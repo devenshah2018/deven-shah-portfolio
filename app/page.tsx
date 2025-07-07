@@ -12,7 +12,6 @@ export default function HomePage() {
       <AboutSection />
       <ExperienceSection />
       <ProjectsSection />
-      <PublicationsSection />
       <ContactSection />
     </main>
   )

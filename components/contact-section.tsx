@@ -1,6 +1,6 @@
 "use client"
 
-import type React from "react"
+import React from "react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -10,7 +10,6 @@ import {
   Mail,
   Linkedin,
   Github,
-  Twitter,
   CalendarCheck2,
   Send,
   MapPin,
@@ -19,6 +18,8 @@ import {
   Sparkles,
   Loader2,
 } from "lucide-react"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faXTwitter } from "@fortawesome/free-brands-svg-icons"
 import { motion } from "framer-motion"
 import { useState } from "react"
 
@@ -42,7 +43,7 @@ export function ContactSection() {
       const mailtoLink = `mailto:devenshah2018@gmail.com?subject=${encodeURIComponent(
         `[Portfolio Contact] ${formData.subject}`,
       )}&body=${encodeURIComponent(
-        `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`,
+        `${formData.message}`,
       )}`
 
       // Simulate delay
@@ -66,6 +67,13 @@ export function ContactSection() {
 
   const socialLinks = [
     {
+      name: "Email",
+      icon: Mail,
+      url: "mailto:devenshah2018@gmail.com",
+      handle: "devenshah2018@gmail.com",
+      color: "hover:bg-red-600/20 hover:text-red-500",
+    },
+    {
       name: "LinkedIn",
       icon: Linkedin,
       url: "https://www.linkedin.com/in/deven-a-shah/",
@@ -81,7 +89,7 @@ export function ContactSection() {
     },
     {
       name: "Twitter",
-      icon: Twitter,
+      icon: faXTwitter,
       url: "https://x.com/devenshah2018",
       handle: "@devenshah2018",
       color: "hover:bg-blue-500/20 hover:text-blue-400",
@@ -240,40 +248,6 @@ export function ContactSection() {
               viewport={{ once: true }}
               className="lg:col-span-2 space-y-8"
             >
-              {/* Quick Contact Info */}
-              <Card className="bg-card border-border shadow-xl">
-                <CardHeader>
-                  <CardTitle className="text-xl font-semibold text-foreground">Direct Contact</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-5">
-                  {contactInfo.map((info) => (
-                    <div key={info.title} className="flex items-start gap-4">
-                      <div className="mt-1 flex-shrink-0 w-8 h-8 bg-gradient-to-br from-primary/20 to-accent/20 rounded-lg flex items-center justify-center">
-                        <info.icon className="h-4 w-4 text-primary" />
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-foreground">{info.title}</p>
-                        {info.badge ? (
-                          <Badge className="mt-0.5 text-xs bg-green-700/30 text-green-300 border-green-600">
-                            <Sparkles className="mr-1 h-3 w-3" />
-                            {info.value}
-                          </Badge>
-                        ) : info.href ? (
-                          <a
-                            href={info.href}
-                            className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                          >
-                            {info.value}
-                          </a>
-                        ) : (
-                          <p className="text-sm text-muted-foreground">{info.value}</p>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </CardContent>
-              </Card>
-
               {/* Social Media */}
               <Card className="bg-card border-border shadow-xl">
                 <CardHeader>
@@ -290,7 +264,16 @@ export function ContactSection() {
                       <a href={social.url} target="_blank" rel="noopener noreferrer">
                         <div className="flex items-center gap-3">
                           <div className="p-2 rounded-md bg-secondary/50 group-hover:bg-transparent transition-colors">
-                            <social.icon className="h-5 w-5 text-muted-foreground group-hover:inherit transition-colors" />
+                            {social.name === "Twitter" ? (
+                              <FontAwesomeIcon 
+                                icon={faXTwitter} 
+                                className="h-5 w-5 text-muted-foreground group-hover:inherit transition-colors" 
+                              />
+                            ) : (
+                              React.createElement(social.icon as React.ComponentType<any>, {
+                                className: "h-5 w-5 text-muted-foreground group-hover:inherit transition-colors"
+                              })
+                            )}
                           </div>
                           <div>
                             <p className="font-medium text-foreground group-hover:inherit">{social.name}</p>
@@ -313,12 +296,12 @@ export function ContactSection() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-muted-foreground mb-5">
-                    Book a 30-minute call to discuss opportunities, collaborations, or just to chat about tech.
+                    Book a quick chat to discuss opportunities, collaborations, or just to chat about tech.
                   </p>
                   <Button
                     size="lg"
                     className="w-full bg-gradient-to-r from-accent to-purple-700 text-primary-foreground hover:opacity-90"
-                    onClick={() => window.open("https://cal.com/devenshah", "_blank")}
+                    onClick={() => window.open("https://cal.com/deven-shah-l0qkjk/quick-chat", "_blank")}
                   >
                     <CalendarCheck2 className="mr-2 h-4 w-4" />
                     Book a Call via Cal.com
