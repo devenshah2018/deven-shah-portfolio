@@ -136,6 +136,41 @@ export function ContactSection() {
             </motion.p>
           </div>
 
+          {/* Cal.com Booking - Primary CTA, full width */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+            viewport={{ once: true }}
+            className="mb-12"
+          >
+            <Card className="bg-card border border-gray-300/20 shadow-2xl w-full max-w-6xl mx-auto px-0 md:px-0 rounded-2xl">
+              <CardContent className="py-3 px-4 md:px-10 flex flex-col md:flex-row items-center md:items-center justify-between gap-4 md:gap-8">
+                <div className="flex-1 text-center md:text-left">
+                  <h3 className="text-lg md:text-xl font-semibold text-foreground mb-1 flex items-center gap-2 justify-center md:justify-start">
+                    <CalendarCheck2 className="h-7 w-7 text-accent" />
+                    Let's Talk
+                  </h3>
+                  <p className="text-base md:text-lg text-muted-foreground mb-0">
+                    Book a quick chat to discuss opportunities, collaborations, or just to chat about tech.
+                  </p>
+                </div>
+                <div className="flex-shrink-0 w-full md:w-auto flex justify-center md:justify-end">
+                  <Button
+                    size="sm"
+                    className="min-w-[180px] text-primary-foreground text-sm font-semibold py-3 px-6 md:ml-6 shadow-md hover:opacity-90"
+                    style={{height: '44px'}}
+                    onClick={() => window.open("https://cal.com/deven-shah-l0qkjk/quick-chat", "_blank")}
+                  >
+                    <CalendarCheck2 className="mr-2 h-4 w-4" />
+                    Book a Call
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+
+          {/* Message Form & Socials - 2 columns on large screens */}
           <div className="grid lg:grid-cols-5 gap-12 items-start">
             {/* Contact Form Column */}
             <motion.div
@@ -143,9 +178,9 @@ export function ContactSection() {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.7, delay: 0.1 }}
               viewport={{ once: true }}
-              className="lg:col-span-3"
+              className="lg:col-span-3 flex flex-col h-full"
             >
-              <Card className="bg-card border-border shadow-xl p-2 sm:p-4">
+              <Card className="bg-card border-border shadow-xl p-2 sm:p-4 h-full flex flex-col">
                 <CardHeader className="pb-4">
                   <CardTitle className="text-2xl font-semibold text-foreground flex items-center gap-3">
                     <MessageSquare className="h-7 w-7 text-primary" />
@@ -155,7 +190,7 @@ export function ContactSection() {
                     Fill out the form below, and I'll get back to you as soon as possible.
                   </CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="flex-1 flex flex-col justify-between">
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid sm:grid-cols-2 gap-6">
                       <div className="space-y-1.5">
@@ -240,44 +275,19 @@ export function ContactSection() {
               </Card>
             </motion.div>
 
-            {/* Contact Info & Social Column */}
+            {/* Social Media Column */}
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.7, delay: 0.2 }}
               viewport={{ once: true }}
-              className="lg:col-span-2 space-y-8"
+              className="lg:col-span-2 flex flex-col h-full"
             >
-
-                            {/* Calendar Booking */}
-              <Card className="bg-card border-border shadow-xl">
-                <CardHeader>
-                  <CardTitle className="text-xl font-semibold text-foreground flex items-center gap-2">
-                    <CalendarCheck2 className="h-6 w-6 text-accent" />
-                    Schedule a Meeting
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-5">
-                    Book a quick chat to discuss opportunities, collaborations, or just to chat about tech.
-                  </p>
-                  <Button
-                    size="lg"
-                    className="w-full text-primary-foreground hover:opacity-90"
-                    onClick={() => window.open("https://cal.com/deven-shah-l0qkjk/quick-chat", "_blank")}
-                  >
-                    <CalendarCheck2 className="mr-2 h-4 w-4" />
-                    Book a Call via Cal.com
-                  </Button>
-                </CardContent>
-              </Card>
-
-              {/* Social Media */}
-              <Card className="bg-card border-border shadow-xl">
+              <Card className="bg-card border-border shadow-xl h-full flex flex-col">
                 <CardHeader>
                   <CardTitle className="text-xl font-semibold text-foreground">Find Me Online</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-3">
+                <CardContent className="flex-1 flex flex-col justify-between space-y-3">
                   {socialLinks.map((social) => (
                     <Button
                       key={social.name}
