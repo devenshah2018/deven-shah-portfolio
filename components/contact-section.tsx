@@ -68,22 +68,22 @@ export function ContactSection() {
     {
       name: "LinkedIn",
       icon: Linkedin,
-      url: "https://linkedin.com/in/devenshah",
-      handle: "/in/devenshah",
+      url: "https://www.linkedin.com/in/deven-a-shah/",
+      handle: "/in/deven-a-shah",
       color: "hover:bg-sky-600/20 hover:text-sky-500",
     },
     {
       name: "GitHub",
       icon: Github,
-      url: "https://github.com/devenshah",
-      handle: "/devenshah",
+      url: "https://github.com/devenshah2018",
+      handle: "/devenshah2018",
       color: "hover:bg-gray-600/20 hover:text-gray-400",
     },
     {
       name: "Twitter",
       icon: Twitter,
-      url: "https://twitter.com/devenshah",
-      handle: "@devenshah",
+      url: "https://x.com/devenshah2018",
+      handle: "@devenshah2018",
       color: "hover:bg-blue-500/20 hover:text-blue-400",
     },
   ]

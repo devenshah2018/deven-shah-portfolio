@@ -30,7 +30,8 @@ const projects = [
     description:
       "Launched Ares, a SOC2 and OWASP compliance solution with 100+ users, accepted into Microsoft's Startup Program and Buildspace S5, integrated via a Rust and TypeScript VSCode extension.",
     technologies: ["Rust", "TypeScript", "VSCode Extension", "Security", "Compliance"],
-    type: "video",
+    type: "link",
+    link: "https://x.com/devenshah2018/status/1853296427549733029",
     status: "Launched",
     users: "100+ users",
     gradient: "from-red-500 via-orange-500 to-yellow-500",
@@ -45,6 +46,7 @@ const projects = [
       "Built an ML solution to forecast cryptocurrency trends using a synthetic dataset for undergraduate capstone that was presented live at the SJSU Fall 2022 Expo.",
     technologies: ["Python", "Machine Learning", "Data Science", "Forecasting"],
     type: "github",
+    link: "https://github.com/b-devera/crypto-forecasting-model",
     status: "Completed",
     gradient: "from-green-500 via-emerald-500 to-teal-500",
     icon: Zap,
@@ -61,6 +63,10 @@ export function ProjectsSection() {
       setQodeModalOpen(true)
     } else if (project.type === "video") {
       setAresModalOpen(true)
+    } else if (project.type === "link") {
+      window.open(project.link, "_blank")
+    } else if (project.type === "github") {
+      window.open(project.link, "_blank")
     } else {
       window.open("https://github.com/devenshah", "_blank")
     }
@@ -202,7 +208,7 @@ export function ProjectsSection() {
                           Try Interactive IDE
                         </>
                       )}
-                      {project.type === "video" && (
+                      {project.type === "video" || project.type === "link" && (
                         <>
                           <Play className="mr-2 h-5 w-5" />
                           Watch Demo

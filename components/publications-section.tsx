@@ -259,12 +259,12 @@ export function PublicationsSection() {
                       <p className="text-sm font-semibold text-primary mb-1">Current Pursuit</p>
                       <p className="font-medium text-foreground">M.S. Computer Science</p>
                       <p className="text-xs text-muted-foreground">
-                        Boston University (Specialization: Data Analytics)
+                        Boston University (Concentration: Data Analytics)
                       </p>
                     </div>
                     <hr className="border-border" />
                     <div>
-                      <p className="text-sm font-semibold text-primary mb-1">Alma Mater</p>
+                      <p className="text-sm font-semibold text-primary mb-1">Completed</p>
                       <p className="font-medium text-foreground">B.S. Software Engineering</p>
                       <p className="text-xs text-muted-foreground">San Jose State University (Graduated: Dec 2022)</p>
                     </div>

@@ -110,12 +110,12 @@ export function HeroSection() {
             transition={{ duration: 0.8, delay: 0.8 }}
             className="flex items-center justify-center gap-6 mb-16"
           >
-            <Link href="https://github.com/devenshah" target="_blank" rel="noopener noreferrer">
+            <Link href="https://github.com/devenshah2018" target="_blank" rel="noopener noreferrer">
               <Button variant="ghost" size="lg" className="hover:bg-gray-100 dark:hover:bg-gray-800 p-3">
                 <Github className="h-6 w-6" />
               </Button>
             </Link>
-            <Link href="https://linkedin.com/in/devenshah" target="_blank" rel="noopener noreferrer">
+            <Link href="https://linkedin.com/in/deven-a-shah" target="_blank" rel="noopener noreferrer">
               <Button variant="ghost" size="lg" className="hover:bg-gray-100 dark:hover:bg-gray-800 p-3">
                 <Linkedin className="h-6 w-6" />
               </Button>
