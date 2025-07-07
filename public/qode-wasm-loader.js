@@ -28,25 +28,106 @@ window.createQodeInterpreter = function() {
     // Load the quantum interpreter JavaScript
     const script = document.createElement('script');
     script.src = '/quantum_interpreter.js';
-    script.onload = function() {
+    script.onload = async function() {
       console.log('Quantum interpreter script loaded');
       
-      // Wait for interpreter to be ready
-      const checkReady = () => {
-        if (window.qodeInterpreterReady && window.executeQode) {
-          console.log('Qode interpreter is ready');
-          resolve({
-            executeQode: window.executeQode,
-            executeQodeCode: window.executeQodeCode || window.executeQode,
-            FS: window.Module ? window.Module.FS : null,
-            ready: true
+      try {
+        // Instantiate the Emscripten module with output capture
+        console.log('Instantiating QuantumInterpreter module...');
+        
+        // Set up output capture before instantiating the module
+        let capturedOutput = '';
+        let capturedErrors = '';
+        
+        const module = await QuantumInterpreter({
+          print: function(text) {
+            console.log('WASM stdout:', text);
+            capturedOutput += text + '\n';
+            window.qodeOutput = capturedOutput;
+          },
+          printErr: function(text) {
+            console.error('WASM stderr:', text);
+            capturedErrors += text + '\n';
+            window.qodeErrors = capturedErrors;
+          }
+        });
+        
+        console.log('QuantumInterpreter module instantiated:', module);
+        
+        // Set up global functions expected by the loader
+        window.executeQode = function(code) {
+          return new Promise((resolve) => {
+            try {
+              // Reset output capture
+              capturedOutput = '';
+              capturedErrors = '';
+              window.qodeOutput = '';
+              window.qodeErrors = '';
+              
+              // Write the code to a file in the WASM filesystem
+              if (module.FS) {
+                // Ensure tmp directory exists
+                try {
+                  module.FS.mkdir('/tmp');
+                } catch (e) {
+                  // Directory might already exist
+                }
+                
+                module.FS.writeFile('/tmp/program.qode', code);
+                console.log('Code written to WASM filesystem');
+                
+                // Call the main function with the program file
+                const result = module.callMain ? module.callMain(['/tmp/program.qode']) : 0;
+                console.log('WASM callMain result:', result);
+                
+                // Get the captured output
+                const output = capturedOutput || window.qodeOutput || 'Program executed (no output captured)';
+                const errors = capturedErrors || window.qodeErrors || '';
+                
+                console.log('Captured output:', output);
+                console.log('Captured errors:', errors);
+                
+                resolve({
+                  success: result === 0,
+                  output: output,
+                  errors: errors,
+                  exitCode: result
+                });
+              } else {
+                throw new Error('WASM filesystem not available');
+              }
+            } catch (error) {
+              console.error('WASM execution error:', error);
+              resolve({
+                success: false,
+                output: capturedOutput || '',
+                errors: error.toString(),
+                exitCode: 1
+              });
+            }
           });
-        } else {
-          setTimeout(checkReady, 100);
-        }
-      };
-      
-      checkReady();
+        };
+        
+        window.executeQodeCode = window.executeQode;
+        window.Module = module;
+        window.qodeInterpreterReady = true;
+        
+        console.log('Qode interpreter is ready');
+        resolve({
+          executeQode: window.executeQode,
+          executeQodeCode: window.executeQodeCode,
+          FS: module.FS,
+          ready: true,
+          simulation: false  // Real WASM mode
+        });
+        
+      } catch (error) {
+        console.error('Failed to instantiate QuantumInterpreter:', error);
+        // Fall back to simulation mode
+        const fallbackModule = createFallbackModule();
+        window.qodeInterpreterReady = true;
+        resolve(fallbackModule);
+      }
     };
     
     script.onerror = function(error) {
