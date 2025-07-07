@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { ArrowDown, Download, Mail, Github, Linkedin } from "lucide-react"
+import { ArrowDown, Download, Mail, Github, Linkedin, Activity } from "lucide-react"
 import { motion } from "framer-motion"
 import Link from "next/link"
 
@@ -97,7 +97,7 @@ export function HeroSection() {
                 }
               }}
             >
-              <Mail className="mr-2 h-5 w-5" />
+              <Activity className="mr-2 h-5 w-5" />
               Get In Touch
             </Button>
             <Button
