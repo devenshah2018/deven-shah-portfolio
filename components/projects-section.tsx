@@ -73,7 +73,7 @@ export function ProjectsSection() {
   }
 
   return (
-    <section id="projects" className="py-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-800 dark:to-gray-900">
+    <section id="projects" className="py-24 bg-gradient-to-b from-gray-800 to-gray-900">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -88,7 +88,7 @@ export function ProjectsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent"
+              className="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent"
             >
               Featured Projects
             </motion.h2>
@@ -97,7 +97,7 @@ export function ProjectsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               viewport={{ once: true }}
-              className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto"
+              className="text-xl text-gray-400 max-w-3xl mx-auto"
             >
               Innovative solutions spanning quantum computing, security compliance, and machine learning.
             </motion.p>
@@ -113,7 +113,7 @@ export function ProjectsSection() {
                 viewport={{ once: true }}
                 className="group"
               >
-                <Card className="h-full flex flex-col hover:shadow-2xl transition-all duration-500 border-0 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm overflow-hidden relative">
+                <Card className="h-full flex flex-col hover:shadow-2xl transition-all duration-500 border-0 bg-gray-800/80 backdrop-blur-sm overflow-hidden relative">
                   {/* Gradient Background */}
                   <div
                     className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}
@@ -126,13 +126,13 @@ export function ProjectsSection() {
                       >
                         <project.icon className="h-8 w-8 text-white" />
                       </div>
-                      <Badge variant="outline" className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
+                      <Badge variant="outline" className="bg-gray-800/50 backdrop-blur-sm">
                         <Calendar className="mr-1 h-3 w-3" />
                         {project.period.split(" – ")[0]}
                       </Badge>
                     </div>
 
-                    <CardTitle className="text-2xl font-bold mb-2 text-gray-900 dark:text-white">
+                    <CardTitle className="text-2xl font-bold mb-2 text-white">
                       {project.title}
                     </CardTitle>
                     <p
@@ -159,7 +159,7 @@ export function ProjectsSection() {
                         {project.status}
                       </Badge>
                       {project.users && (
-                        <Badge variant="outline" className="bg-white/50 dark:bg-gray-800/50">
+                        <Badge variant="outline" className="bg-gray-800/50">
                           <Users className="mr-1 h-3 w-3" />
                           {project.users}
                         </Badge>
@@ -168,18 +168,18 @@ export function ProjectsSection() {
                   </CardHeader>
 
                   <CardContent className="flex-1 flex flex-col relative z-10">
-                    <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed flex-1">
+                    <p className="text-gray-300 mb-6 leading-relaxed flex-1">
                       {project.description}
                     </p>
 
                     {/* Highlights */}
                     <div className="mb-6">
-                      <h4 className="font-semibold text-gray-900 dark:text-white mb-3">Key Highlights</h4>
+                      <h4 className="font-semibold text-white mb-3">Key Highlights</h4>
                       <div className="space-y-2">
                         {project.highlights.map((highlight, i) => (
                           <div key={i} className="flex items-center gap-2">
                             <div className={`w-2 h-2 bg-gradient-to-r ${project.gradient} rounded-full`}></div>
-                            <span className="text-sm text-gray-600 dark:text-gray-400">{highlight}</span>
+                            <span className="text-sm text-gray-400">{highlight}</span>
                           </div>
                         ))}
                       </div>
@@ -189,7 +189,7 @@ export function ProjectsSection() {
                     <div className="mb-6">
                       <div className="flex flex-wrap gap-2">
                         {project.technologies.map((tech) => (
-                          <Badge key={tech} variant="secondary" className="text-xs bg-gray-100 dark:bg-gray-700">
+                          <Badge key={tech} variant="secondary" className="text-xs bg-gray-700">
                             {tech}
                           </Badge>
                         ))}

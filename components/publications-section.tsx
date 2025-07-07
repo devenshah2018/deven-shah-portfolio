@@ -99,7 +99,7 @@ export function PublicationsSection() {
   return (
     <section
       id="publications"
-      className="py-24 bg-gradient-to-b from-secondary/30 to-background dark:from-gray-800/50 dark:to-gray-900"
+      className="py-24 bg-gradient-to-b from-gray-800/50 to-gray-900"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div

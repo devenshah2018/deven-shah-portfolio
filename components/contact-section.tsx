@@ -97,7 +97,7 @@ export function ContactSection() {
   return (
     <section
       id="contact"
-      className="py-24 bg-gradient-to-b from-background to-secondary/30 dark:from-gray-900 dark:to-black/30"
+      className="py-24 bg-gradient-to-b from-background to-secondary/30"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -161,7 +161,7 @@ export function ContactSection() {
                           onChange={handleInputChange}
                           placeholder="e.g., Ada Lovelace"
                           required
-                          className="bg-secondary/30 dark:bg-secondary/50 focus:ring-primary"
+                          className="bg-secondary/50 focus:ring-primary"
                         />
                       </div>
                       <div className="space-y-1.5">
@@ -176,7 +176,7 @@ export function ContactSection() {
                           onChange={handleInputChange}
                           placeholder="e.g., ada@example.com"
                           required
-                          className="bg-secondary/30 dark:bg-secondary/50 focus:ring-primary"
+                          className="bg-secondary/50 focus:ring-primary"
                         />
                       </div>
                     </div>
@@ -191,7 +191,7 @@ export function ContactSection() {
                         onChange={handleInputChange}
                         placeholder="e.g., Project Collaboration Inquiry"
                         required
-                        className="bg-secondary/30 dark:bg-secondary/50 focus:ring-primary"
+                        className="bg-secondary/50 focus:ring-primary"
                       />
                     </div>
                     <div className="space-y-1.5">
@@ -206,7 +206,7 @@ export function ContactSection() {
                         placeholder="Tell me about your project, opportunity, or just say hello!"
                         rows={5}
                         required
-                        className="bg-secondary/30 dark:bg-secondary/50 focus:ring-primary"
+                        className="bg-secondary/50 focus:ring-primary"
                       />
                     </div>
                     <Button
@@ -254,7 +254,7 @@ export function ContactSection() {
                       <div>
                         <p className="text-sm font-medium text-foreground">{info.title}</p>
                         {info.badge ? (
-                          <Badge className="mt-0.5 text-xs bg-green-100 text-green-700 dark:bg-green-700/30 dark:text-green-300 border-green-300 dark:border-green-600">
+                          <Badge className="mt-0.5 text-xs bg-green-700/30 text-green-300 border-green-600">
                             <Sparkles className="mr-1 h-3 w-3" />
                             {info.value}
                           </Badge>

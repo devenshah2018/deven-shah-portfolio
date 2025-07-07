@@ -57,7 +57,7 @@ const experiences = [
 
 export function ExperienceSection() {
   return (
-    <section id="experience" className="py-24 bg-white dark:bg-gray-900">
+    <section id="experience" className="py-24 bg-gray-900">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -72,7 +72,7 @@ export function ExperienceSection() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent"
+              className="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent"
             >
               Professional Journey
             </motion.h2>
@@ -81,7 +81,7 @@ export function ExperienceSection() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               viewport={{ once: true }}
-              className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto"
+              className="text-xl text-gray-400 max-w-3xl mx-auto"
             >
               From intern to co-founder, building impactful solutions across diverse industries and technologies.
             </motion.p>
@@ -103,12 +103,12 @@ export function ExperienceSection() {
                 >
                   {/* Timeline Dot */}
                   <div
-                    className={`absolute left-6 w-5 h-5 bg-gradient-to-r ${exp.color} rounded-full border-4 border-white dark:border-gray-900 shadow-lg hidden md:block z-10`}
+                    className={`absolute left-6 w-5 h-5 bg-gradient-to-r ${exp.color} rounded-full border-4 border-gray-900 shadow-lg hidden md:block z-10`}
                   ></div>
 
                   <div className="md:ml-20">
                     <Card
-                      className={`hover:shadow-2xl transition-all duration-300 border-0 ${exp.featured ? "bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20" : "bg-white/80 dark:bg-gray-800/80"} backdrop-blur-sm`}
+                      className={`hover:shadow-2xl transition-all duration-300 border-0 ${exp.featured ? "bg-gradient-to-br from-blue-900/20 to-purple-900/20" : "bg-gray-800/80"} backdrop-blur-sm`}
                     >
                       <CardHeader className="pb-4">
                         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
@@ -122,7 +122,7 @@ export function ExperienceSection() {
                             </p>
                           </div>
                           <div className="flex flex-col sm:flex-row gap-3">
-                            <Badge variant="outline" className="w-fit bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
+                            <Badge variant="outline" className="w-fit bg-gray-800/50 backdrop-blur-sm">
                               <Calendar className="mr-2 h-4 w-4" />
                               {exp.period}
                             </Badge>
@@ -140,10 +140,10 @@ export function ExperienceSection() {
                         </div>
                       </CardHeader>
                       <CardContent className="space-y-6">
-                        <p className="text-gray-600 dark:text-gray-300 text-lg leading-relaxed">{exp.description}</p>
+                        <p className="text-gray-300 text-lg leading-relaxed">{exp.description}</p>
 
                         <div className="space-y-4">
-                          <h4 className="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                          <h4 className="font-semibold text-white flex items-center gap-2">
                             <TrendingUp className="h-5 w-5 text-green-500" />
                             Key Achievements
                           </h4>
@@ -155,12 +155,12 @@ export function ExperienceSection() {
                                 whileInView={{ opacity: 1, x: 0 }}
                                 transition={{ duration: 0.4, delay: i * 0.1 }}
                                 viewport={{ once: true }}
-                                className="flex items-start gap-3 p-3 rounded-lg bg-white/50 dark:bg-gray-700/50 backdrop-blur-sm"
+                                className="flex items-start gap-3 p-3 rounded-lg bg-gray-700/50 backdrop-blur-sm"
                               >
                                 <div
                                   className={`w-2 h-2 bg-gradient-to-r ${exp.color} rounded-full mt-2 flex-shrink-0`}
                                 ></div>
-                                <span className="text-gray-700 dark:text-gray-300 leading-relaxed">{achievement}</span>
+                                <span className="text-gray-300 leading-relaxed">{achievement}</span>
                               </motion.div>
                             ))}
                           </div>

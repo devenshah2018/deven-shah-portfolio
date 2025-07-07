@@ -10,7 +10,7 @@ export function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Animated Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-blue-900/20 dark:to-purple-900/20" />
+      <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-blue-900/20 to-purple-900/20" />
 
       {/* Floating Elements */}
       <div className="absolute inset-0 overflow-hidden">
@@ -61,7 +61,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 dark:from-white dark:via-blue-200 dark:to-purple-200 bg-clip-text text-transparent leading-tight"
+            className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-blue-200 to-purple-200 bg-clip-text text-transparent leading-tight"
           >
             Deven Shah
           </motion.h1>
@@ -72,10 +72,10 @@ export function HeroSection() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="mb-8"
           >
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-gray-700 dark:text-gray-300 mb-4">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-gray-300 mb-4">
               Co-Founder/CTO & Full-Stack Developer
             </h2>
-            <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg sm:text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
               Building the future with AI-powered analytics, quantum programming languages, and security compliance
               platforms. Currently pursuing M.S. in Computer Science at Boston University.
             </p>
@@ -97,7 +97,7 @@ export function HeroSection() {
             <Button
               variant="outline"
               size="lg"
-              className="px-8 py-3 text-lg font-semibold border-2 hover:bg-gray-50 dark:hover:bg-gray-800"
+              className="px-8 py-3 text-lg font-semibold border-2 hover:bg-gray-800"
             >
               <Download className="mr-2 h-5 w-5" />
               Download Resume
@@ -111,12 +111,12 @@ export function HeroSection() {
             className="flex items-center justify-center gap-6 mb-16"
           >
             <Link href="https://github.com/devenshah2018" target="_blank" rel="noopener noreferrer">
-              <Button variant="ghost" size="lg" className="hover:bg-gray-100 dark:hover:bg-gray-800 p-3">
+              <Button variant="ghost" size="lg" className="hover:bg-gray-800 p-3">
                 <Github className="h-6 w-6" />
               </Button>
             </Link>
             <Link href="https://linkedin.com/in/deven-a-shah" target="_blank" rel="noopener noreferrer">
-              <Button variant="ghost" size="lg" className="hover:bg-gray-100 dark:hover:bg-gray-800 p-3">
+              <Button variant="ghost" size="lg" className="hover:bg-gray-800 p-3">
                 <Linkedin className="h-6 w-6" />
               </Button>
             </Link>
