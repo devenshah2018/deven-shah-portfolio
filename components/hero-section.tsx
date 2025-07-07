@@ -90,6 +90,12 @@ export function HeroSection() {
             <Button
               size="lg"
               className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 px-8 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
+              onClick={() => {
+                const contactSection = document.getElementById('contact');
+                if (contactSection) {
+                  contactSection.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
             >
               <Mail className="mr-2 h-5 w-5" />
               Get In Touch
@@ -98,6 +104,14 @@ export function HeroSection() {
               variant="outline"
               size="lg"
               className="px-8 py-3 text-lg font-semibold border-2 hover:bg-gray-800"
+              onClick={() => {
+                const link = document.createElement('a');
+                link.href = '/Resume.pdf';
+                link.download = 'Deven_Shah_Resume.pdf';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+              }}
             >
               <Download className="mr-2 h-5 w-5" />
               Download Resume
