@@ -1,14 +1,189 @@
 "use client"
 
+import { useState } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { motion } from "framer-motion"
-import { GraduationCap, Briefcase, Code, Palette } from "lucide-react"
+import { GraduationCap, Briefcase, Code, Palette, Zap } from "lucide-react"
+import { SkillModal } from "@/components/skill-modal"
 
 const skills = {
-  languages: ["Python", "TypeScript", "C#", "Java", "Apex", "JavaScript", "SQL", "SOQL", "HTML", "CSS", "Bash"],
+  languages: ["Python", "TypeScript", "C#", "Java", "C", "Apex", "JavaScript", "SQL", "SOQL", "HTML", "CSS", "Bash"],
   platforms: ["AWS", "Salesforce", "Azure", "LangGraph", "React", ".NET", "Flask"],
 }
+
+// Skill mappings to experiences, projects, and education
+const skillMappings = [
+  {
+    skill: "Python",
+    experiences: [
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase },
+      { title: "Solutions Architect Intern", company: "NetApp", id: "netapp", icon: Briefcase }
+    ],
+    projects: [
+      { title: "Ares", subtitle: "Security Compliance Platform", id: "ares", icon: Zap },
+      { title: "Cryptocurrency Forecasting", subtitle: "ML Prediction Model", id: "crypto", icon: Zap }
+    ],
+    education: [
+      { title: "B.S. Software Engineering", institution: "San Jose State University", id: "sjsu", icon: GraduationCap }
+    ]
+  },
+  {
+    skill: "TypeScript",
+    experiences: [
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase },
+      { title: "Application Developer", company: "Patelco", id: "patelco", icon: Briefcase }
+    ],
+    projects: [
+      { title: "Ares", subtitle: "Security Compliance Platform", id: "ares", icon: Zap }
+    ]
+  },
+  {
+    skill: "C#",
+    experiences: [
+      { title: "Application Developer", company: "Patelco", id: "patelco", icon: Briefcase }
+    ],
+    education: [
+      { title: "B.S. Software Engineering", institution: "San Jose State University", id: "sjsu", icon: GraduationCap }
+    ]
+  },
+  {
+    skill: "React",
+    experiences: [
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase }
+    ]
+  },
+  {
+    skill: "Azure",
+    experiences: [
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase },
+      { title: "Application Developer", company: "Patelco", id: "patelco", icon: Briefcase },
+    ],
+    projects: [
+      { title: "Ares", subtitle: "Security Compliance Platform", id: "ares", icon: Zap }
+    ]
+  },
+  {
+    skill: "LangGraph",
+    experiences: [
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase }
+    ]
+  },
+  {
+    skill: ".NET",
+    experiences: [
+      { title: "Application Developer", company: "Patelco", id: "patelco", icon: Briefcase }
+    ]
+  },
+  {
+    skill: "SQL",
+    experiences: [
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase },
+      { title: "Application Developer", company: "Patelco", id: "patelco", icon: Briefcase },
+      { title: "Solutions Architect Intern", company: "NetApp", id: "netapp", icon: Briefcase }
+    ],
+    projects: [
+      { title: "Ares", subtitle: "Security Compliance Platform", id: "ares", icon: Zap }
+    ],
+    education: [
+      { title: "B.S. Software Engineering", institution: "San Jose State University", id: "sjsu", icon: GraduationCap }
+    ]
+  },
+    {
+    skill: "SOQL",
+    experiences: [
+      { title: "Application Developer", company: "Patelco", id: "patelco", icon: Briefcase },
+    ]
+  },
+    {
+    skill: "HTML",
+    experiences: [
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase },
+      { title: "Application Developer", company: "Patelco", id: "patelco", icon: Briefcase },
+      { title: "Solutions Architect Intern", company: "NetApp", id: "netapp", icon: Briefcase }
+    ],
+    projects: [
+      { title: "Ares", subtitle: "Security Compliance Platform", id: "ares", icon: Zap },
+      { title: "Cryptocurrency Forecasting", subtitle: "ML Prediction Model", id: "crypto", icon: Zap }
+    ],
+    education: [
+      { title: "B.S. Software Engineering", institution: "San Jose State University", id: "sjsu", icon: GraduationCap }
+    ]
+  },
+      {
+    skill: "CSS",
+    experiences: [
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase },
+      { title: "Application Developer", company: "Patelco", id: "patelco", icon: Briefcase },
+      { title: "Solutions Architect Intern", company: "NetApp", id: "netapp", icon: Briefcase }
+    ],
+    projects: [
+      { title: "Ares", subtitle: "Security Compliance Platform", id: "ares", icon: Zap },
+      { title: "Cryptocurrency Forecasting", subtitle: "ML Prediction Model", id: "crypto", icon: Zap }
+    ],
+    education: [
+      { title: "B.S. Software Engineering", institution: "San Jose State University", id: "sjsu", icon: GraduationCap }
+    ]
+  },
+  {
+    skill: "Java",
+    education: [
+      { title: "B.S. Software Engineering", institution: "San Jose State University", id: "sjsu", icon: GraduationCap }
+    ]
+  },
+    {
+    skill: "C",
+      projects: [
+      { title: "Qode", subtitle: "Quantum Programming Language", id: "qode", icon: Zap },
+    ]
+  },
+  {
+    skill: "JavaScript",
+    experiences: [
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase },
+      { title: "Application Developer", company: "Patelco", id: "patelco", icon: Briefcase }
+    ],
+      projects: [
+      { title: "Qode", subtitle: "Quantum Programming Language", id: "qode", icon: Zap },
+    ]
+  },
+  {
+    skill: "Apex",
+    experiences: [
+      { title: "Application Developer", company: "Patelco", id: "patelco", icon: Briefcase }
+    ]
+  },
+  {
+    skill: "Salesforce",
+    experiences: [
+      { title: "Application Developer", company: "Patelco", id: "patelco", icon: Briefcase }
+    ]
+  },
+  {
+    skill: "AWS",
+    experiences: [
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase }
+    ],
+    education: [
+      { title: "AWS Cloud Practitioner Certification", institution: "Amazon Web Services", id: "aws", icon: GraduationCap }
+    ]
+  },
+  {
+    skill: "Flask",
+    experiences: [
+      { title: "Solutions Architect Intern", company: "NetApp", id: "netapp", icon: Briefcase }
+    ],
+    projects: [
+      { title: "Cryptocurrency Forecasting", subtitle: "ML Prediction Model", id: "crypto", icon: Zap }
+    ]
+  },
+  {
+    skill: "Bash",
+    experiences: [
+      { title: "Solutions Architect Intern", company: "NetApp", id: "netapp", icon: Briefcase }
+    ]
+  }
+]
 
 const highlights = [
   {
@@ -42,6 +217,32 @@ const highlights = [
 ]
 
 export function AboutSection() {
+  const [modalOpen, setModalOpen] = useState(false)
+  const [selectedSkill, setSelectedSkill] = useState<string | null>(null)
+
+  const handleSkillClick = (skill: string) => {
+    const skillMapping = skillMappings.find(mapping => mapping.skill === skill)
+    if (skillMapping && (skillMapping.experiences || skillMapping.projects || skillMapping.education)) {
+      setSelectedSkill(skill)
+      setModalOpen(true)
+    }
+  }
+
+  const hasMapping = (skill: string) => {
+    const skillMapping = skillMappings.find(mapping => mapping.skill === skill)
+    return skillMapping && (skillMapping.experiences || skillMapping.projects || skillMapping.education)
+  }
+
+  const getMappingCount = (skill: string) => {
+    const skillMapping = skillMappings.find(mapping => mapping.skill === skill)
+    if (!skillMapping) return 0
+    
+    const experienceCount = skillMapping.experiences?.length || 0
+    const projectCount = skillMapping.projects?.length || 0
+    const educationCount = skillMapping.education?.length || 0
+    
+    return experienceCount + projectCount + educationCount
+  }
   return (
     <section id="about" className="py-24 bg-gradient-to-b from-gray-900 to-gray-800">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -126,9 +327,19 @@ export function AboutSection() {
                       >
                         <Badge
                           variant="secondary"
-                          className="text-sm py-2 px-4 bg-gradient-to-r from-blue-900/30 to-purple-900/30 border border-blue-700 hover:shadow-md transition-all"
+                          className={`text-sm py-2 px-4 bg-gradient-to-r from-blue-900/30 to-purple-900/30 border border-blue-700 transition-all ${
+                            hasMapping(skill) 
+                              ? 'hover:shadow-lg hover:scale-105 cursor-pointer hover:border-blue-400 hover:bg-blue-900/50' 
+                              : 'hover:shadow-md'
+                          }`}
+                          onClick={() => hasMapping(skill) && handleSkillClick(skill)}
                         >
                           {skill}
+                          {hasMapping(skill) && (
+                            <span className="ml-1 text-blue-400 font-medium">
+                              {getMappingCount(skill)}
+                            </span>
+                          )}
                         </Badge>
                       </motion.div>
                     ))}
@@ -151,9 +362,19 @@ export function AboutSection() {
                       >
                         <Badge
                           variant="secondary"
-                          className="text-sm py-2 px-4 bg-gradient-to-r from-green-900/30 to-emerald-900/30 border border-green-700 hover:shadow-md transition-all"
+                          className={`text-sm py-2 px-4 bg-gradient-to-r from-green-900/30 to-emerald-900/30 border border-green-700 transition-all ${
+                            hasMapping(skill) 
+                              ? 'hover:shadow-lg hover:scale-105 cursor-pointer hover:border-green-400 hover:bg-green-900/50' 
+                              : 'hover:shadow-md'
+                          }`}
+                          onClick={() => hasMapping(skill) && handleSkillClick(skill)}
                         >
                           {skill}
+                          {hasMapping(skill) && (
+                            <span className="ml-1 text-green-400 font-medium">
+                              {getMappingCount(skill)}
+                            </span>
+                          )}
                         </Badge>
                       </motion.div>
                     ))}
@@ -164,6 +385,13 @@ export function AboutSection() {
           </div>
         </motion.div>
       </div>
+
+      <SkillModal 
+        open={modalOpen} 
+        onOpenChange={setModalOpen}
+        skillName={selectedSkill}
+        skillMappings={skillMappings}
+      />
     </section>
   )
 }
