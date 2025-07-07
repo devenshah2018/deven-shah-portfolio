@@ -121,7 +121,7 @@ export function ContactSection() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent"
+              className="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent"
             >
               Let's Connect
             </motion.h2>
@@ -220,7 +220,7 @@ export function ContactSection() {
                     <Button
                       type="submit"
                       size="lg"
-                      className="w-full bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90 text-base font-semibold"
+                      className="w-full text-primary-foreground hover:opacity-90 text-base font-semibold"
                       disabled={isSubmitting}
                     >
                       {isSubmitting ? (
@@ -248,6 +248,30 @@ export function ContactSection() {
               viewport={{ once: true }}
               className="lg:col-span-2 space-y-8"
             >
+
+                            {/* Calendar Booking */}
+              <Card className="bg-card border-border shadow-xl">
+                <CardHeader>
+                  <CardTitle className="text-xl font-semibold text-foreground flex items-center gap-2">
+                    <CalendarCheck2 className="h-6 w-6 text-accent" />
+                    Schedule a Meeting
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground mb-5">
+                    Book a quick chat to discuss opportunities, collaborations, or just to chat about tech.
+                  </p>
+                  <Button
+                    size="lg"
+                    className="w-full text-primary-foreground hover:opacity-90"
+                    onClick={() => window.open("https://cal.com/deven-shah-l0qkjk/quick-chat", "_blank")}
+                  >
+                    <CalendarCheck2 className="mr-2 h-4 w-4" />
+                    Book a Call via Cal.com
+                  </Button>
+                </CardContent>
+              </Card>
+
               {/* Social Media */}
               <Card className="bg-card border-border shadow-xl">
                 <CardHeader>
@@ -286,28 +310,7 @@ export function ContactSection() {
                 </CardContent>
               </Card>
 
-              {/* Calendar Booking */}
-              <Card className="bg-card border-border shadow-xl">
-                <CardHeader>
-                  <CardTitle className="text-xl font-semibold text-foreground flex items-center gap-2">
-                    <CalendarCheck2 className="h-6 w-6 text-accent" />
-                    Schedule a Meeting
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground mb-5">
-                    Book a quick chat to discuss opportunities, collaborations, or just to chat about tech.
-                  </p>
-                  <Button
-                    size="lg"
-                    className="w-full bg-gradient-to-r from-accent to-purple-700 text-primary-foreground hover:opacity-90"
-                    onClick={() => window.open("https://cal.com/deven-shah-l0qkjk/quick-chat", "_blank")}
-                  >
-                    <CalendarCheck2 className="mr-2 h-4 w-4" />
-                    Book a Call via Cal.com
-                  </Button>
-                </CardContent>
-              </Card>
+
             </motion.div>
           </div>
         </motion.div>
