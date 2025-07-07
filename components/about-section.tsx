@@ -285,15 +285,16 @@ export function AboutSection() {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
               >
-                <Card className="h-full hover:shadow-xl transition-all duration-300 border-0 bg-gray-800/80 backdrop-blur-sm">
-                  <CardContent className="p-8">
-                    <div
-                      className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${highlight.gradient} flex items-center justify-center mb-6 shadow-lg`}
-                    >
-                      <highlight.icon className="h-8 w-8 text-white" />
+                <Card className="h-full border border-gray-700 bg-gray-900/95 shadow-md rounded-2xl p-0">
+                  <CardContent className="flex flex-row items-center gap-6 p-8">
+                    <div className="flex-shrink-0 w-16 h-16 rounded-full bg-gray-800 flex items-center justify-center border border-gray-700">
+                      <highlight.icon className="h-8 w-8 text-blue-400" />
                     </div>
-                    <h3 className="text-2xl font-bold mb-4 text-white">{highlight.title}</h3>
-                    <p className="text-gray-300 leading-relaxed text-lg">{highlight.description}</p>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-xl font-bold text-white mb-2 leading-tight">{highlight.title}</h3>
+                      <div className="h-[2px] w-10 bg-gray-700 mb-3" />
+                      <p className="text-gray-300 text-base leading-relaxed">{highlight.description}</p>
+                    </div>
                   </CardContent>
                 </Card>
               </motion.div>
