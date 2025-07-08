@@ -70,7 +70,7 @@ export function HeroSection() {
               Deven Shah
             </h1>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-gray-300 mt-2">
-              Co-Founder/CTO & Full-Stack Developer
+              Co-Founder/CTO & Graduate MSCS Student
             </h2>
           </motion.div>
 
@@ -81,8 +81,7 @@ export function HeroSection() {
             className="mb-8"
           >
             <p className="text-lg sm:text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
-              Building the future with AI-powered analytics, quantum programming languages, and security compliance
-              platforms. Currently pursuing M.S. in Computer Science at Boston University.
+              Shaping the next generation of analytics, quantum computing, and secure systems—powered by AI and grounded in research.
             </p>
           </motion.div>
 

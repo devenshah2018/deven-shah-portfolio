@@ -190,28 +190,28 @@ const highlights = [
     icon: Briefcase,
     title: "Current Focus",
     description:
-      "Co-founder/CTO of Suno Analytics, building AI-powered e-commerce analytics platform serving companies up to $50M ARR.",
+      "Co-founder and CTO at Suno Analytics, building AI-powered analytics for $50M+ e-commerce brands",
     gradient: "from-blue-500 to-cyan-500",
   },
-  {
-    icon: GraduationCap,
-    title: "Education",
-    description:
-      "M.S. in Computer Science at Boston University (Data Analytics). B.S. in Software Engineering from SJSU (2022).",
-    gradient: "from-indigo-500 to-purple-500",
-  },
+{
+  icon: GraduationCap,
+  title: "Education",
+  description: 
+    "M.S. in Computer Science at Boston University, B.S. in Software Engineering from San Jose State University",
+  gradient: "from-indigo-500 to-purple-500",
+},
   {
     icon: Code,
     title: "Expertise",
     description:
-      "Full-stack development, AI/ML, quantum computing, security compliance, and scalable system architecture.",
+      "Full-stack development, AI and machine learning, quantum programming, security compliance, scalable architecture",
     gradient: "from-emerald-500 to-teal-500",
   },
   {
     icon: Palette,
     title: "Innovation",
     description:
-      "Created Qode quantum programming language, Ares security platform (100+ users), and multiple award-winning projects.",
+      "Co-founder of Suno Analytics, creator of Qode quantum language, founder of Ares security platform with 100+ users, winner of multiple hackathons",
     gradient: "from-orange-500 to-red-500",
   },
 ]
@@ -275,9 +275,7 @@ export function AboutSection() {
               viewport={{ once: true }}
               className="text-xl text-slate-400 max-w-4xl mx-auto font-light leading-relaxed"
             >
-              Passionate about building innovative solutions that bridge the gap between cutting-edge technology and
-              real-world impact.
-            </motion.p>
+Passionate systems builder bridging advanced technology with real-world impact          </motion.p>
           </div>
 
           {/* Highlights Grid */}
@@ -300,8 +298,16 @@ export function AboutSection() {
                       </div>
                       <div className="flex-1">
                         <h3 className="text-2xl font-bold text-white mb-3 tracking-wide">{highlight.title}</h3>
-                        <div className="h-0.5 w-12 bg-slate-700 mb-4 rounded-full" />
-                        <p className="text-slate-300 text-base leading-relaxed font-light">{highlight.description}</p>
+                        <p className="text-slate-300 text-base leading-relaxed font-light">
+                          {Array.isArray(highlight.description)
+                            ? highlight.description.map((line, idx) => (
+                                <span key={idx}>
+                                  {line}
+                                  {idx < highlight.description.length - 1 && <br />}
+                                </span>
+                              ))
+                            : highlight.description}
+                        </p>
                       </div>
                     </div>
                   </CardContent>
