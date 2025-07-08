@@ -1,10 +1,12 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faXTwitter } from "@fortawesome/free-brands-svg-icons"
 import { ArrowDown, Download, Mail, Github, Linkedin, Activity } from "lucide-react"
 import { motion } from "framer-motion"
 import Link from "next/link"
+import { RotatingTweets } from "@/components/rotating-tweets"
 
 export function HeroSection() {
   return (
@@ -55,16 +57,22 @@ export function HeroSection() {
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-4xl mx-auto text-center relative z-20">
 
-          <motion.h1
+          {/* Move name and title below navigation */}
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-blue-200 to-purple-200 bg-clip-text text-transparent leading-tight"
+            className="mt-32 mb-6"
           >
-            Deven Shah
-          </motion.h1>
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-white via-blue-200 to-purple-200 bg-clip-text text-transparent leading-tight">
+              Deven Shah
+            </h1>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-gray-300 mt-2">
+              Co-Founder/CTO & Full-Stack Developer
+            </h2>
+          </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -72,9 +80,6 @@ export function HeroSection() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="mb-8"
           >
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-gray-300 mb-4">
-              Co-Founder/CTO & Full-Stack Developer
-            </h2>
             <p className="text-lg sm:text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
               Building the future with AI-powered analytics, quantum programming languages, and security compliance
               platforms. Currently pursuing M.S. in Computer Science at Boston University.
@@ -134,25 +139,21 @@ export function HeroSection() {
                 <Linkedin className="h-6 w-6" />
               </Button>
             </Link>
+            <Link href="mailto:devenshah2018@gmail.com" target="_blank" rel="noopener noreferrer">
+              <Button variant="ghost" size="lg" className="hover:bg-gray-800 p-3">
+                <Mail className="h-6 w-6" />
+              </Button>
+            </Link>
+            <Link href="https://x.com/devenshah2018" target="_blank" rel="noopener noreferrer">
+              <Button variant="ghost" size="lg" className="hover:bg-gray-800 p-3">
+                {/* X icon using SVG for X (Twitter) */}
+                <FontAwesomeIcon icon={faXTwitter} className="h-6 w-6 text-white" />
+              </Button>
+            </Link>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 1 }}
-            className="flex justify-center"
-          >
-            <motion.div
-              animate={{ y: [0, 10, 0] }}
-              transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-            >
-              <Button variant="ghost" size="lg" className="rounded-full p-3" asChild>
-                <Link href="#about">
-                  <ArrowDown className="h-6 w-6" />
-                </Link>
-              </Button>
-            </motion.div>
-          </motion.div>
+          <RotatingTweets className="mb-20 z-10 relative" />
+
         </div>
       </div>
     </section>

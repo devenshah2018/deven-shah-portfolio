@@ -5,19 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Badge } from "@/components/ui/badge"
-import {
-  Mail,
-  Linkedin,
-  Github,
-  CalendarCheck2,
-  Send,
-  MapPin,
-  Briefcase,
-  MessageSquare,
-  Sparkles,
-  Loader2,
-} from "lucide-react"
+import { Mail, Linkedin, Github, CalendarCheck2, Send, MapPin, Briefcase, MessageSquare, Loader2 } from "lucide-react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faXTwitter } from "@fortawesome/free-brands-svg-icons"
 import { motion } from "framer-motion"
@@ -36,23 +24,16 @@ export function ContactSection() {
     e.preventDefault()
     setIsSubmitting(true)
 
-    // Simulate API call or mailto link
-    // For a real app, replace this with an actual API call to a backend endpoint
     try {
-      // Example: Using mailto as fallback
       const mailtoLink = `mailto:devenshah2018@gmail.com?subject=${encodeURIComponent(
         `[Portfolio Contact] ${formData.subject}`,
-      )}&body=${encodeURIComponent(
-        `${formData.message}`,
-      )}`
+      )}&body=${encodeURIComponent(`${formData.message}`)}`
 
-      // Simulate delay
       await new Promise((resolve) => setTimeout(resolve, 1000))
-
       window.location.href = mailtoLink
       setFormData({ name: "", email: "", subject: "", message: "" })
     } catch (error) {
-
+      console.error("Error submitting form:", error)
     } finally {
       setIsSubmitting(false)
     }
@@ -71,98 +52,92 @@ export function ContactSection() {
       icon: Mail,
       url: "mailto:devenshah2018@gmail.com",
       handle: "devenshah2018@gmail.com",
-      color: "hover:bg-red-600/20 hover:text-red-500",
+      gradient: "from-red-500 to-pink-500",
     },
     {
       name: "LinkedIn",
       icon: Linkedin,
       url: "https://www.linkedin.com/in/deven-a-shah/",
       handle: "/in/deven-a-shah",
-      color: "hover:bg-sky-600/20 hover:text-sky-500",
+      gradient: "from-blue-500 to-cyan-500",
     },
     {
       name: "GitHub",
       icon: Github,
       url: "https://github.com/devenshah2018",
       handle: "/devenshah2018",
-      color: "hover:bg-gray-600/20 hover:text-gray-400",
+      gradient: "from-slate-500 to-slate-600",
     },
     {
       name: "Twitter",
       icon: faXTwitter,
       url: "https://x.com/devenshah2018",
       handle: "@devenshah2018",
-      color: "hover:bg-blue-500/20 hover:text-blue-400",
+      gradient: "from-slate-700 to-slate-800",
     },
   ]
 
-  const contactInfo = [
-    { icon: Mail, title: "Email", value: "devenshah2018@gmail.com", href: "mailto:devenshah2018@gmail.com" },
-    { icon: MapPin, title: "Location", value: "Boston, MA (Remote Open)" },
-    { icon: Briefcase, title: "Availability", value: "Open to New Opportunities", badge: true },
-  ]
-
   return (
-    <section
-      id="contact"
-      className="py-24 bg-gradient-to-b from-background to-secondary/30"
-    >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="contact" className="py-32 bg-gradient-to-b from-slate-950 to-slate-900">
+      <div className="container mx-auto px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="max-w-6xl mx-auto"
+          className="max-w-7xl mx-auto"
         >
-          <div className="text-center mb-16">
-            <motion.h2
+          {/* Section Header */}
+          <div className="text-center mb-20">
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent"
+              className="mb-6"
             >
-              Let's Connect
-            </motion.h2>
+              <h2 className="text-5xl sm:text-6xl font-bold mb-4 bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent tracking-tight">
+                Let's Connect
+              </h2>
+              <div className="h-1 w-20 bg-gradient-to-r from-blue-500 to-indigo-500 mx-auto rounded-full" />
+            </motion.div>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               viewport={{ once: true }}
-              className="text-xl text-muted-foreground max-w-3xl mx-auto"
+              className="text-xl text-slate-400 max-w-4xl mx-auto font-light leading-relaxed"
             >
               Have a project, an opportunity, or just want to chat about tech? I'd love to hear from you.
             </motion.p>
           </div>
 
-          {/* Cal.com Booking - Primary CTA, full width */}
+          {/* Cal.com Booking - Primary CTA */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
             viewport={{ once: true }}
-            className="mb-12"
+            className="mb-16"
           >
-            <Card className="bg-card border border-gray-300/20 shadow-2xl w-full max-w-6xl mx-auto px-0 md:px-0 rounded-2xl">
-              <CardContent className="py-3 px-4 md:px-10 flex flex-col md:flex-row items-center md:items-center justify-between gap-4 md:gap-8">
+            <Card className="bg-slate-900/50 backdrop-blur-sm border border-slate-800 shadow-2xl rounded-2xl hover:shadow-blue-500/10 transition-all duration-500">
+              <CardContent className="py-8 px-8 md:px-12 flex flex-col md:flex-row items-center justify-between gap-8">
                 <div className="flex-1 text-center md:text-left">
-                  <h3 className="text-lg md:text-xl font-semibold text-foreground mb-1 flex items-center gap-2 justify-center md:justify-start">
-                    <CalendarCheck2 className="h-7 w-7 text-accent" />
-                    Let's Talk
+                  <h3 className="text-2xl font-bold text-white mb-3 flex items-center gap-3 justify-center md:justify-start">
+                    <CalendarCheck2 className="h-7 w-7 text-blue-400" />
+                    Schedule a Call
                   </h3>
-                  <p className="text-base md:text-lg text-muted-foreground mb-0">
-                    Book a quick chat to discuss opportunities, collaborations, or just to chat about tech.
+                  <p className="text-lg text-slate-300 font-light">
+                    Book a quick chat to discuss opportunities, collaborations, or just to talk about tech.
                   </p>
                 </div>
-                <div className="flex-shrink-0 w-full md:w-auto flex justify-center md:justify-end">
+                <div className="flex-shrink-0">
                   <Button
-                    size="sm"
-                    className="min-w-[180px] text-primary-foreground text-sm font-semibold py-3 px-6 md:ml-6 shadow-md hover:opacity-90"
-                    style={{height: '44px'}}
+                    size="lg"
+                    className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white border-0 px-8 py-4 text-lg font-semibold shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 rounded-full"
                     onClick={() => window.open("https://cal.com/deven-shah-l0qkjk/quick-chat", "_blank")}
                   >
-                    <CalendarCheck2 className="mr-2 h-4 w-4" />
+                    <CalendarCheck2 className="mr-3 h-5 w-5" />
                     Book a Call
                   </Button>
                 </div>
@@ -170,31 +145,31 @@ export function ContactSection() {
             </Card>
           </motion.div>
 
-          {/* Message Form & Socials - 2 columns on large screens */}
-          <div className="grid lg:grid-cols-5 gap-12 items-start">
-            {/* Contact Form Column */}
+          {/* Contact Form & Social Links */}
+          <div className="grid lg:grid-cols-3 gap-12">
+            {/* Contact Form */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, delay: 0.1 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
               viewport={{ once: true }}
-              className="lg:col-span-3 flex flex-col h-full"
+              className="lg:col-span-2"
             >
-              <Card className="bg-card border-border shadow-xl p-2 sm:p-4 h-full flex flex-col">
-                <CardHeader className="pb-4">
-                  <CardTitle className="text-2xl font-semibold text-foreground flex items-center gap-3">
-                    <MessageSquare className="h-7 w-7 text-primary" />
+              <Card className="bg-slate-900/50 backdrop-blur-sm border border-slate-800 shadow-2xl rounded-2xl h-full">
+                <CardHeader className="pb-6">
+                  <CardTitle className="text-2xl font-bold text-white flex items-center gap-3">
+                    <MessageSquare className="h-7 w-7 text-blue-400" />
                     Send a Message
                   </CardTitle>
-                  <CardDescription className="text-muted-foreground">
+                  <CardDescription className="text-slate-400 text-lg font-light">
                     Fill out the form below, and I'll get back to you as soon as possible.
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="flex-1 flex flex-col justify-between">
+                <CardContent>
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid sm:grid-cols-2 gap-6">
-                      <div className="space-y-1.5">
-                        <label htmlFor="name" className="text-sm font-medium text-foreground">
+                      <div className="space-y-2">
+                        <label htmlFor="name" className="text-sm font-medium text-slate-200">
                           Full Name
                         </label>
                         <Input
@@ -204,11 +179,11 @@ export function ContactSection() {
                           onChange={handleInputChange}
                           placeholder="e.g., Ada Lovelace"
                           required
-                          className="bg-secondary/50 focus:ring-primary"
+                          className="bg-slate-800/50 border-slate-700 text-white placeholder:text-slate-400 focus:border-blue-400 focus:ring-blue-400/20 rounded-xl"
                         />
                       </div>
-                      <div className="space-y-1.5">
-                        <label htmlFor="email" className="text-sm font-medium text-foreground">
+                      <div className="space-y-2">
+                        <label htmlFor="email" className="text-sm font-medium text-slate-200">
                           Email Address
                         </label>
                         <Input
@@ -219,12 +194,12 @@ export function ContactSection() {
                           onChange={handleInputChange}
                           placeholder="e.g., ada@example.com"
                           required
-                          className="bg-secondary/50 focus:ring-primary"
+                          className="bg-slate-800/50 border-slate-700 text-white placeholder:text-slate-400 focus:border-blue-400 focus:ring-blue-400/20 rounded-xl"
                         />
                       </div>
                     </div>
-                    <div className="space-y-1.5">
-                      <label htmlFor="subject" className="text-sm font-medium text-foreground">
+                    <div className="space-y-2">
+                      <label htmlFor="subject" className="text-sm font-medium text-slate-200">
                         Subject
                       </label>
                       <Input
@@ -234,11 +209,11 @@ export function ContactSection() {
                         onChange={handleInputChange}
                         placeholder="e.g., Project Collaboration Inquiry"
                         required
-                        className="bg-secondary/50 focus:ring-primary"
+                        className="bg-slate-800/50 border-slate-700 text-white placeholder:text-slate-400 focus:border-blue-400 focus:ring-blue-400/20 rounded-xl"
                       />
                     </div>
-                    <div className="space-y-1.5">
-                      <label htmlFor="message" className="text-sm font-medium text-foreground">
+                    <div className="space-y-2">
+                      <label htmlFor="message" className="text-sm font-medium text-slate-200">
                         Your Message
                       </label>
                       <Textarea
@@ -247,26 +222,26 @@ export function ContactSection() {
                         value={formData.message}
                         onChange={handleInputChange}
                         placeholder="Tell me about your project, opportunity, or just say hello!"
-                        rows={5}
+                        rows={6}
                         required
-                        className="bg-secondary/50 focus:ring-primary"
+                        className="bg-slate-800/50 border-slate-700 text-white placeholder:text-slate-400 focus:border-blue-400 focus:ring-blue-400/20 rounded-xl resize-none"
                       />
                     </div>
                     <Button
                       type="submit"
                       size="lg"
-                      className="w-full text-primary-foreground hover:opacity-90 text-base font-semibold"
+                      className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white border-0 py-4 text-lg font-semibold shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 rounded-xl"
                       disabled={isSubmitting}
                     >
                       {isSubmitting ? (
                         <>
-                          {" "}
-                          <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Sending...{" "}
+                          <Loader2 className="mr-3 h-5 w-5 animate-spin" />
+                          Sending...
                         </>
                       ) : (
                         <>
-                          {" "}
-                          <Send className="mr-2 h-4 w-4" /> Send Message{" "}
+                          <Send className="mr-3 h-5 w-5" />
+                          Send Message
                         </>
                       )}
                     </Button>
@@ -275,43 +250,79 @@ export function ContactSection() {
               </Card>
             </motion.div>
 
-            {/* Social Media Column */}
+            {/* Social Links & Contact Info */}
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, delay: 0.2 }}
+              transition={{ duration: 0.7, delay: 0.3 }}
               viewport={{ once: true }}
-              className="lg:col-span-2 flex flex-col h-full"
+              className="space-y-8"
             >
-              <Card className="bg-card border-border shadow-xl h-full flex flex-col">
+              {/* Contact Info */}
+              <Card className="bg-slate-900/50 backdrop-blur-sm border border-slate-800 shadow-2xl rounded-2xl">
                 <CardHeader>
-                  <CardTitle className="text-xl font-semibold text-foreground">Find Me Online</CardTitle>
+                  <CardTitle className="text-xl font-bold text-white">Contact Information</CardTitle>
                 </CardHeader>
-                <CardContent className="flex-1 flex flex-col justify-between space-y-3">
+                <CardContent className="space-y-6">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-red-500 to-pink-500 flex items-center justify-center">
+                      <Mail className="h-6 w-6 text-white" />
+                    </div>
+                    <div>
+                      <p className="font-medium text-white">Email</p>
+                      <p className="text-sm text-slate-400">devenshah2018@gmail.com</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 flex items-center justify-center">
+                      <MapPin className="h-6 w-6 text-white" />
+                    </div>
+                    <div>
+                      <p className="font-medium text-white">Location</p>
+                      <p className="text-sm text-slate-400">Boston, MA (Remote Open)</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-500 flex items-center justify-center">
+                      <Briefcase className="h-6 w-6 text-white" />
+                    </div>
+                    <div>
+                      <p className="font-medium text-white">Role</p>
+                      <p className="text-sm text-slate-400">Co-Founder/CTO</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Social Links */}
+              <Card className="bg-slate-900/50 backdrop-blur-sm border border-slate-800 shadow-2xl rounded-2xl">
+                <CardHeader>
+                  <CardTitle className="text-xl font-bold text-white">Find Me Online</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
                   {socialLinks.map((social) => (
                     <Button
                       key={social.name}
                       variant="outline"
-                      className={`w-full justify-start h-auto py-3 px-4 group ${social.color} border-border hover:border-transparent transition-all duration-300`}
+                      className="w-full justify-start h-auto p-4 bg-slate-800/30 border-slate-700 hover:bg-slate-700/50 hover:border-slate-600 transition-all duration-300 rounded-xl group"
                       asChild
                     >
                       <a href={social.url} target="_blank" rel="noopener noreferrer">
-                        <div className="flex items-center gap-3">
-                          <div className="p-2 rounded-md bg-secondary/50 group-hover:bg-transparent transition-colors">
+                        <div className="flex items-center gap-4">
+                          <div
+                            className={`w-10 h-10 rounded-lg bg-gradient-to-r ${social.gradient} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}
+                          >
                             {social.name === "Twitter" ? (
-                              <FontAwesomeIcon 
-                                icon={faXTwitter} 
-                                className="h-5 w-5 text-muted-foreground group-hover:inherit transition-colors" 
-                              />
+                              <FontAwesomeIcon icon={faXTwitter} className="h-5 w-5 text-white" />
                             ) : (
                               React.createElement(social.icon as React.ComponentType<any>, {
-                                className: "h-5 w-5 text-muted-foreground group-hover:inherit transition-colors"
+                                className: "h-5 w-5 text-white",
                               })
                             )}
                           </div>
-                          <div>
-                            <p className="font-medium text-foreground group-hover:inherit">{social.name}</p>
-                            <p className="text-xs text-muted-foreground group-hover:inherit">{social.handle}</p>
+                          <div className="text-left">
+                            <p className="font-medium text-white group-hover:text-slate-200">{social.name}</p>
+                            <p className="text-xs text-slate-400 group-hover:text-slate-300">{social.handle}</p>
                           </div>
                         </div>
                       </a>
@@ -319,8 +330,6 @@ export function ContactSection() {
                   ))}
                 </CardContent>
               </Card>
-
-
             </motion.div>
           </div>
         </motion.div>

@@ -32,16 +32,23 @@ export function Navigation() {
       animate={{ y: 0 }}
       transition={{ duration: 0.6 }}
       className={`fixed top-0 w-full z-50 transition-all duration-500 ${
-        isScrolled
-          ? "bg-gray-900/80 backdrop-blur-xl border-b border-gray-700/20 shadow-lg"
-          : "bg-transparent"
+        isScrolled ? "bg-slate-950/90 backdrop-blur-xl border-b border-slate-800/50 shadow-2xl" : "bg-transparent"
       }`}
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
+          {/* Logo */}
+          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }}>
+            <Link
+              href="#"
+              className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent"
+            >
+              DS
+            </Link>
+          </motion.div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-1">
+          <div className="hidden md:flex items-center space-x-2">
             {navItems.map((item, index) => (
               <motion.div
                 key={item.name}
@@ -51,7 +58,7 @@ export function Navigation() {
               >
                 <Link
                   href={item.href}
-                  className="px-4 py-2 rounded-full text-gray-300 hover:text-blue-400 hover:bg-blue-900/20 transition-all duration-300 font-medium"
+                  className="px-6 py-3 rounded-full text-slate-300 hover:text-white hover:bg-slate-800/50 transition-all duration-300 font-medium text-sm tracking-wide"
                 >
                   {item.name}
                 </Link>
@@ -60,20 +67,20 @@ export function Navigation() {
           </div>
 
           {/* Mobile Navigation */}
-          <div className="md:hidden flex items-center space-x-2">
+          <div className="md:hidden">
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="rounded-full">
-                  <Menu className="h-6 w-6" />
+                <Button variant="ghost" size="icon" className="rounded-full hover:bg-slate-800/50">
+                  <Menu className="h-6 w-6 text-slate-300" />
                 </Button>
               </SheetTrigger>
-              <SheetContent className="bg-gray-900/95 backdrop-blur-xl">
-                <div className="flex flex-col space-y-6 mt-12">
+              <SheetContent className="bg-slate-950/95 backdrop-blur-xl border-slate-800">
+                <div className="flex flex-col space-y-8 mt-16">
                   {navItems.map((item) => (
                     <Link
                       key={item.name}
                       href={item.href}
-                      className="text-xl font-semibold text-gray-300 hover:text-blue-400 transition-colors py-2"
+                      className="text-xl font-semibold text-slate-300 hover:text-white transition-colors py-2"
                     >
                       {item.name}
                     </Link>
