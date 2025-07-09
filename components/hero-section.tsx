@@ -7,7 +7,12 @@ import { ArrowDown, Download, Mail, Github, Linkedin, Activity } from "lucide-re
 import { motion } from "framer-motion"
 import Link from "next/link"
 import { RotatingTweets } from "@/components/rotating-tweets"
-import { GitHubCalendar } from "github-contribution-calendar";
+import dynamic from "next/dynamic"
+
+const GitHubCalendar = dynamic(
+  () => import("github-contribution-calendar").then(mod => ({ default: mod.GitHubCalendar })),
+  { ssr: false }
+)
 
 export function HeroSection() {
   return (
