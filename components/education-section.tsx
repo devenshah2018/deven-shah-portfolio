@@ -11,7 +11,8 @@ const educationData = [
     institution: "Boston University",
     period: "Present",
     status: "In Progress",
-    focus: "Data Analytics",
+    concentration: "Data Analytics",
+    coursework: [],
     gradient: "from-blue-500 to-cyan-500",
     icon: GraduationCap,
   },
@@ -20,7 +21,7 @@ const educationData = [
     institution: "San Jose State University",
     period: "08/2018 – 12/2022",
     status: "Completed",
-    focus: "Software Development",
+    coursework: ["Data Structures & Algorithms", "Assembly Language Programming", "Operating Systems", "Object Oriented Design", "Information Security", "Machine Learning & Big Data", "Computer Networks"],
     gradient: "from-indigo-500 to-purple-500",
     icon: GraduationCap,
   },
@@ -133,9 +134,38 @@ export function EducationSection() {
                               {edu.status}
                             </Badge>
                           </div>
-                          <p className="text-slate-300 font-light">
-                            Focus: <span className="text-slate-200 font-medium">{edu.focus}</span>
-                          </p>
+                          {edu.concentration && (
+                            <div className="mb-3">
+                              <p className="text-slate-300 font-light">
+                                Concentration: <span className="text-slate-200 font-medium">{edu.concentration}</span>
+                              </p>
+                            </div>
+                          )}
+                          <div>
+                            <p className="text-slate-300 font-light mb-2">
+                              {edu.coursework.length > 0 ? "Relevant Coursework:" : "Academic Status:"}
+                            </p>
+                            <div className="flex flex-wrap gap-2">
+                              {edu.coursework.length > 0 ? (
+                                edu.coursework.map((course, courseIndex) => (
+                                  <Badge
+                                    key={courseIndex}
+                                    variant="outline"
+                                    className="bg-slate-800/30 border-slate-600/50 text-slate-300 text-xs px-2 py-1"
+                                  >
+                                    {course}
+                                  </Badge>
+                                ))
+                              ) : (
+                                <Badge
+                                  variant="outline"
+                                  className="bg-gradient-to-r from-blue-500/20 to-cyan-500/20 text-blue-300 border-blue-500/50 text-xs px-3 py-1.5"
+                                >
+                                  Courses in Progress
+                                </Badge>
+                              )}
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </CardContent>
