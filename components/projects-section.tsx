@@ -1,10 +1,13 @@
 "use client"
 
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { ExternalLink, Code, Calendar, Users, Award, Zap } from "lucide-react"
+import { ExternalLink, Play, Code, Calendar, Users, Award, Zap } from "lucide-react"
 import { motion } from "framer-motion"
+import { QodeIdeModal } from "@/components/qode-ide-modal"
+import { AresVideoModal } from "@/components/ares-video-modal"
+import { useState } from "react"
 
 const projects = [
   {
@@ -14,7 +17,7 @@ const projects = [
     description:
       "Lightweight, interpreted quantum programming language built with C, featuring intuitive syntax for scripting quantum operations, applying and measuring quantum gates, qubits, and quantum states.",
     technologies: ["C", "Quantum Computing", "Compiler Design", "Language Design"],
-    type: "demo",
+    type: "ide",
     status: "Active Development",
     gradient: "from-purple-500 via-blue-500 to-cyan-500",
     icon: Code,
@@ -52,18 +55,26 @@ const projects = [
 ]
 
 export function ProjectsSection() {
+  const [qodeModalOpen, setQodeModalOpen] = useState(false)
+  const [aresModalOpen, setAresModalOpen] = useState(false)
+
   const handleProjectAction = (project: (typeof projects)[0]) => {
-    if (project.type === "demo") {
-      // Handle demo action
-      console.log("Demo action for", project.title)
-    } else if (project.link) {
+    if (project.type === "ide") {
+      setQodeModalOpen(true)
+    } else if (project.type === "video") {
+      setAresModalOpen(true)
+    } else if (project.type === "link") {
       window.open(project.link, "_blank")
+    } else if (project.type === "github") {
+      window.open(project.link, "_blank")
+    } else {
+      window.open("https://github.com/devenshah", "_blank")
     }
   }
 
   return (
-    <section id="projects" className="py-32 bg-gradient-to-b from-slate-950 to-slate-900">
-      <div className="container mx-auto px-6 lg:px-8">
+    <section id="projects" className="py-24 bg-gradient-to-b from-gray-800 to-gray-900">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -71,57 +82,59 @@ export function ProjectsSection() {
           viewport={{ once: true }}
           className="max-w-7xl mx-auto"
         >
-          {/* Section Header */}
-          <div className="text-center mb-20">
-            <motion.div
+          <div className="text-center mb-16">
+            <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="mb-6"
+              className="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent"
             >
-              <h2 className="text-5xl sm:text-6xl font-bold mb-4 bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent tracking-tight">
-                Featured Projects
-              </h2>
-              <div className="h-1 w-20 bg-gradient-to-r from-blue-500 to-indigo-500 mx-auto rounded-full" />
-            </motion.div>
+              Featured Projects
+            </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               viewport={{ once: true }}
-              className="text-xl text-slate-400 max-w-4xl mx-auto font-light leading-relaxed"
+              className="text-xl text-gray-400 max-w-3xl mx-auto"
             >
               Innovative solutions spanning quantum computing, security compliance, and machine learning.
             </motion.p>
           </div>
 
-          {/* Projects Grid */}
           <div className="grid lg:grid-cols-3 gap-8">
             {projects.map((project, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
                 viewport={{ once: true }}
                 className="group"
               >
-                <Card className="h-full flex flex-col border border-slate-800 bg-slate-900/50 backdrop-blur-sm shadow-2xl rounded-2xl hover:shadow-blue-500/10 transition-all duration-500 overflow-hidden">
-                  <CardHeader className="p-8 pb-6">
-                    <div className="flex items-center justify-between mb-6">
+                <Card className="h-full flex flex-col hover:shadow-2xl transition-all duration-500 border-0 bg-gray-800/80 backdrop-blur-sm overflow-hidden relative">
+                  {/* Gradient Background */}
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}
+                  ></div>
+
+                  <CardHeader className="relative z-10 pb-4">
+                    <div className="flex items-center justify-between mb-4">
                       <div
-                        className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${project.gradient} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}
+                        className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${project.gradient} flex items-center justify-center shadow-lg`}
                       >
                         <project.icon className="h-8 w-8 text-white" />
                       </div>
-                      <Badge variant="outline" className="bg-slate-800/50 border-slate-700 text-slate-300">
+                      <Badge variant="outline" className="bg-gray-800/50 backdrop-blur-sm">
                         <Calendar className="mr-1 h-3 w-3" />
                         {project.period.split(" – ")[0]}
                       </Badge>
                     </div>
 
-                    <h3 className="text-2xl font-bold mb-2 text-white tracking-wide">{project.title}</h3>
+                    <CardTitle className="text-2xl font-bold mb-2 text-white">
+                      {project.title}
+                    </CardTitle>
                     <p
                       className={`text-lg font-semibold bg-gradient-to-r ${project.gradient} bg-clip-text text-transparent mb-4`}
                     >
@@ -130,17 +143,23 @@ export function ProjectsSection() {
 
                     <div className="flex flex-wrap items-center gap-2 mb-4">
                       <Badge
-                        variant={project.status === "Active Development" ? "default" : "secondary"}
+                        variant={
+                          project.status === "Active Development"
+                            ? "default"
+                            : project.status === "Launched"
+                              ? "default"
+                              : "secondary"
+                        }
                         className={
                           project.status === "Active Development"
                             ? `bg-gradient-to-r ${project.gradient} text-white border-0`
-                            : "bg-slate-800 text-slate-300"
+                            : ""
                         }
                       >
                         {project.status}
                       </Badge>
                       {project.users && (
-                        <Badge variant="outline" className="bg-slate-800/50 border-slate-700 text-slate-300">
+                        <Badge variant="outline" className="bg-gray-800/50">
                           <Users className="mr-1 h-3 w-3" />
                           {project.users}
                         </Badge>
@@ -148,35 +167,29 @@ export function ProjectsSection() {
                     </div>
                   </CardHeader>
 
-                  <CardContent className="flex-1 flex flex-col p-8 pt-0">
-                    <p className="text-slate-300 mb-8 leading-relaxed flex-1 font-light">{project.description}</p>
+                  <CardContent className="flex-1 flex flex-col relative z-10">
+                    <p className="text-gray-300 mb-6 leading-relaxed flex-1">
+                      {project.description}
+                    </p>
 
                     {/* Highlights */}
-                    <div className="mb-8">
-                      <h4 className="font-semibold text-slate-200 mb-4 text-sm uppercase tracking-wide">
-                        Key Highlights
-                      </h4>
-                      <div className="space-y-3">
+                    <div className="mb-6">
+                      <h4 className="font-semibold text-white mb-3">Key Highlights</h4>
+                      <div className="space-y-2">
                         {project.highlights.map((highlight, i) => (
-                          <div key={i} className="flex items-center gap-3">
-                            <div
-                              className={`w-2 h-2 bg-gradient-to-r ${project.gradient} rounded-full flex-shrink-0`}
-                            />
-                            <span className="text-sm text-slate-400 font-light">{highlight}</span>
+                          <div key={i} className="flex items-center gap-2">
+                            <div className={`w-2 h-2 bg-gradient-to-r ${project.gradient} rounded-full`}></div>
+                            <span className="text-sm text-gray-400">{highlight}</span>
                           </div>
                         ))}
                       </div>
                     </div>
 
                     {/* Technologies */}
-                    <div className="mb-8">
+                    <div className="mb-6">
                       <div className="flex flex-wrap gap-2">
                         {project.technologies.map((tech) => (
-                          <Badge
-                            key={tech}
-                            variant="secondary"
-                            className="text-xs bg-slate-800/50 border-slate-700 text-slate-300 px-2 py-1"
-                          >
+                          <Badge key={tech} variant="secondary" className="text-xs bg-gray-700">
                             {tech}
                           </Badge>
                         ))}
@@ -186,19 +199,19 @@ export function ProjectsSection() {
                     {/* Action Button */}
                     <Button
                       onClick={() => handleProjectAction(project)}
-                      className={`w-full bg-gradient-to-r ${project.gradient} hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-300 text-white border-0 font-semibold py-3 rounded-xl`}
+                      className={`w-full bg-gradient-to-r ${project.gradient} hover:shadow-lg transition-all duration-300 text-white border-0 font-semibold`}
                       size="lg"
                     >
-                      {project.type === "demo" && (
+                      {project.type === "ide" && (
                         <>
                           <Code className="mr-2 h-5 w-5" />
-                          Try Interactive Demo
+                          Try Interactive IDE
                         </>
                       )}
-                      {project.type === "link" && (
+                      {project.type === "video" || project.type === "link" && (
                         <>
-                          <ExternalLink className="mr-2 h-5 w-5" />
-                          View Project
+                          <Play className="mr-2 h-5 w-5" />
+                          Watch Demo
                         </>
                       )}
                       {project.type === "github" && (
@@ -215,6 +228,9 @@ export function ProjectsSection() {
           </div>
         </motion.div>
       </div>
+
+      <QodeIdeModal open={qodeModalOpen} onOpenChange={setQodeModalOpen} />
+      <AresVideoModal open={aresModalOpen} onOpenChange={setAresModalOpen} />
     </section>
   )
 }
