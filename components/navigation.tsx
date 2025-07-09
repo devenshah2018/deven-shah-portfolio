@@ -21,6 +21,7 @@ export function Navigation() {
 	const [currentTime, setCurrentTime] = useState("")
 	const [timeZoneAbbr, setTimeZoneAbbr] = useState("")
 	const [timeZoneFull, setTimeZoneFull] = useState("")
+	const [mobileNavOpen, setMobileNavOpen] = useState(false)
 	const heroRef = useRef<HTMLElement | null>(null)
 
 	// Get user's timezone and update clock
@@ -158,31 +159,35 @@ export function Navigation() {
 					</div>
 					{/* Mobile Navigation */}
 					<div className="md:hidden">
-						<Sheet>
+						<Sheet open={mobileNavOpen} onOpenChange={setMobileNavOpen}>
 							<SheetTrigger asChild>
 								<Button
 									variant="ghost"
 									size="icon"
 									className="rounded-full hover:bg-slate-800/50"
+									aria-label="Open navigation menu"
 								>
 									<Menu className="h-6 w-6 text-slate-300" />
 								</Button>
 							</SheetTrigger>
-							<SheetContent className="bg-slate-950/95 backdrop-blur-xl border-slate-800">
-								<div className="flex flex-col space-y-8 mt-16">
-									{navItems.map((item) => (
+							<SheetContent className="bg-slate-950/95 backdrop-blur-xl border-slate-800 p-0">
+								<div className="flex flex-col space-y-2 mt-10 px-4">
+									{navItems.map((item, idx) => (
 										<Link
 											key={item.name}
 											href={item.href}
 											className={
 												item.name === "Connect"
-													? "text-xl font-sans font-bold uppercase tracking-widest bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent hover:from-blue-300 hover:to-indigo-300 transition-all duration-300 py-2"
-													: "text-xl font-sans font-semibold uppercase tracking-wider text-slate-300 hover:text-white transition-colors py-2"
+													? "w-full block text-base font-sans font-bold uppercase tracking-widest rounded-lg bg-blue-600 text-white py-3 px-4 shadow hover:bg-blue-700 transition-all duration-200 text-center mb-2"
+													: "w-full block text-base font-sans font-semibold uppercase tracking-wider text-slate-200 hover:bg-slate-800/70 hover:text-white rounded-lg py-3 px-4 transition-all duration-200 text-center"
 											}
+											style={{letterSpacing: item.name === "Connect" ? '0.15em' : '0.1em'}}
+											onClick={() => setMobileNavOpen(false)}
 										>
 											{item.name}
 										</Link>
 									))}
+									<div className="my-2 border-t border-slate-800" />
 								</div>
 							</SheetContent>
 						</Sheet>
