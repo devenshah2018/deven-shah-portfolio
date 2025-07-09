@@ -6,6 +6,9 @@ import { Badge } from "@/components/ui/badge"
 import { motion } from "framer-motion"
 import { GraduationCap, Briefcase, Code, Palette, Zap } from "lucide-react"
 import { SkillModal } from "@/components/skill-modal"
+import { RotatingTweets } from "@/components/rotating-tweets"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faXTwitter } from "@fortawesome/free-brands-svg-icons"
 
 const skills = {
   languages: ["Python", "TypeScript", "C#", "Java", "C", "Apex", "JavaScript", "SQL", "SOQL", "HTML", "CSS", "Bash"],
@@ -236,11 +239,9 @@ export function AboutSection() {
   const getMappingCount = (skill: string) => {
     const skillMapping = skillMappings.find((mapping) => mapping.skill === skill)
     if (!skillMapping) return 0
-
     const experienceCount = skillMapping.experiences?.length || 0
     const projectCount = skillMapping.projects?.length || 0
     const educationCount = skillMapping.education?.length || 0
-
     return experienceCount + projectCount + educationCount
   }
 
@@ -254,152 +255,170 @@ export function AboutSection() {
           viewport={{ once: true }}
           className="max-w-7xl mx-auto"
         >
-          {/* Section Header */}
-          <div className="text-center mb-20">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-              className="mb-6"
-            >
-              <h2 className="text-5xl sm:text-6xl font-bold mb-4 bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent tracking-tight">
-                About Me
-              </h2>
-              <div className="h-1 w-20 bg-gradient-to-r from-blue-500 to-indigo-500 mx-auto rounded-full" />
-            </motion.div>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              viewport={{ once: true }}
-              className="text-xl text-slate-400 max-w-4xl mx-auto font-light leading-relaxed"
-            >
-Passionate systems builder bridging advanced technology with real-world impact          </motion.p>
-          </div>
-
-          {/* Highlights Grid */}
-          <div className="grid md:grid-cols-2 gap-8 mb-24">
-            {highlights.map((highlight, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-              >
-                <Card className="h-full border border-slate-800 bg-slate-900/50 backdrop-blur-sm shadow-2xl rounded-2xl hover:shadow-blue-500/10 transition-all duration-500 group">
-                  <CardContent className="p-8">
-                    <div className="flex items-start gap-6">
-                      <div
-                        className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${highlight.gradient} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}
-                      >
-                        <highlight.icon className="h-8 w-8 text-white" />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="text-2xl font-bold text-white mb-3 tracking-wide">{highlight.title}</h3>
-                        <p className="text-slate-300 text-base leading-relaxed font-light">
-                          {Array.isArray(highlight.description)
-                            ? highlight.description.map((line, idx) => (
-                                <span key={idx}>
-                                  {line}
-                                  {idx < highlight.description.length - 1 && <br />}
-                                </span>
-                              ))
-                            : highlight.description}
-                        </p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Skills Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="space-y-16"
-          >
-            <div className="text-center">
-              <h3 className="text-4xl font-bold mb-4 text-white tracking-tight">Technical Skills</h3>
-              <div className="h-0.5 w-16 bg-gradient-to-r from-blue-500 to-indigo-500 mx-auto rounded-full" />
+          {/* Redesigned About Section: Two-Column Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-32 items-start">
+            {/* Left Column: Personal Intro, Highlights, Socials */}
+            <div className="space-y-12">
+              <div className="mb-8">
+                <h2 className="text-5xl sm:text-6xl font-bold mb-4 bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent tracking-tight">
+                  About Me
+                </h2>
+                <p className="text-xl text-slate-400 max-w-2xl font-light leading-relaxed mb-4">
+                  Passionate systems builder bridging advanced technology with real-world impact. I architect, code, and launch products at the intersection of AI, analytics, and security.
+                </p>
+              </div>
+              {/* Highlights */}
+              <div className="space-y-16">
+                {highlights.map((highlight, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                  >
+                    <Card className="h-full border border-slate-800 bg-slate-900/60 backdrop-blur-sm shadow-xl rounded-2xl hover:shadow-blue-500/10 transition-all duration-500 group">
+                      <CardContent className="p-4 flex items-center gap-4">
+                        <div className={`min-w-12 min-h-12 w-12 h-12 rounded-2xl bg-gradient-to-r ${highlight.gradient} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                          <highlight.icon className="h-7 w-7 text-white" />
+                        </div>
+                        <div>
+                          <h3 className="text-lg font-bold text-white mb-1 tracking-wide">{highlight.title}</h3>
+                          <p className="text-slate-300 text-sm leading-relaxed font-light">
+                            {Array.isArray(highlight.description)
+                              ? highlight.description.map((line, idx) => (
+                                  <span key={idx}>
+                                    {line}
+                                    {idx < highlight.description.length - 1 && <br />}
+                                  </span>
+                                ))
+                              : highlight.description}
+                          </p>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                ))}
+              </div>
+              
             </div>
 
-            <div className="grid lg:grid-cols-2 gap-16">
-              <div className="space-y-8">
-                <h4 className="text-2xl font-semibold text-slate-200 flex items-center gap-4">
-                  <div className="w-4 h-4 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full"></div>
-                  Programming Languages
-                </h4>
-                <div className="flex flex-wrap gap-3">
-                  {skills.languages.map((skill, index) => (
-                    <motion.div
-                      key={skill}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.4, delay: index * 0.05 }}
-                      viewport={{ once: true }}
-                    >
-                      <Badge
-                        variant="secondary"
-                        className={`text-sm py-3 px-5 bg-slate-800/50 border border-slate-700 text-slate-200 transition-all duration-300 rounded-full ${
-                          hasMapping(skill)
-                            ? "hover:shadow-lg hover:scale-105 cursor-pointer hover:border-blue-400 hover:bg-blue-900/30 hover:text-blue-200"
-                            : "hover:bg-slate-700/50"
-                        }`}
-                        onClick={() => hasMapping(skill) && handleSkillClick(skill)}
-                      >
-                        {skill}
-                        {hasMapping(skill) && (
-                          <span className="ml-2 text-blue-400 font-semibold text-xs">{getMappingCount(skill)}</span>
-                        )}
-                      </Badge>
-                    </motion.div>
-                  ))}
+            {/* Right Column: Rotating Tweets, Skills, Timeline */}
+            <div className="space-y-12">
+              {/* Rotating Tweets prominently displayed */}
+              <div className="mb-24 flex">
+                <div className="w-full max-w-md min-h-[320px] relative overflow-visible">
+                  <h3 className="text-2xl font-bold text-white mb-3 flex items-center gap-2">
+                    <FontAwesomeIcon icon={faXTwitter} className="h-6 w-6 text-blue-400" />
+                    Recent Thoughts
+                  </h3>
+                  <div>
+                    <RotatingTweets />
+                  </div>
                 </div>
               </div>
-
-              <div className="space-y-8">
-                <h4 className="text-2xl font-semibold text-slate-200 flex items-center gap-4">
-                  <div className="w-4 h-4 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full"></div>
-                  Platforms & Frameworks
-                </h4>
-                <div className="flex flex-wrap gap-3">
-                  {skills.platforms.map((skill, index) => (
-                    <motion.div
-                      key={skill}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.4, delay: index * 0.05 }}
-                      viewport={{ once: true }}
-                    >
-                      <Badge
-                        variant="secondary"
-                        className={`text-sm py-3 px-5 bg-slate-800/50 border border-slate-700 text-slate-200 transition-all duration-300 rounded-full ${
-                          hasMapping(skill)
-                            ? "hover:shadow-lg hover:scale-105 cursor-pointer hover:border-emerald-400 hover:bg-emerald-900/30 hover:text-emerald-200"
-                            : "hover:bg-slate-700/50"
-                        }`}
-                        onClick={() => hasMapping(skill) && handleSkillClick(skill)}
-                      >
-                        {skill}
-                        {hasMapping(skill) && (
-                          <span className="ml-2 text-emerald-400 font-semibold text-xs">{getMappingCount(skill)}</span>
-                        )}
-                      </Badge>
-                    </motion.div>
-                  ))}
+              {/* Visual Timeline (Education/Certifications/Experience) */}
+              <div>
+                <h3 className="text-2xl font-bold text-white mb-3">Timeline</h3>
+                {/* Legend */}
+                <div className="flex gap-6 mb-4 text-sm">
+                  <div className="flex items-center gap-2">
+                    <span className="inline-block w-4 h-4 rounded-full bg-blue-500"></span>
+                    <span className="text-slate-300">Experience</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="inline-block w-4 h-4 rounded-full bg-purple-400"></span>
+                    <span className="text-slate-300">Education</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="inline-block w-4 h-4 rounded-full bg-orange-400"></span>
+                    <span className="text-slate-300">Certification</span>
+                  </div>
+                </div>
+                <div className="border-l-4 border-blue-500/40 pl-6 space-y-6">
+                  {/* Education */}
+                  <a
+                    href="#education"
+                    className="block cursor-pointer group focus:outline-none"
+                  >
+                    <span className="block text-lg font-semibold text-purple-400 group-hover:text-purple-300">Present</span>
+                    <span className="block text-white font-bold">M.S. in Computer Science (Data Analytics)</span>
+                    <span className="block text-slate-400">Boston University</span>
+                  </a>
+                  {/* Experience */}
+                  <a
+                    href="#experience"
+                    className="block cursor-pointer group focus:outline-none"
+                  >
+                    <span className="block text-lg font-semibold text-blue-500 group-hover:text-blue-400">12/2024–Present</span>
+                    <span className="block text-white font-bold">Co-Founder/CTO</span>
+                    <span className="block text-slate-400">Suno Analytics</span>
+                  </a>
+                  <a
+                    href="#experience"
+                    className="block cursor-pointer group focus:outline-none"
+                  >
+                    <span className="block text-lg font-semibold text-blue-500 group-hover:text-blue-400">04/2023–04/2024</span>
+                    <span className="block text-white font-bold">Application Developer</span>
+                    <span className="block text-slate-400">Patelco Credit Union</span>
+                  </a>
+                  {/* Certification */}
+                  <a
+                    href="#education"
+                    className="block cursor-pointer group focus:outline-none"
+                  >
+                    <span className="block text-lg font-semibold text-orange-400 group-hover:text-orange-300">02/2023</span>
+                    <span className="block text-white font-bold">AWS Cloud Practitioner Certification</span>
+                    <span className="block text-slate-400">Amazon Web Services</span>
+                  </a>
+                  {/* Experience */}
+                  <a
+                    href="#experience"
+                    className="block cursor-pointer group focus:outline-none"
+                  >
+                    <span className="block text-lg font-semibold text-blue-500 group-hover:text-blue-400">05/2021–12/2022</span>
+                    <span className="block text-white font-bold">Solutions Architect Intern</span>
+                    <span className="block text-slate-400">NetApp</span>
+                  </a>
+                  {/* Education */}
+                  <a
+                    href="#education"
+                    className="block cursor-pointer group focus:outline-none"
+                  >
+                    <span className="block text-lg font-semibold text-purple-400 group-hover:text-purple-300">08/2018–12/2022</span>
+                    <span className="block text-white font-bold">B.S. in Software Engineering</span>
+                    <span className="block text-slate-400">San Jose State University</span>
+                  </a>
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
+          {/* Technical Skills - full width below both columns */}
+          <div className="col-span-1 lg:col-span-2 mt-12">
+            <h3 className="text-2xl font-bold text-white mb-3">Technical Skills</h3>
+            <div className="flex flex-wrap gap-3">
+              {skills.languages.concat(skills.platforms).map((skill, index) => (
+                <Badge
+                  key={skill}
+                  variant="secondary"
+                  className={`text-sm py-2 px-4 bg-slate-800/50 border border-slate-700 text-slate-200 transition-all duration-300 rounded-full ${
+                    hasMapping(skill)
+                      ? "hover:shadow-lg hover:scale-105 cursor-pointer hover:border-blue-400 hover:bg-blue-900/30 hover:text-blue-200"
+                      : "hover:bg-slate-700/50"
+                  }`}
+                  onClick={() => hasMapping(skill) && handleSkillClick(skill)}
+                >
+                  {skill}
+                  {hasMapping(skill) && (
+                    <span className="ml-2 text-blue-400 font-semibold text-xs">{getMappingCount(skill)}</span>
+                  )}
+                </Badge>
+              ))}
+            </div>
+          </div>
+          {/* End Technical Skills */}
         </motion.div>
       </div>
-
       <SkillModal
         open={modalOpen}
         onOpenChange={setModalOpen}
