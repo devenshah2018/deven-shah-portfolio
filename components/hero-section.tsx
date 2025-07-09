@@ -157,20 +157,21 @@ export function HeroSection() {
             </Link>
           </motion.div>
 
-                    <div className="flex justify-center mt-6 mb-20">
-                      <GitHubCalendar
-                        username="devenshah2018"
-                        token={process.env.NEXT_PUBLIC_GITHUB_ACCESS_TOKEN}
-                        showLabels={true}
-                        fontSize={15}
-                        titleColor="#fbbf24" // Tailwind's yellow-400 for strong contrast
-                        cellSize={17}
-                        labelColor="#fbbf24"
-                        theme="classic"
-                        background="transparent"
-                        
-                      />
-                    </div>
+          <div className="flex justify-center mt-6 mb-20">
+            <div className="w-full max-w-full overflow-x-auto rounded-lg bg-transparent p-0 m-0">
+              <GitHubCalendar
+                username="devenshah2018"
+                token={process.env.NEXT_PUBLIC_GITHUB_ACCESS_TOKEN}
+                showLabels={true}
+                fontSize={15}
+                titleColor="#fbbf24"
+                cellSize={17}
+                labelColor="#fbbf24"
+                theme="classic"
+                background="transparent"
+              />
+            </div>
+          </div>
 
         </div>
       </div>
