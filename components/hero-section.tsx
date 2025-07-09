@@ -7,6 +7,7 @@ import { ArrowDown, Download, Mail, Github, Linkedin, Activity } from "lucide-re
 import { motion } from "framer-motion"
 import Link from "next/link"
 import { RotatingTweets } from "@/components/rotating-tweets"
+import { GitHubCalendar } from "github-contribution-calendar";
 
 export function HeroSection() {
   return (
@@ -57,14 +58,14 @@ export function HeroSection() {
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="max-w-4xl mx-auto text-center relative z-20">
+        <div className="mx-auto text-center relative z-20">
 
           {/* Move name and title below navigation */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="mt-32 mb-6"
+            className="mb-2"
           >
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-white via-blue-200 to-purple-200 bg-clip-text text-transparent leading-tight">
               Deven Shah
@@ -126,7 +127,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
-            className="flex items-center justify-center gap-6 mb-16"
+            className="flex items-center justify-center gap-6 mb-10"
           >
             <Link href="https://github.com/devenshah2018" target="_blank" rel="noopener noreferrer">
               <Button variant="ghost" size="lg" className="hover:bg-gray-800 p-3">
@@ -151,7 +152,20 @@ export function HeroSection() {
             </Link>
           </motion.div>
 
-          <RotatingTweets className="mb-20 z-10 relative" />
+                    <div className="flex justify-center mt-6 mb-20">
+                      <GitHubCalendar
+                        username="devenshah2018"
+                        token={process.env.NEXT_PUBLIC_GITHUB_ACCESS_TOKEN}
+                        showLabels={true}
+                        fontSize={15}
+                        titleColor="#fbbf24" // Tailwind's yellow-400 for strong contrast
+                        cellSize={17}
+                        labelColor="#fbbf24"
+                        theme="classic"
+                        background="transparent"
+                        
+                      />
+                    </div>
 
         </div>
       </div>
