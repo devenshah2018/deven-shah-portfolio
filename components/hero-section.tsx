@@ -11,7 +11,7 @@ import { GitHubCalendar } from "github-contribution-calendar";
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-[1100px] flex items-center justify-center overflow-hidden">
+    <section id="hero" className="relative min-h-[1100px] flex items-center justify-center overflow-hidden">
       {/* Animated Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-blue-900/20 to-purple-900/20" />
 
