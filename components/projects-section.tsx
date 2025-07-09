@@ -31,7 +31,7 @@ const projects = [
       "Launched Ares, a SOC2 and OWASP compliance solution with 100+ users, accepted into Microsoft's Startup Program and Buildspace S5, integrated via a Rust and TypeScript VSCode extension.",
     technologies: ["Rust", "TypeScript", "VSCode Extension", "Security", "Compliance"],
     type: "link",
-    link: "https://x.com/devenshah2018/status/1853296427549733029",
+    link: "http://marketplace.visualstudio.com/items?itemName=strive-ai.strive",
     status: "Launched",
     users: "100+ users",
     gradient: "from-red-500 via-orange-500 to-yellow-500",
@@ -210,8 +210,8 @@ export function ProjectsSection() {
                       )}
                       {project.type === "video" || project.type === "link" && (
                         <>
-                          <Play className="mr-2 h-5 w-5" />
-                          Watch Demo
+                          <ExternalLink className="mr-2 h-5 w-5" />
+                          View on Marketplace
                         </>
                       )}
                       {project.type === "github" && (
