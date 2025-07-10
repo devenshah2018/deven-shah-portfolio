@@ -120,24 +120,29 @@ export function ContactSection() {
             viewport={{ once: true }}
             className="mb-16"
           >
-            <Card className="bg-slate-900/50 backdrop-blur-sm border border-slate-800 shadow-2xl rounded-2xl hover:shadow-blue-500/10 transition-all duration-500">
-              <CardContent className="py-8 px-8 md:px-12 flex flex-col md:flex-row items-center justify-between gap-8">
+            <Card className="bg-gradient-to-br from-blue-950/80 via-slate-900/90 to-indigo-950/80 border-0 shadow-2xl rounded-2xl transition-all duration-500 relative overflow-hidden">
+              {/* Animated Glow Accent */}
+              <div className="absolute -top-8 -left-8 w-40 h-40 bg-gradient-to-br from-blue-500/30 via-indigo-400/20 to-transparent rounded-full blur-2xl opacity-70 animate-pulse z-0" aria-hidden="true" />
+              <CardContent className="py-6 px-5 md:px-10 flex flex-col md:flex-row items-center md:items-center justify-between gap-6 md:gap-8 relative z-10">
                 <div className="flex-1 text-center md:text-left">
-                  <h3 className="text-2xl font-bold text-white mb-3 flex items-center gap-3 justify-center md:justify-start">
+                  <h3 className="text-2xl font-extrabold text-white mb-2 flex items-center gap-3 justify-center md:justify-start tracking-tight">
                     <CalendarCheck2 className="h-7 w-7 text-blue-400" />
                     Schedule a Call
                   </h3>
-                  <p className="text-lg text-slate-300 font-light">
-                    Book a quick chat to discuss opportunities, collaborations, or just to talk about tech.
+                  <p className="text-base text-slate-200 font-light max-w-xl mx-auto md:mx-0">
+                    Book a quick chat to discuss opportunities, collaborations, or just to talk tech.
                   </p>
                 </div>
-                <div className="flex-shrink-0">
+                <div className="flex-shrink-0 flex justify-center md:justify-end w-full md:w-auto">
                   <Button
                     size="lg"
-                    className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white border-0 px-8 py-4 text-lg font-semibold shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 rounded-full"
+                    className="w-full md:w-auto min-w-[180px] bg-blue-600 hover:bg-blue-700 focus-visible:ring-4 focus-visible:ring-blue-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 text-white border-0 px-8 py-4 text-lg font-bold shadow-xl transition-all duration-200 rounded-full flex items-center justify-center gap-2 outline-none ring-0"
                     onClick={() => window.open("https://cal.com/deven-shah-l0qkjk/quick-chat", "_blank")}
+                    style={{ fontSize: '1.15rem' }}
+                    aria-label="Book a call with Deven Shah via Cal.com"
+                    tabIndex={0}
                   >
-                    <CalendarCheck2 className="mr-3 h-5 w-5" />
+                    <CalendarCheck2 className="mr-3 h-5 w-5" aria-hidden="true" />
                     Book a Call
                   </Button>
                 </div>
@@ -256,73 +261,73 @@ export function ContactSection() {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.7, delay: 0.3 }}
               viewport={{ once: true }}
-              className="space-y-8"
+              className="space-y-8 lg:space-y-10 flex flex-col gap-8 lg:gap-10"
             >
               {/* Contact Info */}
-              <Card className="bg-slate-900/50 backdrop-blur-sm border border-slate-800 shadow-2xl rounded-2xl">
-                <CardHeader>
-                  <CardTitle className="text-xl font-bold text-white">Contact Information</CardTitle>
+              <Card className="bg-slate-950/90 border-0 shadow-xl rounded-2xl px-4 py-6 md:px-6 md:py-8">
+                <CardHeader className="pb-4">
+                  <CardTitle className="text-lg font-bold text-white tracking-tight">Contact Information</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-6">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-red-500 to-pink-500 flex items-center justify-center">
-                      <Mail className="h-6 w-6 text-white" />
+                <CardContent className="space-y-5">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-red-500 to-pink-500 flex items-center justify-center">
+                      <Mail className="h-5 w-5 text-white" />
                     </div>
                     <div>
-                      <p className="font-medium text-white">Email</p>
-                      <p className="text-sm text-slate-400">devenshah2018@gmail.com</p>
+                      <p className="font-semibold text-white text-sm">Email</p>
+                      <p className="text-xs text-slate-300 select-all">devenshah2018@gmail.com</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 flex items-center justify-center">
-                      <MapPin className="h-6 w-6 text-white" />
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-emerald-500 to-teal-500 flex items-center justify-center">
+                      <MapPin className="h-5 w-5 text-white" />
                     </div>
                     <div>
-                      <p className="font-medium text-white">Location</p>
-                      <p className="text-sm text-slate-400">Boston, MA (Remote Open)</p>
+                      <p className="font-semibold text-white text-sm">Location</p>
+                      <p className="text-xs text-slate-300">Boston, MA (Remote Open)</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-500 flex items-center justify-center">
-                      <Briefcase className="h-6 w-6 text-white" />
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-500 flex items-center justify-center">
+                      <Briefcase className="h-5 w-5 text-white" />
                     </div>
                     <div>
-                      <p className="font-medium text-white">Role</p>
-                      <p className="text-sm text-slate-400">Co-Founder/CTO</p>
+                      <p className="font-semibold text-white text-sm">Role</p>
+                      <p className="text-xs text-slate-300">Co-Founder/CTO</p>
                     </div>
                   </div>
                 </CardContent>
               </Card>
 
               {/* Social Links */}
-              <Card className="bg-slate-900/50 backdrop-blur-sm border border-slate-800 shadow-2xl rounded-2xl">
-                <CardHeader>
-                  <CardTitle className="text-xl font-bold text-white">Find Me Online</CardTitle>
+              <Card className="bg-slate-950/90 border-0 shadow-xl rounded-2xl px-4 py-6 md:px-6 md:py-8">
+                <CardHeader className="pb-4">
+                  <CardTitle className="text-lg font-bold text-white tracking-tight">Find Me Online</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-3">
                   {socialLinks.map((social) => (
                     <Button
                       key={social.name}
-                      variant="outline"
-                      className="w-full justify-start h-auto p-4 bg-slate-800/30 border-slate-700 hover:bg-slate-700/50 hover:border-slate-600 transition-all duration-300 rounded-xl group"
+                      variant="ghost"
+                      className="w-full justify-start h-auto px-3 py-3 bg-slate-900/70 border-0 hover:bg-slate-800/80 transition-all duration-200 rounded-xl group focus-visible:ring-2 focus-visible:ring-blue-400/70"
                       asChild
                     >
                       <a href={social.url} target="_blank" rel="noopener noreferrer">
-                        <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-3">
                           <div
-                            className={`w-10 h-10 rounded-lg bg-gradient-to-r ${social.gradient} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}
+                            className={`w-8 h-8 rounded-md bg-gradient-to-r ${social.gradient} flex items-center justify-center group-hover:scale-105 transition-transform duration-200`}
                           >
                             {social.name === "Twitter" ? (
-                              <FontAwesomeIcon icon={faXTwitter} className="h-5 w-5 text-white" />
+                              <FontAwesomeIcon icon={faXTwitter} className="h-4 w-4 text-white" />
                             ) : (
                               React.createElement(social.icon as React.ComponentType<any>, {
-                                className: "h-5 w-5 text-white",
+                                className: "h-4 w-4 text-white",
                               })
                             )}
                           </div>
                           <div className="text-left">
-                            <p className="font-medium text-white group-hover:text-slate-200">{social.name}</p>
-                            <p className="text-xs text-slate-400 group-hover:text-slate-300">{social.handle}</p>
+                            <p className="font-medium text-white text-sm group-hover:text-blue-200">{social.name}</p>
+                            <p className="text-xs text-slate-400 group-hover:text-slate-200">{social.handle}</p>
                           </div>
                         </div>
                       </a>
