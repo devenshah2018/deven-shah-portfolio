@@ -81,7 +81,7 @@ export function ProjectsSection() {
 	}
 
 	return (
-		<section id="projects" className="py-20 sm:py-28 bg-gradient-to-b from-gray-900 to-gray-950">
+		<section id="projects" className="py-20 sm:py-28 bg-gradient-to-b from-slate-950 to-slate-900">
 			<div className="container mx-auto px-2 sm:px-6 lg:px-8">
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
