@@ -129,7 +129,7 @@ export function ContactSection() {
             viewport={{ once: true }}
             className="mb-16"
           >
-            <Card className="bg-slate-900/95 border-0 shadow-2xl rounded-2xl transition-all duration-500 relative overflow-hidden">
+            <Card id="book-a-call-container" className="bg-slate-900/95 border-0 shadow-2xl rounded-2xl transition-all duration-500 relative overflow-hidden">
               <CardContent className="py-6 px-5 md:px-10 flex flex-col md:flex-row items-center md:items-center justify-between gap-6 md:gap-8 relative z-10">
                 <div className="flex-1 text-center md:text-left">
                   <h3 className="text-2xl font-extrabold text-white mb-2 flex items-center gap-3 justify-center md:justify-start tracking-tight">

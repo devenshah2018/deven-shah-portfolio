@@ -4,8 +4,12 @@ import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { Menu, X } from "lucide-react"
+import { Menu, X, Route } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
+
+interface NavigationProps {
+  onStartTour?: () => void
+}
 
 const navItems = [
 	{ name: "About", href: "#about" },
@@ -15,7 +19,7 @@ const navItems = [
 	{ name: "Connect", href: "#contact" },
 ]
 
-export function Navigation() {
+export function Navigation({ onStartTour }: NavigationProps) {
 	const [isScrolled, setIsScrolled] = useState(false)
 	const [showName, setShowName] = useState(false)
 	const [currentTime, setCurrentTime] = useState("")
@@ -137,6 +141,22 @@ export function Navigation() {
 					</motion.div>
 					{/* Desktop Navigation */}
 					<div className="hidden md:flex items-center space-x-2">
+						{/* Tour Button */}
+						<motion.div
+							initial={{ opacity: 0, y: -20 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{ duration: 0.4, delay: 0.6 }}
+						>
+							<Button
+								onClick={onStartTour}
+								variant="outline"
+								className="px-4 py-2 rounded-full bg-gradient-to-r from-blue-500/20 to-indigo-500/20 border-blue-400/50 text-blue-300 hover:bg-gradient-to-r hover:from-blue-500/30 hover:to-indigo-500/30 hover:text-white hover:border-blue-300 transition-all duration-300 font-mono font-semibold text-sm tracking-wide shadow-lg hover:shadow-blue-500/25"
+							>
+								<Route className="h-4 w-4 mr-2" />
+								Take Tour
+							</Button>
+						</motion.div>
+						
 						{navItems.map((item, index) => (
 							<motion.div
 								key={item.name}
@@ -237,6 +257,27 @@ export function Navigation() {
 								}}
 							>
 								<div className="px-6 py-4">
+									{/* Tour Button - Mobile */}
+									<motion.div
+										initial={{ opacity: 0, y: -10 }}
+										animate={{ opacity: 1, y: 0 }}
+										exit={{ opacity: 0, y: -10 }}
+										transition={{ duration: 0.4 }}
+										className="py-2 mb-4 border-b border-slate-700/50"
+									>
+										<Button
+											onClick={() => {
+												setMobileNavOpen(false)
+												onStartTour?.()
+											}}
+											variant="outline"
+											className="w-full bg-gradient-to-r from-blue-500/20 to-indigo-500/20 border-blue-400/50 text-blue-300 hover:bg-gradient-to-r hover:from-blue-500/30 hover:to-indigo-500/30 hover:text-white hover:border-blue-300 transition-all duration-300 font-mono font-semibold text-lg shadow-lg hover:shadow-blue-500/25"
+										>
+											<Route className="h-5 w-5 mr-2" />
+											Take Guided Tour
+										</Button>
+									</motion.div>
+									
 									{/* Mobile nav items */}
 									{navItems.map((item, index) => (
 										<motion.div

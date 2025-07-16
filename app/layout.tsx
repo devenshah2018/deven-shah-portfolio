@@ -2,9 +2,9 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
-import { Navigation } from "@/components/navigation"
-import { Footer } from "@/components/footer"
 import { Analytics } from "@vercel/analytics/next"
+import { TourProvider } from "@/components/tour-context"
+import { LayoutWrapper } from "@/components/layout-wrapper"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -30,10 +30,12 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <body className={inter.className}>
-        <Navigation />
-        {children}
-        <Analytics />
-        <Footer />
+        <TourProvider>
+          <LayoutWrapper>
+            {children}
+          </LayoutWrapper>
+          <Analytics />
+        </TourProvider>
       </body>
     </html>
   )
