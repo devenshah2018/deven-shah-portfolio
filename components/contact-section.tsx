@@ -199,7 +199,7 @@ export function ContactSection() {
               viewport={{ once: true }}
               className="lg:col-span-2"
             >
-              <Card className="bg-slate-900/50 backdrop-blur-sm border border-slate-800 shadow-2xl rounded-2xl h-full">
+              <Card className="bg-slate-900/50 backdrop-blur-sm border border-slate-800 shadow-xl rounded-2xl h-full">
                 <CardHeader className="pb-6">
                   <CardTitle className="text-2xl font-bold text-white flex items-center gap-3">
                     <MessageSquare className="h-7 w-7 text-blue-400" />
@@ -303,7 +303,7 @@ export function ContactSection() {
               className="space-y-8 lg:space-y-10 flex flex-col gap-8 lg:gap-10"
             >
               {/* Contact Info */}
-              <Card className="bg-slate-950/90 border-0 shadow-xl rounded-2xl px-4 py-6 md:px-6 md:py-8">
+              <Card className="bg-slate-900/50 backdrop-blur-sm border border-slate-800 shadow-xl rounded-2xl px-4 py-6 md:px-6 md:py-8">
                 <CardHeader className="pb-4">
                   <CardTitle className="text-lg font-bold text-white tracking-tight">Contact Information</CardTitle>
                 </CardHeader>
@@ -339,7 +339,7 @@ export function ContactSection() {
               </Card>
 
               {/* Social Links */}
-              <Card className="bg-slate-950/90 border-0 shadow-xl rounded-2xl px-4 py-6 md:px-6 md:py-8">
+              <Card className="bg-slate-900/50 backdrop-blur-sm border border-slate-800 shadow-xl rounded-2xl px-4 py-6 md:px-6 md:py-8">
                 <CardHeader className="pb-4">
                   <CardTitle className="text-lg font-bold text-white tracking-tight">Find Me Online</CardTitle>
                 </CardHeader>
