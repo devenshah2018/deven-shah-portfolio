@@ -11,12 +11,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faXTwitter } from "@fortawesome/free-brands-svg-icons"
 
 const skills = {
-  languages: ["Python", "TypeScript", "C#", "Java", "C", "Apex", "JavaScript", "SQL", "SOQL", "HTML", "CSS", "Bash"],
-  platforms: ["AWS", "Salesforce", "Azure", "LangGraph"],
-  frameworks: ["React", ".NET", "Flask"],
-  frontend: ["TypeScript", "JavaScript", "HTML", "CSS", "React"],
-  backend: ["Python", "C#", "Java", "C", "TypeScript", ".NET", "Flask", "Bash"],
-  database: ["SQL", "SOQL"],
+  languages: ["Python", "TypeScript", "C#", "Java", "C", "Apex", "JavaScript", "SQL", "SOQL", "HTML", "CSS", "Bash", "Rust"],
+  platforms: ["AWS", "Salesforce", "Azure", "LangGraph", "GCP"],
+  frameworks: ["React", ".NET", "Flask", "TailwindCSS"],
+  frontend: ["TypeScript", "JavaScript", "HTML", "CSS", "React", "TailwindCSS"],
+  backend: ["Python", "C#", "Java", "C", "TypeScript", ".NET", "Flask", "Bash", "Rust", "Docker", "REST API", "GraphQL"],
+  database: ["SQL", "SOQL", "Oracle", "PostgreSQL"],
+  aimal: ["Python", "LLMs", "Sklearn", "Tensorflow", "Pytorch", "LangGraph"],
+  devops: ["Docker", "Github", "Git", "GCP", "AWS", "Azure"],
+  apis: ["C#", "Python", "Apex", "Azure", "REST API", "GraphQL", "TypeScript"]
 }
 
 // Skill mappings to experiences, projects, and education
@@ -189,7 +192,113 @@ const skillMappings = [
     experiences: [
       { title: "Solutions Architect Intern", company: "NetApp", id: "netapp", icon: Briefcase }
     ]
-  }
+  },
+  {
+    skill: "Oracle",
+    experiences: [
+      { title: "Solutions Architect Intern", company: "NetApp", id: "netapp", icon: Briefcase }
+    ]
+  },
+  {
+    skill: "PostgreSQL",
+    experiences: [
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase }
+    ]
+  },
+  {
+    skill: "GCP",
+    experiences: [
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase }
+    ]
+  },
+  {
+    skill: "TailwindCSS",
+    experiences: [
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase }
+    ]
+  },
+  {
+    skill: "Rust",
+    projects: [
+      { title: "Ares", subtitle: "Security Compliance Platform", id: "ares", icon: Zap }
+    ]
+  },
+  {
+    skill: "LLMs",
+    experiences: [
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase }
+    ],
+    projects: [
+      { title: "Ares", subtitle: "Security Compliance Platform", id: "ares", icon: Zap }
+    ]
+  },
+  {
+    skill: "Sklearn",
+    experiences: [
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase }
+    ],
+    projects: [
+      { title: "Cryptocurrency Forecasting", subtitle: "ML Prediction Model", id: "crypto", icon: Zap }
+    ]
+  },
+  {
+    skill: "Tensorflow",
+    experiences: [
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase }
+    ],
+    projects: [
+      { title: "Cryptocurrency Forecasting", subtitle: "ML Prediction Model", id: "crypto", icon: Zap }
+    ]
+  },
+  {
+    skill: "Pytorch",
+    projects: [
+      { title: "Cryptocurrency Forecasting", subtitle: "ML Prediction Model", id: "crypto", icon: Zap }
+    ]
+  },
+  {
+    skill: "Docker",
+    experiences: [
+      { title: "Solutions Architect Intern", company: "NetApp", id: "netapp", icon: Briefcase },
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase }
+    ]
+  },
+  {
+    skill: "Github",
+    experiences: [
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase },
+      { title: "Application Developer", company: "Patelco", id: "patelco", icon: Briefcase },
+      { title: "Solutions Architect Intern", company: "NetApp", id: "netapp", icon: Briefcase }
+    ],
+    education: [
+      { title: "B.S. Software Engineering", institution: "San Jose State University", id: "sjsu", icon: GraduationCap }
+    ]
+  },
+  {
+    skill: "Git",
+    experiences: [
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase },
+      { title: "Application Developer", company: "Patelco", id: "patelco", icon: Briefcase },
+      { title: "Solutions Architect Intern", company: "NetApp", id: "netapp", icon: Briefcase }
+    ],
+    education: [
+      { title: "B.S. Software Engineering", institution: "San Jose State University", id: "sjsu", icon: GraduationCap }
+    ]
+  },
+  {
+    skill: "REST API",
+    experiences: [
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase },
+      { title: "Application Developer", company: "Patelco", id: "patelco", icon: Briefcase },
+      { title: "Solutions Architect Intern", company: "NetApp", id: "netapp", icon: Briefcase }
+    ]
+  },
+  {
+    skill: "GraphQL",
+    experiences: [
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase }
+    ]
+  },
 ]
 
 const highlights = [
@@ -225,12 +334,15 @@ const highlights = [
 
 const skillCategories = [
   { key: "all", label: "All" },
-  { key: "languages", label: "Languages" },
-  { key: "platforms", label: "Platforms" },
-  { key: "frameworks", label: "Frameworks" },
-  { key: "frontend", label: "Frontend" },
+  { key: "aimal", label: "AI/ML" },
+  { key: "apis", label: "API" },
   { key: "backend", label: "Backend" },
   { key: "database", label: "Database" },
+  { key: "devops", label: "DevOps" },
+  { key: "frontend", label: "Frontend" },
+  { key: "frameworks", label: "Frameworks" },
+  { key: "languages", label: "Languages" },
+  { key: "platforms", label: "Platforms" },
 ];
 
 const categorizedSkills = {
@@ -241,6 +353,9 @@ const categorizedSkills = {
     ...skills.frontend,
     ...skills.backend,
     ...skills.database,
+    ...skills.aimal,
+    ...skills.devops,
+    ...skills.apis,
   ])),
   languages: skills.languages,
   platforms: skills.platforms,
@@ -248,6 +363,9 @@ const categorizedSkills = {
   frontend: skills.frontend,
   backend: skills.backend,
   database: skills.database,
+  aimal: skills.aimal,
+  devops: skills.devops,
+  apis: skills.apis,
 };
 
 export function AboutSection() {
@@ -448,7 +566,10 @@ export function AboutSection() {
               </div>
             </div>
             <div className="flex flex-wrap gap-2">
-              {(categorizedSkills[activeCategory as keyof typeof categorizedSkills] as string[]).map((skill: string) => (
+              {(categorizedSkills[activeCategory as keyof typeof categorizedSkills] as string[])
+                .slice() // copy to avoid mutating original
+                .sort((a, b) => a.localeCompare(b))
+                .map((skill: string) => (
                 <button
                   key={skill}
                   type="button"
