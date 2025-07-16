@@ -85,3 +85,60 @@ html {
 .animate-fade-in-up {
   animation: fadeInUp 0.6s ease-out;
 }
+
+/* Subtle, dark-theme-integrated animated border glow for the IDE button */
+.animate-ide-border-glow {
+  background: linear-gradient(90deg, hsl(217, 80%, 32%) 0%, hsl(187, 80%, 28%) 100%);
+  opacity: 0.10;
+  filter: blur(6px) brightness(0.7) saturate(0.7);
+  animation: ide-border-glow 2.8s cubic-bezier(0.4,0,0.6,1) infinite alternate;
+  transition: opacity 0.3s, filter 0.3s;
+}
+
+@keyframes ide-border-glow {
+  0% { opacity: 0.08; filter: blur(6px) brightness(0.7) saturate(0.7); }
+  50% { opacity: 0.16; filter: blur(10px) brightness(0.8) saturate(0.8); }
+  100% { opacity: 0.08; filter: blur(6px) brightness(0.7) saturate(0.7); }
+}
+
+/* Pulsating border animation for Try IDE button */
+@keyframes ide-pulse-border {
+  0% {
+    box-shadow: 0 0 0 0 rgba(34,211,238,0.18), 0 0 0 2px rgba(34,211,238,0.12);
+    border-color: rgba(34,211,238,0.32);
+  }
+  50% {
+    box-shadow: 0 0 8px 4px rgba(34,211,238,0.22), 0 0 0 4px rgba(34,211,238,0.18);
+    border-color: rgba(34,211,238,0.55);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(34,211,238,0.18), 0 0 0 2px rgba(34,211,238,0.12);
+    border-color: rgba(34,211,238,0.32);
+  }
+}
+.animate-ide-pulse-border {
+  animation: ide-pulse-border 1.8s cubic-bezier(0.4,0,0.6,1) infinite;
+  border-radius: 1rem;
+  transition: border-color 0.3s;
+}
+
+/* Pulsating blue border animation for Try IDE button */
+@keyframes ide-pulse-border-blue {
+  0% {
+    box-shadow: 0 0 0 0 rgba(59,130,246,0.18), 0 0 0 2px rgba(59,130,246,0.12);
+    border-color: rgba(59,130,246,0.32);
+  }
+  50% {
+    box-shadow: 0 0 8px 4px rgba(59,130,246,0.22), 0 0 0 4px rgba(59,130,246,0.18);
+    border-color: rgba(59,130,246,0.55);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(59,130,246,0.18), 0 0 0 2px rgba(59,130,246,0.12);
+    border-color: rgba(59,130,246,0.32);
+  }
+}
+.animate-ide-pulse-border-blue {
+  animation: ide-pulse-border-blue 1.8s cubic-bezier(0.4,0,0.6,1) infinite;
+  border-radius: 1rem;
+  transition: border-color 0.3s;
+}

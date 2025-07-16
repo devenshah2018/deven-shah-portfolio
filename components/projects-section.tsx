@@ -164,13 +164,18 @@ export function ProjectsSection() {
 										{/* Action Button */}
 										<Button
 											onClick={() => handleProjectAction(project)}
-											className="w-full bg-slate-800 hover:bg-slate-700 transition-all duration-300 text-white border-0 font-bold text-base py-2 rounded-lg mt-auto shadow-sm"
+											className={`w-full bg-slate-800 hover:bg-slate-700 transition-all duration-300 text-white border-0 font-bold text-base py-2 rounded-xl mt-auto shadow-xl focus:ring-4 focus:ring-blue-900/60 focus:outline-none
+    ${project.type === "ide" ? "relative overflow-visible group/ide" : ""}`}
 											size="sm"
 										>
 											{project.type === "ide" && (
 												<>
-													<Code className="mr-2 h-4 w-4" />
-													Try Interactive IDE
+													{/* Pulsating blue highlighted border */}
+													<span className="absolute -inset-1 z-0 rounded-2xl pointer-events-none animate-ide-pulse-border-blue border-2 border-blue-400/40 group-hover/ide:border-blue-400/70" />
+													<span className="relative z-10 flex items-center justify-center gap-2 w-full">
+														<Code className="h-5 w-5 text-white drop-shadow-md" />
+														<span className="tracking-wide text-[1.08em] font-semibold text-white drop-shadow-sm">Try Interactive IDE</span>
+													</span>
 												</>
 											)}
 											{(project.type === "video" || project.type === "link") && (
@@ -199,3 +204,23 @@ export function ProjectsSection() {
 		</section>
 	)
 }
+
+// Add this to your global CSS (e.g. globals.css):
+// .animate-ide-border-glow {
+//   background: linear-gradient(90deg, #2563eb 0%, #06b6d4 100%);
+//   opacity: 0.18;
+//   filter: blur(8px);
+//   animation: ide-border-glow 2.8s cubic-bezier(0.4,0,0.6,1) infinite alternate;
+// }
+// @keyframes ide-border-glow {
+//   0% { opacity: 0.12; filter: blur(8px); }
+//   50% { opacity: 0.28; filter: blur(14px); }
+//   100% { opacity: 0.12; filter: blur(8px); }
+// }
+// .animate-ide-pulse-border {
+//   animation: ide-pulse-border 2s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;
+// }
+// @keyframes ide-pulse-border {
+//   0% { border-color: rgba(6, 182, 212, 0.4); }
+//   50% { border-color: rgba(6, 182, 212, 0.7); }
+//   100% { border-color: rgba(6, 182, 212, 0.4); }
