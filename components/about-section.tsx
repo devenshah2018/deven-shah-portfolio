@@ -12,7 +12,11 @@ import { faXTwitter } from "@fortawesome/free-brands-svg-icons"
 
 const skills = {
   languages: ["Python", "TypeScript", "C#", "Java", "C", "Apex", "JavaScript", "SQL", "SOQL", "HTML", "CSS", "Bash"],
-  platforms: ["AWS", "Salesforce", "Azure", "LangGraph", "React", ".NET", "Flask"],
+  platforms: ["AWS", "Salesforce", "Azure", "LangGraph"],
+  frameworks: ["React", ".NET", "Flask"],
+  frontend: ["TypeScript", "JavaScript", "HTML", "CSS", "React"],
+  backend: ["Python", "C#", "Java", "C", "TypeScript", ".NET", "Flask", "Bash"],
+  database: ["SQL", "SOQL"],
 }
 
 // Skill mappings to experiences, projects, and education
@@ -219,9 +223,37 @@ const highlights = [
   },
 ]
 
+const skillCategories = [
+  { key: "all", label: "All" },
+  { key: "languages", label: "Languages" },
+  { key: "platforms", label: "Platforms" },
+  { key: "frameworks", label: "Frameworks" },
+  { key: "frontend", label: "Frontend" },
+  { key: "backend", label: "Backend" },
+  { key: "database", label: "Database" },
+];
+
+const categorizedSkills = {
+  all: Array.from(new Set([
+    ...skills.languages,
+    ...skills.platforms,
+    ...skills.frameworks,
+    ...skills.frontend,
+    ...skills.backend,
+    ...skills.database,
+  ])),
+  languages: skills.languages,
+  platforms: skills.platforms,
+  frameworks: skills.frameworks,
+  frontend: skills.frontend,
+  backend: skills.backend,
+  database: skills.database,
+};
+
 export function AboutSection() {
   const [modalOpen, setModalOpen] = useState(false)
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null)
+  const [activeCategory, setActiveCategory] = useState<string>("all")
 
   const handleSkillClick = (skill: string) => {
     const skillMapping = skillMappings.find((mapping) => mapping.skill === skill)
@@ -395,24 +427,48 @@ export function AboutSection() {
           </div>
           {/* Technical Skills - full width below both columns */}
           <div className="col-span-1 lg:col-span-2 mt-12">
-            <h3 className="text-2xl font-bold text-white mb-3">Technical Skills</h3>
-            <div className="flex flex-wrap gap-3">
-              {skills.languages.concat(skills.platforms).map((skill, index) => (
-                <Badge
+            <div className="flex items-center gap-4 mb-3 flex-wrap">
+              <h3 className="text-2xl font-bold text-white">Technical Skills</h3>
+              <div className="flex gap-2 flex-wrap">
+                {skillCategories.map((cat) => (
+                  <button
+                    key={cat.key}
+                    type="button"
+                    className={`px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wide border-2 shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400/70 focus:ring-offset-2 focus:ring-offset-slate-900
+                      ${activeCategory === cat.key
+                        ? "bg-gradient-to-r from-blue-600 to-cyan-500 text-white border-blue-400 scale-105 drop-shadow-lg"
+                        : "bg-slate-900/80 text-blue-200 border-blue-800 hover:bg-blue-900/40 hover:text-white hover:border-blue-400"}
+                    `}
+                    style={{ letterSpacing: '0.08em' }}
+                    onClick={() => setActiveCategory(cat.key)}
+                  >
+                    {cat.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {(categorizedSkills[activeCategory as keyof typeof categorizedSkills] as string[]).map((skill: string) => (
+                <button
                   key={skill}
-                  variant="secondary"
-                  className={`text-sm py-2 px-4 bg-slate-800/50 border border-slate-700 text-slate-200 transition-all duration-300 rounded-full ${
-                    hasMapping(skill)
-                      ? "hover:shadow-lg hover:scale-105 cursor-pointer hover:border-blue-400 hover:bg-blue-900/30 hover:text-blue-200"
-                      : "hover:bg-slate-700/50"
-                  }`}
+                  type="button"
+                  className={`inline-flex items-center px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-800/70 text-slate-200 text-sm font-medium shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400/70 focus:ring-offset-2 focus:ring-offset-slate-900
+                    ${hasMapping(skill)
+                      ? 'hover:bg-blue-900/30 hover:text-blue-200 hover:border-blue-400 focus:bg-blue-900/30 focus:text-blue-200 focus:border-blue-400'
+                      : 'opacity-80 cursor-default'}
+                  `}
+                  style={{ minWidth: 0, minHeight: 0, fontSize: '0.98rem', letterSpacing: '0.01em', lineHeight: 1.2 }}
+                  aria-label={skill + (hasMapping(skill) ? `, ${getMappingCount(skill)} related items` : '')}
                   onClick={() => hasMapping(skill) && handleSkillClick(skill)}
+                  tabIndex={0}
                 >
-                  {skill}
+                  <span className="truncate max-w-[90px]">{skill}</span>
                   {hasMapping(skill) && (
-                    <span className="ml-2 text-blue-400 font-semibold text-xs">{getMappingCount(skill)}</span>
+                    <span className="ml-1 px-1.5 py-0.5 rounded bg-blue-800/60 text-blue-200 text-[0.7em] font-semibold border border-blue-400/30 ml-2">
+                      {getMappingCount(skill)}
+                    </span>
                   )}
-                </Badge>
+                </button>
               ))}
             </div>
           </div>
