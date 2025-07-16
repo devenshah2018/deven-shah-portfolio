@@ -72,10 +72,16 @@ export function HeroSection() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="mb-2"
           >
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-white via-blue-200 to-purple-200 bg-clip-text text-transparent leading-tight">
-              Deven Shah
-            </h1>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-gray-300 mt-2">
+            <div className="flex items-center justify-center gap-3 mb-3">
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-white via-blue-200 to-purple-200 bg-clip-text text-transparent leading-tight">
+                Deven Shah
+              </h1>
+              <span className="hidden sm:inline-flex items-center px-2 py-0.5 bg-gradient-to-r from-blue-600/30 to-purple-600/30 border border-blue-400/10 rounded-full shadow-sm backdrop-blur-sm">
+                <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full mr-1 animate-pulse opacity-70"></span>
+                <span className="text-white/80 font-medium text-xs tracking-wide uppercase opacity-80">Software Engineer</span>
+              </span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl lg:text-3xl font-semibold text-gray-300 mt-2">
               Co-Founder/CTO & Graduate MSCS Student
             </h2>
           </motion.div>
