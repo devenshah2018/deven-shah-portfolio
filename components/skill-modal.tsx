@@ -38,13 +38,29 @@ interface SkillModalProps {
 export function SkillModal({ open, onOpenChange, skillName, skillMappings }: SkillModalProps) {
   const skillData = skillMappings.find((mapping) => mapping.skill === skillName)
 
-  // Updated scrollToSection: close modal first, then scroll after delay
+  // Updated scrollToSection: close modal first, then scroll after delay with highlighting
   const scrollToSection = (sectionId: string, itemId?: string) => {
     onOpenChange(false);
     setTimeout(() => {
       const section = document.getElementById(sectionId);
       if (section) {
         section.scrollIntoView({ behavior: "smooth" });
+        
+        // If we have an itemId, highlight that specific item
+        if (itemId) {
+          setTimeout(() => {
+            const targetElement = document.querySelector(`[data-item-id="${itemId}"]`);
+            if (targetElement) {
+              // Add the same tour highlight class
+              targetElement.classList.add('tour-highlight');
+              
+              // Remove the highlight after 3 seconds
+              setTimeout(() => {
+                targetElement.classList.remove('tour-highlight');
+              }, 3000);
+            }
+          }, 500); // Wait for scroll to complete
+        }
       }
     }, 200); // Delay to allow modal to close
   }

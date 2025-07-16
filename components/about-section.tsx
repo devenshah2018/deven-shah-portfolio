@@ -27,25 +27,25 @@ const skillMappings = [
   {
     skill: "Python",
     experiences: [
-      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase },
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno-analytics", icon: Briefcase },
       { title: "Solutions Architect Intern", company: "NetApp", id: "netapp", icon: Briefcase }
     ],
     projects: [
-      { title: "Ares", subtitle: "Security Compliance Platform", id: "ares", icon: Zap },
-      { title: "Cryptocurrency Forecasting", subtitle: "ML Prediction Model", id: "crypto", icon: Zap }
+      { title: "Ares", subtitle: "Security Compliance Platform", id: "ares-project", icon: Zap },
+      { title: "Cryptocurrency Forecasting", subtitle: "ML Prediction Model", id: "crypto-forecasting-project", icon: Zap }
     ],
     education: [
-      { title: "B.S. Software Engineering", institution: "San Jose State University", id: "sjsu", icon: GraduationCap }
+      { title: "B.S. Software Engineering", institution: "San Jose State University", id: "sjsu-bachelors", icon: GraduationCap }
     ]
   },
   {
     skill: "TypeScript",
     experiences: [
-      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase },
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno-analytics", icon: Briefcase },
       { title: "Application Developer", company: "Patelco", id: "patelco", icon: Briefcase }
     ],
     projects: [
-      { title: "Ares", subtitle: "Security Compliance Platform", id: "ares", icon: Zap }
+      { title: "Ares", subtitle: "Security Compliance Platform", id: "ares-project", icon: Zap }
     ]
   },
   {
@@ -54,29 +54,29 @@ const skillMappings = [
       { title: "Application Developer", company: "Patelco", id: "patelco", icon: Briefcase }
     ],
     education: [
-      { title: "B.S. Software Engineering", institution: "San Jose State University", id: "sjsu", icon: GraduationCap }
+      { title: "B.S. Software Engineering", institution: "San Jose State University", id: "sjsu-bachelors", icon: GraduationCap }
     ]
   },
   {
     skill: "React",
     experiences: [
-      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase }
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno-analytics", icon: Briefcase }
     ]
   },
   {
     skill: "Azure",
     experiences: [
-      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase },
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno-analytics", icon: Briefcase },
       { title: "Application Developer", company: "Patelco", id: "patelco", icon: Briefcase },
     ],
     projects: [
-      { title: "Ares", subtitle: "Security Compliance Platform", id: "ares", icon: Zap }
+      { title: "Ares", subtitle: "Security Compliance Platform", id: "ares-project", icon: Zap }
     ]
   },
   {
     skill: "LangGraph",
     experiences: [
-      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase }
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno-analytics", icon: Briefcase }
     ]
   },
   {
@@ -88,15 +88,15 @@ const skillMappings = [
   {
     skill: "SQL",
     experiences: [
-      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase },
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno-analytics", icon: Briefcase },
       { title: "Application Developer", company: "Patelco", id: "patelco", icon: Briefcase },
       { title: "Solutions Architect Intern", company: "NetApp", id: "netapp", icon: Briefcase }
     ],
     projects: [
-      { title: "Ares", subtitle: "Security Compliance Platform", id: "ares", icon: Zap }
+      { title: "Ares", subtitle: "Security Compliance Platform", id: "ares-project", icon: Zap }
     ],
     education: [
-      { title: "B.S. Software Engineering", institution: "San Jose State University", id: "sjsu", icon: GraduationCap }
+      { title: "B.S. Software Engineering", institution: "San Jose State University", id: "sjsu-bachelors", icon: GraduationCap }
     ]
   },
     {
@@ -108,53 +108,53 @@ const skillMappings = [
     {
     skill: "HTML",
     experiences: [
-      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase },
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno-analytics", icon: Briefcase },
       { title: "Application Developer", company: "Patelco", id: "patelco", icon: Briefcase },
       { title: "Solutions Architect Intern", company: "NetApp", id: "netapp", icon: Briefcase }
     ],
     projects: [
-      { title: "Ares", subtitle: "Security Compliance Platform", id: "ares", icon: Zap },
-      { title: "Cryptocurrency Forecasting", subtitle: "ML Prediction Model", id: "crypto", icon: Zap }
+      { title: "Ares", subtitle: "Security Compliance Platform", id: "ares-project", icon: Zap },
+      { title: "Cryptocurrency Forecasting", subtitle: "ML Prediction Model", id: "crypto-forecasting-project", icon: Zap }
     ],
     education: [
-      { title: "B.S. Software Engineering", institution: "San Jose State University", id: "sjsu", icon: GraduationCap }
+      { title: "B.S. Software Engineering", institution: "San Jose State University", id: "sjsu-bachelors", icon: GraduationCap }
     ]
   },
       {
     skill: "CSS",
     experiences: [
-      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase },
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno-analytics", icon: Briefcase },
       { title: "Application Developer", company: "Patelco", id: "patelco", icon: Briefcase },
       { title: "Solutions Architect Intern", company: "NetApp", id: "netapp", icon: Briefcase }
     ],
     projects: [
-      { title: "Ares", subtitle: "Security Compliance Platform", id: "ares", icon: Zap },
-      { title: "Cryptocurrency Forecasting", subtitle: "ML Prediction Model", id: "crypto", icon: Zap }
+      { title: "Ares", subtitle: "Security Compliance Platform", id: "ares-project", icon: Zap },
+      { title: "Cryptocurrency Forecasting", subtitle: "ML Prediction Model", id: "crypto-forecasting-project", icon: Zap }
     ],
     education: [
-      { title: "B.S. Software Engineering", institution: "San Jose State University", id: "sjsu", icon: GraduationCap }
+      { title: "B.S. Software Engineering", institution: "San Jose State University", id: "sjsu-bachelors", icon: GraduationCap }
     ]
   },
   {
     skill: "Java",
     education: [
-      { title: "B.S. Software Engineering", institution: "San Jose State University", id: "sjsu", icon: GraduationCap }
+      { title: "B.S. Software Engineering", institution: "San Jose State University", id: "sjsu-bachelors", icon: GraduationCap }
     ]
   },
     {
     skill: "C",
       projects: [
-      { title: "Qode", subtitle: "Quantum Programming Language", id: "qode", icon: Zap },
+      { title: "Qode", subtitle: "Quantum Programming Language", id: "qode-project", icon: Zap },
     ]
   },
   {
     skill: "JavaScript",
     experiences: [
-      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase },
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno-analytics", icon: Briefcase },
       { title: "Application Developer", company: "Patelco", id: "patelco", icon: Briefcase }
     ],
       projects: [
-      { title: "Qode", subtitle: "Quantum Programming Language", id: "qode", icon: Zap },
+      { title: "Qode", subtitle: "Quantum Programming Language", id: "qode-project", icon: Zap },
     ]
   },
   {
@@ -172,10 +172,10 @@ const skillMappings = [
   {
     skill: "AWS",
     experiences: [
-      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase }
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno-analytics", icon: Briefcase }
     ],
     education: [
-      { title: "AWS Cloud Practitioner Certification", institution: "Amazon Web Services", id: "aws", icon: GraduationCap }
+      { title: "AWS Cloud Practitioner Certification", institution: "Amazon Web Services", id: "aws-cloud-practitioner", icon: GraduationCap }
     ]
   },
   {
@@ -184,7 +184,7 @@ const skillMappings = [
       { title: "Solutions Architect Intern", company: "NetApp", id: "netapp", icon: Briefcase }
     ],
     projects: [
-      { title: "Cryptocurrency Forecasting", subtitle: "ML Prediction Model", id: "crypto", icon: Zap }
+      { title: "Cryptocurrency Forecasting", subtitle: "ML Prediction Model", id: "crypto-forecasting-project", icon: Zap }
     ]
   },
   {
@@ -202,93 +202,93 @@ const skillMappings = [
   {
     skill: "PostgreSQL",
     experiences: [
-      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase }
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno-analytics", icon: Briefcase }
     ]
   },
   {
     skill: "GCP",
     experiences: [
-      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase }
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno-analytics", icon: Briefcase }
     ]
   },
   {
     skill: "TailwindCSS",
     experiences: [
-      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase }
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno-analytics", icon: Briefcase }
     ]
   },
   {
     skill: "Rust",
     projects: [
-      { title: "Ares", subtitle: "Security Compliance Platform", id: "ares", icon: Zap }
+      { title: "Ares", subtitle: "Security Compliance Platform", id: "ares-project", icon: Zap }
     ]
   },
   {
     skill: "LLMs",
     experiences: [
-      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase }
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno-analytics", icon: Briefcase }
     ],
     projects: [
-      { title: "Ares", subtitle: "Security Compliance Platform", id: "ares", icon: Zap }
+      { title: "Ares", subtitle: "Security Compliance Platform", id: "ares-project", icon: Zap }
     ]
   },
   {
     skill: "Sklearn",
     experiences: [
-      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase }
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno-analytics", icon: Briefcase }
     ],
     projects: [
-      { title: "Cryptocurrency Forecasting", subtitle: "ML Prediction Model", id: "crypto", icon: Zap }
+      { title: "Cryptocurrency Forecasting", subtitle: "ML Prediction Model", id: "crypto-forecasting-project", icon: Zap }
     ]
   },
   {
     skill: "Tensorflow",
     experiences: [
-      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase }
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno-analytics", icon: Briefcase }
     ],
     projects: [
-      { title: "Cryptocurrency Forecasting", subtitle: "ML Prediction Model", id: "crypto", icon: Zap }
+      { title: "Cryptocurrency Forecasting", subtitle: "ML Prediction Model", id: "crypto-forecasting-project", icon: Zap }
     ]
   },
   {
     skill: "Pytorch",
     projects: [
-      { title: "Cryptocurrency Forecasting", subtitle: "ML Prediction Model", id: "crypto", icon: Zap }
+      { title: "Cryptocurrency Forecasting", subtitle: "ML Prediction Model", id: "crypto-forecasting-project", icon: Zap }
     ]
   },
   {
     skill: "Docker",
     experiences: [
       { title: "Solutions Architect Intern", company: "NetApp", id: "netapp", icon: Briefcase },
-      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase }
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno-analytics", icon: Briefcase }
     ]
   },
   {
     skill: "Github",
     experiences: [
-      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase },
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno-analytics", icon: Briefcase },
       { title: "Application Developer", company: "Patelco", id: "patelco", icon: Briefcase },
       { title: "Solutions Architect Intern", company: "NetApp", id: "netapp", icon: Briefcase }
     ],
     education: [
-      { title: "B.S. Software Engineering", institution: "San Jose State University", id: "sjsu", icon: GraduationCap }
+      { title: "B.S. Software Engineering", institution: "San Jose State University", id: "sjsu-bachelors", icon: GraduationCap }
     ]
   },
   {
     skill: "Git",
     experiences: [
-      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase },
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno-analytics", icon: Briefcase },
       { title: "Application Developer", company: "Patelco", id: "patelco", icon: Briefcase },
       { title: "Solutions Architect Intern", company: "NetApp", id: "netapp", icon: Briefcase }
     ],
     education: [
-      { title: "B.S. Software Engineering", institution: "San Jose State University", id: "sjsu", icon: GraduationCap }
+      { title: "B.S. Software Engineering", institution: "San Jose State University", id: "sjsu-bachelors", icon: GraduationCap }
     ]
   },
   {
     skill: "REST API",
     experiences: [
-      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase },
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno-analytics", icon: Briefcase },
       { title: "Application Developer", company: "Patelco", id: "patelco", icon: Briefcase },
       { title: "Solutions Architect Intern", company: "NetApp", id: "netapp", icon: Briefcase }
     ]
@@ -296,7 +296,7 @@ const skillMappings = [
   {
     skill: "GraphQL",
     experiences: [
-      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno", icon: Briefcase }
+      { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno-analytics", icon: Briefcase }
     ]
   },
 ]

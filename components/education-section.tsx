@@ -9,6 +9,7 @@ import { useState } from "react"
 
 const educationData = [
 	{
+		id: "bu-masters",
 		degree: "M.S. in Computer Science",
 		institution: "Boston University",
 		period: "Present",
@@ -20,6 +21,7 @@ const educationData = [
 		logo: "/bu-logo.png",
 	},
 	{
+		id: "sjsu-bachelors",
 		degree: "B.S. in Software Engineering",
 		institution: "San Jose State University",
 		period: "08/2018 – 12/2022",
@@ -41,6 +43,7 @@ const educationData = [
 
 const certificationData = [
 	{
+		id: "aws-cloud-practitioner",
 		title: "AWS Cloud Practitioner Certification",
 		issuer: "Amazon Web Services",
 		period: "02/2023",
@@ -159,7 +162,7 @@ export function EducationSection() {
 										transition={{ duration: 0.5, delay: index * 0.1 }}
 										viewport={{ once: true }}
 									>
-										<Card className="border border-slate-700/30 bg-slate-900/90 backdrop-blur-sm shadow-xl rounded-xl transition-all duration-500 group overflow-hidden">
+										<Card data-item-id={edu.id} className="border border-slate-700/30 bg-slate-900/90 backdrop-blur-sm shadow-xl rounded-xl transition-all duration-500 group overflow-hidden">
 											<CardContent className="p-0">
 												<div className="flex items-start gap-4 p-6">
 													{/* Logo */}
@@ -323,7 +326,7 @@ export function EducationSection() {
 									transition={{ duration: 0.5, delay: index * 0.1 }}
 									viewport={{ once: true }}
 								>
-									<Card className="border border-slate-700/30 bg-slate-900/90 backdrop-blur-sm shadow-xl rounded-xl transition-all duration-300 group">
+									<Card data-item-id={cert.id} className="border border-slate-700/30 bg-slate-900/90 backdrop-blur-sm shadow-xl rounded-xl transition-all duration-300 group">
 										<CardContent className="p-0">
 											<div className="flex items-start gap-4 p-6">
 												{/* Logo */}

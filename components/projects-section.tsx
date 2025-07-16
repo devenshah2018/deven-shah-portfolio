@@ -11,6 +11,7 @@ import { useState } from "react"
 
 const projects = [
 	{
+		id: "qode-project",
 		title: "Qode",
 		subtitle: "Quantum Programming Language",
 		period: "10/2024 – Present",
@@ -28,6 +29,7 @@ const projects = [
 		],
 	},
 	{
+		id: "ares-project",
 		title: "Ares",
 		subtitle: "Security Compliance Platform",
 		period: "01/2024 – 08/2024",
@@ -47,6 +49,7 @@ const projects = [
 		],
 	},
 	{
+		id: "crypto-forecasting-project",
 		title: "Cryptocurrency Forecasting",
 		subtitle: "ML Prediction Model",
 		period: "01/2022 – 12/2022",
@@ -121,7 +124,7 @@ export function ProjectsSection() {
 								viewport={{ once: true }}
 								className="group relative"
 							>
-								<Card className="h-full flex flex-col border border-slate-800 bg-slate-900/80 shadow-lg rounded-xl overflow-hidden relative transition-all duration-400 min-h-[340px]">
+								<Card data-item-id={project.id} className="h-full flex flex-col border border-slate-800 bg-slate-900/80 shadow-lg rounded-xl overflow-hidden relative transition-all duration-400 min-h-[340px]">
 									{/* Top Accent Bar */}
 									<div className={`absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r ${project.gradient} z-10`} />
 									{/* Icon and Title Row */}

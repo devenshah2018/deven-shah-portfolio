@@ -9,6 +9,7 @@ import { motion } from "framer-motion"
 
 const experiences = [
 	{
+		id: "suno-analytics",
 		title: "Co-Founder/CTO",
 		company: "Suno Analytics",
 		companyLogo: "/suno-logo.jpeg",
@@ -28,6 +29,7 @@ const experiences = [
 		link: "https://www.sunoanalytics.com",
 	},
 	{
+		id: "patelco",
 		title: "Application Developer",
 		company: "Patelco",
 		companyLogo: "/patelco-logo.png",
@@ -46,6 +48,7 @@ const experiences = [
 		link: "https://www.patelco.org",
 	},
 	{
+		id: "netapp",
 		title: "Solutions Architect Intern",
 		company: "NetApp",
 		companyLogo: "/netapp-logo.png",
@@ -111,7 +114,10 @@ export function ExperienceSection() {
 								transition={{ duration: 0.6, delay: index * 0.1 }}
 								viewport={{ once: true }}
 							>
-								<Card className="border border-slate-800 bg-slate-900/50 backdrop-blur-sm shadow-2xl rounded-2xl hover:shadow-blue-500/10 transition-all duration-500 overflow-hidden group">
+								<Card 
+									className="border border-slate-800 bg-slate-900/50 backdrop-blur-sm shadow-2xl rounded-2xl hover:shadow-blue-500/10 transition-all duration-500 overflow-hidden group"
+									data-item-id={exp.id}
+								>
 									<CardContent className="p-4 sm:p-8">
 										<div className="flex flex-col lg:flex-row lg:items-start gap-6 sm:gap-8">
 											{/* Left Column - Main Info */}
