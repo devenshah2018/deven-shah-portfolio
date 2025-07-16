@@ -684,9 +684,9 @@ TERM"
                 </Button>
               </div>
             </div>
-            <div className="flex-1 relative">
-              <ScrollArea className="absolute inset-0">
-                <div className="h-[70vh] w-full p-4 text-sm overflow-auto bg-black text-slate-300 font-mono leading-relaxed space-y-1">
+            <div className="flex-1 relative min-h-[200px]">
+              <ScrollArea className="absolute inset-0 h-full w-full">
+                <div className="min-h-full h-full w-full p-4 text-sm overflow-auto bg-black text-slate-300 font-mono leading-relaxed space-y-1">
                   {output.split('\n').map((line, index) => (
                     <div key={index} className="flex items-start gap-2">
                       {/* Line number */}
