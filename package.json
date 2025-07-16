@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@calcom/atoms": "^1.1.1",
+    "@calcom/embed-react": "^1.5.3",
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
     "@fortawesome/free-brands-svg-icons": "^6.7.2",
     "@fortawesome/react-fontawesome": "^0.2.2",

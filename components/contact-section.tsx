@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -10,6 +10,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faXTwitter } from "@fortawesome/free-brands-svg-icons"
 import { motion } from "framer-motion"
 import { useState } from "react"
+import "@calcom/atoms/globals.min.css"
+import { getCalApi } from "@calcom/embed-react"
 
 export function ContactSection() {
   const [formData, setFormData] = useState({
@@ -19,6 +21,13 @@ export function ContactSection() {
     message: "",
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
+
+    useEffect(() => {
+    (async function () {
+      const cal = await getCalApi({"namespace":"quick-chat"});
+      cal("ui", {"hideEventTypeDetails":false,"layout":"month_view"});
+    })();
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -120,31 +129,61 @@ export function ContactSection() {
             viewport={{ once: true }}
             className="mb-16"
           >
-            <Card className="bg-gradient-to-br from-blue-950/80 via-slate-900/90 to-indigo-950/80 border-0 shadow-2xl rounded-2xl transition-all duration-500 relative overflow-hidden">
-              {/* Animated Glow Accent */}
-              <div className="absolute -top-8 -left-8 w-40 h-40 bg-gradient-to-br from-blue-500/30 via-indigo-400/20 to-transparent rounded-full blur-2xl opacity-70 animate-pulse z-0" aria-hidden="true" />
+            <Card className="bg-slate-900/95 border-0 shadow-2xl rounded-2xl transition-all duration-500 relative overflow-hidden">
               <CardContent className="py-6 px-5 md:px-10 flex flex-col md:flex-row items-center md:items-center justify-between gap-6 md:gap-8 relative z-10">
                 <div className="flex-1 text-center md:text-left">
                   <h3 className="text-2xl font-extrabold text-white mb-2 flex items-center gap-3 justify-center md:justify-start tracking-tight">
                     <CalendarCheck2 className="h-7 w-7 text-blue-400" />
-                    Schedule a Call
+                    Book a Call
                   </h3>
                   <p className="text-base text-slate-200 font-light max-w-xl mx-auto md:mx-0">
                     Book a quick chat to discuss opportunities, collaborations, or just to talk tech.
                   </p>
                 </div>
-                <div className="flex-shrink-0 flex justify-center md:justify-end w-full md:w-auto">
-                  <Button
-                    size="lg"
-                    className="w-full md:w-auto min-w-[180px] bg-blue-600 hover:bg-blue-700 focus-visible:ring-4 focus-visible:ring-blue-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 text-white border-0 px-8 py-4 text-lg font-bold shadow-xl transition-all duration-200 rounded-full flex items-center justify-center gap-2 outline-none ring-0"
-                    onClick={() => window.open("https://cal.com/deven-shah-l0qkjk/quick-chat", "_blank")}
-                    style={{ fontSize: '1.15rem' }}
-                    aria-label="Book a call with Deven Shah via Cal.com"
-                    tabIndex={0}
-                  >
-                    <CalendarCheck2 className="mr-3 h-5 w-5" aria-hidden="true" />
-                    Book a Call
-                  </Button>
+                <div className="flex-shrink-0 flex flex-col items-center md:items-end w-full md:w-auto gap-3">
+                  <div className="flex flex-row gap-3 w-full md:w-auto">
+                    <Button
+                      data-cal-namespace="quick-chat"
+                      data-cal-link="deven-shah-l0qkjk/quick-chat"
+                      data-cal-config='{"layout":"month_view"}'
+                      size="lg"
+                      className="w-full md:w-auto min-w-[180px] bg-blue-600 hover:bg-blue-700 focus-visible:ring-4 focus-visible:ring-blue-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 text-white border-0 px-8 py-4 text-lg font-bold shadow-xl transition-all duration-200 rounded-full flex items-center justify-center gap-2 outline-none ring-0"
+                      aria-controls="cal-embed-container"
+                      aria-label="Show calendar to select a time with Deven Shah"
+                      tabIndex={0}
+                    >
+                      <CalendarCheck2 className="mr-3 h-5 w-5" aria-hidden="true" />
+                      Select a Time
+                    </Button>
+                    <Button
+                      asChild
+                      size="lg"
+                      className="w-full md:w-auto min-w-[56px] px-4 py-4 bg-slate-800 text-white border-0 text-lg font-bold shadow-xl transition-all duration-200 rounded-full flex items-center justify-center gap-2 outline-none ring-0"
+                      aria-label="Open Cal.com calendar in a new tab"
+                      tabIndex={0}
+                    >
+                      <a
+                        href="https://cal.com/deven-shah-l0qkjk/quick-chat?overlayCalendar=true"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={2}
+                          stroke="currentColor"
+                          className="h-5 w-5"
+                          aria-hidden="true"
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M18 13V19a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M15 3h6m0 0v6m0-6L10 14" />
+                        </svg>
+                        <span className="sr-only">Open in new tab</span>
+                      </a>
+                    </Button>
+                  </div>
                 </div>
               </CardContent>
             </Card>
