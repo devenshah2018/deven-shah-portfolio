@@ -122,6 +122,16 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
   const interpreterLoadedRef = useRef(false)
   const isLoadingRef = useRef(false)
 
+  // Detect OS for hotkey badge
+  const [hotkeyLabel, setHotkeyLabel] = useState<'Cmd' | 'Ctrl'>('Cmd');
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const platform = window.navigator.platform.toLowerCase();
+      if (platform.includes('mac')) setHotkeyLabel('Cmd');
+      else setHotkeyLabel('Ctrl');
+    }
+  }, []);
+
   // Load the Qode WASM interpreter when the modal opens
   useEffect(() => {
     if (open && !interpreterLoadedRef.current && !isLoadingRef.current) {
@@ -129,6 +139,20 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
       loadQodeInterpreter()
     }
   }, [open])
+
+  // Hotkey handler for running code
+  useEffect(() => {
+    if (!open) return;
+    const handler = (e: KeyboardEvent) => {
+      const isMac = hotkeyLabel === 'Cmd';
+      if ((isMac ? e.metaKey : e.ctrlKey) && e.key === 'Enter') {
+        e.preventDefault();
+        if (!isRunning) runQodeProgram();
+      }
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [open, isRunning, hotkeyLabel]);
 
   const loadQodeWasmLoader = async () => {
     return new Promise((resolve, reject) => {
@@ -516,7 +540,7 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
                 size="sm"
                 onClick={runQodeProgram}
                 disabled={isRunning}
-                className="bg-green-600 hover:bg-green-700 focus:bg-green-700 text-white text-sm h-7 px-3"
+                className="bg-green-600 hover:bg-green-700 focus:bg-green-700 text-white text-sm h-7 px-3 relative"
               >
                 {isRunning ? (
                   <>
@@ -526,7 +550,10 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
                 ) : (
                   <>
                     <Play className="mr-2 h-3 w-3" />
-                    Run Code
+                    Run
+                    <span className="ml-2 text-xs text-green-100 font-mono tracking-tight align-middle" style={{fontSize:'11px',marginLeft:'6px'}}>
+                      {hotkeyLabel}+Enter
+                    </span>
                   </>
                 )}
               </Button>
