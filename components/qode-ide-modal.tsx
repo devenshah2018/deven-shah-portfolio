@@ -100,7 +100,7 @@ TERM`,
 TERM`,
 
   compact: `#> $Compact_Syntax_Demo
-q1 q2 !X q1 !H q1 !I q1 !Y q2 !I q2 #> $Compact_Demo_Complete TERM`,
+!X q1 !H q1 !I q1 !Y q2 !I q2 #> $Compact_Demo_Complete TERM`,
 }
 
 export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
@@ -193,9 +193,6 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
               "=====================================\n\n" +
               "SYSTEM STATUS: OPERATIONAL\n" +
               "INTERPRETER: WebAssembly Ready\n" +
-              "QUANTUM GATES: H, X, Y, Z, S, I\n" +
-              "ANALYSIS: Real-time probability calculation\n" +
-              `MODE: ${module.simulation ? "Simulation" : "Hardware"}\n\n` +
               "Ready for quantum program execution.\n",
           )
         }
@@ -332,7 +329,7 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
           qubitState.state = "(|0⟩ + |1⟩)/√2"
           qubitState.prob0 = 0.5
           qubitState.prob1 = 0.5
-          output += `Hadamard gate applied to qubit ${qubit}: superposition state created\n`
+          output += `Hadamard gate applied to qubit ${qubit}\n`
           operationLog.push(`Hadamard gate operation to qubit ${qubit}`)
         }
       }
@@ -346,7 +343,7 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
           qubitState.prob0 = qubitState.prob1
           qubitState.prob1 = temp
           qubitState.state = qubitState.prob0 > qubitState.prob1 ? "|0⟩" : "|1⟩"
-          output += `Pauli-X gate applied to qubit ${qubit}: computational basis state flipped\n`
+          output += `Pauli-X gate applied to qubit ${qubit}\n`
           operationLog.push(`Pauli-X gate operation to qubit ${qubit}`)
         }
       }
@@ -361,7 +358,7 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
           qubitState.prob0 = qubitState.prob1
           qubitState.prob1 = temp
           qubitState.state = "i|0⟩ - i|1⟩"
-          output += `Pauli-Y gate applied to qubit ${qubit}: rotation about Y-axis with phase\n`
+          output += `Pauli-Y gate applied to qubit ${qubit}\n`
           operationLog.push(`Pauli-Y gate operation to qubit ${qubit}`)
         }
       }
@@ -372,7 +369,7 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
           operations++
           const qubitState = qubits.get(qubit)!
           qubitState.state = qubitState.prob1 > 0 ? "|0⟩ - |1⟩" : "|0⟩"
-          output += `Pauli-Z gate applied to qubit ${qubit}: phase flip on |1⟩ component\n`
+          output += `Pauli-Z gate applied to qubit ${qubit}\n`
           operationLog.push(`Pauli-Z gate operation to qubit ${qubit}`)
         }
       }
@@ -383,7 +380,7 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
           operations++
           const qubitState = qubits.get(qubit)!
           qubitState.state = qubitState.prob1 > 0 ? "|0⟩ + i|1⟩" : "|0⟩"
-          output += `Phase-S gate applied to qubit ${qubit}: π/2 phase shift applied\n`
+          output += `Phase-S gate applied to qubit ${qubit}\n`
           operationLog.push(`Phase-S gate operation to qubit ${qubit}`)
         }
       }
@@ -519,7 +516,7 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
                 size="sm"
                 onClick={runQodeProgram}
                 disabled={isRunning}
-                className="bg-blue-600 hover:bg-blue-700 text-white text-sm h-7 px-3"
+                className="bg-green-600 hover:bg-green-700 focus:bg-green-700 text-white text-sm h-7 px-3"
               >
                 {isRunning ? (
                   <>
@@ -707,7 +704,7 @@ TERM"
                             // Special output for #> user console log lines and simulated $> lines
                             const logText = line.replace('#> $', '').replace(/_/g, ' ')
                             return (
-                              <div key={index} className="h-6 flex items-center py-0.5 bg-slate-800/40 rounded px-2">
+                              <div key={index} className="h-6 flex items-center py-0.5 rounded px-2">
                                 <span className="text-blue-200 font-normal text-[13px] tracking-tight mr-2">→</span>
                                 <span className="text-blue-200 font-normal text-[13px] tracking-tight">{logText}</span>
                               </div>
