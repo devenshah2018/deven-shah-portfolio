@@ -99,7 +99,7 @@ export function ProjectsSection() {
 							whileInView={{ opacity: 1, y: 0 }}
 							transition={{ duration: 0.6 }}
 							viewport={{ once: true }}
-							className="text-4xl sm:text-5xl font-extrabold mb-2 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent tracking-tight"
+							className="text-4xl sm:text-5xl font-extrabold mb-2 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent tracking-tight uppercase"
 						>
 							Featured Projects
 						</motion.h2>

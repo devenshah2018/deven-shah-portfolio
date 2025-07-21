@@ -463,82 +463,72 @@ export function GuidedTour() {
         {!isTransitioning && (
           <motion.div
             key={currentStep}
-            initial={{ opacity: 0, scale: 0.9, x: 20 }}
-            animate={{ opacity: 1, scale: 1, x: 0 }}
-            exit={{ opacity: 0, scale: 0.9, x: 20 }}
-            transition={{ 
-              duration: 0.3,
-              ease: "easeInOut"
-            }}
+            initial={{ opacity: 0, scale: 0.97, y: 16 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.97, y: 16 }}
+            transition={{ duration: 0.22, ease: "easeInOut" }}
             className="fixed z-[101] tour-tooltip-container"
             style={{
               ...tooltipPosition,
               pointerEvents: 'auto'
             }}
           >
-            <Card className="bg-slate-900/95 border-slate-700 shadow-2xl backdrop-blur-xl tour-tooltip w-full h-[280px] flex flex-col">
-              <CardContent className="p-4 flex flex-col h-full">
+            <Card className="bg-slate-900/95 border border-slate-700 shadow-2xl tour-tooltip w-full max-w-[380px] h-auto flex flex-col rounded-2xl p-0">
+              <CardContent className="p-6 flex flex-col h-full">
                 {/* Header */}
-                <div className="flex items-center justify-between mb-3 flex-shrink-0">
+                <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-2 min-w-0">
                     {getStepIcon()}
-                    <h3 className="text-sm font-bold text-white tour-tooltip-title truncate">
+                    <h3 className="text-base font-bold text-white truncate">
                       {currentStepData.title}
                     </h3>
                   </div>
                   <Button
                     variant="ghost"
-                    size="sm"
+                    size="icon"
                     onClick={handleCloseTour}
-                    className="text-slate-400 hover:text-white hover:bg-slate-800 flex-shrink-0 h-6 w-6 p-0"
+                    className="text-slate-400 hover:text-white hover:bg-slate-800 h-7 w-7 p-0"
                   >
-                    <X className="h-3 w-3" />
+                    <X className="h-4 w-4" />
                   </Button>
                 </div>
 
                 {/* Progress Bar */}
-                <div className="mb-3 flex-shrink-0">
-                  <div className="flex justify-between text-xs text-slate-400 mb-1">
-                    <span>Progress</span>
-                    <span>{currentStep + 1} of {tourSteps.length}</span>
-                  </div>
+                <div className="mb-4">
                   <div className="w-full bg-slate-800 rounded-full h-1.5">
-                    <div 
+                    <div
                       className="bg-gradient-to-r from-blue-500 to-cyan-500 h-1.5 rounded-full transition-all duration-500"
                       style={{ width: `${((currentStep + 1) / tourSteps.length) * 100}%` }}
                     />
                   </div>
-                </div>
-                
-                {/* Content - flexible height */}
-                <div className="flex-1 flex flex-col justify-between">
-                  <p className="text-slate-300 leading-relaxed text-xs tour-tooltip-content mb-3">
-                    {currentStepData.content}
-                  </p>
-
-                  {/* Keyboard navigation hint */}
-                  <div className="text-xs text-slate-500 mb-3 font-mono flex-shrink-0">
-                    💡 Use arrow keys • ESC to close
+                  <div className="flex justify-between text-xs text-slate-400 mt-1">
+                    <span>Step {currentStep + 1} of {tourSteps.length}</span>
                   </div>
                 </div>
-                
+
+                {/* Content */}
+                <div className="flex-1 flex flex-col justify-center mb-6">
+                  <p className="text-slate-200 text-sm leading-relaxed">
+                    {currentStepData.content}
+                  </p>
+                </div>
+
                 {/* Navigation */}
-                <div className="flex justify-between items-center gap-2 flex-shrink-0">
+                <div className="flex justify-between items-center gap-2 mt-auto">
                   <Button
                     variant="outline"
                     onClick={prevStep}
                     disabled={currentStep === 0 || isTransitioning}
-                    className="bg-slate-800 border-slate-600 text-slate-300 hover:bg-slate-700 hover:text-white disabled:opacity-50 text-xs h-8 px-3"
+                    className="border-slate-700 text-slate-400 hover:bg-slate-800 hover:text-white disabled:opacity-50 text-xs h-8 px-4 rounded-lg"
                   >
                     <ChevronLeft className="h-3 w-3 mr-1" />
                     Previous
                   </Button>
-                  
                   <div className="flex gap-2">
                     {currentStep === tourSteps.length - 1 ? (
                       <Button
                         onClick={handleCloseTour}
-                        className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-semibold text-xs h-8 px-3"
+                        className="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs h-8 px-4 rounded-lg shadow-none"
                       >
                         Finish Tour
                       </Button>
@@ -546,7 +536,7 @@ export function GuidedTour() {
                       <Button
                         onClick={nextStep}
                         disabled={isTransitioning}
-                        className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-semibold text-xs h-8 px-3"
+                        className="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs h-8 px-4 rounded-lg shadow-none"
                       >
                         Next
                         <ChevronRight className="h-3 w-3 ml-1" />

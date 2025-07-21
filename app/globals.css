@@ -150,59 +150,16 @@ html {
 /* Highlighted element styling */
 .tour-highlight {
   position: relative;
-  z-index: 75;
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.8), 0 0 25px rgba(0, 123, 255, 0.6);
-  border-radius: 12px;
-  transition: all 0.3s ease-in-out;
-  animation: tour-pulse 2s ease-in-out infinite;
+  z-index: 50 !important;
+  box-shadow: 0 0 0 2px #0090ff, 0 2px 12px 0 rgba(0,144,255,0.10);
+  border-radius: 12px !important;
+  border: 2px solid #0090ff !important;
+  transition: box-shadow 0.18s cubic-bezier(0.4,0,0.2,1), border-color 0.18s cubic-bezier(0.4,0,0.2,1);
 }
 
-@keyframes tour-pulse {
-  0%, 100% {
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.8), 0 0 25px rgba(0, 123, 255, 0.6);
-  }
-  50% {
-    box-shadow: 0 0 0 6px rgba(0, 123, 255, 0.9), 0 0 35px rgba(0, 123, 255, 0.8);
-  }
-}
-
-.tour-highlight::before {
-  content: '';
-  position: absolute;
-  top: -12px;
-  left: -12px;
-  right: -12px;
-  bottom: -12px;
-  background: transparent;
-  border-radius: 16px;
-  z-index: -1;
-}
-
+.tour-highlight::before,
 .tour-highlight::after {
-  content: '';
-  position: absolute;
-  top: -8px;
-  left: -8px;
-  right: -8px;
-  bottom: -8px;
-  background: linear-gradient(45deg, 
-    rgba(0, 123, 255, 0.2) 0%, 
-    rgba(0, 149, 255, 0.2) 50%, 
-    rgba(0, 123, 255, 0.2) 100%);
-  border-radius: 16px;
-  z-index: -1;
-  animation: tour-glow 1.5s ease-in-out infinite alternate;
-}
-
-@keyframes tour-glow {
-  0% {
-    opacity: 0.4;
-    transform: scale(1);
-  }
-  100% {
-    opacity: 0.8;
-    transform: scale(1.02);
-  }
+  display: none !important;
 }
 
 /* Toast-style tour tooltip - override existing styles */
