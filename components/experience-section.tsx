@@ -115,7 +115,7 @@ export function ExperienceSection() {
 								viewport={{ once: true }}
 							>
 								<Card 
-									className="border border-slate-800 bg-slate-900/50 backdrop-blur-sm shadow-2xl rounded-2xl hover:shadow-blue-500/10 transition-all duration-500 overflow-hidden group"
+									className="border border-slate-800 bg-slate-900/50 backdrop-blur-sm shadow-2xl rounded-2xl transition-all duration-500 overflow-hidden group"
 									data-item-id={exp.id}
 								>
 									<CardContent className="p-4 sm:p-8">
