@@ -19,10 +19,9 @@ const experiences = [
 			"Built an e-commerce analytics platform offering deep insights and AI agents for inventory management.",
 		achievements: [
 			"Led a global development team, improving project timelines and consistently delivering key initiatives to clients",
-			"Generated leads and conduct client demos, driving engagement with companies up to $50M ARR",
+			"Conduct client discovery and demos, driving engagement with companies up to $50M ARR",
 			"Developed AI agents via LangGraph, intuitive interfaces using React, and scalable PostgreSQL backend systems",
-			"Created data tools that streamline reporting, aiding client decision-making processes",
-			"Analyzed market trends to refine strategies, increasing brand visibility through targeted campaigns",
+			"Created data tools that streamline reporting, aiding client decision-making processes"
 		],
 		featured: true,
 		gradient: "from-blue-500 to-cyan-500",
@@ -36,7 +35,7 @@ const experiences = [
 		location: "San Francisco, CA",
 		period: "04/2023 – 04/2024",
 		description:
-			"Responsible for developing full-stack applications using Agile to streamline the acquisition of new Patelco members.",
+			"Responsible for developing full-stack applications to streamline the acquisition of new Patelco members.",
 		achievements: [
 			"Developed full-stack features using Azure and ASP.NET, improving member acquisition with SFDC expertise",
 			"Lead administrative tool development for acquisition monitoring, ensuring alignment with business needs",
@@ -55,7 +54,7 @@ const experiences = [
 		location: "San Jose, CA",
 		period: "05/2021 – 12/2022",
 		description:
-			"Automated storage array data management and supported sales meetings by gathering client requirements.",
+			"Automated big data management and supported sales meetings by gathering client requirements.",
 		achievements: [
 			"Automated data backup solutions, cutting RMAN time by 50% using Oracle and ONTAP expertise",
 			"Developed scripts for performance insights, enhancing data analysis with Oracle and SQL skills",

@@ -31,7 +31,7 @@ const tourSteps = [
     id: "experience-current",
     title: "Current Role - Co-Founder/CTO",
     content: "This is the culmination of everything I've learned from leading global teams, building AI agents with LangGraph, to working with $50M+ brands. It's where I bring vision to life.",
-    target: "#experience .space-y-8 > div:first-child",
+    target: '[data-item-id="suno-analytics"]',
     position: "right",
     showProgress: true,
     type: "experience"
@@ -40,7 +40,7 @@ const tourSteps = [
     id: "experience-patelco",
     title: "Full-Stack Development at Patelco",
     content: "This role sharpened my ability to deliver real-world impact, from winning a hackathon to automating fraud detection. It was my proving ground in high-stakes environments.",
-    target: "#experience .space-y-8 > div:nth-child(2)",
+    target: '[data-item-id="patelco"]',
     position: "left",
     showProgress: true,
     type: "experience"
@@ -49,7 +49,7 @@ const tourSteps = [
     id: "experience-netapp",
     title: "Starting as an Intern at NetApp",
     content: "Every journey starts somewhere. Mine began at NetApp. It taught me how scalable systems work and sparked my obsession with automation and optimization.",
-    target: "#experience .space-y-8 > div:nth-child(3)",
+    target: '[data-item-id="netapp"]',
     position: "right",
     showProgress: true,
     type: "experience"
