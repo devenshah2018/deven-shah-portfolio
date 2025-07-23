@@ -116,24 +116,26 @@ export function ProjectsSection() {
 					viewport={{ once: true }}
 				>
 					<div className="text-center mb-10 sm:mb-16">
-						<motion.h2
+												<motion.div
 							initial={{ opacity: 0, y: 20 }}
 							whileInView={{ opacity: 1, y: 0 }}
 							transition={{ duration: 0.6 }}
 							viewport={{ once: true }}
-							className="text-3xl sm:text-4xl font-bold mb-2 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent tracking-tight"
+							className="mb-4"
 						>
-							Featured Projects
-						</motion.h2>
-						<div className="h-1 w-14 bg-gradient-to-r from-blue-500 via-cyan-500 to-teal-400 mx-auto rounded-full mb-3" />
+							<h2 className="text-4xl sm:text-5xl font-bold mb-2 bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent tracking-tight">
+								Featured Projects
+							</h2>
+							<div className="h-1 w-16 bg-gradient-to-r from-blue-500 to-indigo-500 mx-auto rounded-full" />
+							</motion.div>
 						<motion.p
 							initial={{ opacity: 0, y: 20 }}
 							whileInView={{ opacity: 1, y: 0 }}
 							transition={{ duration: 0.6, delay: 0.2 }}
 							viewport={{ once: true }}
-							className="text-base sm:text-lg text-slate-400 max-w-xl mx-auto font-normal leading-relaxed"
+							className="text-base sm:text-lg text-slate-400 max-w-3xl mx-auto font-light leading-relaxed"
 						>
-							Explore my most impactful work—each project blends innovation, clarity, and modern engineering. Every card is interactive and accessible.
+							 Quantum, security, and ML—each project is a leap forward.
 						</motion.p>
 					</div>
 					<div className="grid grid-cols-1 gap-8">
@@ -146,7 +148,7 @@ export function ProjectsSection() {
 								viewport={{ once: true }}
 								className="group relative"
 							>
-								<Card data-item-id={project.id} className="flex flex-row items-center border border-slate-800 bg-slate-950 shadow-lg rounded-xl overflow-hidden relative transition-all duration-400 min-h-[110px] px-5 py-4 gap-6 focus-within:ring-2 focus-within:ring-blue-500/60 group">
+								<Card data-item-id={project.id} className="flex flex-row items-center border border-slate-800 bg-slate-900 shadow-lg rounded-xl overflow-hidden relative transition-all duration-400 min-h-[110px] px-5 py-4 gap-6 focus-within:ring-2 focus-within:ring-blue-500/60 group">
 									{/* Icon */}
 									<div className={`flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br ${project.gradient} flex items-center justify-center shadow-sm border border-slate-900/80`}>
 										<project.icon className="h-6 w-6 text-white" />
