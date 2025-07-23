@@ -244,24 +244,27 @@ export function EducationSection() {
 																	</h4>
 																	{edu.coursework.length > 4 && (
 																		<button
-																			onClick={() =>
-																				setShowAllCourses(!showAllCourses)
-																			}
-																			className="text-xs text-blue-400 font-medium transition-colors duration-200 flex items-center gap-1 px-2 py-1 rounded-md"
+																			onClick={() => setShowAllCourses(!showAllCourses)}
+																			className="text-xs font-semibold text-blue-500 bg-slate-800/80 border border-slate-700 px-3 py-1 rounded-lg shadow-sm flex items-center gap-2 transition-all duration-200 hover:bg-blue-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-400/70"
 																			aria-label={
 																				showAllCourses
 																					? "Show fewer courses"
 																					: "Show all courses"
 																			}
+																			tabIndex={0}
+																			style={{ cursor: 'pointer', minWidth: 110 }}
 																		>
-																			{showAllCourses
-																				? "Less"
-																				: `All (${edu.coursework.length})`}
+																			<span>
+																				{showAllCourses
+																					? "Show Less"
+																					: `Show All (${edu.coursework.length})`}
+																			</span>
 																			<motion.div
 																				animate={{
 																					rotate: showAllCourses ? 180 : 0,
 																				}}
 																				transition={{ duration: 0.2 }}
+																				className="inline-block"
 																			>
 																				<svg
 																					className="w-3 h-3"
@@ -280,24 +283,18 @@ export function EducationSection() {
 																		</button>
 																	)}
 																</div>
-																<div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+																<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
 																	{displayedCourses.map((course, courseIndex) => (
 																		<motion.div
 																			key={courseIndex}
 																			initial={{ opacity: 0, scale: 0.95 }}
 																			animate={{ opacity: 1, scale: 1 }}
-																			transition={{
-																				duration: 0.2,
-																				delay: courseIndex * 0.05,
-																			}}
+																			transition={{ duration: 0.2, delay: courseIndex * 0.05 }}
+																			className="flex items-center gap-2 bg-slate-900/95 border border-slate-800 rounded-lg px-2.5 py-1 min-h-[32px] h-[32px] shadow-sm w-full"
+																			style={{ justifyContent: 'flex-start', alignItems: 'center' }}
 																		>
-																			<Badge
-																				variant="outline"
-																				className="bg-slate-800/30 border-slate-600/50 text-slate-300 text-xs px-2.5 py-1.5 rounded-md w-full justify-start transition-all duration-200"
-																			>
-																				<div className="w-1 h-1 rounded-full bg-gradient-to-r from-blue-400 to-indigo-500 mr-1.5 flex-shrink-0"></div>
-																				{course}
-																			</Badge>
+																			<span className="w-1.5 h-1.5 rounded-full bg-slate-700 flex-shrink-0"></span>
+																			<span className="flex-1 text-left text-[0.82rem] text-slate-300 font-medium leading-tight break-words whitespace-normal truncate" title={course}>{course}</span>
 																		</motion.div>
 																	))}
 																</div>
