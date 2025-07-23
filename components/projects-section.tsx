@@ -146,40 +146,40 @@ export function ProjectsSection() {
 								viewport={{ once: true }}
 								className="group relative"
 							>
-								<Card data-item-id={project.id} className="flex flex-row items-center border border-slate-800 bg-slate-900 shadow-md rounded-xl overflow-hidden relative transition-all duration-400 min-h-[100px] px-4 py-3 gap-5 focus-within:ring-2 focus-within:ring-blue-500/60 group">
+								<Card data-item-id={project.id} className="flex flex-row items-center border border-slate-800 bg-slate-950 shadow-lg rounded-xl overflow-hidden relative transition-all duration-400 min-h-[110px] px-5 py-4 gap-6 focus-within:ring-2 focus-within:ring-blue-500/60 group">
 									{/* Icon */}
 									<div className={`flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br ${project.gradient} flex items-center justify-center shadow-sm border border-slate-900/80`}>
 										<project.icon className="h-6 w-6 text-white" />
 									</div>
 									{/* Main Content */}
-									<div className="flex-1 min-w-0 flex flex-col justify-center gap-1">
-										<div className="flex items-center gap-2 mb-1">
-											<span className="text-base sm:text-lg font-bold text-white tracking-tight leading-tight">{project.title}</span>
-											<span className="text-xs sm:text-sm font-medium text-slate-400 ml-2">|</span>
-											<span className="text-xs sm:text-sm font-medium text-slate-400 whitespace-normal max-w-full">{project.subtitle}</span>
+									<div className="flex-1 min-w-0 flex flex-col justify-center gap-2">
+										<div className="flex items-center gap-3 mb-1">
+											<span className="text-lg font-bold text-white tracking-tight leading-tight">{project.title}</span>
+											<span className="text-xs font-medium text-slate-400 select-none">|</span>
+											<span className="text-sm font-medium text-slate-300 whitespace-normal max-w-full">{project.subtitle}</span>
 										</div>
 										<div className="flex flex-wrap gap-2 mb-1">
 											{project.technologies.map((tech, i) => (
-												<Badge key={i} variant="outline" className="bg-blue-800/80 border border-blue-700 text-white px-2 py-0.5 rounded-md text-xs font-semibold shadow-none focus-visible:ring-2 focus-visible:ring-blue-500/60">{tech}</Badge>
+												<Badge key={i} variant="outline" className="bg-blue-900 border border-blue-700 text-blue-100 px-2 py-0.5 rounded-full text-xs font-semibold shadow-none focus-visible:ring-2 focus-visible:ring-blue-500/60">{tech}</Badge>
 											))}
 										</div>
 										<div className="flex flex-wrap gap-2">
 											{project.highlights.map((highlight, i) => (
-												<span key={i} className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-800/80 text-slate-200 text-xs font-normal whitespace-normal border border-slate-700" title={highlight}>
+												<span key={i} className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 text-xs font-normal whitespace-normal border border-slate-700" title={highlight}>
 													{highlight}
 												</span>
 											))}
 										</div>
 									</div>
 									{/* Action Button & Meta */}
-									<div className="flex flex-col items-end justify-center ml-4 min-w-[110px] gap-1">
+									<div className="flex flex-col items-end justify-center ml-4 min-w-[120px] gap-2">
 										<div className="flex items-center gap-2">
 											{project.status && (
-												<span className={`text-xs font-medium px-2 py-0.5 rounded-md border ${
-													project.status === 'Launched' ? 'bg-green-900/80 text-green-300 border-green-800' :
-													project.status === 'Active Development' ? 'bg-blue-900/80 text-blue-300 border-blue-800' :
-													project.status === 'Completed' ? 'bg-slate-900/80 text-slate-300 border-slate-800' :
-													'bg-slate-900/80 text-slate-400 border-slate-800'
+												<span className={`text-xs font-medium px-2 py-0.5 rounded-full border ${
+													project.status === 'Launched' ? 'bg-green-900 text-green-300 border-green-800' :
+													project.status === 'Active Development' ? 'bg-blue-900 text-blue-300 border-blue-800' :
+													project.status === 'Completed' ? 'bg-slate-900 text-slate-300 border-slate-800' :
+													'bg-slate-900 text-slate-400 border-slate-800'
 												}`}>
 													{project.status}
 												</span>
