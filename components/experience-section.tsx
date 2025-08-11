@@ -10,7 +10,7 @@ import { motion } from "framer-motion"
 const experiences = [
 	{
 		id: "suno-analytics",
-		title: "Co-Founder/CTO",
+		title: "Co-Founder & CTO",
 		company: "Suno Analytics",
 		companyLogo: "/suno-logo.jpeg",
 		location: "Remote",
@@ -19,9 +19,9 @@ const experiences = [
 			"Built an e-commerce analytics platform offering deep insights and AI agents for inventory management.",
 		achievements: [
 			"Led a global development team, improving project timelines and consistently delivering key initiatives to clients",
-			"Conduct client discovery and demos, driving engagement with companies up to $50M ARR",
 			"Developed AI agents via LangGraph, intuitive interfaces using React, and scalable PostgreSQL backend systems",
-			"Created data tools that streamline reporting, aiding client decision-making processes"
+			"Designed system architecture for high availability and performance, ensuring robust data handling",
+			"Conduct client discovery and demos, driving engagement with companies up to $50M ARR",
 		],
 		featured: true,
 		gradient: "from-blue-500 to-cyan-500",
@@ -32,7 +32,7 @@ const experiences = [
 		title: "Application Developer",
 		company: "Patelco",
 		companyLogo: "/patelco-logo.png",
-		location: "San Francisco, CA",
+		location: "Dublin, CA",
 		period: "04/2023 – 04/2024",
 		description:
 			"Responsible for developing full-stack applications to streamline the acquisition of new Patelco members.",
@@ -59,6 +59,7 @@ const experiences = [
 			"Automated data backup solutions, cutting RMAN time by 50% using Oracle and ONTAP expertise",
 			"Developed scripts for performance insights, enhancing data analysis with Oracle and SQL skills",
 			"Created alert system for storage health, reducing monitoring time by 90% with Python and Bash",
+			"Migrated legacy system API to REST, improving integration with modern applications",
 		],
 		gradient: "from-emerald-500 to-teal-500",
 		link: "https://www.netapp.com",
