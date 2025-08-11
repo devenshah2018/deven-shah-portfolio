@@ -139,6 +139,7 @@ export function ContactSection() {
                   <p className="text-base text-slate-200 font-light max-w-xl mx-auto md:mx-0">
                     Book a quick chat to discuss opportunities, collaborations, or just to talk tech.
                   </p>
+                  <p className="text-xs text-slate-400 mt-3">Powered by <a href="https://cal.com/deven-shah-l0qkjk/quick-chat" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 transition-colors underline decoration-dotted">Cal.com</a></p>
                 </div>
                 <div className="flex-shrink-0 flex flex-col items-center md:items-end w-full md:w-auto gap-3">
                   <div className="flex flex-row gap-3 w-full md:w-auto">
@@ -155,34 +156,6 @@ export function ContactSection() {
                       <CalendarCheck2 className="mr-3 h-5 w-5" aria-hidden="true" />
                       Select a Time
                     </Button>
-                    <Button
-                      asChild
-                      size="lg"
-                      className="w-full md:w-auto min-w-[56px] px-4 py-4 bg-slate-800 text-white border-0 text-lg font-bold shadow-xl transition-all duration-200 rounded-full flex items-center justify-center gap-2 outline-none ring-0"
-                      aria-label="Open Cal.com calendar in a new tab"
-                      tabIndex={0}
-                    >
-                      <a
-                        href="https://cal.com/deven-shah-l0qkjk/quick-chat?overlayCalendar=true"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth={2}
-                          stroke="currentColor"
-                          className="h-5 w-5"
-                          aria-hidden="true"
-                        >
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M18 13V19a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M15 3h6m0 0v6m0-6L10 14" />
-                        </svg>
-                        <span className="sr-only">Open in new tab</span>
-                      </a>
-                    </Button>
                   </div>
                 </div>
               </CardContent>
@@ -190,45 +163,48 @@ export function ContactSection() {
           </motion.div>
 
           {/* Contact Form & Social Links */}
-          <div className="grid lg:grid-cols-3 gap-12">
+          <div className="grid lg:grid-cols-5 gap-8 lg:gap-12">
             {/* Contact Form */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.7, delay: 0.2 }}
               viewport={{ once: true }}
-              className="lg:col-span-2"
+              className="lg:col-span-3"
             >
-              <Card className="bg-slate-900/50 backdrop-blur-sm border border-slate-800 shadow-xl rounded-2xl h-full">
-                <CardHeader className="pb-6">
-                  <CardTitle className="text-2xl font-bold text-white flex items-center gap-3">
-                    <MessageSquare className="h-7 w-7 text-blue-400" />
-                    Send a Message
-                  </CardTitle>
-                  <CardDescription className="text-slate-400 text-lg font-light">
-                    Fill out the form below, and I'll get back to you as soon as possible.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <form onSubmit={handleSubmit} className="space-y-6">
+              <Card className="gap-0 bg-white/[0.02] backdrop-blur-sm border border-slate-700/50 shadow-2xl rounded-xl h-full overflow-hidden">
+                <div className="px-8 py-6 border-b border-slate-700/30">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-blue-500/10 rounded-lg">
+                      <MessageSquare className="h-5 w-5 text-blue-400" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold text-white">Send a Message</h3>
+                      <p className="text-sm text-slate-400 mt-1">I'll get back to you within 24 hours</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="p-8">
+                  <form onSubmit={handleSubmit} className="space-y-3">
                     <div className="grid sm:grid-cols-2 gap-6">
-                      <div className="space-y-2">
-                        <label htmlFor="name" className="text-sm font-medium text-slate-200">
-                          Full Name
+                      <div className="space-y-3">
+                        <label htmlFor="name" className="block text-sm font-medium text-slate-300">
+                          Full Name *
                         </label>
                         <Input
                           id="name"
                           name="name"
                           value={formData.name}
                           onChange={handleInputChange}
-                          placeholder="e.g., Ada Lovelace"
+                          placeholder="John Doe"
                           required
-                          className="bg-slate-800/50 border-slate-700 text-white placeholder:text-slate-400 focus:border-blue-400 focus:ring-blue-400/20 rounded-xl"
+                          className="h-11 bg-slate-800/40 border-slate-600/50 text-white placeholder:text-slate-500 focus:border-blue-400/60 focus:ring-1 focus:ring-blue-400/20 rounded-lg transition-all duration-200"
                         />
                       </div>
-                      <div className="space-y-2">
-                        <label htmlFor="email" className="text-sm font-medium text-slate-200">
-                          Email Address
+                      <div className="space-y-3">
+                        <label htmlFor="email" className="block text-sm font-medium text-slate-300">
+                          Email Address *
                         </label>
                         <Input
                           id="email"
@@ -236,143 +212,124 @@ export function ContactSection() {
                           type="email"
                           value={formData.email}
                           onChange={handleInputChange}
-                          placeholder="e.g., ada@example.com"
+                          placeholder="john@company.com"
                           required
-                          className="bg-slate-800/50 border-slate-700 text-white placeholder:text-slate-400 focus:border-blue-400 focus:ring-blue-400/20 rounded-xl"
+                          className="h-11 bg-slate-800/40 border-slate-600/50 text-white placeholder:text-slate-500 focus:border-blue-400/60 focus:ring-1 focus:ring-blue-400/20 rounded-lg transition-all duration-200"
                         />
                       </div>
                     </div>
-                    <div className="space-y-2">
-                      <label htmlFor="subject" className="text-sm font-medium text-slate-200">
-                        Subject
+                    
+                    <div className="space-y-3">
+                      <label htmlFor="subject" className="block text-sm font-medium text-slate-300">
+                        Subject *
                       </label>
                       <Input
                         id="subject"
                         name="subject"
                         value={formData.subject}
                         onChange={handleInputChange}
-                        placeholder="e.g., Project Collaboration Inquiry"
+                        placeholder="Project Collaboration Opportunity"
                         required
-                        className="bg-slate-800/50 border-slate-700 text-white placeholder:text-slate-400 focus:border-blue-400 focus:ring-blue-400/20 rounded-xl"
+                        className="h-11 bg-slate-800/40 border-slate-600/50 text-white placeholder:text-slate-500 focus:border-blue-400/60 focus:ring-1 focus:ring-blue-400/20 rounded-lg transition-all duration-200"
                       />
                     </div>
-                    <div className="space-y-2">
-                      <label htmlFor="message" className="text-sm font-medium text-slate-200">
-                        Your Message
+                    
+                    <div className="space-y-3">
+                      <label htmlFor="message" className="block text-sm font-medium text-slate-300">
+                        Message *
                       </label>
                       <Textarea
                         id="message"
                         name="message"
                         value={formData.message}
                         onChange={handleInputChange}
-                        placeholder="Tell me about your project, opportunity, or just say hello!"
-                        rows={6}
+                        placeholder="Tell me about your project, opportunity, or just say hello..."
+                        rows={5}
                         required
-                        className="bg-slate-800/50 border-slate-700 text-white placeholder:text-slate-400 focus:border-blue-400 focus:ring-blue-400/20 rounded-xl resize-none"
+                        className="bg-slate-800/40 border-slate-600/50 text-white placeholder:text-slate-500 focus:border-blue-400/60 focus:ring-1 focus:ring-blue-400/20 rounded-lg resize-none transition-all duration-200"
                       />
                     </div>
-                    <Button
-                      type="submit"
-                      size="lg"
-                      className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white border-0 py-4 text-lg font-semibold shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 rounded-xl"
-                      disabled={isSubmitting}
-                    >
-                      {isSubmitting ? (
-                        <>
-                          <Loader2 className="mr-3 h-5 w-5 animate-spin" />
-                          Sending...
-                        </>
-                      ) : (
-                        <>
-                          <Send className="mr-3 h-5 w-5" />
-                          Send Message
-                        </>
-                      )}
-                    </Button>
+                    
+                    <div className="pt-4">
+                      <Button
+                        type="submit"
+                        size="lg"
+                        className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white border-0 font-medium shadow-lg hover:shadow-blue-500/20 transition-all duration-200 rounded-lg"
+                        disabled={isSubmitting}
+                      >
+                        {isSubmitting ? (
+                          <>
+                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                            Sending...
+                          </>
+                        ) : (
+                          <>
+                            <Send className="mr-2 h-4 w-4" />
+                            Send Message
+                          </>
+                        )}
+                      </Button>
+                    </div>
                   </form>
-                </CardContent>
+                </div>
               </Card>
             </motion.div>
 
-            {/* Social Links & Contact Info */}
+            {/* Social Links */}
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.7, delay: 0.3 }}
               viewport={{ once: true }}
-              className="space-y-8 lg:space-y-10 flex flex-col gap-8 lg:gap-10"
+              className="lg:col-span-2"
             >
-              {/* Contact Info */}
-              <Card className="bg-slate-900/50 backdrop-blur-sm border border-slate-800 shadow-xl rounded-2xl px-4 py-6 md:px-6 md:py-8">
-                <CardHeader className="pb-4">
-                  <CardTitle className="text-lg font-bold text-white tracking-tight">Contact Information</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-5">
+              <Card className="bg-white/[0.02] backdrop-blur-sm border border-slate-700/50 shadow-2xl rounded-xl h-full overflow-hidden">
+                <div className="px-8 py-6 border-b border-slate-700/30">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-red-500 to-pink-500 flex items-center justify-center">
-                      <Mail className="h-5 w-5 text-white" />
+                    <div className="p-2 bg-blue-500/10 rounded-lg">
+                      <Linkedin className="h-5 w-5 text-blue-400" />
                     </div>
                     <div>
-                      <p className="font-semibold text-white text-sm">Email</p>
-                      <p className="text-xs text-slate-300 select-all">devenshah2018@gmail.com</p>
+                      <h3 className="text-xl font-semibold text-white">Connect With Me</h3>
+                      <p className="text-sm text-slate-400 mt-1">Find me on these platforms</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-emerald-500 to-teal-500 flex items-center justify-center">
-                      <MapPin className="h-5 w-5 text-white" />
-                    </div>
-                    <div>
-                      <p className="font-semibold text-white text-sm">Location</p>
-                      <p className="text-xs text-slate-300">Boston, MA (Remote Open)</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-500 flex items-center justify-center">
-                      <Briefcase className="h-5 w-5 text-white" />
-                    </div>
-                    <div>
-                      <p className="font-semibold text-white text-sm">Role</p>
-                      <p className="text-xs text-slate-300">Co-Founder/CTO</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Social Links */}
-              <Card className="bg-slate-900/50 backdrop-blur-sm border border-slate-800 shadow-xl rounded-2xl px-4 py-6 md:px-6 md:py-8">
-                <CardHeader className="pb-4">
-                  <CardTitle className="text-lg font-bold text-white tracking-tight">Find Me Online</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
+                </div>
+                
+                <div className="p-8 space-y-4">
                   {socialLinks.map((social) => (
-                    <Button
+                    <a
                       key={social.name}
-                      variant="ghost"
-                      className="w-full justify-start h-auto px-3 py-3 bg-slate-900/70 border-0 hover:bg-slate-800/80 transition-all duration-200 rounded-xl group focus-visible:ring-2 focus-visible:ring-blue-400/70"
-                      asChild
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-4 p-4 rounded-lg bg-slate-800/20 hover:bg-slate-800/40 border border-slate-700/30 hover:border-slate-600/50 transition-all duration-200 group"
                     >
-                      <a href={social.url} target="_blank" rel="noopener noreferrer">
-                        <div className="flex items-center gap-3">
-                          <div
-                            className={`w-8 h-8 rounded-md bg-gradient-to-r ${social.gradient} flex items-center justify-center group-hover:scale-105 transition-transform duration-200`}
-                          >
-                            {social.name === "Twitter" ? (
-                              <FontAwesomeIcon icon={faXTwitter} className="h-4 w-4 text-white" />
-                            ) : (
-                              React.createElement(social.icon as React.ComponentType<any>, {
-                                className: "h-4 w-4 text-white",
-                              })
-                            )}
-                          </div>
-                          <div className="text-left">
-                            <p className="font-medium text-white text-sm group-hover:text-blue-200">{social.name}</p>
-                            <p className="text-xs text-slate-400 group-hover:text-slate-200">{social.handle}</p>
-                          </div>
-                        </div>
-                      </a>
-                    </Button>
+                      <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${social.gradient} flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform duration-200`}>
+                        {social.name === "Twitter" ? (
+                          <FontAwesomeIcon icon={faXTwitter} className="h-4 w-4 text-white" />
+                        ) : (
+                          React.createElement(social.icon as React.ComponentType<any>, {
+                            className: "h-4 w-4 text-white",
+                          })
+                        )}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium text-white text-sm group-hover:text-blue-200 transition-colors duration-200">
+                          {social.name}
+                        </p>
+                        <p className="text-xs text-slate-400 group-hover:text-slate-300 transition-colors duration-200 truncate">
+                          {social.handle}
+                        </p>
+                      </div>
+                      <div className="flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                        <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                      </div>
+                    </a>
                   ))}
-                </CardContent>
+                </div>
               </Card>
             </motion.div>
           </div>
