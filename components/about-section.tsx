@@ -322,7 +322,7 @@ const highlights = [
     icon: Briefcase,
     title: "Current Focus",
     description:
-      "Co-founder and CTO at Suno Analytics, building AI-powered analytics for $50M+ e-commerce brands",
+      "Co-founder and CTO at Suno Analytics, building AI-powered inventory management analytics for e-commerce brands",
     gradient: "from-blue-500 to-cyan-500",
   },
 {
@@ -336,14 +336,14 @@ const highlights = [
     icon: Code,
     title: "Expertise",
     description:
-      "Full-stack development, AI and machine learning, quantum programming, security compliance, scalable architecture",
+      "Full-stack development, AI and machine learning, quantum programming, and scalable architecture",
     gradient: "from-emerald-500 to-teal-500",
   },
   {
     icon: Palette,
     title: "Innovation",
     description:
-      "Co-founder of Suno Analytics, creator of Qode quantum language, founder of Ares security platform with 100+ users, winner of multiple hackathons",
+      "Co-founder of Suno Analytics, creator of Qode quantum language, co-creator of Ares security platform with 100+ users",
     gradient: "from-orange-500 to-red-500",
   },
 ]
@@ -430,7 +430,7 @@ export function AboutSection() {
                   About Me
                 </h2>
                 <p className="text-xl text-slate-400 max-w-2xl font-light leading-relaxed mb-4">
-                  Passionate systems builder bridging advanced technology with real-world impact. I architect, code, and launch products at the intersection of AI, analytics, and security.
+                  Passionate builder bridging advanced technology with real-world impact. I architect, code, and launch products at the intersection of AI, analytics, and security.
                 </p>
               </div>
               {/* Highlights */}
@@ -443,9 +443,9 @@ export function AboutSection() {
                     transition={{ duration: 0.6, delay: index * 0.1 }}
                     viewport={{ once: true }}
                   >
-                    <Card className="h-full border border-slate-800 bg-slate-900/60 backdrop-blur-sm shadow-xl rounded-2xl hover:shadow-blue-500/10 transition-all duration-500 group">
+                    <Card className="h-full border border-slate-800 bg-slate-900/60 backdrop-blur-sm shadow-xl rounded-2xl transition-all duration-500 group">
                       <CardContent className="p-4 flex items-center gap-4">
-                        <div className={`min-w-12 min-h-12 w-12 h-12 rounded-2xl bg-gradient-to-r ${highlight.gradient} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                        <div className={`min-w-12 min-h-12 w-12 h-12 rounded-2xl bg-gradient-to-r ${highlight.gradient} flex items-center justify-center shadow-lg transition-transform duration-300`}>
                           <highlight.icon className="h-7 w-7 text-white" />
                         </div>
                         <div>

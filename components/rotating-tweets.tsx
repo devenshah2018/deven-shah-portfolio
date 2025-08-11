@@ -62,7 +62,7 @@ export function RotatingTweets({ className }: RotatingTweetsProps) {
 	useEffect(() => {
 		timeoutRef.current = setTimeout(() => {
 			setIndex((prev) => (prev + 1) % TWEETS.length)
-		}, 6000)
+		}, 10000)
 		return () => {
 			if (timeoutRef.current) clearTimeout(timeoutRef.current)
 		}
