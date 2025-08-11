@@ -1,12 +1,14 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import { GraduationCap, Briefcase, Zap } from "lucide-react"
 import { SkillModal } from "@/components/skill-modal"
 import { RotatingTweets } from "@/components/rotating-tweets"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faXTwitter } from "@fortawesome/free-brands-svg-icons"
+import { getStravaStats } from "@/lib/utils"
+import { set } from "zod"
 
 const skills = {
   languages: ["Python", "TypeScript", "C#", "Java", "C", "Apex", "JavaScript", "SQL", "SOQL", "HTML", "CSS", "Bash", "Rust"],
@@ -357,6 +359,52 @@ export function AboutSection() {
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null)
   // Add back activeCategory for tab toggle
   const [activeCategory, setActiveCategory] = useState<string>("all")
+  const [currentAchievementIndex, setCurrentAchievementIndex] = useState(0)
+  interface ActivityTotals {
+    count: number
+    distance: number
+    moving_time: number
+    elapsed_time: number
+    elevation_gain: number
+    achievement_count?: number
+  }
+
+  interface StravaStats {
+    biggest_ride_distance: number
+    biggest_climb_elevation_gain: number
+    recent_ride_totals: ActivityTotals
+    all_ride_totals: ActivityTotals
+    recent_run_totals: ActivityTotals
+    all_run_totals: ActivityTotals
+    recent_swim_totals: ActivityTotals
+    all_swim_totals: ActivityTotals
+    ytd_ride_totals: ActivityTotals
+    ytd_run_totals: ActivityTotals
+    ytd_swim_totals: ActivityTotals
+  }
+
+  const [stravaStats, setStravaStats] = useState<StravaStats | null>(null)
+
+  // Past achievements for carousel
+  const pastAchievements = [
+    { name: "Spartan Sprint", date: "06/2022", type: "Obstacle Racing" },
+    { name: "Spartan Sprint", date: "04/2023", type: "Obstacle Racing" },
+    { name: "Spartan Super", date: "08/2024", type: "Obstacle Racing" },
+    { name: "Olympic Triathlon", date: "06/2025", type: "Triathlon" }
+  ]
+
+  // Upcoming achievement (static)
+  const upcomingAchievement = { name: "Ironman 140.6", date: "Expected 10/2025", type: "Triathlon" }
+
+  // Auto-rotate achievements every 3 seconds
+  useEffect(() => {
+    if (pastAchievements.length > 1) {
+      const interval = setInterval(() => {
+        setCurrentAchievementIndex((prev) => (prev + 1) % pastAchievements.length)
+      }, 3000)
+      return () => clearInterval(interval)
+    }
+  }, [pastAchievements.length])
 
   const handleSkillClick = (skill: string) => {
     const skillMapping = skillMappings.find((mapping) => mapping.skill === skill)
@@ -365,6 +413,35 @@ export function AboutSection() {
       setModalOpen(true)
     }
   }
+
+  useEffect(() => {
+    const fetchStravaStats = async () => {
+      try {
+        const cachedData = localStorage.getItem('stravaStats');
+        if (cachedData) {
+          console.log('Using cached Strava data from localStorage');
+          setStravaStats(JSON.parse(cachedData));
+          return;
+        }
+        console.log('Fetching new Strava data from API');
+        const stats = await getStravaStats();
+        
+        if (stats) {
+          localStorage.setItem('stravaStats', JSON.stringify(stats));
+          setStravaStats(stats);
+        }
+      } catch (error) {
+        console.error('Failed to fetch Strava stats:', error);
+        const cachedData = localStorage.getItem('stravaStats');
+        if (cachedData) {
+          console.log('Using cached Strava data as fallback after API error');
+          setStravaStats(JSON.parse(cachedData));
+        }
+      }
+    }
+    
+    fetchStravaStats();
+  }, [])
 
   const hasMapping = (skill: string) => {
     const skillMapping = skillMappings.find((mapping) => mapping.skill === skill)
@@ -399,7 +476,7 @@ export function AboutSection() {
                   About Me
                 </h2>
                 <p className="text-xl text-slate-400 max-w-2xl font-light leading-relaxed mb-4">
-                  Passionate builder bridging advanced technology with real-world impact. I architect, code, and launch products at the intersection of AI, analytics, and security.
+                  Passionate builder bridging advanced technology with real-world impact. I architect, code, and launch products at the intersection of AI, analytics, and security. As a frequent Spartan Race competitor and current Ironman 140.6 trainee, physical fitness has become a cornerstone of my life, driving my discipline and resilience.
                 </p>
               </div>
 
@@ -472,6 +549,120 @@ export function AboutSection() {
                 </div>
               </div>
               <div className="h-5" />
+              {/* Activity Dashboard */}
+              <div className="mt-8">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="h-6 w-6 text-orange-500">
+                    <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.599h4.172L10.463 0l-7 13.828h4.172"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold text-white">Activity Dashboard</h3>
+                    <p className="text-xs text-slate-400">Powered by <a href="https://www.strava.com/athletes/123793208" target="_blank" rel="noopener noreferrer" className="text-orange-400 hover:text-orange-300 transition-colors underline decoration-dotted">Strava</a></p>
+                  </div>
+                </div>
+
+                {/* Unified Stats & Achievements Panel */}
+                <div className="rounded-xl backdrop-blur-sm overflow-hidden">
+                  {/* Stats Section */}
+                  <div className="p-4 border-b border-slate-700/30">
+                    <div className="grid grid-cols-3 divide-x divide-slate-700/30">
+                      <div className="text-center px-2">
+                        <div className="text-lg font-bold text-green-400">
+                          {stravaStats?.all_run_totals.distance ? (stravaStats.all_run_totals.distance * 0.000621371).toFixed(0) : "--"}
+                        </div>
+                        <div className="text-xs text-slate-400 mt-0.5">Run Miles</div>
+                      </div>
+                      <div className="text-center px-2">
+                        <div className="text-lg font-bold text-blue-400">
+                          {stravaStats?.all_ride_totals.distance ? (stravaStats.all_ride_totals.distance * 0.000621371).toFixed(0) : "--"}
+                        </div>
+                        <div className="text-xs text-slate-400 mt-0.5">Ride Miles</div>
+                      </div>
+                      <div className="text-center px-2">
+                        <div className="text-lg font-bold text-purple-400">
+                          {stravaStats?.all_run_totals.moving_time && stravaStats?.all_ride_totals.moving_time 
+                            ? ((stravaStats.all_run_totals.moving_time + stravaStats.all_ride_totals.moving_time) / 3600).toFixed(0) 
+                            : "--"}
+                        </div>
+                        <div className="text-xs text-slate-400 mt-0.5">Total Hours</div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Achievements Section */}
+                  <div className="p-4">
+                    <div className="flex items-center gap-2 mb-3">
+                      <svg className="w-3.5 h-3.5 text-slate-400" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                      </svg>
+                      <span className="text-xs font-medium text-slate-400 uppercase tracking-wide">Athletic Achievements</span>
+                    </div>
+                    
+                    <div className="grid grid-cols-3 gap-3">
+                      {/* Carousel Section - Past Achievements */}
+                      <div className="col-span-2 relative">
+                        <div className="bg-slate-700/20 rounded-lg p-3 h-[70px] flex items-center justify-between">
+                          <div className="flex-1 relative h-full">
+                            {/* Achievement Content with Fade Transition */}
+                            {pastAchievements.map((achievement, index) => (
+                              <div
+                                key={index}
+                                className={`absolute inset-0 flex items-center justify-between transition-opacity duration-500 ease-in-out ${
+                                  index === currentAchievementIndex ? 'opacity-100' : 'opacity-0'
+                                }`}
+                              >
+                                <div>
+                                  <div className="text-sm font-semibold text-slate-200">
+                                    {achievement.name}
+                                  </div>
+                                  <div className="text-xs text-slate-400 mt-0.5">
+                                    {achievement.type} • {achievement.date}
+                                  </div>
+                                </div>
+                                <div className="flex items-center gap-1 ml-3">
+                                  {/* Carousel Indicators */}
+                                  {pastAchievements.map((_, dotIndex) => (
+                                    <button
+                                      key={dotIndex}
+                                      onClick={() => setCurrentAchievementIndex(dotIndex)}
+                                      className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
+                                        dotIndex === currentAchievementIndex 
+                                          ? 'bg-blue-400 scale-125' 
+                                          : 'bg-slate-500 hover:bg-slate-400'
+                                      }`}
+                                      aria-label={`View achievement ${dotIndex + 1}`}
+                                    />
+                                  ))}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Static Upcoming Achievement */}
+                      <div className="col-span-1">
+                        <div className="bg-gradient-to-br from-purple-900/30 to-purple-800/20 border border-purple-700/40 rounded-lg p-3 h-[70px] flex items-center">
+                          <div>
+                            <div className="text-sm font-semibold text-purple-200">
+                              {upcomingAchievement.name}
+                            </div>
+                            <div className="text-xs text-purple-300/70 mt-0.5">
+                              {upcomingAchievement.type}
+                            </div>
+                            <div className="text-xs text-purple-400 mt-1 font-medium">
+                              {upcomingAchievement.date}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               {/* Technical Skills with tabs and multi-per-row layout */}
               <div className="mt-8">
                 <div className="flex items-center gap-4 mb-3 flex-wrap">
