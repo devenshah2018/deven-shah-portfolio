@@ -8,7 +8,6 @@ import { RotatingTweets } from "@/components/rotating-tweets"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faXTwitter } from "@fortawesome/free-brands-svg-icons"
 import { getStravaStats } from "@/lib/utils"
-import { set } from "zod"
 
 const skills = {
   languages: ["Python", "TypeScript", "C#", "Java", "C", "Apex", "JavaScript", "SQL", "SOQL", "HTML", "CSS", "Bash", "Rust"],
@@ -572,13 +571,13 @@ export function AboutSection() {
                         <div className="text-lg font-bold text-green-400">
                           {stravaStats?.all_run_totals.distance ? (stravaStats.all_run_totals.distance * 0.000621371).toFixed(0) : "--"}
                         </div>
-                        <div className="text-xs text-slate-400 mt-0.5">Run Miles</div>
+                        <div className="text-xs text-slate-400 mt-0.5">miles ran</div>
                       </div>
                       <div className="text-center px-2">
                         <div className="text-lg font-bold text-blue-400">
                           {stravaStats?.all_ride_totals.distance ? (stravaStats.all_ride_totals.distance * 0.000621371).toFixed(0) : "--"}
                         </div>
-                        <div className="text-xs text-slate-400 mt-0.5">Ride Miles</div>
+                        <div className="text-xs text-slate-400 mt-0.5">miles cycled</div>
                       </div>
                       <div className="text-center px-2">
                         <div className="text-lg font-bold text-purple-400">
@@ -586,7 +585,7 @@ export function AboutSection() {
                             ? ((stravaStats.all_run_totals.moving_time + stravaStats.all_ride_totals.moving_time) / 3600).toFixed(0) 
                             : "--"}
                         </div>
-                        <div className="text-xs text-slate-400 mt-0.5">Total Hours</div>
+                        <div className="text-xs text-slate-400 mt-0.5">hours active</div>
                       </div>
                     </div>
                   </div>
