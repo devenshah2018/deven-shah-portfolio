@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Mail, Linkedin, Github, CalendarCheck2, Send, MapPin, Briefcase, MessageSquare, Loader2 } from "lucide-react"
+import { Mail, Linkedin, Github, CalendarCheck2, Send, MapPin, Briefcase, MessageSquare, Loader2, ThumbsUp } from "lucide-react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faXTwitter } from "@fortawesome/free-brands-svg-icons"
 import { motion } from "framer-motion"
@@ -122,21 +122,21 @@ export function ContactSection() {
           </div>
 
           {/* Cal.com Booking - Primary CTA */}
-          <motion.div
+            <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
             viewport={{ once: true }}
             className="mb-16"
-          >
-            <Card id="book-a-call-container" className="bg-slate-900/95 border-0 shadow-2xl rounded-2xl transition-all duration-500 relative overflow-hidden">
+            >
+            <Card id="book-a-call-container" className="bg-transparent border-0 rounded-2xl transition-all duration-500 relative overflow-hidden">
               <CardContent className="py-6 px-5 md:px-10 flex flex-col md:flex-row items-center md:items-center justify-between gap-6 md:gap-8 relative z-10">
                 <div className="flex-1 text-center md:text-left">
                   <h3 className="text-2xl font-extrabold text-white mb-2 flex items-center gap-3 justify-center md:justify-start tracking-tight">
                     <CalendarCheck2 className="h-7 w-7 text-blue-400" />
                     Book a Call
                   </h3>
-                  <p className="text-base text-slate-200 font-light max-w-xl mx-auto md:mx-0">
+                  <p className="text-base text-slate-400 font-light max-w-xl mx-auto md:mx-0">
                     Schedule a quick chat to discuss opportunities, collaborations, or just to talk tech.
                   </p>
                   <p className="text-xs text-slate-400 mt-3">Powered by <a href="https://cal.com/deven-shah-l0qkjk/quick-chat" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 transition-colors underline decoration-dotted">Cal.com</a></p>
@@ -148,7 +148,7 @@ export function ContactSection() {
                       data-cal-link="deven-shah-l0qkjk/quick-chat"
                       data-cal-config='{"layout":"month_view"}'
                       size="lg"
-                      className="w-full md:w-auto min-w-[180px] bg-blue-600 hover:bg-blue-700 focus-visible:ring-4 focus-visible:ring-blue-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 text-white border-0 px-8 py-4 text-lg font-bold shadow-xl transition-all duration-200 rounded-full flex items-center justify-center gap-2 outline-none ring-0"
+                      className="w-full md:w-auto min-w-[180px] bg-blue-600 hover:bg-blue-700 focus-visible:ring-4 focus-visible:ring-blue-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 text-white border-0 px-8 py-4 text-lg font-bold transition-all duration-200 rounded-full flex items-center justify-center gap-2 outline-none ring-0"
                       aria-controls="cal-embed-container"
                       aria-label="Show calendar to select a time with Deven Shah"
                       tabIndex={0}
@@ -172,15 +172,12 @@ export function ContactSection() {
               viewport={{ once: true }}
               className="lg:col-span-3"
             >
-              <Card className="gap-0 bg-white/[0.02] backdrop-blur-sm border border-slate-700/50 shadow-2xl rounded-xl h-full overflow-hidden">
+              <Card className="gap-0 bg-transparent border-none backdrop-blur-sm h-full overflow-hidden">
                 <div className="px-8 py-6 border-b border-slate-700/30">
                   <div className="flex items-center gap-3">
-                    <div className="p-2 bg-blue-500/10 rounded-lg">
-                      <MessageSquare className="h-5 w-5 text-blue-400" />
-                    </div>
                     <div>
-                      <h3 className="text-xl font-semibold text-white">Send a Message</h3>
-                      <p className="text-sm text-slate-400 mt-1">I'll get back to you within 24 hours</p>
+                      <h3 className="text-2xl font-extrabold text-white mb-2 flex items-center gap-3 justify-center md:justify-start tracking-tight"><MessageSquare className="h-7 w-7 text-blue-400" />Send a Message</h3>
+                      <p className="text-base text-slate-400 font-light max-w-xl mx-auto md:mx-0">I'll get back to you within 24 hours</p>
                     </div>
                   </div>
                 </div>
@@ -254,7 +251,7 @@ export function ContactSection() {
                       <Button
                         type="submit"
                         size="lg"
-                        className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white border-0 font-medium shadow-lg hover:shadow-blue-500/20 transition-all duration-200 rounded-lg"
+                        className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white border-0 font-medium hover:shadow-blue-500/20 transition-all duration-200 rounded-lg"
                         disabled={isSubmitting}
                       >
                         {isSubmitting ? (
@@ -283,20 +280,17 @@ export function ContactSection() {
               viewport={{ once: true }}
               className="lg:col-span-2"
             >
-              <Card className="bg-white/[0.02] backdrop-blur-sm border border-slate-700/50 shadow-2xl rounded-xl h-full overflow-hidden">
+              <Card className="gap-0 bg-transparent border-none backdrop-blur-sm h-full overflow-hidden">
                 <div className="px-8 py-6 border-b border-slate-700/30">
                   <div className="flex items-center gap-3">
-                    <div className="p-2 bg-blue-500/10 rounded-lg">
-                      <Linkedin className="h-5 w-5 text-blue-400" />
-                    </div>
                     <div>
-                      <h3 className="text-xl font-semibold text-white">Connect With Me</h3>
-                      <p className="text-sm text-slate-400 mt-1">Find me on these platforms</p>
+                      <h3 className="text-2xl font-extrabold text-white mb-2 flex items-center gap-3 justify-center md:justify-start tracking-tight"><ThumbsUp className="h-7 w-7 text-blue-400" />Connect With Me</h3>
+                      <p className="text-base text-slate-400 font-light max-w-xl mx-auto md:mx-0">Find me on these platforms</p>
                     </div>
                   </div>
                 </div>
                 
-                <div className="p-8 space-y-4">
+                <div className="p-8 space-y-8">
                   {socialLinks.map((social) => (
                     <a
                       key={social.name}

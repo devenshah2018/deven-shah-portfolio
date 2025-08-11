@@ -439,7 +439,7 @@ export function GuidedTour() {
 							transform: undefined,
 						}}
 					>
-						<Card className="bg-slate-900/95 border border-slate-700 shadow-2xl tour-tooltip w-full max-w-[380px] h-auto flex flex-col rounded-2xl p-0">
+						<Card className="bg-slate-900 border border-slate-700 w-full max-w-[380px] h-auto flex flex-col rounded-2xl p-0">
 							<CardContent className="p-6 flex flex-col h-full">
 								{/* Header */}
 								<div className="flex items-center justify-between mb-4">
