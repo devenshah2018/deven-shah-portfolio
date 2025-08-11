@@ -30,7 +30,9 @@ const skillMappings = [
       { title: "Solutions Architect Intern", company: "NetApp", id: "netapp", icon: Briefcase }
     ],
     projects: [
+      { title: "MCP Model Server", subtitle: "Local ML Inference TCP Server", id: "mcp-model-server", icon: Zap },
       { title: "Ares", subtitle: "Security Compliance Platform", id: "ares-project", icon: Zap },
+      { title: "Molecule Mutation Prediction", subtitle: "BRAF V600E Mutation Inhibitor Classifier", id: "molecule-mutation-prediction", icon: Zap },
       { title: "Cryptocurrency Forecasting", subtitle: "ML Prediction Model", id: "crypto-forecasting-project", icon: Zap }
     ],
     education: [
@@ -197,6 +199,11 @@ const skillMappings = [
     skill: "Bash",
     experiences: [
       { title: "Solutions Architect Intern", company: "NetApp", id: "netapp", icon: Briefcase }
+    ],
+    projects:
+    [
+      { title: "MCP Model Server", subtitle: "Local ML Inference TCP Server", id: "mcp-model-server", icon: Zap },
+      { title: "Molecule Mutation Prediction", subtitle: "BRAF V600E Mutation Inhibitor Classifier", id: "molecule-mutation-prediction", icon: Zap },
     ]
   },
   {
@@ -247,6 +254,8 @@ const skillMappings = [
       { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno-analytics", icon: Briefcase }
     ],
     projects: [
+      { title: "MCP Model Server", subtitle: "Local ML Inference TCP Server", id: "mcp-model-server", icon: Zap },
+      { title: "Molecule Mutation Prediction", subtitle: "BRAF V600E Mutation Inhibitor Classifier", id: "molecule-mutation-prediction", icon: Zap },
       { title: "Cryptocurrency Forecasting", subtitle: "ML Prediction Model", id: "crypto-forecasting-project", icon: Zap }
     ]
   },
@@ -280,9 +289,11 @@ const skillMappings = [
       { title: "Solutions Architect Intern", company: "NetApp", id: "netapp", icon: Briefcase }
     ],
         projects: [
+          { title: "MCP Model Server", subtitle: "Local ML Inference TCP Server", id: "mcp-model-server", icon: Zap },
       { title: "Portfolio Website", subtitle: "Personal Portfolio", id: "portfolio-project", icon: Zap },
-            { title: "Qode", subtitle: "Quantum Programming Language", id: "qode-project", icon: Zap },
+      { title: "Qode", subtitle: "Quantum Programming Language", id: "qode-project", icon: Zap },
       { title: "Ares", subtitle: "Security Compliance Platform", id: "ares-project", icon: Zap },
+      { title: "Molecule Mutation Prediction", subtitle: "BRAF V600E Mutation Inhibitor Classifier", id: "molecule-mutation-prediction", icon: Zap },
       { title: "Cryptocurrency Forecasting", subtitle: "ML Prediction Model", id: "crypto-forecasting-project", icon: Zap }
     ],
     education: [
@@ -295,6 +306,14 @@ const skillMappings = [
       { title: "Co-Founder/CTO", company: "Suno Analytics", id: "suno-analytics", icon: Briefcase },
       { title: "Application Developer", company: "Patelco", id: "patelco", icon: Briefcase },
       { title: "Solutions Architect Intern", company: "NetApp", id: "netapp", icon: Briefcase }
+    ],
+        projects: [
+          { title: "MCP Model Server", subtitle: "Local ML Inference TCP Server", id: "mcp-model-server", icon: Zap },
+      { title: "Portfolio Website", subtitle: "Personal Portfolio", id: "portfolio-project", icon: Zap },
+      { title: "Qode", subtitle: "Quantum Programming Language", id: "qode-project", icon: Zap },
+      { title: "Ares", subtitle: "Security Compliance Platform", id: "ares-project", icon: Zap },
+      { title: "Molecule Mutation Prediction", subtitle: "BRAF V600E Mutation Inhibitor Classifier", id: "molecule-mutation-prediction", icon: Zap },
+      { title: "Cryptocurrency Forecasting", subtitle: "ML Prediction Model", id: "crypto-forecasting-project", icon: Zap }
     ],
     education: [
       { title: "B.S. Software Engineering", institution: "San Jose State University", id: "sjsu-bachelors", icon: GraduationCap }

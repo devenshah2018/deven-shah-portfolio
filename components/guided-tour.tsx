@@ -63,42 +63,6 @@ const tourSteps = [
 		showProgress: true,
 		type: "section"
 	},
-  {
-    id: "project-portfolio",
-    title: "Deven Shah Portfolio",
-    content: "This portfolio is more than a showcase; it's a testament to my journey. Built with React, it reflects my skills and the projects that define my career.",
-    target: "#projects .grid > div:first-child",
-    position: "bottom",
-    showProgress: true,
-    type: "project"
-  },
-	{
-		id: "project-qode",
-		title: "Qode - Quantum IDE",
-		content: "This project reflects my curiosity-driven growth. Venturing into quantum computing and creating tools that make it more accessible and intuitive for others.",
-		target: "#projects .grid > div:nth-child(2)",
-		position: "bottom",
-		showProgress: true,
-		type: "project"
-	},
-	{
-		id: "project-ares",
-		title: "Ares - Code Compliance Tool",
-		content: "Born from my passion for scalable systems, Ares solves real-world compliance challenges. It's a step toward empowering developers with AI-driven guardrails.",
-		target: "#projects .grid > div:nth-child(3)",
-		position: "bottom",
-		showProgress: true,
-		type: "project"
-	},
-	{
-		id: "project-crypto",
-		title: "Cryptocurrency Forecasting",
-		content: "This was the turning point where I applied machine learning to practical challenges. It laid the foundation for my interest in predictive systems and data science.",
-		target: "#projects .grid > div:nth-child(4)",
-		position: "bottom",
-		showProgress: true,
-		type: "project"
-	},
 	{
 		id: "education-section",
 		title: "Education & Certifications",
