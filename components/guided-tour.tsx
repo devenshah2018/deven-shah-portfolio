@@ -4,15 +4,15 @@ import { useState, useEffect, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { X, ChevronRight, ChevronLeft, Play, Calendar, ExternalLink, GraduationCap, Briefcase, Award } from "lucide-react"
+import { X, ChevronRight, ChevronLeft, Play, Calendar, ExternalLink, GraduationCap, Briefcase, Award, Rocket } from "lucide-react"
 import { useTour } from "@/components/tour-context"
 
 // Tour step definitions
 const tourSteps = [
 	{
 		id: "intro",
-		title: "🚀 Welcome",
-		content: "Hi! I'm Deven Shah. Let me walk you through how I evolved from a curious intern into a co-founder leading AI innovation. Each section reflects a chapter in that growth. Let's begin!",
+		title: "Welcome",
+		content: "Hi! I'm Deven Shah. Let me walk you through how I evolved from an intern into a co-founder leading AI innovation. Each section reflects a chapter in that growth. Let's begin!",
 		target: null,
 		position: "center",
 		showProgress: true,
@@ -25,13 +25,13 @@ const tourSteps = [
 		target: "#experience",
 		position: "bottom",
 		showProgress: true,
-		type: "section"
+		type: "experience"
 	},
 	{
-		id: "experience-current",
-		title: "Co-Founder/CTO at Suno.AI",
-		content: "This is the culmination of everything I've learned from leading global teams, building AI agents with LangGraph, to working with $50M+ brands. It's where I bring vision to life.",
-		target: '[data-item-id="suno-analytics"]',
+		id: "experience-netapp",
+		title: "Starting as an Intern at NetApp",
+		content: "Every journey starts somewhere. Mine began at NetApp. It taught me how scalable systems work and sparked my curiosity with automation and optimization.",
+		target: '[data-item-id="netapp"]',
 		position: "right",
 		showProgress: true,
 		type: "experience"
@@ -46,10 +46,10 @@ const tourSteps = [
 		type: "experience"
 	},
 	{
-		id: "experience-netapp",
-		title: "Starting as an Intern at NetApp",
-		content: "Every journey starts somewhere. Mine began at NetApp. It taught me how scalable systems work and sparked my obsession with automation and optimization.",
-		target: '[data-item-id="netapp"]',
+		id: "experience-current",
+		title: "Co-Founder/CTO at Suno Analytics",
+		content: "This is the culmination of everything I've learned from leading global teams, building AI agents with LangGraph, to connecting with $50M+ brands. It's where I bring vision to life.",
+		target: '[data-item-id="suno-analytics"]',
 		position: "right",
 		showProgress: true,
 		type: "experience"
@@ -57,11 +57,11 @@ const tourSteps = [
 	{
 		id: "projects-section",
 		title: "Featured Projects",
-		content: "These projects represent my evolution. Applying what I've learned to build tools that push boundaries in AI, quantum computing, and security compliance.",
+		content: "These projects represent my evolution. Applying what I've learned to build tools that push boundaries in AI, systems engineering, and quantum computing.",
 		target: "#projects",
 		position: "bottom",
 		showProgress: true,
-		type: "section"
+		type: "projects"
 	},
 	{
 		id: "education-section",
@@ -70,11 +70,11 @@ const tourSteps = [
 		target: "#education",
 		position: "bottom",
 		showProgress: true,
-		type: "section"
+		type: "education"
 	},
 	{
 		id: "contact-cta",
-		title: "🎯 Ready to Connect?",
+		title: "Ready to Chat?",
 		content: "Thanks for exploring my journey. If anything resonated, whether it's AI, security, or innovation. I'd love to connect, let's build something great together.",
 		target: "#book-a-call-container",
 		position: "top",
@@ -398,18 +398,20 @@ export function GuidedTour() {
 
 	const getStepIcon = () => {
 		switch (currentStepData.type) {
+			case 'intro':
+				return <Rocket className="h-5 w-5 text-blue-400" />
 			case 'experience':
 				return <Briefcase className="h-5 w-5 text-blue-400" />
-			case 'project':
-				return <Play className="h-5 w-5 text-emerald-400" />
+			case 'projects':
+				return <Play className="h-5 w-5 text-blue-400" />
 			case 'education':
-				return <GraduationCap className="h-5 w-5 text-indigo-400" />
+				return <GraduationCap className="h-5 w-5 text-blue-400" />
 			case 'certification':
-				return <Award className="h-5 w-5 text-orange-400" />
+				return <Award className="h-5 w-5 text-blue-400" />
 			case 'cta':
-				return <ExternalLink className="h-5 w-5 text-cyan-400" />
+				return <Calendar className="h-5 w-5 text-blue-400" />
 			default:
-				return <Calendar className="h-5 w-5 text-slate-400" />
+				return <Calendar className="h-5 w-5 text-blue-400" />
 		}
 	}
 

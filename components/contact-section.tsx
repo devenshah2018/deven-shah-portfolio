@@ -137,7 +137,7 @@ export function ContactSection() {
                     Book a Call
                   </h3>
                   <p className="text-base text-slate-200 font-light max-w-xl mx-auto md:mx-0">
-                    Book a quick chat to discuss opportunities, collaborations, or just to talk tech.
+                    Schedule a quick chat to discuss opportunities, collaborations, or just to talk tech.
                   </p>
                   <p className="text-xs text-slate-400 mt-3">Powered by <a href="https://cal.com/deven-shah-l0qkjk/quick-chat" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 transition-colors underline decoration-dotted">Cal.com</a></p>
                 </div>
