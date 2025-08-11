@@ -419,7 +419,7 @@ export function AboutSection() {
     if (pastAchievements.length > 1) {
       const interval = setInterval(() => {
         setCurrentAchievementIndex((prev) => (prev + 1) % pastAchievements.length)
-      }, 3000)
+      }, 5000)
       return () => clearInterval(interval)
     }
   }, [pastAchievements.length])
@@ -587,24 +587,24 @@ export function AboutSection() {
                   <div className="p-4 border-b border-slate-700/30">
                     <div className="grid grid-cols-3 divide-x divide-slate-700/30">
                       <div className="text-center px-2">
-                        <div className="text-lg font-bold text-green-400">
+                        <div className="text-2xl font-bold text-green-400">
                           {stravaStats?.all_run_totals.distance ? (stravaStats.all_run_totals.distance * 0.000621371).toFixed(0) : "--"}
                         </div>
-                        <div className="text-xs text-slate-400 mt-0.5">miles ran</div>
+                        <div className="text-sm text-slate-400 mt-1">miles ran</div>
                       </div>
                       <div className="text-center px-2">
-                        <div className="text-lg font-bold text-blue-400">
+                        <div className="text-2xl font-bold text-blue-400">
                           {stravaStats?.all_ride_totals.distance ? (stravaStats.all_ride_totals.distance * 0.000621371).toFixed(0) : "--"}
                         </div>
-                        <div className="text-xs text-slate-400 mt-0.5">miles cycled</div>
+                        <div className="text-sm text-slate-400 mt-1">miles cycled</div>
                       </div>
                       <div className="text-center px-2">
-                        <div className="text-lg font-bold text-purple-400">
+                        <div className="text-2xl font-bold text-purple-400">
                           {stravaStats?.all_run_totals.moving_time && stravaStats?.all_ride_totals.moving_time 
                             ? ((stravaStats.all_run_totals.moving_time + stravaStats.all_ride_totals.moving_time) / 3600).toFixed(0) 
                             : "--"}
                         </div>
-                        <div className="text-xs text-slate-400 mt-0.5">hours active</div>
+                        <div className="text-sm text-slate-400 mt-1">hours active</div>
                       </div>
                     </div>
                   </div>
@@ -612,10 +612,10 @@ export function AboutSection() {
                   {/* Achievements Section */}
                   <div className="p-4">
                     <div className="flex items-center gap-2 mb-3">
-                      <svg className="w-3.5 h-3.5 text-slate-400" fill="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                       </svg>
-                      <span className="text-xs font-medium text-slate-400 uppercase tracking-wide">Athletic Achievements</span>
+                      <span className="text-sm font-medium text-slate-400 uppercase tracking-wide">Athletic Achievements</span>
                     </div>
                     
                     <div className="grid grid-cols-3 gap-3">
@@ -635,7 +635,7 @@ export function AboutSection() {
                                   <div className="text-sm font-semibold text-slate-200">
                                     {achievement.name}
                                   </div>
-                                  <div className="text-xs text-slate-400 mt-0.5">
+                                  <div className="text-sm text-slate-400 mt-0.5">
                                     {achievement.type} • {achievement.date}
                                   </div>
                                 </div>
@@ -660,20 +660,47 @@ export function AboutSection() {
                         </div>
                       </div>
                       
-                      {/* Static Upcoming Achievement */}
+                      {/* Upcoming Achievement - Enterprise Grade */}
                       <div className="col-span-1">
-                        <div className="bg-gradient-to-br from-purple-900/30 to-purple-800/20 border border-purple-700/40 rounded-lg p-3 h-[70px] flex items-center">
-                          <div>
-                            <div className="text-sm font-semibold text-purple-200">
-                              {upcomingAchievement.name}
+                        <div className="group relative bg-gradient-to-br from-slate-800/40 via-orange-900/20 to-amber-900/15 border border-slate-600/40 rounded-lg p-3 h-[70px] flex flex-col justify-center overflow-hidden backdrop-blur-sm transition-all duration-500 ease-out hover:border-orange-400/30 hover:shadow-lg hover:shadow-orange-500/5">
+                          {/* Subtle animated background layer */}
+                          <div className="absolute inset-0 bg-gradient-to-r from-orange-400/3 via-amber-400/2 to-orange-400/3 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out"></div>
+                          
+                          {/* Professional content layout */}
+                          <div className="relative z-10 flex flex-col justify-center h-full space-y-1.5">
+                            {/* Title row with refined icon */}
+                            <div className="flex items-center gap-2.5">
+                              <div className="relative">
+                                <svg className="w-4 h-4 text-orange-400/80 group-hover:text-orange-400 transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24">
+                                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                                </svg>
+                                {/* Subtle glow effect */}
+                                <div className="absolute inset-0 bg-orange-400/10 rounded-full blur-sm scale-150 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                              </div>
+                              <div className="text-base font-semibold text-slate-100 group-hover:text-white truncate leading-tight transition-colors duration-300">
+                                Ironman 140.6
+                              </div>
                             </div>
-                            <div className="text-xs text-purple-300/70 mt-0.5">
-                              {upcomingAchievement.type}
-                            </div>
-                            <div className="text-xs text-purple-400 mt-1 font-medium">
-                              {upcomingAchievement.date}
+                            
+                            {/* Meta information row */}
+                            <div className="flex items-center justify-between">
+                              <span className="text-sm text-slate-400 group-hover:text-slate-300 font-medium transition-colors duration-300">
+                                Triathlon
+                              </span>
+                              <div className="flex items-center gap-1.5 text-amber-400/70 group-hover:text-amber-400 font-medium transition-colors duration-300">
+                                <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
+                                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                                <span className="text-sm font-medium">Oct 2025</span>
+                              </div>
                             </div>
                           </div>
+                          
+                          {/* Sophisticated progress indicator */}
+                          <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-orange-500/20 to-transparent"></div>
+                          
+                          {/* Corner accent - very subtle */}
+                          <div className="absolute top-0 right-0 w-2 h-2 bg-gradient-to-br from-orange-400/20 to-transparent rounded-bl-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                         </div>
                       </div>
                     </div>
