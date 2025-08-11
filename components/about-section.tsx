@@ -508,14 +508,14 @@ export function AboutSection() {
                     <span className="text-slate-300">Career</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="inline-block w-4 h-4 rounded-full bg-purple-400"></span>
+                    <span className="inline-block w-4 h-4 rounded-full bg-amber-400"></span>
                     <span className="text-slate-300">Education/Certifications</span>
                   </div>
                 </div>
                 <div className="border-l-4 border-blue-500/40 pl-6 space-y-6">
                   {/* Education */}
                   <a href="#education" className="block cursor-pointer group focus:outline-none">
-                    <span className="block text-lg font-semibold text-purple-400 group-hover:text-purple-300">Present</span>
+                    <span className="block text-lg font-semibold text-amber-400 group-hover:text-amber-300">Present</span>
                     <span className="block text-white font-bold">M.S. in Computer Science (Data Analytics)</span>
                     <span className="block text-slate-400">Boston University</span>
                   </a>
@@ -532,7 +532,7 @@ export function AboutSection() {
                   </a>
                   {/* Education/Certifications (merged color) */}
                   <a href="#education" className="block cursor-pointer group focus:outline-none">
-                    <span className="block text-lg font-semibold text-purple-400 group-hover:text-purple-300">02/2023</span>
+                    <span className="block text-lg font-semibold text-amber-400 group-hover:text-amber-300">02/2023</span>
                     <span className="block text-white font-bold">AWS Cloud Practitioner Certification</span>
                     <span className="block text-slate-400">Amazon Web Services</span>
                   </a>
@@ -544,7 +544,7 @@ export function AboutSection() {
                   </a>
                   {/* Education */}
                   <a href="#education" className="block cursor-pointer group focus:outline-none">
-                    <span className="block text-lg font-semibold text-purple-400 group-hover:text-purple-300">08/2018–12/2022</span>
+                    <span className="block text-lg font-semibold text-amber-400 group-hover:text-amber-300">08/2018–12/2022</span>
                     <span className="block text-white font-bold">B.S. in Software Engineering</span>
                     <span className="block text-slate-400">San Jose State University</span>
                   </a>
