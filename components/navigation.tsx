@@ -138,7 +138,7 @@ export function Navigation({ onStartTour }: NavigationProps) {
 													<div className="flex items-center gap-2">
 														{/* GitHub */}
 														<a
-															href="https://github.com/devenapatel"
+															href="https://github.com/devenshah2018"
 															target="_blank"
 															rel="noopener noreferrer"
 															className="group/item flex items-center justify-center w-7 h-7 rounded bg-slate-800/30 hover:bg-slate-700/50 text-slate-500 hover:text-slate-200 transition-all duration-150 hover:scale-105"
@@ -151,7 +151,7 @@ export function Navigation({ onStartTour }: NavigationProps) {
 														
 														{/* LinkedIn */}
 														<a
-															href="https://linkedin.com/in/deven-shah-4b63b01b9"
+															href="https://www.linkedin.com/in/deven-a-shah/"
 															target="_blank"
 															rel="noopener noreferrer"
 															className="group/item flex items-center justify-center w-7 h-7 rounded bg-slate-800/30 hover:bg-blue-600/15 text-slate-500 hover:text-blue-400 transition-all duration-150 hover:scale-105"
@@ -164,7 +164,7 @@ export function Navigation({ onStartTour }: NavigationProps) {
 														
 														{/* Email */}
 														<a
-															href="mailto:deven@suno.ai"
+															href="mailto:devenshah2018@gmail.com"
 															className="group/item flex items-center justify-center w-7 h-7 rounded bg-slate-800/30 hover:bg-green-600/15 text-slate-500 hover:text-green-400 transition-all duration-150 hover:scale-105"
 															aria-label="Email Contact"
 														>
@@ -175,7 +175,7 @@ export function Navigation({ onStartTour }: NavigationProps) {
 														
 														{/* X (Twitter) */}
 														<a
-															href="https://x.com/deven_shah_"
+															href="https://x.com/devenshah2018"
 															target="_blank"
 															rel="noopener noreferrer"
 															className="group/item flex items-center justify-center w-7 h-7 rounded bg-slate-800/30 hover:bg-slate-600/20 text-slate-500 hover:text-slate-200 transition-all duration-150 hover:scale-105"
