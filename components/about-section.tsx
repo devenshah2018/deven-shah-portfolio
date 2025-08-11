@@ -663,19 +663,52 @@ export function AboutSection() {
                 </div>
               </div>
 
-              {/* Technical Skills with tabs and multi-per-row layout */}
+              {/* Technical Skills with vertical tabs */}
               <div className="mt-8">
-                <div className="flex items-center gap-4 mb-3 flex-wrap">
-                  <h3 className="text-2xl font-bold text-white">Technical Skills</h3>
-                  <div className="flex gap-2 flex-wrap">
+                <h3 className="text-2xl font-bold text-white mb-4">Technical Skills</h3>
+                
+                <div className="flex gap-6">
+                  {/* Skills Display Area - Left Side */}
+                  <div className="flex-1">
+                    <div className="flex flex-wrap gap-2">
+                      {(categorizedSkills[activeCategory as keyof typeof categorizedSkills] as string[])
+                        .slice()
+                        .sort((a, b) => a.localeCompare(b))
+                        .map((skill: string) => (
+                          <button
+                            key={skill}
+                            type="button"
+                            className={`inline-flex items-center px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-800/70 text-slate-200 text-sm font-medium shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400/70 focus:ring-offset-2 focus:ring-offset-slate-900
+                              ${hasMapping(skill)
+                                ? 'hover:bg-blue-900/30 hover:text-blue-200 hover:border-blue-400 focus:bg-blue-900/30 focus:text-blue-200 focus:border-blue-400'
+                                : 'opacity-80 cursor-default'}
+                            `}
+                            style={{ minWidth: 0, minHeight: 0, fontSize: '0.98rem', letterSpacing: '0.01em', lineHeight: 1.2 }}
+                            aria-label={skill + (hasMapping(skill) ? `, ${getMappingCount(skill)} related items` : '')}
+                            onClick={() => hasMapping(skill) && handleSkillClick(skill)}
+                            tabIndex={0}
+                          >
+                            <span className="truncate max-w-[90px]">{skill}</span>
+                            {hasMapping(skill) && (
+                              <span className="ml-1 px-1.5 py-0.5 rounded bg-blue-800/60 text-blue-200 text-[0.7em] font-semibold border border-blue-400/30 ml-2">
+                                {getMappingCount(skill)}
+                              </span>
+                            )}
+                          </button>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  {/* Category Tabs - Right Side (Vertical) */}
+                  <div className="flex flex-col gap-1 min-w-[100px]">
                     {skillCategories.map((cat) => (
                       <button
                         key={cat.key}
                         type="button"
-                        className={`px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wide border-2 shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400/70 focus:ring-offset-2 focus:ring-offset-slate-900
+                        className={`px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wide border transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400/70 focus:ring-offset-2 focus:ring-offset-slate-900 text-left
                           ${activeCategory === cat.key
-                            ? "bg-gradient-to-r from-blue-600 to-cyan-500 text-white border-blue-400 scale-105 drop-shadow-lg"
-                            : "bg-slate-900/80 text-blue-200 border-blue-800 hover:bg-blue-900/40 hover:text-white hover:border-blue-400"}
+                            ? "bg-gradient-to-r from-blue-600 to-cyan-500 text-white border-blue-400 shadow-lg"
+                            : "bg-slate-900/80 text-blue-200 border-blue-800/50 hover:bg-blue-900/40 hover:text-white hover:border-blue-400"}
                         `}
                         style={{ letterSpacing: '0.08em' }}
                         onClick={() => setActiveCategory(cat.key)}
@@ -685,33 +718,6 @@ export function AboutSection() {
                       </button>
                     ))}
                   </div>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {(categorizedSkills[activeCategory as keyof typeof categorizedSkills] as string[])
-                    .slice()
-                    .sort((a, b) => a.localeCompare(b))
-                    .map((skill: string) => (
-                      <button
-                        key={skill}
-                        type="button"
-                        className={`inline-flex items-center px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-800/70 text-slate-200 text-sm font-medium shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400/70 focus:ring-offset-2 focus:ring-offset-slate-900
-                          ${hasMapping(skill)
-                            ? 'hover:bg-blue-900/30 hover:text-blue-200 hover:border-blue-400 focus:bg-blue-900/30 focus:text-blue-200 focus:border-blue-400'
-                            : 'opacity-80 cursor-default'}
-                        `}
-                        style={{ minWidth: 0, minHeight: 0, fontSize: '0.98rem', letterSpacing: '0.01em', lineHeight: 1.2 }}
-                        aria-label={skill + (hasMapping(skill) ? `, ${getMappingCount(skill)} related items` : '')}
-                        onClick={() => hasMapping(skill) && handleSkillClick(skill)}
-                        tabIndex={0}
-                      >
-                        <span className="truncate max-w-[90px]">{skill}</span>
-                        {hasMapping(skill) && (
-                          <span className="ml-1 px-1.5 py-0.5 rounded bg-blue-800/60 text-blue-200 text-[0.7em] font-semibold border border-blue-400/30 ml-2">
-                            {getMappingCount(skill)}
-                          </span>
-                        )}
-                      </button>
-                  ))}
                 </div>
               </div>
             </div>
