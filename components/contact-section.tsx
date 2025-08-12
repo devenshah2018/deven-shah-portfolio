@@ -14,6 +14,7 @@ import {
   MessageSquare,
   Loader2,
   ThumbsUp,
+  ExternalLink,
 } from 'lucide-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXTwitter } from '@fortawesome/free-brands-svg-icons';
@@ -138,8 +139,13 @@ export function ContactSection() {
           >
             <Card
               id='book-a-call-container'
-              className='relative overflow-hidden rounded-2xl border-0 bg-transparent transition-all duration-500'
+              className='group relative overflow-hidden rounded-2xl border border-slate-700/40 bg-slate-800/20 backdrop-blur-sm transition-all duration-500'
             >
+              <div className='absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/10 via-purple-500/5 to-cyan-500/10 opacity-0 transition-opacity duration-500' />
+              
+              <div className='absolute inset-0 rounded-2xl bg-gradient-to-b from-white/[0.02] to-transparent' />
+              
+              <div className='absolute left-8 right-8 top-0 h-px bg-gradient-to-r from-transparent via-slate-500/30 to-transparent' />
               <CardContent className='relative z-10 flex flex-col items-center justify-between gap-6 px-5 py-6 md:flex-row md:items-center md:gap-8 md:px-10'>
                 <div className='flex-1 text-center md:text-left'>
                   <h3 className='mb-2 flex items-center justify-center gap-3 text-2xl font-extrabold tracking-tight text-white md:justify-start'>
@@ -153,7 +159,7 @@ export function ContactSection() {
                   <p className='mt-3 text-xs text-slate-400'>
                     Powered by{' '}
                     <a
-                      href='https://cal.com/deven-shah-l0qkjk/quick-chat'
+                      href='https://cal.com/'
                       target='_blank'
                       rel='noopener noreferrer'
                       className='text-blue-400 underline decoration-dotted transition-colors hover:text-blue-300'
@@ -176,6 +182,14 @@ export function ContactSection() {
                     >
                       <CalendarCheck2 className='mr-3 h-5 w-5' aria-hidden='true' />
                       Select a Time
+                    </Button>
+                    <Button
+                      onClick={() => { window.open('https://cal.com/deven-shah-l0qkjk/quick-chat', '_blank') }}
+                      size='lg'
+                      className='flex w-full items-center justify-center gap-2 rounded-full border-0 bg-zinc-600 px-8 py-4 text-lg font-bold text-white outline-none ring-0 transition-all duration-200 hover:bg-zinc-700 focus-visible:ring-4 focus-visible:ring-blue-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 md:w-auto'
+                      tabIndex={0}
+                    >
+                      <ExternalLink className='h-5 w-5' aria-hidden='true' />
                     </Button>
                   </div>
                 </div>
