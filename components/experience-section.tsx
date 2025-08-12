@@ -90,7 +90,6 @@ export function ExperienceSection() {
           viewport={{ once: true }}
           className="max-w-7xl mx-auto"
         >
-          {/* Section Header */}
           <div className="text-center mb-10 sm:mb-14">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -116,7 +115,6 @@ export function ExperienceSection() {
               enterprise platforms.
             </motion.p>
           </div>
-          {/* Experience Cards - Responsive Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7">
             {experiences.map((exp, index) => (
               <motion.div
@@ -198,7 +196,6 @@ export function ExperienceSection() {
                         </>
                       )}
                     </Button>
-                    {/* Expanded Achievements */}
                     {allExpanded && (
                       <motion.div
                         id={`exp-achievements-${exp.id}`}

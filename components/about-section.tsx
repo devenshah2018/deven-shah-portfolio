@@ -48,7 +48,6 @@ const skills = {
   apis: ["C#", "Python", "Apex", "Azure", "REST API", "GraphQL", "TypeScript"],
 };
 
-// Skill mappings to experiences, projects, and education
 const skillMappings = [
   {
     skill: "Python",
@@ -841,7 +840,6 @@ const skillMappings = [
   },
 ];
 
-// Reintroduce category tabs and data mapping for tabbed view
 const skillCategories = [
   { key: "all", label: "All" },
   { key: "aimal", label: "AI/ML" },
@@ -883,7 +881,6 @@ const categorizedSkills = {
 export function AboutSection() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
-  // Add back activeCategory for tab toggle
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [currentAchievementIndex, setCurrentAchievementIndex] = useState(0);
   interface ActivityTotals {
@@ -911,7 +908,6 @@ export function AboutSection() {
 
   const [stravaStats, setStravaStats] = useState<StravaStats | null>(null);
 
-  // Past achievements for carousel
   const pastAchievements = [
     { name: "Spartan Sprint", date: "06/2022", type: "Obstacle Racing" },
     { name: "Spartan Sprint", date: "04/2023", type: "Obstacle Racing" },
@@ -919,14 +915,12 @@ export function AboutSection() {
     { name: "Olympic Triathlon", date: "06/2025", type: "Triathlon" },
   ];
 
-  // Upcoming achievement (static)
   const upcomingAchievement = {
     name: "Ironman 140.6",
     date: "Expected 10/2025",
     type: "Triathlon",
   };
 
-  // Auto-rotate achievements every 3 seconds
   useEffect(() => {
     if (pastAchievements.length > 1) {
       const interval = setInterval(() => {
@@ -1018,9 +1012,7 @@ export function AboutSection() {
           viewport={{ once: true }}
           className="max-w-7xl mx-auto"
         >
-          {/* Two-Column Layout */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-32 items-start">
-            {/* Left Column: Personal Intro + Timeline */}
             <div className="space-y-12">
               <div className="mb-2">
                 <h2 className="text-5xl sm:text-6xl font-bold mb-4 bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent tracking-tight">
@@ -1036,10 +1028,8 @@ export function AboutSection() {
                 </p>
               </div>
 
-              {/* Timeline moved here */}
               <div>
                 <h3 className="text-2xl font-bold text-white mb-3">Timeline</h3>
-                {/* Legend */}
                 <div className="flex gap-6 mb-4 text-sm">
                   <div className="flex items-center gap-2">
                     <span className="inline-block w-4 h-4 rounded-full bg-blue-500"></span>
@@ -1053,7 +1043,6 @@ export function AboutSection() {
                   </div>
                 </div>
                 <div className="border-l-4 border-blue-500/40 pl-6 space-y-6">
-                  {/* Education */}
                   <a
                     href="#education"
                     className="block cursor-pointer group focus:outline-none"
@@ -1068,7 +1057,6 @@ export function AboutSection() {
                       Boston University
                     </span>
                   </a>
-                  {/* Career */}
                   <a
                     href="#experience"
                     className="block cursor-pointer group focus:outline-none"
@@ -1095,7 +1083,6 @@ export function AboutSection() {
                       Patelco Credit Union
                     </span>
                   </a>
-                  {/* Education/Certifications (merged color) */}
                   <a
                     href="#education"
                     className="block cursor-pointer group focus:outline-none"
@@ -1110,7 +1097,6 @@ export function AboutSection() {
                       Amazon Web Services
                     </span>
                   </a>
-                  {/* Career */}
                   <a
                     href="#experience"
                     className="block cursor-pointer group focus:outline-none"
@@ -1123,7 +1109,6 @@ export function AboutSection() {
                     </span>
                     <span className="block text-slate-400">NetApp</span>
                   </a>
-                  {/* Education */}
                   <a
                     href="#education"
                     className="block cursor-pointer group focus:outline-none"
@@ -1142,9 +1127,7 @@ export function AboutSection() {
               </div>
             </div>
 
-            {/* Right Column: Rotating Tweets + Technical Skills */}
             <div className="space-y-12">
-              {/* Rotating Tweets */}
               <div className="mb-8 flex">
                 <div className="w-full max-w-md min-h-[320px] relative overflow-visible">
                   <h3 className="text-2xl font-bold text-white mb-3 flex items-center gap-2">
@@ -1160,7 +1143,6 @@ export function AboutSection() {
                 </div>
               </div>
               <div className="h-5" />
-              {/* Activity Dashboard */}
               <div className="mt-8">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="h-6 w-6 text-orange-500">
@@ -1190,9 +1172,7 @@ export function AboutSection() {
                   </div>
                 </div>
 
-                {/* Unified Stats & Achievements Panel */}
                 <div className="rounded-xl backdrop-blur-sm overflow-hidden">
-                  {/* Stats Section */}
                   <div className="p-4 border-b border-slate-700/30">
                     <div className="grid grid-cols-3 divide-x divide-slate-700/30">
                       <div className="text-center px-2">
@@ -1239,7 +1219,6 @@ export function AboutSection() {
                     </div>
                   </div>
 
-                  {/* Achievements Section */}
                   <div className="p-4">
                     <div className="flex items-center gap-2 mb-3">
                       <svg
@@ -1255,11 +1234,9 @@ export function AboutSection() {
                     </div>
 
                     <div className="grid grid-cols-3 gap-3">
-                      {/* Carousel Section - Past Achievements */}
                       <div className="col-span-2 relative">
                         <div className="bg-slate-700/20 rounded-lg p-3 h-[70px] flex items-center justify-between">
                           <div className="flex-1 relative h-full">
-                            {/* Achievement Content with Fade Transition */}
                             {pastAchievements.map((achievement, index) => (
                               <div
                                 key={index}
@@ -1278,7 +1255,6 @@ export function AboutSection() {
                                   </div>
                                 </div>
                                 <div className="flex items-center gap-1 ml-3">
-                                  {/* Carousel Indicators */}
                                   {pastAchievements.map((_, dotIndex) => (
                                     <button
                                       key={dotIndex}
@@ -1300,15 +1276,11 @@ export function AboutSection() {
                         </div>
                       </div>
 
-                      {/* Upcoming Achievement - Enterprise Grade */}
                       <div className="col-span-1">
                         <div className="group relative bg-gradient-to-br from-slate-800/40 via-orange-900/20 to-amber-900/15 border border-slate-600/40 rounded-lg p-3 h-[70px] flex flex-col justify-center overflow-hidden backdrop-blur-sm transition-all duration-500 ease-out hover:border-orange-400/30 hover:shadow-lg hover:shadow-orange-500/5">
-                          {/* Subtle animated background layer */}
                           <div className="absolute inset-0 bg-gradient-to-r from-orange-400/3 via-amber-400/2 to-orange-400/3 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out"></div>
 
-                          {/* Professional content layout */}
                           <div className="relative z-10 flex flex-col justify-center h-full space-y-1.5">
-                            {/* Title row with refined icon */}
                             <div className="flex items-center gap-2.5">
                               <div className="relative">
                                 <svg
@@ -1318,7 +1290,6 @@ export function AboutSection() {
                                 >
                                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
                                 </svg>
-                                {/* Subtle glow effect */}
                                 <div className="absolute inset-0 bg-orange-400/10 rounded-full blur-sm scale-150 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                               </div>
                               <div className="text-base font-semibold text-slate-100 group-hover:text-white truncate leading-tight transition-colors duration-300">
@@ -1326,7 +1297,6 @@ export function AboutSection() {
                               </div>
                             </div>
 
-                            {/* Meta information row */}
                             <div className="flex items-center justify-between">
                               <span className="text-sm text-slate-400 group-hover:text-slate-300 font-medium transition-colors duration-300">
                                 Triathlon
@@ -1346,10 +1316,8 @@ export function AboutSection() {
                             </div>
                           </div>
 
-                          {/* Sophisticated progress indicator */}
                           <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-orange-500/20 to-transparent"></div>
 
-                          {/* Corner accent - very subtle */}
                           <div className="absolute top-0 right-0 w-2 h-2 bg-gradient-to-br from-orange-400/20 to-transparent rounded-bl-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                         </div>
                       </div>
@@ -1358,14 +1326,12 @@ export function AboutSection() {
                 </div>
               </div>
 
-              {/* Technical Skills with vertical tabs */}
               <div className="mt-8">
                 <h3 className="text-2xl font-bold text-white mb-4">
                   Technical Skills
                 </h3>
 
                 <div className="flex gap-6">
-                  {/* Skills Display Area - Left Side */}
                   <div className="flex-1">
                     <div className="flex flex-wrap gap-2">
                       {(
@@ -1417,7 +1383,6 @@ export function AboutSection() {
                     </div>
                   </div>
 
-                  {/* Category Tabs - Right Side (Vertical) */}
                   <div className="flex flex-col gap-1 min-w-[100px]">
                     {skillCategories.map((cat) => (
                       <button

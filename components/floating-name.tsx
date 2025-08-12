@@ -15,7 +15,6 @@ export function FloatingName() {
   const { scrollY } = useScroll();
 
   useEffect(() => {
-    // Get elements once they're mounted
     const heroName = document.getElementById("hero-name");
     const nav = document.querySelector("nav");
 
@@ -35,7 +34,6 @@ export function FloatingName() {
         left: heroRect.left,
       });
 
-      // Position where the name should end up (left side of navigation)
       setEndPosition({
         top: navRect.top + window.scrollY + navRect.height / 2 - 20, // Center vertically in nav
         left: navRect.left + 40, // Left padding inside nav
@@ -48,11 +46,9 @@ export function FloatingName() {
       const heroRect = heroNameElement.getBoundingClientRect();
       const scrollProgress = window.scrollY;
 
-      // Start animation when hero name starts going out of view
       const shouldShow =
         scrollProgress > 200 && heroRect.bottom < window.innerHeight * 0.8;
 
-      // Hide when we've scrolled too far or when navigation shows the name
       const heroElement = document.getElementById("hero");
       const heroIsInView =
         heroElement &&
@@ -66,7 +62,7 @@ export function FloatingName() {
     updatePositions();
     window.addEventListener("scroll", handleScroll);
     window.addEventListener("resize", updatePositions);
-    handleScroll(); // Initial check
+    handleScroll();
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -74,10 +70,9 @@ export function FloatingName() {
     };
   }, [heroNameElement, navElement]);
 
-  // Calculate smooth animation values based on scroll position
   const animationProgress = useTransform(
     scrollY,
-    [200, 600], // Start at 200px scroll, complete by 600px
+    [200, 600],
     [0, 1],
     { clamp: true },
   );
@@ -97,7 +92,7 @@ export function FloatingName() {
   const scale = useTransform(
     animationProgress,
     [0, 1],
-    [1, 0.35], // Scale down to match navigation text size
+    [1, 0.35],
   );
 
   const opacity = useTransform(
@@ -134,7 +129,7 @@ export function FloatingName() {
       <motion.h1
         className="text-5xl sm:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent leading-tight whitespace-nowrap"
         style={{
-          fontSize: "inherit", // This will scale with the parent
+          fontSize: "inherit",
         }}
       >
         Deven Shah

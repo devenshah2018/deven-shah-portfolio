@@ -30,10 +30,8 @@ export function HeroSection() {
       id="hero"
       className="relative min-h-[1100px] flex items-center justify-center overflow-hidden"
     >
-      {/* Animated Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-blue-900/20 to-purple-900/20" />
 
-      {/* Floating Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
           animate={{
@@ -77,7 +75,6 @@ export function HeroSection() {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="mx-auto text-center relative z-20">
-          {/* Move name and title below navigation */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}

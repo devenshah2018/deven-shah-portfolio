@@ -118,7 +118,6 @@ export function ContactSection() {
           viewport={{ once: true }}
           className="max-w-7xl mx-auto"
         >
-          {/* Section Header */}
           <div className="text-center mb-20">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -144,7 +143,6 @@ export function ContactSection() {
             </motion.p>
           </div>
 
-          {/* Cal.com Booking - Primary CTA */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -202,9 +200,7 @@ export function ContactSection() {
             </Card>
           </motion.div>
 
-          {/* Contact Form & Social Links */}
           <div className="grid lg:grid-cols-5 gap-8 lg:gap-12">
-            {/* Contact Form */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -329,7 +325,6 @@ export function ContactSection() {
               </Card>
             </motion.div>
 
-            {/* Social Links */}
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}

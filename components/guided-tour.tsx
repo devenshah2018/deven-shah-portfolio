@@ -18,7 +18,6 @@ import {
 } from "lucide-react";
 import { useTour } from "@/components/tour-context";
 
-// Tour step definitions
 const tourSteps = [
   {
     id: "intro",
@@ -126,14 +125,11 @@ export function GuidedTour() {
         const elementHeight = rect.height;
         let scrollTop;
 
-        // If the element is a section (height > 60% of viewport), align top
         if (elementHeight > viewportHeight * 0.6) {
-          scrollTop = elementTop - 24; // Add a small offset for header
+          scrollTop = elementTop - 24;
         } else if (window.innerWidth < 768) {
-          // Mobile: show element at top quarter
           scrollTop = elementTop - viewportHeight * 0.18;
         } else {
-          // Desktop: center element, but ensure it's fully in view
           const tooltipPadding = 350;
           const safePadding = 50;
           const minTop = elementTop - tooltipPadding - safePadding;
@@ -186,43 +182,30 @@ export function GuidedTour() {
   const handleCloseTour = useCallback(() => {
     setCurrentStep(0);
 
-    // Immediately re-enable page interactions
     document.body.style.overflow = "";
     document.body.style.pointerEvents = "";
 
-    // Clean up highlights
     document.querySelectorAll(".tour-highlight").forEach((el) => {
       el.classList.remove("tour-highlight");
     });
 
-    // Optional: Add analytics tracking here
-    console.log(
-      "Tour completed at step:",
-      currentStep + 1,
-      "of",
-      tourSteps.length,
-    );
     closeTour();
   }, [closeTour, currentStep]);
 
   const updateTooltipPosition = useCallback(() => {
-    // Fixed top-right toast position with consistent dimensions
     const viewportWidth = window.innerWidth;
     const margin = 20;
 
-    // Set consistent width regardless of screen size
     const tooltipWidth = 380;
     const mobileWidth = 320;
 
     if (viewportWidth < 768) {
-      // On mobile, use slightly smaller width but still consistent
       setTooltipPosition({
         top: `${margin}px`,
         right: `${margin}px`,
         width: `${Math.min(mobileWidth, viewportWidth - 40)}px`,
       });
     } else {
-      // Desktop: fixed width for consistency
       setTooltipPosition({
         top: `${margin}px`,
         right: `${margin}px`,
@@ -232,12 +215,10 @@ export function GuidedTour() {
   }, []);
 
   const highlightElement = useCallback(() => {
-    // Remove any existing highlights
     document.querySelectorAll(".tour-highlight").forEach((el) => {
       el.classList.remove("tour-highlight");
     });
 
-    // Highlight experience items
     if (
       currentStepData.target &&
       currentStepData.target.startsWith("[data-item-id=")
@@ -248,7 +229,6 @@ export function GuidedTour() {
       }
     }
 
-    // Highlight project items
     if (
       currentStepData.target &&
       currentStepData.target.startsWith("#projects .grid > div")
@@ -259,7 +239,6 @@ export function GuidedTour() {
       }
     }
 
-    // Highlight book-a-call container on last step
     if (currentStepData.target === "#book-a-call-container") {
       const element = document.querySelector(currentStepData.target);
       if (element) {
@@ -270,22 +249,17 @@ export function GuidedTour() {
 
   useEffect(() => {
     if (isTourOpen) {
-      // Only scroll to top on the first step (intro)
       if (currentStep === 0) {
-        // First, scroll to the top of the page to ensure consistent starting position
         window.scrollTo({
           top: 0,
           behavior: "smooth",
         });
 
-        // Small delay to ensure scroll to top completes before starting tour
         setTimeout(() => {
           highlightElement();
           updateTooltipPosition();
-          // Don't scroll to target on first step since we're already at the top
         }, 300);
       } else {
-        // For subsequent steps, just highlight and scroll to target
         highlightElement();
         updateTooltipPosition();
         if (currentStepData.target) {
@@ -293,15 +267,12 @@ export function GuidedTour() {
         }
       }
 
-      // Disable scrolling and interactions during tour
       document.body.style.overflow = "hidden";
       document.body.style.pointerEvents = "none";
 
-      // Create a stable reference to the event handler
       const preventInteraction = (e: Event) => {
         const target = e.target as HTMLElement;
 
-        // Allow interactions with tour modal and its children
         if (
           target.closest(".tour-tooltip-container") ||
           target.closest(".tour-tooltip")
@@ -314,9 +285,7 @@ export function GuidedTour() {
         e.stopImmediatePropagation();
       };
 
-      // Create a stable reference to the keyboard handler
       const handleKeyDown = (e: KeyboardEvent) => {
-        // Only allow arrow keys and escape for tour navigation
         if (
           ![
             "ArrowLeft",
@@ -330,7 +299,6 @@ export function GuidedTour() {
         }
       };
 
-      // Add comprehensive event listeners to prevent all interactions
       const events = [
         "wheel",
         "touchmove",
@@ -355,24 +323,19 @@ export function GuidedTour() {
         });
       });
 
-      // Add keyboard handler separately
       document.addEventListener("keydown", handleKeyDown, {
         passive: false,
         capture: true,
       });
 
-      // Return cleanup function
       return () => {
-        // Cleanup highlights when component unmounts
         document.querySelectorAll(".tour-highlight").forEach((el) => {
           el.classList.remove("tour-highlight");
         });
 
-        // Re-enable scrolling and interactions
         document.body.style.overflow = "";
         document.body.style.pointerEvents = "";
 
-        // Remove all event listeners using the same function references
         events.forEach((event) => {
           document.removeEventListener(event, preventInteraction, {
             capture: true,
@@ -393,7 +356,6 @@ export function GuidedTour() {
     currentStepData.target,
   ]);
 
-  // Throttle function to limit scroll updates
   function throttle(func: Function, limit: number) {
     let inThrottle: boolean;
     return function (this: any, ...args: any[]) {
@@ -405,7 +367,6 @@ export function GuidedTour() {
     };
   }
 
-  // Window resize handler to recalculate position
   useEffect(() => {
     if (!isTourOpen) return;
 
@@ -414,7 +375,6 @@ export function GuidedTour() {
     };
 
     const handleOrientationChange = () => {
-      // Handle orientation change on mobile devices
       setTimeout(() => {
         updateTooltipPosition();
         if (currentStepData.target) {
@@ -437,7 +397,6 @@ export function GuidedTour() {
     updateTooltipPosition,
   ]);
 
-  // Keyboard navigation
   useEffect(() => {
     if (!isTourOpen) return;
 
@@ -491,7 +450,6 @@ export function GuidedTour() {
 
   return (
     <>
-      {/* Toast-style tooltip in top right */}
       <AnimatePresence mode="wait">
         {!isTransitioning && (
           <motion.div
@@ -531,14 +489,12 @@ export function GuidedTour() {
                   </Button>
                 </div>
 
-                {/* Content */}
                 <div className="flex-1 flex flex-col justify-center mb-6">
                   <p className="text-slate-200 text-sm leading-relaxed">
                     {currentStepData.content}
                   </p>
                 </div>
 
-                {/* Navigation */}
                 <div className="flex justify-between items-center gap-2 mt-auto">
                   <Button
                     variant="outline"

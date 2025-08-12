@@ -18,7 +18,6 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { QodeIdeModal } from "@/components/qode-ide-modal";
-import { AresVideoModal } from "@/components/ares-video-modal";
 import { useState } from "react";
 
 const projects = [
@@ -244,7 +243,6 @@ const projects = [
 
 export function ProjectsSection() {
   const [qodeModalOpen, setQodeModalOpen] = useState(false);
-  const [aresModalOpen, setAresModalOpen] = useState(false);
   const [allProjectsExpanded, setAllProjectsExpanded] = useState(false);
   const [showAllProjects, setShowAllProjects] = useState(false);
 
@@ -259,8 +257,6 @@ export function ProjectsSection() {
   const handleProjectAction = (project: (typeof projects)[0]) => {
     if (project.type === "ide") {
       setQodeModalOpen(true);
-    } else if (project.type === "video") {
-      setAresModalOpen(true);
     } else if (project.type === "link") {
       window.open(project.link, "_blank");
     } else if (project.type === "github") {
@@ -306,7 +302,6 @@ export function ProjectsSection() {
               Quantum, security, and ML—each project is a leap forward.
             </motion.p>
 
-            {/* Global Expand/Collapse Button */}
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
@@ -500,7 +495,6 @@ export function ProjectsSection() {
             })}
           </div>
 
-          {/* Show More/Less Projects Button */}
           {projects.length > 6 && (
             <motion.div
               initial={{ opacity: 0 }}
@@ -532,7 +526,6 @@ export function ProjectsSection() {
       </div>
 
       <QodeIdeModal open={qodeModalOpen} onOpenChange={setQodeModalOpen} />
-      <AresVideoModal open={aresModalOpen} onOpenChange={setAresModalOpen} />
     </section>
   );
 }

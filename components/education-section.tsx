@@ -70,7 +70,6 @@ export function EducationSection() {
           viewport={{ once: true }}
           className="max-w-4xl mx-auto"
         >
-          {/* Section Header */}
           <div className="text-center mb-12">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -96,7 +95,6 @@ export function EducationSection() {
             </motion.p>
           </div>
 
-          {/* Tabs */}
           <Tabs
             value={activeTab}
             onValueChange={setActiveTab}
@@ -168,7 +166,6 @@ export function EducationSection() {
                     >
                       <CardContent className="p-0">
                         <div className="flex items-start gap-4 p-6">
-                          {/* Logo */}
                           <div className="relative flex-shrink-0">
                             <div className="w-16 h-16 rounded-xl bg-white/5 border border-slate-600/30 p-3 shadow-md backdrop-blur-sm">
                               <img
@@ -182,7 +179,6 @@ export function EducationSection() {
                             </div>
                           </div>
 
-                          {/* Content */}
                           <div className="flex-1 min-w-0">
                             <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-3 mb-4">
                               <div className="min-w-0">
@@ -235,7 +231,6 @@ export function EducationSection() {
                               </div>
                             </div>
 
-                            {/* Coursework */}
                             {edu.coursework.length > 0 && (
                               <div className="border-t border-slate-700/30 pt-4">
                                 <div className="flex items-center justify-between mb-3">
@@ -351,7 +346,6 @@ export function EducationSection() {
                   >
                     <CardContent className="p-0">
                       <div className="flex items-start gap-4 p-6">
-                        {/* Logo */}
                         <div className="relative flex-shrink-0">
                           <div className="w-16 h-16 rounded-xl bg-white/5 border border-slate-600/30 p-3 shadow-md backdrop-blur-sm">
                             <img
@@ -365,7 +359,6 @@ export function EducationSection() {
                           </div>
                         </div>
 
-                        {/* Content */}
                         <div className="flex-1 min-w-0">
                           <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-3">
                             <div className="min-w-0">
@@ -403,7 +396,6 @@ export function EducationSection() {
                             </div>
                           </div>
 
-                          {/* Description */}
                           <div className="border-t border-slate-700/30 pt-3">
                             <h4 className="text-sm font-semibold text-slate-200 flex items-center gap-2 mb-2">
                               <div className="w-1.5 h-1.5 rounded-full bg-orange-400"></div>

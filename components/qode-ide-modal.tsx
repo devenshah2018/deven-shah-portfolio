@@ -33,7 +33,6 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 
-// Global window extension for Qode interpreter
 declare global {
   interface Window {
     QodeModule: any;
@@ -52,7 +51,6 @@ interface QodeIdeModalProps {
   onOpenChange: (open: boolean) => void;
 }
 
-// Example Qode programs
 const qodeExamples = {
   basic: `#> $Basic_Qubit_Operations_Demo
 
@@ -127,7 +125,6 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
   const interpreterLoadedRef = useRef(false);
   const isLoadingRef = useRef(false);
 
-  // Detect OS for hotkey badge
   const [hotkeyLabel, setHotkeyLabel] = useState<"Cmd" | "Ctrl">("Cmd");
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -137,7 +134,6 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
     }
   }, []);
 
-  // Load the Qode WASM interpreter when the modal opens
   useEffect(() => {
     if (open && !interpreterLoadedRef.current && !isLoadingRef.current) {
       interpreterLoadedRef.current = true;
@@ -145,7 +141,6 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
     }
   }, [open]);
 
-  // Hotkey handler for running code
   useEffect(() => {
     if (!open) return;
     const handler = (e: KeyboardEvent) => {
@@ -161,13 +156,11 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
 
   const loadQodeWasmLoader = async () => {
     return new Promise((resolve, reject) => {
-      // Check if the loader is already available
       if (window.createQodeInterpreter) {
         resolve(true);
         return;
       }
 
-      // Load the WASM loader script
       const script = document.createElement("script");
       script.src = "/qode-wasm-loader.js";
       script.onload = () => {
@@ -183,7 +176,6 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
   };
 
   const loadQodeInterpreter = async () => {
-    // Prevent multiple simultaneous loads
     if (isLoadingRef.current || interpreter) {
       console.log("Interpreter already loading or loaded, skipping...");
       return;
@@ -192,7 +184,6 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
     isLoadingRef.current = true;
     console.log("Starting interpreter load...");
 
-    // Only set loading message if output is in initial state
     const isInitialState =
       output.includes("Execute your quantum program to begin") ||
       output.includes("Interpreter: Initializing...");
@@ -205,7 +196,6 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
     }
 
     try {
-      // Load our new WASM loader
       await loadQodeWasmLoader();
 
       if (isInitialState) {
@@ -214,14 +204,12 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
         );
       }
 
-      // Use the new createQodeInterpreter function
       if (window.createQodeInterpreter) {
         const module = await window.createQodeInterpreter();
         setInterpreter(module);
         setInterpreterReady(true);
         console.log("Interpreter loaded successfully:", module);
 
-        // Only update output if we're in initial state
         if (isInitialState) {
           setOutput(
             "QODE QUANTUM DEVELOPMENT ENVIRONMENT\n" +
@@ -237,7 +225,6 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
     } catch (error) {
       console.error("Failed to load Qode interpreter:", error);
 
-      // Only update output if we're in initial state
       if (isInitialState) {
         setOutput(
           "SYSTEM WARNING: Hardware interpreter unavailable\n" +
@@ -250,7 +237,6 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
         );
       }
 
-      // Create a basic fallback interpreter
       const fallbackInterpreter = {
         executeQode: (code: string) =>
           Promise.resolve({
@@ -282,10 +268,8 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
 
     try {
       if (interpreter && interpreterReady) {
-        // Real WASM execution
         await executeWithWasm();
       } else {
-        // Simulation mode
         await executeSimulation();
       }
     } catch (error) {
@@ -298,14 +282,12 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
 
   const executeWithWasm = async () => {
     try {
-      // Use the new WASM loader interface
       if (interpreter && interpreter.executeQode) {
         setOutput(
           (prev) => prev + "LOAD: Program loaded into quantum memory\n",
         );
         setOutput((prev) => prev + "EXEC: WebAssembly interpreter active\n\n");
 
-        // Execute the program using the new interface
         const result = await interpreter.executeQode(code);
 
         if (result.success) {
@@ -331,7 +313,6 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
   const executeSimulation = async () => {
     await new Promise((resolve) => setTimeout(resolve, 800));
 
-    // Parse and simulate the Qode program
     const simulation = simulateQodeProgram(code);
     setOutput((prev) => prev + simulation + "\nDONE: Simulation complete.\n");
   };
@@ -350,9 +331,7 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
     let operations = 0;
     let output = "";
 
-    // Process each line for quantum operations
     for (const line of lines) {
-      // Parse qubit initialization
       const qubitMatches = line.match(/\bq\d+/g);
       if (qubitMatches) {
         qubitMatches.forEach((qubit) => {
@@ -362,7 +341,6 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
         });
       }
 
-      // Parse quantum gates with detailed descriptions
       if (line.includes("!H")) {
         const qubit = line.match(/!H\s+(q\d+)/)?.[1];
         if (qubit && qubits.has(qubit)) {
@@ -396,7 +374,6 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
         if (qubit && qubits.has(qubit)) {
           operations++;
           const qubitState = qubits.get(qubit)!;
-          // Y gate introduces complex phase and bit flip
           const temp = qubitState.prob0;
           qubitState.prob0 = qubitState.prob1;
           qubitState.prob1 = temp;
@@ -438,7 +415,6 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
         }
       }
 
-      // Parse output commands
       if (line.includes("#>")) {
         const textMatch = line.match(/\$([A-Za-z0-9_]+)/);
         if (textMatch) {
@@ -449,11 +425,9 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
       }
     }
 
-    // Add comprehensive execution summary
     output += `Quantum circuit execution summary:\n`;
     output += `Total quantum operations: ${operations}\n`;
 
-    // Add step-by-step breakdown
     operationLog.forEach((step) => {
       output += `${step}\n`;
     });
@@ -487,7 +461,6 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-    // Don't modify output for simple operations like save
   };
 
   const loadProgram = () => {
@@ -513,7 +486,6 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
 
   const copyCode = () => {
     navigator.clipboard.writeText(code);
-    // Don't modify output for simple operations like copy
   };
 
   return (
@@ -522,7 +494,6 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
         className="max-w-[95vw] w-[95vw] max-h-[95vh] p-0 flex flex-col transition-all duration-200 bg-slate-950 border-slate-700 shadow-2xl !max-w-none"
         onInteractOutside={(e) => e.preventDefault()}
       >
-        {/* Header */}
         <div className="px-6 py-3 bg-slate-900 rounded-t-lg">
           <div className="flex items-center justify-between pr-8">
             <div className="flex items-center gap-3">
@@ -562,7 +533,6 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
           </div>
         </div>
 
-        {/* Toolbar */}
         <div className="px-6 py-2 bg-slate-900/30">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -616,9 +586,7 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
           </div>
         </div>
 
-        {/* Main IDE Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 flex-1 overflow-hidden relative">
-          {/* Code Editor Panel */}
           <div className="flex flex-col bg-slate-950 overflow-hidden border-r border-slate-700">
             <div className="px-4 py-1 bg-slate-900/20">
               <div className="flex items-center gap-2">
@@ -635,12 +603,12 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
                   className="h-[70vh] w-full resize-none border-0 rounded-none text-sm p-4 focus-visible:ring-0 focus-visible:ring-offset-0 bg-slate-950 text-slate-200 font-mono leading-relaxed"
                   placeholder="Write your quantum program here...
 
-Example:
-q1 q2             // Initialize qubits
-!H q1             // Hadamard gate
-!X q2             // Pauli-X gate
-!I q1             // Check state
-TERM"
+                    Example:
+                    q1 q2             // Initialize qubits
+                    !H q1             // Hadamard gate
+                    !X q2             // Pauli-X gate
+                    !I q1             // Check state
+                    TERM"
                   spellCheck="false"
                   style={{
                     fontFamily: "JetBrains Mono, SF Mono, Consolas, monospace",
@@ -651,7 +619,6 @@ TERM"
             </div>
           </div>
 
-          {/* Output Console Panel */}
           <div className="flex flex-col bg-black overflow-hidden">
             <div className="px-4 py-1 bg-slate-900/20">
               <div className="flex items-center gap-2">
@@ -662,7 +629,6 @@ TERM"
             <div className="flex-1 relative min-h-[200px]">
               <ScrollArea className="absolute inset-0 h-full w-full">
                 <div className="min-h-full h-full w-full p-4 text-sm overflow-auto bg-black text-slate-300 font-mono leading-relaxed space-y-1">
-                  {/* Render all lines except the execution summary block */}
                   {(() => {
                     const lines = output.split("\n");
                     const summaryStart = lines.findIndex((l) =>
@@ -671,7 +637,6 @@ TERM"
                     let summaryLines: string[] = [];
                     let mainLines: string[] = lines;
                     if (summaryStart !== -1) {
-                      // Find the end of the summary block (terminated line)
                       let summaryEnd = lines.findIndex(
                         (l, i) =>
                           i > summaryStart &&
@@ -680,7 +645,6 @@ TERM"
                       if (summaryEnd !== -1) {
                         summaryEnd += 1; // include the terminated line
                         summaryLines = lines.slice(summaryStart, summaryEnd);
-                        // Any lines after the terminated line
                         const afterSummaryLines = lines.slice(summaryEnd);
                         mainLines = lines
                           .slice(0, summaryStart)
@@ -693,7 +657,6 @@ TERM"
                     return (
                       <>
                         {mainLines.map((line, index) => {
-                          // Custom output styling by operation
                           if (line.startsWith("Hadamard gate applied")) {
                             return (
                               <div
@@ -758,7 +721,6 @@ TERM"
                             line.startsWith("Qubit") &&
                             line.includes("state:")
                           ) {
-                            // Improved I gate output
                             const match = line.match(
                               /Qubit (q\d+) state: \|0⟩ probability: ([0-9.]+), \|1⟩ probability: ([0-9.]+)/,
                             );
@@ -843,7 +805,6 @@ TERM"
                             line.includes("_") &&
                             !line.includes("Console output to")
                           ) {
-                            // Special output for #> user console log lines and simulated $> lines
                             const logText = line
                               .replace("#> $", "")
                               .replace(/_/g, " ");
@@ -861,7 +822,6 @@ TERM"
                               </div>
                             );
                           }
-                          // Default output
                           return (
                             <div
                               key={index}
@@ -883,7 +843,7 @@ TERM"
                                 key={idx}
                                 className={
                                   idx === 0
-                                    ? "hidden" // Hide the repeated summary header line
+                                    ? "hidden"
                                     : idx === 1
                                       ? "text-slate-300 text-[14px] mb-1"
                                       : line.startsWith(
@@ -912,14 +872,12 @@ TERM"
             </div>
           </div>
 
-          {/* Examples Side Panel */}
           <div
             className={`absolute top-0 right-0 h-full w-80 bg-slate-900/95 backdrop-blur-sm border-l border-slate-700 transform transition-transform duration-300 ease-in-out z-50 shadow-xl ${
               showExamples ? "translate-x-0" : "translate-x-full"
             }`}
           >
             <div className="flex flex-col h-full">
-              {/* Panel Header */}
               <div className="flex items-center justify-between p-4 border-b border-slate-700/50 bg-slate-800/50">
                 <h3 className="text-sm font-semibold text-white">
                   Code Examples
@@ -934,7 +892,6 @@ TERM"
                 </Button>
               </div>
 
-              {/* Examples List */}
               <div className="flex-1 p-4 space-y-3 overflow-y-auto">
                 {Object.entries({
                   basic: {
@@ -970,7 +927,6 @@ TERM"
                         }
                       `}
                     >
-                      {/* Accent bar for active/hover */}
                       <div
                         className={`h-full w-1 rounded-l-lg transition-all duration-150 ${currentExample === key ? "bg-blue-400" : "group-hover:bg-blue-300 group-hover:opacity-80 bg-transparent"}`}
                       ></div>
@@ -985,7 +941,6 @@ TERM"
                         </span>
                       </div>
                     </button>
-                    {/* Divider except for last item */}
                     {idx < arr.length - 1 && (
                       <div className="border-b border-slate-800 mx-2" />
                     )}
@@ -995,7 +950,6 @@ TERM"
             </div>
           </div>
 
-          {/* Backdrop */}
           {showExamples && (
             <div
               className="absolute inset-0 bg-black/30 backdrop-blur-sm z-40 transition-opacity duration-300"
@@ -1004,7 +958,6 @@ TERM"
           )}
         </div>
 
-        {/* Footer */}
         <div className="px-6 py-2 bg-slate-900 rounded-b-lg">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">

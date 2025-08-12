@@ -30,7 +30,6 @@ export function Navigation({ onStartTour }: NavigationProps) {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const heroRef = useRef<HTMLElement | null>(null);
 
-  // Get user's timezone and update clock
   useEffect(() => {
     const updateClock = () => {
       const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -58,7 +57,6 @@ export function Navigation({ onStartTour }: NavigationProps) {
     return () => clearInterval(interval);
   }, []);
 
-  // Simple scroll detection
   useEffect(() => {
     let ticking = false;
 
@@ -67,13 +65,10 @@ export function Navigation({ onStartTour }: NavigationProps) {
         requestAnimationFrame(() => {
           setIsScrolled(window.scrollY > 50);
 
-          // Check if hero is even partially in view
           const hero = document.getElementById("hero");
           if (hero) {
             const rect = hero.getBoundingClientRect();
-            // Hero is in view if any part of it is visible
             const isHeroInView = rect.bottom > 100; // Add buffer for smoother transition
-            // Smoother transition with less strict scroll threshold
             const shouldShowName = !isHeroInView && window.scrollY > 400;
             setShowName(shouldShowName);
           } else {
@@ -86,7 +81,7 @@ export function Navigation({ onStartTour }: NavigationProps) {
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll(); // Initial check
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -103,7 +98,6 @@ export function Navigation({ onStartTour }: NavigationProps) {
     >
       <div className="container mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          {/* Logo */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -125,9 +119,7 @@ export function Navigation({ onStartTour }: NavigationProps) {
                       Deven Shah
                     </span>
 
-                    {/* Social Media Icons - Enterprise Grade Hover Popout */}
                     <div className="absolute top-full left-0 opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out pointer-events-none group-hover:pointer-events-auto z-50">
-                      {/* Invisible bridge to prevent hover gaps */}
                       <div className="absolute -top-2 left-0 w-full h-2 bg-transparent"></div>
 
                       <motion.div
@@ -137,10 +129,8 @@ export function Navigation({ onStartTour }: NavigationProps) {
                         transition={{ duration: 0.2, ease: "easeOut" }}
                         className="relative mt-2"
                       >
-                        {/* Main popout container */}
                         <div className="bg-slate-950/90 backdrop-blur-lg border border-slate-700/40 rounded-lg p-2 shadow-xl">
                           <div className="flex items-center gap-2">
-                            {/* GitHub */}
                             <a
                               href="https://github.com/devenshah2018"
                               target="_blank"
@@ -157,7 +147,6 @@ export function Navigation({ onStartTour }: NavigationProps) {
                               </svg>
                             </a>
 
-                            {/* LinkedIn */}
                             <a
                               href="https://www.linkedin.com/in/deven-a-shah/"
                               target="_blank"
@@ -174,7 +163,6 @@ export function Navigation({ onStartTour }: NavigationProps) {
                               </svg>
                             </a>
 
-                            {/* Email */}
                             <a
                               href="mailto:devenshah2018@gmail.com"
                               className="group/item flex items-center justify-center w-7 h-7 rounded bg-slate-800/30 hover:bg-green-600/15 text-slate-500 hover:text-green-400 transition-all duration-150 hover:scale-105"
@@ -195,7 +183,6 @@ export function Navigation({ onStartTour }: NavigationProps) {
                               </svg>
                             </a>
 
-                            {/* X (Twitter) */}
                             <a
                               href="https://x.com/devenshah2018"
                               target="_blank"
@@ -214,7 +201,6 @@ export function Navigation({ onStartTour }: NavigationProps) {
                           </div>
                         </div>
 
-                        {/* Subtle arrow pointer */}
                         <div className="absolute -top-1 left-4 w-2 h-2 bg-slate-950/90 border-l border-t border-slate-700/40 transform rotate-45"></div>
                       </motion.div>
                     </div>
@@ -264,9 +250,7 @@ export function Navigation({ onStartTour }: NavigationProps) {
               </AnimatePresence>
             </div>
           </motion.div>
-          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-2">
-            {/* Tour Button */}
             <motion.div
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -302,7 +286,6 @@ export function Navigation({ onStartTour }: NavigationProps) {
               </motion.div>
             ))}
           </div>
-          {/* Mobile Navigation */}
           <div className="md:hidden">
             <Sheet open={mobileNavOpen} onOpenChange={setMobileNavOpen}>
               <SheetTrigger asChild>
@@ -434,23 +417,22 @@ export function Navigation({ onStartTour }: NavigationProps) {
               </SheetTrigger>
               <SheetContent
                 className={`
-									overflow-hidden
-									rounded-3xl
-									bg-slate-950/90
-									backdrop-blur-2xl
-									border border-slate-800/50
-									shadow-2xl
-									transition-all duration-500
-									translate-y-0
-									${mobileNavOpen ? "scale-100 opacity-100" : "scale-95 opacity-0"}
-								`}
+							overflow-hidden
+							rounded-3xl
+							bg-slate-950/90
+							backdrop-blur-2xl
+							border border-slate-800/50
+							shadow-2xl
+							transition-all duration-500
+							translate-y-0
+							${mobileNavOpen ? "scale-100 opacity-100" : "scale-95 opacity-0"}
+						`}
                 style={{
                   WebkitBackdropFilter: "blur(30px)",
                   backdropFilter: "blur(30px)",
                 }}
               >
                 <div className="px-6 py-4">
-                  {/* Tour Button - Mobile */}
                   <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -471,7 +453,6 @@ export function Navigation({ onStartTour }: NavigationProps) {
                     </Button>
                   </motion.div>
 
-                  {/* Mobile nav items */}
                   {navItems.map((item, index) => (
                     <motion.div
                       key={item.name}

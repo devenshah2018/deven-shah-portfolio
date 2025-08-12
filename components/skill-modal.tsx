@@ -50,7 +50,6 @@ export function SkillModal({
     (mapping) => mapping.skill === skillName,
   );
 
-  // Updated scrollToSection: close modal first, then scroll after delay with highlighting
   const scrollToSection = (sectionId: string, itemId?: string) => {
     onOpenChange(false);
     setTimeout(() => {
@@ -58,25 +57,22 @@ export function SkillModal({
       if (section) {
         section.scrollIntoView({ behavior: "smooth" });
 
-        // If we have an itemId, highlight that specific item
         if (itemId) {
           setTimeout(() => {
             const targetElement = document.querySelector(
               `[data-item-id="${itemId}"]`,
             );
             if (targetElement) {
-              // Add the same tour highlight class
               targetElement.classList.add("tour-highlight");
 
-              // Remove the highlight after 3 seconds
               setTimeout(() => {
                 targetElement.classList.remove("tour-highlight");
               }, 3000);
             }
-          }, 500); // Wait for scroll to complete
+          }, 500);
         }
       }
-    }, 200); // Delay to allow modal to close
+    }, 200);
   };
 
   if (!skillData || !skillName) {
@@ -96,7 +92,6 @@ export function SkillModal({
         </DialogHeader>
 
         <div className="space-y-7 max-h-[50vh] overflow-y-auto pr-1">
-          {/* Experiences */}
           {skillData.experiences && skillData.experiences.length > 0 && (
             <div>
               <h3 className="text-base font-semibold text-slate-200 mb-3 flex items-center gap-2">
@@ -130,7 +125,6 @@ export function SkillModal({
             </div>
           )}
 
-          {/* Projects */}
           {skillData.projects && skillData.projects.length > 0 && (
             <div>
               <h3 className="text-base font-semibold text-slate-200 mb-3 flex items-center gap-2">
@@ -164,7 +158,6 @@ export function SkillModal({
             </div>
           )}
 
-          {/* Education */}
           {skillData.education && skillData.education.length > 0 && (
             <div>
               <h3 className="text-base font-semibold text-slate-200 mb-3 flex items-center gap-2">

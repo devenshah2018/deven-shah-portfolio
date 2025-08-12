@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 
-// Replace with your best tweets
 const TWEETS = [
   {
     id: "1",
