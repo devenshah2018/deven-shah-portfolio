@@ -25,7 +25,6 @@ A cutting-edge personal portfolio built with **Next.js 14**, **TypeScript**, and
 - Skills demonstration with real-world applications
 
 ### 🔬 **Qode Interactive IDE**
-> **World's first browser-based quantum programming language IDE**
 
 - **Live Code Execution**: Real-time quantum circuit simulation using WebAssembly
 - **Syntax Highlighting**: Custom editor with Qode language support
@@ -262,35 +261,3 @@ useEffect(() => {
 5. **Technical Innovation**: WebAssembly, advanced animations, and modern architecture
 
 ---
-
-## 📞 **Contact & Links**
-
-- **Portfolio**: [deven.shah](https://deven.shah)
-- **Email**: [devenshah2018@gmail.com](mailto:devenshah2018@gmail.com)
-- **LinkedIn**: [/in/deven-a-shah](https://linkedin.com/in/deven-a-shah)
-- **GitHub**: [/devenshah2018](https://github.com/devenshah2018)
-- **Twitter**: [@devenshah2018](https://twitter.com/devenshah2018)
-
----
-
-## 📄 **License**
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 🙏 **Acknowledgments**
-
-- **Qode Language**: Original quantum programming language design
-- **WebAssembly Community**: For WASM compilation techniques
-- **Next.js Team**: For the excellent framework and documentation
-- **Vercel**: For seamless deployment and hosting
-- **Strava**: For the comprehensive athletics API
-- **Cal.com**: For the embedded scheduling solution
-
----
-
-<div align="center">
-  <p><strong>Built with ❤️ by Deven Shah</strong></p>
-  <p><em>Pushing the boundaries of web development and quantum computing</em></p>
-</div>
