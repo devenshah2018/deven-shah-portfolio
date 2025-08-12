@@ -436,11 +436,11 @@ export function GuidedTour() {
             initial={{ opacity: 0, scale: 0.96, y: 16, filter: 'blur(4px)' }}
             animate={{ opacity: 1, scale: 1, y: 0, filter: 'blur(0px)' }}
             exit={{ opacity: 0, scale: 0.96, y: -8, filter: 'blur(2px)' }}
-            transition={{ 
-              duration: 0.4, 
+            transition={{
+              duration: 0.4,
               ease: [0.16, 1, 0.3, 1],
               opacity: { duration: 0.3 },
-              filter: { duration: 0.25 }
+              filter: { duration: 0.25 },
             }}
             className='tour-tooltip-container fixed right-8 top-8 z-[101]'
             style={{
@@ -455,13 +455,16 @@ export function GuidedTour() {
           >
             <motion.div
               initial={{ boxShadow: '0 0 0 rgba(59, 130, 246, 0)' }}
-              animate={{ boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(59, 130, 246, 0.1)' }}
+              animate={{
+                boxShadow:
+                  '0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(59, 130, 246, 0.1)',
+              }}
               transition={{ duration: 0.3, delay: 0.1 }}
             >
               <Card className='relative flex h-auto w-full max-w-[400px] flex-col overflow-hidden rounded-xl border border-slate-800/80 bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 p-0 backdrop-blur-xl'>
                 {/* Subtle gradient overlay */}
-                <div className='absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-purple-500/5 pointer-events-none' />
-                
+                <div className='pointer-events-none absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-purple-500/5' />
+
                 <CardContent className='relative flex h-full flex-col p-7'>
                   {/* Progress indicator */}
                   <div className='mb-5 flex h-1 w-full overflow-hidden rounded-full bg-slate-800'>
@@ -485,7 +488,7 @@ export function GuidedTour() {
                         {getStepIcon()}
                       </motion.div>
                       <div className='flex min-w-0 flex-col'>
-                        <motion.h3 
+                        <motion.h3
                           initial={{ opacity: 0, y: 4 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.3, delay: 0.15 }}
@@ -493,7 +496,7 @@ export function GuidedTour() {
                         >
                           {currentStepData ? currentStepData.title : ''}
                         </motion.h3>
-                        <motion.span 
+                        <motion.span
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           transition={{ duration: 0.3, delay: 0.25 }}
@@ -514,7 +517,7 @@ export function GuidedTour() {
                   </div>
 
                   {/* Content */}
-                  <motion.div 
+                  <motion.div
                     className='mb-7 flex flex-1 flex-col justify-center'
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -526,7 +529,7 @@ export function GuidedTour() {
                   </motion.div>
 
                   {/* Navigation */}
-                  <motion.div 
+                  <motion.div
                     className='flex items-center justify-between gap-3'
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -536,12 +539,12 @@ export function GuidedTour() {
                       variant='outline'
                       onClick={prevStep}
                       disabled={currentStep === 0 || isTransitioning}
-                      className='h-9 rounded-lg border-slate-700/60 bg-transparent px-4 text-sm text-slate-300 transition-all hover:border-slate-600 hover:bg-slate-800/40 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed'
+                      className='h-9 rounded-lg border-slate-700/60 bg-transparent px-4 text-sm text-slate-300 transition-all hover:border-slate-600 hover:bg-slate-800/40 hover:text-white disabled:cursor-not-allowed disabled:opacity-40'
                     >
                       <ChevronLeft className='mr-1.5 h-3.5 w-3.5' />
                       Previous
                     </Button>
-                    
+
                     <div className='flex gap-2'>
                       {currentStep === tourSteps.length - 1 ? (
                         <Button
