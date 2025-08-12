@@ -225,7 +225,7 @@ export function EducationSection() {
 
                             {edu.coursework.length > 0 && (
                               <div className='border-t border-slate-700/30 pt-4'>
-                                <div className='mb-3 flex items-center justify-between'>
+                                <div className='mb-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between'>
                                   <h4 className='flex items-center gap-2 text-sm font-semibold text-slate-200'>
                                     <div className='h-1.5 w-1.5 rounded-full bg-gradient-to-r from-blue-400 to-indigo-500'></div>
                                     Relevant Coursework
@@ -236,7 +236,7 @@ export function EducationSection() {
                                   {edu.coursework.length > 4 && (
                                     <button
                                       onClick={() => setShowAllCourses(!showAllCourses)}
-                                      className='flex items-center gap-2 rounded-lg border border-slate-700 bg-slate-800/80 px-3 py-1 text-xs font-semibold text-blue-500 shadow-sm transition-all duration-200 hover:bg-blue-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-400/70'
+                                      className='flex w-fit items-center gap-2 rounded-lg border border-slate-700 bg-slate-800/80 px-3 py-1 text-xs font-semibold text-blue-500 shadow-sm transition-all duration-200 hover:bg-blue-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-400/70 sm:w-auto'
                                       aria-label={
                                         showAllCourses ? 'Show fewer courses' : 'Show all courses'
                                       }

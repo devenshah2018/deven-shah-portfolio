@@ -1086,7 +1086,9 @@ export function AboutSection() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className='text-xl font-semibold text-white'>Activity Dashboard</h3>
+                    <h3 className='text-lg font-semibold text-white sm:text-xl'>
+                      Activity Dashboard
+                    </h3>
                     <p className='text-xs text-slate-400'>
                       Powered by{' '}
                       <a
@@ -1102,26 +1104,26 @@ export function AboutSection() {
                 </div>
 
                 <div className='overflow-hidden rounded-xl backdrop-blur-sm'>
-                  <div className='border-b border-slate-700/30 p-4'>
+                  <div className='border-b border-slate-700/30 p-3 sm:p-4'>
                     <div className='grid grid-cols-3 divide-x divide-slate-700/30'>
-                      <div className='px-2 text-center'>
-                        <div className='text-2xl font-bold text-green-400'>
+                      <div className='px-1 text-center sm:px-2'>
+                        <div className='text-lg font-bold text-green-400 sm:text-2xl'>
                           {stravaStats?.all_run_totals.distance
                             ? (stravaStats.all_run_totals.distance * 0.000621371).toFixed(0)
                             : '--'}
                         </div>
-                        <div className='mt-1 text-sm text-slate-400'>miles ran</div>
+                        <div className='mt-1 text-xs text-slate-400 sm:text-sm'>miles ran</div>
                       </div>
-                      <div className='px-2 text-center'>
-                        <div className='text-2xl font-bold text-blue-400'>
+                      <div className='px-1 text-center sm:px-2'>
+                        <div className='text-lg font-bold text-blue-400 sm:text-2xl'>
                           {stravaStats?.all_ride_totals.distance
                             ? (stravaStats.all_ride_totals.distance * 0.000621371).toFixed(0)
                             : '--'}
                         </div>
-                        <div className='mt-1 text-sm text-slate-400'>miles cycled</div>
+                        <div className='mt-1 text-xs text-slate-400 sm:text-sm'>miles cycled</div>
                       </div>
-                      <div className='px-2 text-center'>
-                        <div className='text-2xl font-bold text-purple-400'>
+                      <div className='px-1 text-center sm:px-2'>
+                        <div className='text-lg font-bold text-purple-400 sm:text-2xl'>
                           {stravaStats?.all_run_totals.moving_time &&
                           stravaStats?.all_ride_totals.moving_time
                             ? (
@@ -1131,12 +1133,12 @@ export function AboutSection() {
                               ).toFixed(0)
                             : '--'}
                         </div>
-                        <div className='mt-1 text-sm text-slate-400'>hours active</div>
+                        <div className='mt-1 text-xs text-slate-400 sm:text-sm'>hours active</div>
                       </div>
                     </div>
                   </div>
 
-                  <div className='p-4'>
+                  <div className='p-3 sm:p-4'>
                     <div className='mb-3 flex items-center gap-2'>
                       <svg
                         className='h-4 w-4 text-amber-400'
@@ -1145,14 +1147,14 @@ export function AboutSection() {
                       >
                         <path d='M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z' />
                       </svg>
-                      <span className='text-sm font-medium uppercase tracking-wide text-slate-400'>
+                      <span className='text-xs font-medium uppercase tracking-wide text-slate-400 sm:text-sm'>
                         Athletic Achievements
                       </span>
                     </div>
 
-                    <div className='grid grid-cols-3 gap-3'>
-                      <div className='relative col-span-2'>
-                        <div className='flex h-[70px] items-center justify-between rounded-lg bg-slate-700/20 p-3'>
+                    <div className='flex flex-col gap-3 sm:grid sm:grid-cols-3'>
+                      <div className='relative sm:col-span-2'>
+                        <div className='flex h-[60px] items-center justify-between rounded-lg bg-slate-700/20 p-2 sm:h-[70px] sm:p-3'>
                           <div className='relative h-full flex-1'>
                             {pastAchievements.map((achievement, index) => (
                               <div
@@ -1161,15 +1163,15 @@ export function AboutSection() {
                                   index === currentAchievementIndex ? 'opacity-100' : 'opacity-0'
                                 }`}
                               >
-                                <div>
-                                  <div className='text-sm font-semibold text-slate-200'>
+                                <div className='min-w-0 flex-1'>
+                                  <div className='truncate text-xs font-semibold text-slate-200 sm:text-sm'>
                                     {achievement.name}
                                   </div>
-                                  <div className='mt-0.5 text-sm text-slate-400'>
+                                  <div className='mt-0.5 text-xs text-slate-400'>
                                     {achievement.type} • {achievement.date}
                                   </div>
                                 </div>
-                                <div className='ml-3 flex items-center gap-1'>
+                                <div className='ml-2 flex flex-shrink-0 items-center gap-1 sm:ml-3'>
                                   {pastAchievements.map((_, dotIndex) => (
                                     <button
                                       key={dotIndex}
@@ -1189,15 +1191,15 @@ export function AboutSection() {
                         </div>
                       </div>
 
-                      <div className='col-span-1'>
-                        <div className='group relative flex h-[70px] flex-col justify-center overflow-hidden rounded-lg border border-slate-600/40 bg-gradient-to-br from-slate-800/40 via-orange-900/20 to-amber-900/15 p-3 backdrop-blur-sm transition-all duration-500 ease-out hover:border-orange-400/30 hover:shadow-lg hover:shadow-orange-500/5'>
+                      <div className='sm:col-span-1'>
+                        <div className='group relative flex h-[60px] flex-col justify-center overflow-hidden rounded-lg border border-slate-600/40 bg-gradient-to-br from-slate-800/40 via-orange-900/20 to-amber-900/15 p-2 backdrop-blur-sm transition-all duration-500 ease-out hover:border-orange-400/30 hover:shadow-lg hover:shadow-orange-500/5 sm:h-[70px] sm:p-3'>
                           <div className='from-orange-400/3 via-amber-400/2 to-orange-400/3 absolute inset-0 bg-gradient-to-r opacity-0 transition-opacity duration-700 ease-out group-hover:opacity-100'></div>
 
-                          <div className='relative z-10 flex h-full flex-col justify-center space-y-1.5'>
-                            <div className='flex items-center gap-2.5'>
+                          <div className='relative z-10 flex h-full flex-col justify-center space-y-1'>
+                            <div className='flex items-center gap-2'>
                               <div className='relative'>
                                 <svg
-                                  className='h-4 w-4 text-orange-400/80 transition-colors duration-300 group-hover:text-orange-400'
+                                  className='h-3 w-3 text-orange-400/80 transition-colors duration-300 group-hover:text-orange-400 sm:h-4 sm:w-4'
                                   fill='currentColor'
                                   viewBox='0 0 24 24'
                                 >
@@ -1205,20 +1207,24 @@ export function AboutSection() {
                                 </svg>
                                 <div className='absolute inset-0 scale-150 rounded-full bg-orange-400/10 opacity-0 blur-sm transition-opacity duration-500 group-hover:opacity-100'></div>
                               </div>
-                              <div className='truncate text-base font-semibold leading-tight text-slate-100 transition-colors duration-300 group-hover:text-white'>
+                              <div className='truncate text-sm font-semibold leading-tight text-slate-100 transition-colors duration-300 group-hover:text-white sm:text-base'>
                                 Ironman 140.6
                               </div>
                             </div>
 
                             <div className='flex items-center justify-between'>
-                              <span className='text-sm font-medium text-slate-400 transition-colors duration-300 group-hover:text-slate-300'>
+                              <span className='text-xs font-medium text-slate-400 transition-colors duration-300 group-hover:text-slate-300 sm:text-sm'>
                                 Triathlon
                               </span>
-                              <div className='flex items-center gap-1.5 font-medium text-amber-400/70 transition-colors duration-300 group-hover:text-amber-400'>
-                                <svg className='h-3 w-3' fill='currentColor' viewBox='0 0 24 24'>
+                              <div className='flex items-center gap-1 font-medium text-amber-400/70 transition-colors duration-300 group-hover:text-amber-400'>
+                                <svg
+                                  className='h-2.5 w-2.5 sm:h-3 sm:w-3'
+                                  fill='currentColor'
+                                  viewBox='0 0 24 24'
+                                >
                                   <path d='M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z' />
                                 </svg>
-                                <span className='text-sm font-medium'>Oct 2025</span>
+                                <span className='text-xs font-medium sm:text-sm'>Oct 2025</span>
                               </div>
                             </div>
                           </div>
