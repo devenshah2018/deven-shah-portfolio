@@ -87,62 +87,6 @@ TERM     # Terminate program
 
 ---
 
-## 🚀 **Getting Started**
-
-### **Prerequisites**
-- Node.js 18+ 
-- npm or yarn package manager
-- Git for version control
-
-### **Installation**
-
-```bash
-# Clone the repository
-git clone https://github.com/devenshah2018/deven-shah-portfolio.git
-cd deven-shah-portfolio
-
-# Install dependencies
-npm install
-
-# Set up environment variables
-cp .env.example .env.local
-# Add your API keys (see Environment Variables section)
-
-# Start development server
-npm run dev
-```
-
-### **Environment Variables**
-
-Create a `.env.local` file with the following variables:
-
-```bash
-# Strava Integration
-NEXT_PUBLIC_STRAVA_CLIENT_ID=your_client_id
-NEXT_PUBLIC_STRAVA_CLIENT_SECRET=your_client_secret
-NEXT_PUBLIC_STRAVA_REFRESH_TOKEN=your_refresh_token
-
-# Cal.com Integration (Optional)
-# If you want to use your own Cal.com account
-NEXT_PUBLIC_CALCOM_USERNAME=your_username
-
-# GitHub Integration (Optional)
-# For enhanced GitHub features
-GITHUB_TOKEN=your_github_token
-```
-
-### **Development Scripts**
-
-```bash
-npm run dev          # Start development server
-npm run build        # Build for production
-npm run start        # Start production server
-npm run lint         # Run ESLint
-npm run type-check   # TypeScript type checking
-```
-
----
-
 ## 📱 **Features Deep Dive**
 
 ### **Guided Tour Implementation**
@@ -162,31 +106,6 @@ The quantum IDE represents a significant technical achievement:
 - **Syntax Parser**: Custom lexer/parser for Qode language
 - **Error Handling**: Comprehensive error reporting and debugging
 - **Memory Management**: Efficient quantum state vector management
-
-### **Integration Architecture**
-
-#### **Strava API Integration**
-```typescript
-// Automatic token refresh and data caching
-export async function getStravaStats() {
-  const accessToken = await axios.post("api/strava/authenticate");
-  const stats = await axios.post("api/strava/stats", {
-    access_token: accessToken.data.access_token,
-  });
-  return stats.data;
-}
-```
-
-#### **Cal.com Embed**
-```tsx
-// Dynamic calendar loading with namespace isolation
-useEffect(() => {
-  (async function () {
-    const cal = await getCalApi({ namespace: "quick-chat" });
-    cal("ui", { hideEventTypeDetails: false, layout: "month_view" });
-  })();
-}, []);
-```
 
 ---
 
@@ -215,10 +134,10 @@ useEffect(() => {
 ## 📊 **Project Statistics**
 
 ### **Performance Metrics**
-- **Lighthouse Performance**: 100/100
-- **First Contentful Paint**: < 1.2s
-- **Largest Contentful Paint**: < 2.5s
-- **Cumulative Layout Shift**: < 0.1
+- **Lighthouse Performance**: 95/100
+- **First Contentful Paint**: < 0.7s
+- **Largest Contentful Paint**: < 1.4s
+- **Cumulative Layout Shift**: < 0.044
 
 ### **Code Quality**
 - **TypeScript Coverage**: 100%
