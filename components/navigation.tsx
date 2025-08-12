@@ -4,10 +4,8 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, X, Route, Linkedin, Mail, Github } from "lucide-react";
+import { Route } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXTwitter } from "@fortawesome/free-brands-svg-icons";
 
 interface NavigationProps {
   onStartTour?: () => void;

@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXTwitter } from "@fortawesome/free-brands-svg-icons";
 import {
-  ArrowDown,
   Download,
   Mail,
   Github,
@@ -13,7 +12,6 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { RotatingTweets } from "@/components/rotating-tweets";
 import dynamic from "next/dynamic";
 
 const GitHubCalendar = dynamic(

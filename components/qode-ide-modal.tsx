@@ -12,26 +12,15 @@ import { Textarea } from "@/components/ui/textarea";
 import {
   Play,
   RotateCcw,
-  Copy,
   ExternalLink,
-  Maximize2,
-  Minimize2,
   Loader2,
   Code,
-  Save,
   FileText,
   Terminal,
-  Upload,
-  ChevronRight,
-  ChevronDown,
-  Activity,
-  Cpu,
-  Database,
+  ChevronRight
 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 
 declare global {
   interface Window {

@@ -5,10 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
   ExternalLink,
-  Play,
   Code,
   Calendar,
-  Users,
   Award,
   Zap,
   ChevronDown,

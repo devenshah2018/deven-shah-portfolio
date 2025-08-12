@@ -10,7 +10,6 @@ import {
   ChevronLeft,
   Play,
   Calendar,
-  ExternalLink,
   GraduationCap,
   Briefcase,
   Award,

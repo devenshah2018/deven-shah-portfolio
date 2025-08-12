@@ -4,9 +4,6 @@ import React, { useEffect } from "react";
 import {
   Card,
   CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,8 +14,6 @@ import {
   Github,
   CalendarCheck2,
   Send,
-  MapPin,
-  Briefcase,
   MessageSquare,
   Loader2,
   ThumbsUp,
