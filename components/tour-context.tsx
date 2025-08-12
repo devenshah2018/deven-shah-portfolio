@@ -1,37 +1,37 @@
-"use client"
+"use client";
 
-import { createContext, useContext, useState, ReactNode } from "react"
+import { createContext, useContext, useState, ReactNode } from "react";
 
 interface TourContextType {
-  isTourOpen: boolean
-  startTour: () => void
-  closeTour: () => void
+  isTourOpen: boolean;
+  startTour: () => void;
+  closeTour: () => void;
 }
 
-const TourContext = createContext<TourContextType | undefined>(undefined)
+const TourContext = createContext<TourContextType | undefined>(undefined);
 
 export function TourProvider({ children }: { children: ReactNode }) {
-  const [isTourOpen, setIsTourOpen] = useState(false)
+  const [isTourOpen, setIsTourOpen] = useState(false);
 
   const startTour = () => {
-    setIsTourOpen(true)
-  }
+    setIsTourOpen(true);
+  };
 
   const closeTour = () => {
-    setIsTourOpen(false)
-  }
+    setIsTourOpen(false);
+  };
 
   return (
     <TourContext.Provider value={{ isTourOpen, startTour, closeTour }}>
       {children}
     </TourContext.Provider>
-  )
+  );
 }
 
 export function useTour() {
-  const context = useContext(TourContext)
+  const context = useContext(TourContext);
   if (context === undefined) {
-    throw new Error("useTour must be used within a TourProvider")
+    throw new Error("useTour must be used within a TourProvider");
   }
-  return context
+  return context;
 }

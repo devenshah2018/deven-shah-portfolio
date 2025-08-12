@@ -1,17 +1,34 @@
-"use client"
+"use client";
 
-import React, { useEffect } from "react"
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Mail, Linkedin, Github, CalendarCheck2, Send, MapPin, Briefcase, MessageSquare, Loader2, ThumbsUp } from "lucide-react"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faXTwitter } from "@fortawesome/free-brands-svg-icons"
-import { motion } from "framer-motion"
-import { useState } from "react"
-import "@calcom/atoms/globals.min.css"
-import { getCalApi } from "@calcom/embed-react"
+import React, { useEffect } from "react";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Mail,
+  Linkedin,
+  Github,
+  CalendarCheck2,
+  Send,
+  MapPin,
+  Briefcase,
+  MessageSquare,
+  Loader2,
+  ThumbsUp,
+} from "lucide-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXTwitter } from "@fortawesome/free-brands-svg-icons";
+import { motion } from "framer-motion";
+import { useState } from "react";
+import "@calcom/atoms/globals.min.css";
+import { getCalApi } from "@calcom/embed-react";
 
 export function ContactSection() {
   const [formData, setFormData] = useState({
@@ -19,41 +36,43 @@ export function ContactSection() {
     email: "",
     subject: "",
     message: "",
-  })
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-    useEffect(() => {
+  useEffect(() => {
     (async function () {
-      const cal = await getCalApi({"namespace":"quick-chat"});
-      cal("ui", {"hideEventTypeDetails":false,"layout":"month_view"});
+      const cal = await getCalApi({ namespace: "quick-chat" });
+      cal("ui", { hideEventTypeDetails: false, layout: "month_view" });
     })();
-  }, [])
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
+    e.preventDefault();
+    setIsSubmitting(true);
 
     try {
       const mailtoLink = `mailto:devenshah2018@gmail.com?subject=${encodeURIComponent(
         `[Portfolio Contact] ${formData.subject}`,
-      )}&body=${encodeURIComponent(`${formData.message}`)}`
+      )}&body=${encodeURIComponent(`${formData.message}`)}`;
 
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-      window.location.href = mailtoLink
-      setFormData({ name: "", email: "", subject: "", message: "" })
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      window.location.href = mailtoLink;
+      setFormData({ name: "", email: "", subject: "", message: "" });
     } catch (error) {
-      console.error("Error submitting form:", error)
+      console.error("Error submitting form:", error);
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     setFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
-    }))
-  }
+    }));
+  };
 
   const socialLinks = [
     {
@@ -84,10 +103,13 @@ export function ContactSection() {
       handle: "@devenshah2018",
       gradient: "from-slate-700 to-slate-800",
     },
-  ]
+  ];
 
   return (
-    <section id="contact" className="py-32 bg-gradient-to-b from-slate-950 to-slate-900">
+    <section
+      id="contact"
+      className="py-32 bg-gradient-to-b from-slate-950 to-slate-900"
+    >
       <div className="container mx-auto px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -117,19 +139,23 @@ export function ContactSection() {
               viewport={{ once: true }}
               className="text-xl text-slate-400 max-w-4xl mx-auto font-light leading-relaxed"
             >
-              Have a project, an opportunity, or just want to chat about tech? I'd love to hear from you.
+              Have a project, an opportunity, or just want to chat about tech?
+              I'd love to hear from you.
             </motion.p>
           </div>
 
           {/* Cal.com Booking - Primary CTA */}
-            <motion.div
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
             viewport={{ once: true }}
             className="mb-16"
+          >
+            <Card
+              id="book-a-call-container"
+              className="bg-transparent border-0 rounded-2xl transition-all duration-500 relative overflow-hidden"
             >
-            <Card id="book-a-call-container" className="bg-transparent border-0 rounded-2xl transition-all duration-500 relative overflow-hidden">
               <CardContent className="py-6 px-5 md:px-10 flex flex-col md:flex-row items-center md:items-center justify-between gap-6 md:gap-8 relative z-10">
                 <div className="flex-1 text-center md:text-left">
                   <h3 className="text-2xl font-extrabold text-white mb-2 flex items-center gap-3 justify-center md:justify-start tracking-tight">
@@ -137,9 +163,20 @@ export function ContactSection() {
                     Book a Call
                   </h3>
                   <p className="text-base text-slate-400 font-light max-w-xl mx-auto md:mx-0">
-                    Schedule a quick chat to discuss opportunities, collaborations, or just to talk tech.
+                    Schedule a quick chat to discuss opportunities,
+                    collaborations, or just to talk tech.
                   </p>
-                  <p className="text-xs text-slate-400 mt-3">Powered by <a href="https://cal.com/deven-shah-l0qkjk/quick-chat" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 transition-colors underline decoration-dotted">Cal.com</a></p>
+                  <p className="text-xs text-slate-400 mt-3">
+                    Powered by{" "}
+                    <a
+                      href="https://cal.com/deven-shah-l0qkjk/quick-chat"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-400 hover:text-blue-300 transition-colors underline decoration-dotted"
+                    >
+                      Cal.com
+                    </a>
+                  </p>
                 </div>
                 <div className="flex-shrink-0 flex flex-col items-center md:items-end w-full md:w-auto gap-3">
                   <div className="flex flex-row gap-3 w-full md:w-auto">
@@ -153,7 +190,10 @@ export function ContactSection() {
                       aria-label="Show calendar to select a time with Deven Shah"
                       tabIndex={0}
                     >
-                      <CalendarCheck2 className="mr-3 h-5 w-5" aria-hidden="true" />
+                      <CalendarCheck2
+                        className="mr-3 h-5 w-5"
+                        aria-hidden="true"
+                      />
                       Select a Time
                     </Button>
                   </div>
@@ -176,17 +216,25 @@ export function ContactSection() {
                 <div className="px-8 py-6 border-b border-slate-700/30">
                   <div className="flex items-center gap-3">
                     <div>
-                      <h3 className="text-2xl font-extrabold text-white mb-2 flex items-center gap-3 justify-center md:justify-start tracking-tight"><MessageSquare className="h-7 w-7 text-blue-400" />Send a Message</h3>
-                      <p className="text-base text-slate-400 font-light max-w-xl mx-auto md:mx-0">I'll get back to you within 24 hours</p>
+                      <h3 className="text-2xl font-extrabold text-white mb-2 flex items-center gap-3 justify-center md:justify-start tracking-tight">
+                        <MessageSquare className="h-7 w-7 text-blue-400" />
+                        Send a Message
+                      </h3>
+                      <p className="text-base text-slate-400 font-light max-w-xl mx-auto md:mx-0">
+                        I'll get back to you within 24 hours
+                      </p>
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="p-8">
                   <form onSubmit={handleSubmit} className="space-y-3">
                     <div className="grid sm:grid-cols-2 gap-6">
                       <div className="space-y-3">
-                        <label htmlFor="name" className="block text-sm font-medium text-slate-300">
+                        <label
+                          htmlFor="name"
+                          className="block text-sm font-medium text-slate-300"
+                        >
                           Full Name *
                         </label>
                         <Input
@@ -200,7 +248,10 @@ export function ContactSection() {
                         />
                       </div>
                       <div className="space-y-3">
-                        <label htmlFor="email" className="block text-sm font-medium text-slate-300">
+                        <label
+                          htmlFor="email"
+                          className="block text-sm font-medium text-slate-300"
+                        >
                           Email Address *
                         </label>
                         <Input
@@ -215,9 +266,12 @@ export function ContactSection() {
                         />
                       </div>
                     </div>
-                    
+
                     <div className="space-y-3">
-                      <label htmlFor="subject" className="block text-sm font-medium text-slate-300">
+                      <label
+                        htmlFor="subject"
+                        className="block text-sm font-medium text-slate-300"
+                      >
                         Subject *
                       </label>
                       <Input
@@ -230,9 +284,12 @@ export function ContactSection() {
                         className="h-11 bg-slate-800/40 border-slate-600/50 text-white placeholder:text-slate-500 focus:border-blue-400/60 focus:ring-1 focus:ring-blue-400/20 rounded-lg transition-all duration-200"
                       />
                     </div>
-                    
+
                     <div className="space-y-3">
-                      <label htmlFor="message" className="block text-sm font-medium text-slate-300">
+                      <label
+                        htmlFor="message"
+                        className="block text-sm font-medium text-slate-300"
+                      >
                         Message *
                       </label>
                       <Textarea
@@ -246,7 +303,7 @@ export function ContactSection() {
                         className="bg-slate-800/40 border-slate-600/50 text-white placeholder:text-slate-500 focus:border-blue-400/60 focus:ring-1 focus:ring-blue-400/20 rounded-lg resize-none transition-all duration-200"
                       />
                     </div>
-                    
+
                     <div className="pt-4">
                       <Button
                         type="submit"
@@ -284,12 +341,17 @@ export function ContactSection() {
                 <div className="px-8 py-6 border-b border-slate-700/30">
                   <div className="flex items-center gap-3">
                     <div>
-                      <h3 className="text-2xl font-extrabold text-white mb-2 flex items-center gap-3 justify-center md:justify-start tracking-tight"><ThumbsUp className="h-7 w-7 text-blue-400" />Connect With Me</h3>
-                      <p className="text-base text-slate-400 font-light max-w-xl mx-auto md:mx-0">Find me on these platforms</p>
+                      <h3 className="text-2xl font-extrabold text-white mb-2 flex items-center gap-3 justify-center md:justify-start tracking-tight">
+                        <ThumbsUp className="h-7 w-7 text-blue-400" />
+                        Connect With Me
+                      </h3>
+                      <p className="text-base text-slate-400 font-light max-w-xl mx-auto md:mx-0">
+                        Find me on these platforms
+                      </p>
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="p-8 space-y-8">
                   {socialLinks.map((social) => (
                     <a
@@ -299,13 +361,21 @@ export function ContactSection() {
                       rel="noopener noreferrer"
                       className="flex items-center gap-4 p-4 rounded-lg bg-slate-800/20 hover:bg-slate-800/40 border border-slate-700/30 hover:border-slate-600/50 transition-all duration-200 group"
                     >
-                      <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${social.gradient} flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform duration-200`}>
+                      <div
+                        className={`w-10 h-10 rounded-lg bg-gradient-to-br ${social.gradient} flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform duration-200`}
+                      >
                         {social.name === "Twitter" ? (
-                          <FontAwesomeIcon icon={faXTwitter} className="h-4 w-4 text-white" />
+                          <FontAwesomeIcon
+                            icon={faXTwitter}
+                            className="h-4 w-4 text-white"
+                          />
                         ) : (
-                          React.createElement(social.icon as React.ComponentType<any>, {
-                            className: "h-4 w-4 text-white",
-                          })
+                          React.createElement(
+                            social.icon as React.ComponentType<any>,
+                            {
+                              className: "h-4 w-4 text-white",
+                            },
+                          )
                         )}
                       </div>
                       <div className="flex-1 min-w-0">
@@ -317,8 +387,18 @@ export function ContactSection() {
                         </p>
                       </div>
                       <div className="flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                        <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        <svg
+                          className="w-4 h-4 text-slate-400"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                          />
                         </svg>
                       </div>
                     </a>
@@ -330,5 +410,5 @@ export function ContactSection() {
         </motion.div>
       </div>
     </section>
-  )
+  );
 }

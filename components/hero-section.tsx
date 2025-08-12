@@ -1,22 +1,35 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faXTwitter } from "@fortawesome/free-brands-svg-icons"
-import { ArrowDown, Download, Mail, Github, Linkedin, Activity } from "lucide-react"
-import { motion } from "framer-motion"
-import Link from "next/link"
-import { RotatingTweets } from "@/components/rotating-tweets"
-import dynamic from "next/dynamic"
+import { Button } from "@/components/ui/button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXTwitter } from "@fortawesome/free-brands-svg-icons";
+import {
+  ArrowDown,
+  Download,
+  Mail,
+  Github,
+  Linkedin,
+  Activity,
+} from "lucide-react";
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { RotatingTweets } from "@/components/rotating-tweets";
+import dynamic from "next/dynamic";
 
 const GitHubCalendar = dynamic(
-  () => import("github-contribution-calendar").then(mod => ({ default: mod.GitHubCalendar })),
-  { ssr: false }
-)
+  () =>
+    import("github-contribution-calendar").then((mod) => ({
+      default: mod.GitHubCalendar,
+    })),
+  { ssr: false },
+);
 
 export function HeroSection() {
   return (
-    <section id="hero" className="relative min-h-[1100px] flex items-center justify-center overflow-hidden">
+    <section
+      id="hero"
+      className="relative min-h-[1100px] flex items-center justify-center overflow-hidden"
+    >
       {/* Animated Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-blue-900/20 to-purple-900/20" />
 
@@ -64,7 +77,6 @@ export function HeroSection() {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="mx-auto text-center relative z-20">
-
           {/* Move name and title below navigation */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -87,7 +99,8 @@ export function HeroSection() {
             className="mb-8"
           >
             <p className="text-lg sm:text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
-              Shaping the next generation of analytics, quantum computing, and secure systems—powered by AI and grounded in research.
+              Shaping the next generation of analytics, quantum computing, and
+              secure systems—powered by AI and grounded in research.
             </p>
           </motion.div>
 
@@ -101,9 +114,9 @@ export function HeroSection() {
               size="lg"
               className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 px-8 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
               onClick={() => {
-                const contactSection = document.getElementById('contact');
+                const contactSection = document.getElementById("contact");
                 if (contactSection) {
-                  contactSection.scrollIntoView({ behavior: 'smooth' });
+                  contactSection.scrollIntoView({ behavior: "smooth" });
                 }
               }}
             >
@@ -115,9 +128,9 @@ export function HeroSection() {
               size="lg"
               className="px-8 py-3 text-lg font-semibold border-2 hover:bg-gray-800"
               onClick={() => {
-                const link = document.createElement('a');
-                link.href = '/Resume.pdf';
-                link.download = 'Deven_Shah_Resume.pdf';
+                const link = document.createElement("a");
+                link.href = "/Resume.pdf";
+                link.download = "Deven_Shah_Resume.pdf";
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
@@ -134,25 +147,60 @@ export function HeroSection() {
             transition={{ duration: 0.8, delay: 0.8 }}
             className="flex items-center justify-center gap-6 mb-10"
           >
-            <Link href="https://github.com/devenshah2018" target="_blank" rel="noopener noreferrer">
-              <Button variant="ghost" size="lg" className="hover:bg-gray-800 p-3">
+            <Link
+              href="https://github.com/devenshah2018"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button
+                variant="ghost"
+                size="lg"
+                className="hover:bg-gray-800 p-3"
+              >
                 <Github className="h-6 w-6" />
               </Button>
             </Link>
-            <Link href="https://linkedin.com/in/deven-a-shah" target="_blank" rel="noopener noreferrer">
-              <Button variant="ghost" size="lg" className="hover:bg-gray-800 p-3">
+            <Link
+              href="https://linkedin.com/in/deven-a-shah"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button
+                variant="ghost"
+                size="lg"
+                className="hover:bg-gray-800 p-3"
+              >
                 <Linkedin className="h-6 w-6" />
               </Button>
             </Link>
-            <Link href="mailto:devenshah2018@gmail.com" target="_blank" rel="noopener noreferrer">
-              <Button variant="ghost" size="lg" className="hover:bg-gray-800 p-3">
+            <Link
+              href="mailto:devenshah2018@gmail.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button
+                variant="ghost"
+                size="lg"
+                className="hover:bg-gray-800 p-3"
+              >
                 <Mail className="h-6 w-6" />
               </Button>
             </Link>
-            <Link href="https://x.com/devenshah2018" target="_blank" rel="noopener noreferrer">
-              <Button variant="ghost" size="lg" className="hover:bg-gray-800 p-3">
+            <Link
+              href="https://x.com/devenshah2018"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button
+                variant="ghost"
+                size="lg"
+                className="hover:bg-gray-800 p-3"
+              >
                 {/* X icon using SVG for X (Twitter) */}
-                <FontAwesomeIcon icon={faXTwitter} className="h-6 w-6 text-white" />
+                <FontAwesomeIcon
+                  icon={faXTwitter}
+                  className="h-6 w-6 text-white"
+                />
               </Button>
             </Link>
           </motion.div>
@@ -172,9 +220,8 @@ export function HeroSection() {
               />
             </div>
           </div>
-
         </div>
       </div>
     </section>
-  )
+  );
 }

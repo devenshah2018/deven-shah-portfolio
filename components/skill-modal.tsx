@@ -1,42 +1,54 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
-import { ExternalLink, Calendar, Award, Code } from "lucide-react"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { ExternalLink, Calendar, Award, Code } from "lucide-react";
 
 interface SkillMapping {
-  skill: string
+  skill: string;
   experiences?: Array<{
-    title: string
-    company: string
-    id: string
-    icon: React.ComponentType<any>
-  }>
+    title: string;
+    company: string;
+    id: string;
+    icon: React.ComponentType<any>;
+  }>;
   projects?: Array<{
-    title: string
-    subtitle: string
-    id: string
-    icon: React.ComponentType<any>
-  }>
+    title: string;
+    subtitle: string;
+    id: string;
+    icon: React.ComponentType<any>;
+  }>;
   education?: Array<{
-    title: string
-    institution: string
-    id: string
-    icon: React.ComponentType<any>
-  }>
+    title: string;
+    institution: string;
+    id: string;
+    icon: React.ComponentType<any>;
+  }>;
 }
 
 interface SkillModalProps {
-  open: boolean
-  onOpenChange: (open: boolean) => void
-  skillName: string | null
-  skillMappings: SkillMapping[]
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  skillName: string | null;
+  skillMappings: SkillMapping[];
 }
 
-export function SkillModal({ open, onOpenChange, skillName, skillMappings }: SkillModalProps) {
-  const skillData = skillMappings.find((mapping) => mapping.skill === skillName)
+export function SkillModal({
+  open,
+  onOpenChange,
+  skillName,
+  skillMappings,
+}: SkillModalProps) {
+  const skillData = skillMappings.find(
+    (mapping) => mapping.skill === skillName,
+  );
 
   // Updated scrollToSection: close modal first, then scroll after delay with highlighting
   const scrollToSection = (sectionId: string, itemId?: string) => {
@@ -45,28 +57,30 @@ export function SkillModal({ open, onOpenChange, skillName, skillMappings }: Ski
       const section = document.getElementById(sectionId);
       if (section) {
         section.scrollIntoView({ behavior: "smooth" });
-        
+
         // If we have an itemId, highlight that specific item
         if (itemId) {
           setTimeout(() => {
-            const targetElement = document.querySelector(`[data-item-id="${itemId}"]`);
+            const targetElement = document.querySelector(
+              `[data-item-id="${itemId}"]`,
+            );
             if (targetElement) {
               // Add the same tour highlight class
-              targetElement.classList.add('tour-highlight');
-              
+              targetElement.classList.add("tour-highlight");
+
               // Remove the highlight after 3 seconds
               setTimeout(() => {
-                targetElement.classList.remove('tour-highlight');
+                targetElement.classList.remove("tour-highlight");
               }, 3000);
             }
           }, 500); // Wait for scroll to complete
         }
       }
     }, 200); // Delay to allow modal to close
-  }
+  };
 
   if (!skillData || !skillName) {
-    return null
+    return null;
   }
 
   return (
@@ -95,14 +109,18 @@ export function SkillModal({ open, onOpenChange, skillName, skillMappings }: Ski
                     key={index}
                     variant="outline"
                     className="w-full justify-start h-auto px-3 py-2 bg-slate-800/60 border-slate-700 hover:border-blue-500 focus-visible:border-blue-500 hover:bg-blue-800/40 focus-visible:bg-blue-800/50 transition-all duration-200 rounded-lg text-left focus-visible:ring-2 focus-visible:ring-blue-400/70 group"
-                    onClick={() => scrollToSection('experience', exp.id)}
+                    onClick={() => scrollToSection("experience", exp.id)}
                     aria-label={`Go to experience: ${exp.title} at ${exp.company}`}
                   >
                     <div className="flex items-center gap-3 w-full">
                       <exp.icon className="h-4 w-4 text-blue-400 flex-shrink-0" />
                       <div className="flex-1">
-                        <div className="font-semibold text-white text-[1rem] leading-tight">{exp.title}</div>
-                        <div className="text-xs text-slate-400">{exp.company}</div>
+                        <div className="font-semibold text-white text-[1rem] leading-tight">
+                          {exp.title}
+                        </div>
+                        <div className="text-xs text-slate-400">
+                          {exp.company}
+                        </div>
                       </div>
                       <ExternalLink className="h-3 w-3 text-slate-500" />
                     </div>
@@ -125,14 +143,18 @@ export function SkillModal({ open, onOpenChange, skillName, skillMappings }: Ski
                     key={index}
                     variant="outline"
                     className="w-full justify-start h-auto px-3 py-2 bg-slate-800/60 border-slate-700 hover:border-blue-500 focus-visible:border-blue-500 hover:bg-blue-800/40 focus-visible:bg-blue-800/50 transition-all duration-200 rounded-lg text-left focus-visible:ring-2 focus-visible:ring-blue-400/70 group"
-                    onClick={() => scrollToSection('projects', project.id)}
+                    onClick={() => scrollToSection("projects", project.id)}
                     aria-label={`Go to project: ${project.title}`}
                   >
                     <div className="flex items-center gap-3 w-full">
                       <project.icon className="h-4 w-4 text-emerald-400 flex-shrink-0" />
                       <div className="flex-1">
-                        <div className="font-semibold text-white text-[1rem] leading-tight">{project.title}</div>
-                        <div className="text-xs text-slate-400">{project.subtitle}</div>
+                        <div className="font-semibold text-white text-[1rem] leading-tight">
+                          {project.title}
+                        </div>
+                        <div className="text-xs text-slate-400">
+                          {project.subtitle}
+                        </div>
                       </div>
                       <ExternalLink className="h-3 w-3 text-slate-500" />
                     </div>
@@ -155,14 +177,18 @@ export function SkillModal({ open, onOpenChange, skillName, skillMappings }: Ski
                     key={index}
                     variant="outline"
                     className="w-full justify-start h-auto px-3 py-2 bg-slate-800/60 border-slate-700 hover:border-blue-500 focus-visible:border-blue-500 hover:bg-blue-800/40 focus-visible:bg-blue-800/50 transition-all duration-200 rounded-lg text-left focus-visible:ring-2 focus-visible:ring-blue-400/70 group"
-                    onClick={() => scrollToSection('education', edu.id)}
+                    onClick={() => scrollToSection("education", edu.id)}
                     aria-label={`Go to education: ${edu.title} at ${edu.institution}`}
                   >
                     <div className="flex items-center gap-3 w-full">
                       <edu.icon className="h-4 w-4 text-indigo-400 flex-shrink-0" />
                       <div className="flex-1">
-                        <div className="font-semibold text-white text-[1rem] leading-tight">{edu.title}</div>
-                        <div className="text-xs text-slate-400">{edu.institution}</div>
+                        <div className="font-semibold text-white text-[1rem] leading-tight">
+                          {edu.title}
+                        </div>
+                        <div className="text-xs text-slate-400">
+                          {edu.institution}
+                        </div>
                       </div>
                       <ExternalLink className="h-3 w-3 text-slate-500" />
                     </div>
@@ -174,5 +200,5 @@ export function SkillModal({ open, onOpenChange, skillName, skillMappings }: Ski
         </div>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
