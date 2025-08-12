@@ -104,6 +104,8 @@ export function GuidedTour() {
   const { isTourOpen, closeTour } = useTour();
   const [currentStep, setCurrentStep] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [displayedText, setDisplayedText] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
   const [tooltipPosition, setTooltipPosition] = useState<{
     top: string;
     left?: string;
@@ -113,6 +115,35 @@ export function GuidedTour() {
   }>({ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' });
 
   const currentStepData = tourSteps[currentStep];
+
+  // Typing effect hook
+  useEffect(() => {
+    if (!currentStepData?.content) return;
+
+    setIsTyping(true);
+    setDisplayedText('');
+    
+    const text = currentStepData.content;
+    let currentIndex = 0;
+    
+    const typeNextChar = () => {
+      if (currentIndex < text.length) {
+        setDisplayedText(text.substring(0, currentIndex + 1));
+        currentIndex++;
+        let delay = 15;
+        
+        setTimeout(typeNextChar, delay);
+      } else {
+        setIsTyping(false);
+      }
+    };
+
+    const startTimeout = setTimeout(typeNextChar, 150);
+    
+    return () => {
+      clearTimeout(startTimeout);
+    };
+  }, [currentStep, currentStepData?.content]);
 
   const scrollToTarget = useCallback((target: string) => {
     const element = document.querySelector(target);
@@ -142,7 +173,7 @@ export function GuidedTour() {
   }, []);
 
   const nextStep = useCallback(() => {
-    if (currentStep < tourSteps.length - 1) {
+    if (currentStep < tourSteps.length - 1 && !isTyping) {
       const nextStepData = tourSteps[currentStep + 1];
       setIsTransitioning(true);
       if (nextStepData && nextStepData.target) {
@@ -150,16 +181,16 @@ export function GuidedTour() {
         setTimeout(() => {
           setCurrentStep(currentStep + 1);
           setIsTransitioning(false);
-        }, 500);
+        }, 200);
       } else {
         setCurrentStep(currentStep + 1);
         setIsTransitioning(false);
       }
     }
-  }, [currentStep, scrollToTarget]);
+  }, [currentStep, scrollToTarget, isTyping]);
 
   const prevStep = useCallback(() => {
-    if (currentStep > 0) {
+    if (currentStep > 0 && !isTyping) {
       const prevStepData = tourSteps[currentStep - 1];
       setIsTransitioning(true);
       if (prevStepData && prevStepData.target) {
@@ -167,13 +198,13 @@ export function GuidedTour() {
         setTimeout(() => {
           setCurrentStep(currentStep - 1);
           setIsTransitioning(false);
-        }, 500);
+        }, 200);
       } else {
         setCurrentStep(currentStep - 1);
         setIsTransitioning(false);
       }
     }
-  }, [currentStep, scrollToTarget]);
+  }, [currentStep, scrollToTarget, isTyping]);
 
   const handleCloseTour = useCallback(() => {
     setCurrentStep(0);
@@ -429,148 +460,137 @@ export function GuidedTour() {
 
   return (
     <>
-      <AnimatePresence mode='wait'>
-        {!isTransitioning && (
-          <motion.div
-            key={currentStep}
-            initial={{ opacity: 0, scale: 0.96, y: 16, filter: 'blur(4px)' }}
-            animate={{ opacity: 1, scale: 1, y: 0, filter: 'blur(0px)' }}
-            exit={{ opacity: 0, scale: 0.96, y: -8, filter: 'blur(2px)' }}
-            transition={{
-              duration: 0.4,
-              ease: [0.16, 1, 0.3, 1],
-              opacity: { duration: 0.3 },
-              filter: { duration: 0.25 },
-            }}
-            className='tour-tooltip-container fixed right-8 top-8 z-[101]'
-            style={{
-              ...tooltipPosition,
-              pointerEvents: 'auto',
-              position: 'fixed',
-              top: tooltipPosition.top || '32px',
-              right: tooltipPosition.right || '32px',
-              left: undefined,
-              transform: undefined,
-            }}
-          >
-            <motion.div
-              initial={{ boxShadow: '0 0 0 rgba(59, 130, 246, 0)' }}
-              animate={{
-                boxShadow:
-                  '0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(59, 130, 246, 0.1)',
-              }}
-              transition={{ duration: 0.3, delay: 0.1 }}
-            >
-              <Card className='relative flex h-auto w-full max-w-[400px] flex-col overflow-hidden rounded-xl border border-slate-800/80 bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 p-0 backdrop-blur-xl'>
-                {/* Subtle gradient overlay */}
-                <div className='pointer-events-none absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-purple-500/5' />
+      <motion.div
+        initial={{ opacity: 0, scale: 0.96, y: 16 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.96, y: -8 }}
+        transition={{
+          duration: 0.4,
+          ease: [0.16, 1, 0.3, 1],
+        }}
+        className='tour-tooltip-container fixed right-8 top-8 z-[101]'
+        style={{
+          ...tooltipPosition,
+          pointerEvents: 'auto',
+          position: 'fixed',
+          top: tooltipPosition.top || '32px',
+          right: tooltipPosition.right || '32px',
+          left: undefined,
+          transform: undefined,
+        }}
+      >
+        <motion.div
+          initial={{ boxShadow: '0 0 0 rgba(59, 130, 246, 0)' }}
+          animate={{
+            boxShadow:
+              '0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(59, 130, 246, 0.1)',
+          }}
+          transition={{ duration: 0.3, delay: 0.1 }}
+        >
+          <Card className='relative flex h-[300px] w-full max-w-[400px] flex-col overflow-hidden rounded-xl border border-slate-800/80 bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 p-0 backdrop-blur-xl'>
+            <div className='pointer-events-none absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-purple-500/5' />
 
-                <CardContent className='relative flex h-full flex-col p-7'>
-                  {/* Progress indicator */}
-                  <div className='mb-5 flex h-1 w-full overflow-hidden rounded-full bg-slate-800'>
-                    <motion.div
-                      className='h-full bg-gradient-to-r from-blue-500 to-blue-400'
-                      initial={{ width: '0%' }}
-                      animate={{ width: `${((currentStep + 1) / tourSteps.length) * 100}%` }}
-                      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                    />
-                  </div>
+            <CardContent className='relative flex h-full flex-col p-7'>
+              <div className='mb-5 flex h-1 w-full overflow-hidden rounded-full bg-slate-800'>
+                <motion.div
+                  className='h-full bg-gradient-to-r from-blue-500 to-blue-400'
+                  initial={false}
+                  animate={{ width: `${((currentStep + 1) / tourSteps.length) * 100}%` }}
+                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                />
+              </div>
 
-                  {/* Header */}
-                  <div className='mb-5 flex items-start justify-between'>
-                    <div className='flex min-w-0 items-center gap-3'>
-                      <motion.div
-                        initial={{ scale: 0.8, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        transition={{ duration: 0.3, delay: 0.2 }}
-                        className='flex h-9 w-9 items-center justify-center rounded-lg bg-blue-500/10 ring-1 ring-blue-500/20'
+              <div className='flex flex-1 flex-col'>
+                <AnimatePresence mode='wait'>
+                  <motion.div
+                    key={currentStep}
+                    initial={{ opacity: 0, y: 4, filter: 'blur(1px)' }}
+                    animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                    exit={{ opacity: 0, y: -2, filter: 'blur(1px)' }}
+                    transition={{ 
+                      duration: 0.15, 
+                      ease: [0.16, 1, 0.3, 1],
+                      filter: { duration: 0.1 }
+                    }}
+                    className='flex flex-1 flex-col'
+                  >
+                    {/* Header */}
+                    <div className='mb-5 flex items-start justify-between'>
+                      <div className='flex min-w-0 items-center gap-3'>
+                        <motion.div
+                          initial={{ scale: 0.9, opacity: 0 }}
+                          animate={{ scale: 1, opacity: 1 }}
+                          transition={{ duration: 0.15, delay: 0.05 }}
+                          className='flex h-9 w-9 items-center justify-center rounded-lg bg-blue-500/10 ring-1 ring-blue-500/20'
+                        >
+                          {getStepIcon()}
+                        </motion.div>
+                        <div className='flex min-w-0 flex-col'>
+                          <h3 className='truncate text-lg font-semibold tracking-tight text-white'>
+                            {currentStepData ? currentStepData.title : ''}
+                          </h3>
+                          <span className='text-xs font-medium text-slate-400'>
+                            Step {currentStep + 1} of {tourSteps.length}
+                          </span>
+                        </div>
+                      </div>
+                      <Button
+                        variant='ghost'
+                        size='icon'
+                        onClick={handleCloseTour}
+                        className='h-8 w-8 rounded-lg p-0 text-slate-400 transition-colors hover:bg-slate-800/60 hover:text-white'
                       >
-                        {getStepIcon()}
-                      </motion.div>
-                      <div className='flex min-w-0 flex-col'>
-                        <motion.h3
-                          initial={{ opacity: 0, y: 4 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.3, delay: 0.15 }}
-                          className='truncate text-lg font-semibold tracking-tight text-white'
-                        >
-                          {currentStepData ? currentStepData.title : ''}
-                        </motion.h3>
-                        <motion.span
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ duration: 0.3, delay: 0.25 }}
-                          className='text-xs font-medium text-slate-400'
-                        >
-                          Step {currentStep + 1} of {tourSteps.length}
-                        </motion.span>
+                        <X className='h-4 w-4' />
+                      </Button>
+                    </div>
+
+                    <div className='flex-1 mb-7 flex flex-col justify-start overflow-hidden'>
+                      <div className='overflow-y-auto scrollbar-thin scrollbar-track-slate-800 scrollbar-thumb-slate-600'>
+                        <p className='text-sm leading-relaxed text-slate-300 pr-2'>
+                          {displayedText}
+                        </p>
                       </div>
                     </div>
-                    <Button
-                      variant='ghost'
-                      size='icon'
-                      onClick={handleCloseTour}
-                      className='h-8 w-8 rounded-lg p-0 text-slate-400 transition-colors hover:bg-slate-800/60 hover:text-white'
-                    >
-                      <X className='h-4 w-4' />
-                    </Button>
+                  </motion.div>
+                </AnimatePresence>
+
+                <div className='flex items-center justify-between gap-3 mt-auto'>
+                  <Button
+                    variant='outline'
+                    onClick={prevStep}
+                    disabled={currentStep === 0 || isTransitioning || isTyping}
+                    className='h-9 rounded-lg border-slate-700/60 bg-transparent px-4 text-sm text-slate-300 transition-all hover:border-slate-600 hover:bg-slate-800/40 hover:text-white disabled:cursor-not-allowed disabled:opacity-40'
+                  >
+                    <ChevronLeft className='mr-1.5 h-3.5 w-3.5' />
+                    Previous
+                  </Button>
+
+                  <div className='flex gap-2'>
+                    {currentStep === tourSteps.length - 1 ? (
+                      <Button
+                        onClick={handleCloseTour}
+                        disabled={isTyping}
+                        className='h-9 rounded-lg bg-gradient-to-r from-blue-600 to-blue-500 px-5 text-sm font-medium text-white shadow-lg shadow-blue-500/25 transition-all hover:from-blue-500 hover:to-blue-400 hover:shadow-blue-500/40 disabled:opacity-60'
+                      >
+                        Complete Tour
+                      </Button>
+                    ) : (
+                      <Button
+                        onClick={nextStep}
+                        disabled={isTransitioning || isTyping}
+                        className='h-9 rounded-lg bg-blue-500 px-5 text-sm font-medium text-white transition-all hover:from-blue-500 hover:to-blue-400 disabled:opacity-60'
+                      >
+                        Continue
+                        <ChevronRight className='ml-1.5 h-3.5 w-3.5' />
+                      </Button>
+                    )}
                   </div>
-
-                  {/* Content */}
-                  <motion.div
-                    className='mb-7 flex flex-1 flex-col justify-center'
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: 0.2 }}
-                  >
-                    <p className='text-sm leading-relaxed text-slate-300'>
-                      {currentStepData ? currentStepData.content : ''}
-                    </p>
-                  </motion.div>
-
-                  {/* Navigation */}
-                  <motion.div
-                    className='flex items-center justify-between gap-3'
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: 0.3 }}
-                  >
-                    <Button
-                      variant='outline'
-                      onClick={prevStep}
-                      disabled={currentStep === 0 || isTransitioning}
-                      className='h-9 rounded-lg border-slate-700/60 bg-transparent px-4 text-sm text-slate-300 transition-all hover:border-slate-600 hover:bg-slate-800/40 hover:text-white disabled:cursor-not-allowed disabled:opacity-40'
-                    >
-                      <ChevronLeft className='mr-1.5 h-3.5 w-3.5' />
-                      Previous
-                    </Button>
-
-                    <div className='flex gap-2'>
-                      {currentStep === tourSteps.length - 1 ? (
-                        <Button
-                          onClick={handleCloseTour}
-                          className='h-9 rounded-lg bg-gradient-to-r from-blue-600 to-blue-500 px-5 text-sm font-medium text-white shadow-lg shadow-blue-500/25 transition-all hover:from-blue-500 hover:to-blue-400 hover:shadow-blue-500/40'
-                        >
-                          Complete Tour
-                        </Button>
-                      ) : (
-                        <Button
-                          onClick={nextStep}
-                          disabled={isTransitioning}
-                          className='h-9 rounded-lg bg-gradient-to-r from-blue-600 to-blue-500 px-5 text-sm font-medium text-white shadow-lg shadow-blue-500/25 transition-all hover:from-blue-500 hover:to-blue-400 hover:shadow-blue-500/40 disabled:opacity-60'
-                        >
-                          Continue
-                          <ChevronRight className='ml-1.5 h-3.5 w-3.5' />
-                        </Button>
-                      )}
-                    </div>
-                  </motion.div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+      </motion.div>
     </>
   );
 }
