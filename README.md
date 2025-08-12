@@ -170,8 +170,10 @@ The quantum IDE represents a significant technical achievement:
 
 - **TypeScript Coverage**: 100% typed codebase with strict mode enabled
 - **ESLint Rules**: 0 linting errors with custom Next.js and React rules
-- **Test Coverage**: Comprehensive component testing with Jest and React Testing Library
-- **Bundle Analysis**: Optimized bundle size with tree-shaking and code splitting
+- **Test Coverage**: Comprehensive component testing with Jest and React Testing
+  Library
+- **Bundle Analysis**: Optimized bundle size with tree-shaking and code
+  splitting
 
 ### **Browser Support**
 

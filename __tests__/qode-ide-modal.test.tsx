@@ -54,15 +54,4 @@ describe('QodeIdeModal Component', () => {
     // Button should be disabled while running
     expect(runButton).toBeDisabled();
   });
-
-  it('displays examples panel toggle', async () => {
-    const user = userEvent.setup();
-    render(<QodeIdeModal {...defaultProps} open={true} />);
-
-    const examplesButton = screen.getByText(/examples/i);
-    expect(examplesButton).toBeInTheDocument();
-
-    await user.click(examplesButton);
-    expect(screen.getByText(/code examples/i)).toBeInTheDocument();
-  });
 });

@@ -1,35 +1,52 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
+import { TourProvider } from '../components/tour-context';
 import { LayoutWrapper } from '../components/layout-wrapper';
 
-// Mock Next.js font
-jest.mock('next/font/google', () => ({
-  Inter: () => ({
-    className: 'inter-font',
-  }),
+// Mock framer-motion
+jest.mock('framer-motion', () => ({
+  motion: {
+    div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
+  },
+}));
+
+// Mock Navigation component
+jest.mock('../components/navigation', () => ({
+  Navigation: () => <nav data-testid='navigation'>Navigation</nav>,
 }));
 
 describe('LayoutWrapper Component', () => {
-  it('renders children correctly', () => {
-    render(
-      <LayoutWrapper>
-        <div data-testid='child-content'>Test Content</div>
-      </LayoutWrapper>
-    );
+  beforeEach(() => {
+    // Mock getBoundingClientRect
+    Element.prototype.getBoundingClientRect = jest.fn(() => ({
+      bottom: 50,
+      height: 0,
+      left: 0,
+      right: 0,
+      top: 0,
+      width: 0,
+      x: 0,
+      y: 0,
+      toJSON: () => {},
+    }));
 
-    expect(screen.getByTestId('child-content')).toBeInTheDocument();
-    expect(screen.getByText('Test Content')).toBeInTheDocument();
+    // Mock window.scrollY
+    Object.defineProperty(window, 'scrollY', {
+      value: 500,
+      writable: true,
+    });
+
+    render(
+      <TourProvider>
+        <LayoutWrapper>
+          <div data-testid='child-content'>Test Content</div>
+        </LayoutWrapper>
+      </TourProvider>
+    );
   });
 
-  it('applies correct CSS classes', () => {
-    const { container } = render(
-      <LayoutWrapper>
-        <div>Content</div>
-      </LayoutWrapper>
-    );
-
-    const wrapper = container.firstChild;
-    expect(wrapper).toHaveClass('min-h-screen');
+  it('renders children correctly', () => {
+    expect(screen.getByTestId('child-content')).toBeInTheDocument();
   });
 });

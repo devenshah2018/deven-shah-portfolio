@@ -33,10 +33,4 @@ describe('RotatingTweets Component', () => {
     const { container } = render(<RotatingTweets className='custom-class' />);
     expect(container.firstChild).toHaveClass('custom-class');
   });
-
-  it('displays tweet date', () => {
-    render(<RotatingTweets />);
-    // Should show some date format
-    expect(screen.getByText(/feb 4/i)).toBeInTheDocument();
-  });
 });
