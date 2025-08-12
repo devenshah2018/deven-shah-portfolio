@@ -24,47 +24,6 @@ export function HeroSection() {
     >
       <div className='absolute inset-0 bg-gradient-to-br from-gray-900 via-blue-900/20 to-purple-900/20' />
 
-      <div className='absolute inset-0 overflow-hidden'>
-        <motion.div
-          animate={{
-            y: [0, -20, 0],
-            rotate: [0, 5, 0],
-          }}
-          transition={{
-            duration: 6,
-            repeat: Number.POSITIVE_INFINITY,
-            ease: 'easeInOut',
-          }}
-          className='absolute left-10 top-20 h-20 w-20 rounded-full bg-gradient-to-r from-blue-400 to-purple-400 opacity-20 blur-xl'
-        />
-        <motion.div
-          animate={{
-            y: [0, 30, 0],
-            rotate: [0, -5, 0],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Number.POSITIVE_INFINITY,
-            ease: 'easeInOut',
-            delay: 1,
-          }}
-          className='absolute right-20 top-40 h-32 w-32 rounded-full bg-gradient-to-r from-purple-400 to-pink-400 opacity-15 blur-xl'
-        />
-        <motion.div
-          animate={{
-            y: [0, -15, 0],
-            x: [0, 10, 0],
-          }}
-          transition={{
-            duration: 7,
-            repeat: Number.POSITIVE_INFINITY,
-            ease: 'easeInOut',
-            delay: 2,
-          }}
-          className='absolute bottom-40 left-1/4 h-24 w-24 rounded-full bg-gradient-to-r from-green-400 to-blue-400 opacity-20 blur-xl'
-        />
-      </div>
-
       <div className='container relative z-10 mx-auto px-4 sm:px-6 lg:px-8'>
         <div className='relative z-20 mx-auto text-center'>
           <motion.div

@@ -155,7 +155,7 @@ export function EducationSection() {
                   >
                     <Card
                       data-item-id={edu.id}
-                      className='group overflow-hidden rounded-xl border border-slate-700/30 bg-slate-900/90 shadow-xl backdrop-blur-sm transition-all duration-500'
+                      className='group overflow-hidden rounded-xl border-none bg-transparent backdrop-blur-sm transition-all duration-500'
                     >
                       <CardContent className='p-0'>
                         <div className='flex items-start gap-4 p-6'>
@@ -328,7 +328,7 @@ export function EducationSection() {
                 >
                   <Card
                     data-item-id={cert.id}
-                    className='group rounded-xl border border-slate-700/30 bg-slate-900/90 shadow-xl backdrop-blur-sm transition-all duration-300'
+                    className='group overflow-hidden rounded-xl border-none bg-transparent backdrop-blur-sm transition-all duration-500'
                   >
                     <CardContent className='p-0'>
                       <div className='flex items-start gap-4 p-6'>

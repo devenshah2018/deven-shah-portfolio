@@ -114,7 +114,7 @@ export function ExperienceSection() {
               technology across fintech, AI, and enterprise platforms.
             </motion.p>
           </div>
-          <div className='grid grid-cols-1 gap-7 md:grid-cols-2 xl:grid-cols-3'>
+          <div className='grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3'>
             {experiences.map((exp, index) => (
               <motion.div
                 key={index}
@@ -122,9 +122,23 @@ export function ExperienceSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
+                className='relative'
               >
+                {/* Separator line - positioned exactly between cards */}
+                {index < experiences.length - 1 && (
+                  <>
+                    {/* Mobile horizontal separator */}
+                    <div className='absolute left-1/2 top-full h-px w-32 -translate-x-1/2 translate-y-4 bg-gradient-to-r from-transparent via-slate-600 to-transparent md:hidden' />
+                    {/* Desktop vertical separator - hide on rightmost cards of each row */}
+                    <div className='absolute right-0 top-1/2 hidden h-32 w-px -translate-y-1/2 translate-x-4 bg-gradient-to-b from-transparent via-slate-600 to-transparent md:block xl:hidden' />
+                    {/* XL screen vertical separator - hide on rightmost cards of 3-column layout */}
+                    {(index + 1) % 3 !== 0 && (
+                      <div className='absolute right-0 top-1/2 hidden h-32 w-px -translate-y-1/2 translate-x-4 bg-gradient-to-b from-transparent via-slate-600 to-transparent xl:block' />
+                    )}
+                  </>
+                )}
                 <Card
-                  className='group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/70 shadow-xl transition-all duration-300'
+                  className='group flex h-full flex-col overflow-hidden rounded-none border-0 bg-transparent transition-all duration-300'
                   data-item-id={exp.id}
                 >
                   <CardContent className='flex h-full flex-col p-5'>
@@ -214,7 +228,7 @@ export function ExperienceSection() {
                           {exp.achievements.map((achievement, i) => (
                             <li key={exp.id + '-' + i} className='flex items-start gap-3'>
                               <div
-                                className={`h-2 w-2 bg-gradient-to-r ${exp.gradient} mt-2 flex-shrink-0 rounded-full`}
+                                className={`h-2 w-2 bg-gradient-to-r ${exp.gradient} mt-2 flex-shrink-0 rounded-none`}
                               />
                               <span className='text-xs font-light leading-relaxed text-slate-300'>
                                 {achievement}

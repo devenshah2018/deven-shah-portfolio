@@ -316,7 +316,7 @@ export function ProjectsSection() {
                 >
                   <Card
                     data-item-id={project.id}
-                    className='flex h-full flex-col gap-0 border border-slate-800 bg-slate-900/50 backdrop-blur-sm transition-all duration-300'
+                    className='flex h-full flex-col gap-0 overflow-hidden rounded-xl border border-transparent bg-transparent backdrop-blur-sm transition-all duration-500 hover:border-2 hover:border-blue-500'
                   >
                     <CardHeader className='pb-4'>
                       <div className='mb-4 flex items-center justify-between'>
