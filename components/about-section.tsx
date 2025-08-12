@@ -987,107 +987,221 @@ export function AboutSection() {
           viewport={{ once: true }}
           className='mx-auto max-w-7xl'
         >
-          <div className='grid grid-cols-1 items-start gap-32 lg:grid-cols-2'>
-            <div className='space-y-12'>
-              <div className='mb-2'>
-                <h2 className='mb-4 bg-gradient-to-r from-white to-slate-300 bg-clip-text text-5xl font-bold tracking-tight text-transparent sm:text-6xl'>
-                  About Me
-                </h2>
-                <p className='mb-4 max-w-2xl text-xl font-light leading-relaxed text-slate-400'>
-                  Passionate builder bridging advanced technology with real-world impact. I
-                  architect, code, and launch products at the intersection of AI, analytics, and
-                  security. As a frequent Spartan Race competitor and current Ironman 140.6 trainee,
-                  physical fitness has become a cornerstone of my life, driving my discipline and
-                  resilience.
-                </p>
-              </div>
+          <div className='mb-10 text-center sm:mb-14'>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className='mb-4'
+            >
+              <h2 className='mb-2 bg-gradient-to-r from-white to-slate-300 bg-clip-text text-4xl font-bold tracking-tight text-transparent sm:text-5xl'>
+                About Me
+              </h2>
+              <div className='mx-auto h-1 w-16 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500' />
+            </motion.div>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+              className='mx-auto max-w-3xl text-base font-light leading-relaxed text-slate-400 sm:text-lg'
+            >
+              Passionate builder bridging advanced technology with real-world impact. I architect,
+              code, and launch products at the intersection of AI, analytics, and security. As a
+              frequent Spartan Race competitor and current Ironman 140.6 trainee, physical fitness
+              has become a cornerstone of my life, driving my discipline and resilience.
+            </motion.p>
+          </div>
 
-              <div>
-                <h3 className='mb-3 text-2xl font-bold text-white'>Timeline</h3>
-                <div className='mb-4 flex gap-6 text-sm'>
-                  <div className='flex items-center gap-2'>
-                    <span className='inline-block h-4 w-4 rounded-full bg-blue-500'></span>
-                    <span className='text-slate-300'>Career</span>
+          {/* Timeline */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            viewport={{ once: true }}
+            className='mb-16'
+          >
+            <h3 className='mb-8 text-2xl font-bold text-white'>Career Timeline</h3>
+
+            {/* Timeline Container */}
+            <div className='relative'>
+              {/* Mobile Vertical Timeline Line */}
+              <div className='absolute bottom-0 left-6 top-0 w-0.5 bg-slate-600 sm:hidden'></div>
+
+              {/* Desktop Horizontal Timeline Line */}
+              <div className='absolute left-0 right-0 top-10 hidden h-1 bg-slate-300 sm:block'></div>
+
+              {/* Timeline Items - Responsive grid with better mobile layout */}
+              <div className='grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-4 md:grid-cols-3 lg:grid-cols-6'>
+                {/* University */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.2 }}
+                  viewport={{ once: true }}
+                  className='relative pl-12 sm:pl-0'
+                >
+                  {/* Mobile Timeline Connector */}
+                  <div className='absolute left-6 top-10 h-3 w-3 -translate-x-1/2 transform rounded-full border-2 border-slate-900 bg-amber-400 sm:hidden'></div>
+
+                  <div className='flex h-20 flex-col justify-between rounded-lg border border-slate-500 bg-slate-900 p-3 backdrop-blur-sm transition-colors duration-200 hover:border-amber-400/50'>
+                    <div className='absolute -top-0.5 left-3 right-3 hidden h-1 rounded-full bg-amber-400/60 sm:block'></div>
+                    <div className='mb-1 truncate text-xs font-semibold text-amber-400'>
+                      2018-2022
+                    </div>
+                    <div className='mb-1 line-clamp-2 text-xs font-bold leading-tight text-white'>
+                      B.S. Software Engineering
+                    </div>
+                    <div className='truncate text-xs text-slate-400'>San Jose State University</div>
                   </div>
-                  <div className='flex items-center gap-2'>
-                    <span className='inline-block h-4 w-4 rounded-full bg-amber-400'></span>
-                    <span className='text-slate-300'>Education/Certifications</span>
+                </motion.div>
+
+                {/* NetApp */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.3 }}
+                  viewport={{ once: true }}
+                  className='relative pl-12 sm:pl-0'
+                >
+                  {/* Mobile Timeline Connector */}
+                  <div className='absolute left-6 top-10 h-3 w-3 -translate-x-1/2 transform rounded-full border-2 border-slate-900 bg-blue-400 sm:hidden'></div>
+
+                  <div className='flex h-20 flex-col justify-between rounded-lg border border-slate-500 bg-slate-900 p-3 backdrop-blur-sm transition-colors duration-200 hover:border-blue-400/50'>
+                    <div className='absolute -top-0.5 left-3 right-3 hidden h-1 rounded-full bg-blue-400/60 sm:block'></div>
+                    <div className='mb-1 truncate text-xs font-semibold text-blue-400'>
+                      2021-2022
+                    </div>
+                    <div className='mb-1 line-clamp-2 text-xs font-bold leading-tight text-white sm:text-sm'>
+                      Solutions Architect
+                    </div>
+                    <div className='truncate text-xs text-slate-400'>NetApp</div>
                   </div>
-                </div>
-                <div className='space-y-6 border-l-4 border-blue-500/40 pl-6'>
-                  <a href='#education' className='group block cursor-pointer focus:outline-none'>
-                    <span className='block text-lg font-semibold text-amber-400 group-hover:text-amber-300'>
-                      Present
-                    </span>
-                    <span className='block font-bold text-white'>
-                      M.S. in Computer Science (Data Analytics)
-                    </span>
-                    <span className='block text-slate-400'>Boston University</span>
-                  </a>
-                  <a href='#experience' className='group block cursor-pointer focus:outline-none'>
-                    <span className='block text-lg font-semibold text-blue-500 group-hover:text-blue-400'>
-                      12/2024–Present
-                    </span>
-                    <span className='block font-bold text-white'>Co-Founder/CTO</span>
-                    <span className='block text-slate-400'>Suno Analytics</span>
-                  </a>
-                  <a href='#experience' className='group block cursor-pointer focus:outline-none'>
-                    <span className='block text-lg font-semibold text-blue-500 group-hover:text-blue-400'>
-                      04/2023–04/2024
-                    </span>
-                    <span className='block font-bold text-white'>Application Developer</span>
-                    <span className='block text-slate-400'>Patelco Credit Union</span>
-                  </a>
-                  <a href='#education' className='group block cursor-pointer focus:outline-none'>
-                    <span className='block text-lg font-semibold text-amber-400 group-hover:text-amber-300'>
-                      02/2023
-                    </span>
-                    <span className='block font-bold text-white'>
-                      AWS Cloud Practitioner Certification
-                    </span>
-                    <span className='block text-slate-400'>Amazon Web Services</span>
-                  </a>
-                  <a href='#experience' className='group block cursor-pointer focus:outline-none'>
-                    <span className='block text-lg font-semibold text-blue-500 group-hover:text-blue-400'>
-                      05/2021–12/2022
-                    </span>
-                    <span className='block font-bold text-white'>Solutions Architect Intern</span>
-                    <span className='block text-slate-400'>NetApp</span>
-                  </a>
-                  <a href='#education' className='group block cursor-pointer focus:outline-none'>
-                    <span className='block text-lg font-semibold text-amber-400 group-hover:text-amber-300'>
-                      08/2018–12/2022
-                    </span>
-                    <span className='block font-bold text-white'>B.S. in Software Engineering</span>
-                    <span className='block text-slate-400'>San Jose State University</span>
-                  </a>
+                </motion.div>
+
+                {/* AWS */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.4 }}
+                  viewport={{ once: true }}
+                  className='relative pl-12 sm:pl-0'
+                >
+                  {/* Mobile Timeline Connector */}
+                  <div className='absolute left-6 top-10 h-3 w-3 -translate-x-1/2 transform rounded-full border-2 border-slate-900 bg-amber-400 sm:hidden'></div>
+
+                  <div className='flex h-20 flex-col justify-between rounded-lg border border-slate-500 bg-slate-900 p-3 backdrop-blur-sm transition-colors duration-200 hover:border-amber-400/50'>
+                    <div className='absolute -top-0.5 left-3 right-3 hidden h-1 rounded-full bg-amber-400/60 sm:block'></div>
+                    <div className='mb-1 truncate text-xs font-semibold text-amber-400'>
+                      Feb 2023
+                    </div>
+                    <div className='mb-1 line-clamp-2 text-xs font-bold leading-tight text-white'>
+                      Certified Cloud Practitioner
+                    </div>
+                    <div className='truncate text-xs text-slate-400'>Amazon Web Services</div>
+                  </div>
+                </motion.div>
+
+                {/* Patelco */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.5 }}
+                  viewport={{ once: true }}
+                  className='relative pl-12 sm:pl-0'
+                >
+                  {/* Mobile Timeline Connector */}
+                  <div className='absolute left-6 top-10 h-3 w-3 -translate-x-1/2 transform rounded-full border-2 border-slate-900 bg-blue-400 sm:hidden'></div>
+
+                  <div className='flex h-20 flex-col justify-between rounded-lg border border-slate-500 bg-slate-900 p-3 backdrop-blur-sm transition-colors duration-200 hover:border-blue-400/50'>
+                    <div className='absolute -top-0.5 left-3 right-3 hidden h-1 rounded-full bg-blue-400/60 sm:block'></div>
+                    <div className='mb-1 truncate text-xs font-semibold text-blue-400'>
+                      2023-2024
+                    </div>
+                    <div className='mb-1 line-clamp-2 text-xs font-bold leading-tight text-white sm:text-sm'>
+                      Application Developer
+                    </div>
+                    <div className='truncate text-xs text-slate-400'>Patelco</div>
+                  </div>
+                </motion.div>
+
+                {/* Suno Analytics */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.6 }}
+                  viewport={{ once: true }}
+                  className='relative pl-12 sm:pl-0'
+                >
+                  {/* Mobile Timeline Connector */}
+                  <div className='absolute left-6 top-10 h-3 w-3 -translate-x-1/2 transform rounded-full border-2 border-slate-900 bg-blue-400 sm:hidden'></div>
+
+                  <div className='flex h-20 flex-col justify-between rounded-lg border border-slate-500 bg-slate-900 p-3 backdrop-blur-sm transition-colors duration-200 hover:border-blue-400/50'>
+                    <div className='absolute -top-0.5 left-3 right-3 hidden h-1 rounded-full bg-blue-400/60 sm:block'></div>
+                    <div className='mb-1 flex min-w-0 items-center gap-1 text-xs font-semibold text-blue-400'>
+                      <span className='truncate'>2024-Present</span>
+                      <div className='h-1 w-1 flex-shrink-0 animate-pulse rounded-full bg-green-400'></div>
+                    </div>
+                    <div className='mb-1 line-clamp-2 text-xs font-bold leading-tight text-white sm:text-sm'>
+                      Co-Founder & CTO
+                    </div>
+                    <div className='truncate text-xs text-slate-400'>Suno Analytics</div>
+                  </div>
+                </motion.div>
+
+                {/* Boston University */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.7 }}
+                  viewport={{ once: true }}
+                  className='relative pl-12 sm:pl-0'
+                >
+                  {/* Mobile Timeline Connector */}
+                  <div className='absolute left-6 top-10 h-3 w-3 -translate-x-1/2 transform rounded-full border-2 border-slate-900 bg-amber-400 sm:hidden'></div>
+
+                  <div className='flex h-20 flex-col justify-between rounded-lg border border-slate-500 bg-slate-900 p-3 backdrop-blur-sm transition-colors duration-200 hover:border-amber-400/50'>
+                    <div className='absolute -top-0.5 left-3 right-3 hidden h-1 rounded-full bg-amber-400/60 sm:block'></div>
+                    <div className='mb-1 flex min-w-0 items-center gap-1 text-xs font-semibold text-amber-400'>
+                      <span className='truncate'>Present</span>
+                      <div className='h-1 w-1 flex-shrink-0 animate-pulse rounded-full bg-green-400'></div>
+                    </div>
+                    <div className='mb-1 line-clamp-2 text-xs font-bold leading-tight text-white sm:text-sm'>
+                      M.S. Computer Science
+                    </div>
+                    <div className='truncate text-xs text-slate-400'>Boston University</div>
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Twitter and Strava Section */}
+          <div className='mb-20 grid grid-cols-1 gap-12 lg:grid-cols-2'>
+            <div className='flex'>
+              <div className='relative min-h-[320px] w-full max-w-md overflow-visible'>
+                <h3 className='mb-3 flex items-center gap-2 text-2xl font-bold text-white'>
+                  <FontAwesomeIcon icon={faXTwitter} className='h-6 w-6 text-blue-400' />
+                  Recent Thoughts
+                </h3>
+                <div>
+                  <RotatingTweets />
                 </div>
               </div>
             </div>
 
-            <div className='space-y-12'>
-              <div className='mb-8 flex'>
-                <div className='relative min-h-[320px] w-full max-w-md overflow-visible'>
-                  <h3 className='mb-3 flex items-center gap-2 text-2xl font-bold text-white'>
-                    <FontAwesomeIcon icon={faXTwitter} className='h-6 w-6 text-blue-400' />
-                    Recent Thoughts
-                  </h3>
-                  <div>
-                    <RotatingTweets />
-                  </div>
-                </div>
-              </div>
-              <div className='h-5' />
-              <div className='mt-8'>
+            <div className='mt-16 lg:mt-0'>
+              <div>
                 <div className='mb-4 flex items-center justify-between'>
                   <div className='flex items-center gap-3'>
-                    <div className='h-6 w-6 text-orange-500'>
-                      <svg className='h-6 w-6' fill='currentColor' viewBox='0 0 24 24'>
-                        <path d='M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.599h4.172L10.463 0l-7 13.828h4.172' />
-                      </svg>
-                    </div>
                     <div>
-                      <h3 className='text-lg font-semibold text-white sm:text-xl'>
+                      <h3 className='mb-3 flex items-center gap-2 text-2xl font-bold text-white'>
+                        <div className='h-6 w-6 text-orange-500'>
+                          <svg className='h-6 w-6' fill='currentColor' viewBox='0 0 24 24'>
+                            <path d='M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.599h4.172L10.463 0l-7 13.828h4.172' />
+                          </svg>
+                        </div>
                         Activity Dashboard
                       </h3>
                       <p className='text-xs text-slate-400'>
@@ -1103,10 +1217,12 @@ export function AboutSection() {
                       </p>
                     </div>
                   </div>
-                  
+
                   <button
-                    onClick={() => window.open('https://www.strava.com/athletes/123793208', '_blank')}
-                    className='group flex items-center justify-center gap-2 rounded-lg border border-orange-600/40 bg-orange-800/20 px-3 py-1.5 text-xs font-medium text-orange-300 backdrop-blur-sm transition-all duration-200 hover:border-orange-500/60 hover:bg-orange-800/30 hover:text-orange-200 focus:outline-none focus:ring-2 focus:ring-orange-400/60 focus:ring-offset-2 focus:ring-offset-slate-900'
+                    onClick={() =>
+                      window.open('https://www.strava.com/athletes/123793208', '_blank')
+                    }
+                    className='group flex items-center justify-center gap-2 rounded-lg border border-orange-600/40 bg-orange-800/20 px-3 py-1.5 text-xs font-medium text-orange-300 backdrop-blur-sm transition-all duration-200 hover:border-orange-500 hover:bg-orange-800/30 hover:text-orange-200 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-slate-900'
                     aria-label='View Strava Profile'
                   >
                     <ExternalLink className='h-3 w-3' />
@@ -1115,6 +1231,7 @@ export function AboutSection() {
                 </div>
 
                 <div className='overflow-hidden rounded-xl backdrop-blur-sm'>
+                  {/* ...existing Strava dashboard content... */}
                   <div className='border-b border-slate-700/30 p-3 sm:p-4'>
                     <div className='grid grid-cols-3 divide-x divide-slate-700/30'>
                       <div className='px-1 text-center sm:px-2'>
@@ -1210,7 +1327,7 @@ export function AboutSection() {
                             <div className='flex items-center gap-2'>
                               <div className='relative'>
                                 <svg
-                                  className='h-3 w-3 text-orange-400/80 transition-colors duration-300 group-hover:text-orange-400 sm:h-4 sm:w-4'
+                                  className='h-3 w-3 text-orange-400 transition-colors duration-300 group-hover:text-orange-400 sm:h-4 sm:w-4'
                                   fill='currentColor'
                                   viewBox='0 0 24 24'
                                 >
@@ -1249,74 +1366,70 @@ export function AboutSection() {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
 
-              <div className='mt-8'>
-                <h3 className='mb-4 text-2xl font-bold text-white'>Technical Skills</h3>
+          {/* Technical Skills Section - Full Width */}
+          <div>
+            <h3 className='mb-3 flex items-center gap-2 text-2xl font-bold text-white'>
+              Technical Skills
+            </h3>
 
-                <div className='flex gap-6'>
-                  <div className='flex-1'>
-                    <div className='flex flex-wrap gap-2'>
-                      {(
-                        categorizedSkills[
-                          activeCategory as keyof typeof categorizedSkills
-                        ] as string[]
-                      )
-                        .slice()
-                        .sort((a, b) => a.localeCompare(b))
-                        .map((skill: string) => (
-                          <button
-                            key={skill}
-                            type='button'
-                            className={`inline-flex items-center rounded-lg border border-slate-700 bg-slate-800/70 px-3 py-1.5 text-sm font-medium text-slate-200 shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400/70 focus:ring-offset-2 focus:ring-offset-slate-900 ${
-                              hasMapping(skill)
-                                ? 'hover:border-blue-400 hover:bg-blue-900/30 hover:text-blue-200 focus:border-blue-400 focus:bg-blue-900/30 focus:text-blue-200'
-                                : 'cursor-default opacity-80'
-                            } `}
-                            style={{
-                              minWidth: 0,
-                              minHeight: 0,
-                              fontSize: '0.98rem',
-                              letterSpacing: '0.01em',
-                              lineHeight: 1.2,
-                            }}
-                            aria-label={
-                              skill +
-                              (hasMapping(skill) ? `, ${getMappingCount(skill)} related items` : '')
-                            }
-                            onClick={() => hasMapping(skill) && handleSkillClick(skill)}
-                            tabIndex={0}
-                          >
-                            <span className='max-w-[90px] truncate'>{skill}</span>
-                            {hasMapping(skill) && (
-                              <span className='ml-2 rounded border border-blue-400/30 bg-blue-800/60 px-1.5 py-0.5 text-[0.7em] font-semibold text-blue-200'>
-                                {getMappingCount(skill)}
-                              </span>
-                            )}
-                          </button>
-                        ))}
-                    </div>
-                  </div>
+            {/* Category Toggles - Top Horizontal */}
+            <div className='mb-6 flex flex-wrap gap-2'>
+              {skillCategories.map(cat => (
+                <button
+                  key={cat.key}
+                  type='button'
+                  className={`rounded-md border px-3 py-1.5 text-xs font-bold uppercase tracking-wide transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400/70 focus:ring-offset-2 focus:ring-offset-slate-900 ${
+                    activeCategory === cat.key
+                      ? 'border-blue-400 bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-lg'
+                      : 'border-blue-800/50 bg-slate-900 text-blue-200 hover:border-blue-400 hover:bg-blue-900/40 hover:text-white'
+                  }`}
+                  style={{ letterSpacing: '0.08em' }}
+                  onClick={() => setActiveCategory(cat.key)}
+                  aria-pressed={activeCategory === cat.key}
+                >
+                  {cat.label}
+                </button>
+              ))}
+            </div>
 
-                  <div className='flex min-w-[100px] flex-col gap-1'>
-                    {skillCategories.map(cat => (
-                      <button
-                        key={cat.key}
-                        type='button'
-                        className={`rounded-lg border px-3 py-2 text-left text-xs font-bold uppercase tracking-wide transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400/70 focus:ring-offset-2 focus:ring-offset-slate-900 ${
-                          activeCategory === cat.key
-                            ? 'border-blue-400 bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-lg'
-                            : 'border-blue-800/50 bg-slate-900/80 text-blue-200 hover:border-blue-400 hover:bg-blue-900/40 hover:text-white'
-                        } `}
-                        style={{ letterSpacing: '0.08em' }}
-                        onClick={() => setActiveCategory(cat.key)}
-                        aria-pressed={activeCategory === cat.key}
-                      >
-                        {cat.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
+            {/* Skills Grid */}
+            <div className='flex flex-wrap gap-2'>
+              {(categorizedSkills[activeCategory as keyof typeof categorizedSkills] as string[])
+                .slice()
+                .sort((a, b) => a.localeCompare(b))
+                .map((skill: string) => (
+                  <button
+                    key={skill}
+                    type='button'
+                    className={`inline-flex items-center rounded-lg border border-slate-700 bg-slate-800/70 px-3 py-1.5 text-sm font-medium text-slate-200 shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400/70 focus:ring-offset-2 focus:ring-offset-slate-900 ${
+                      hasMapping(skill)
+                        ? 'hover:border-blue-400 hover:bg-blue-900/30 hover:text-blue-200 focus:border-blue-400 focus:bg-blue-900/30 focus:text-blue-200'
+                        : 'cursor-default opacity-80'
+                    }`}
+                    style={{
+                      minWidth: 0,
+                      minHeight: 0,
+                      fontSize: '0.98rem',
+                      letterSpacing: '0.01em',
+                      lineHeight: 1.2,
+                    }}
+                    aria-label={
+                      skill + (hasMapping(skill) ? `, ${getMappingCount(skill)} related items` : '')
+                    }
+                    onClick={() => hasMapping(skill) && handleSkillClick(skill)}
+                    tabIndex={0}
+                  >
+                    <span className='max-w-[90px] truncate'>{skill}</span>
+                    {hasMapping(skill) && (
+                      <span className='ml-2 rounded border border-blue-400/30 bg-blue-800 px-1.5 py-0.5 text-[0.7em] font-semibold text-blue-200'>
+                        {getMappingCount(skill)}
+                      </span>
+                    )}
+                  </button>
+                ))}
             </div>
           </div>
         </motion.div>

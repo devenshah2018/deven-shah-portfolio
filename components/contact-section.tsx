@@ -142,9 +142,9 @@ export function ContactSection() {
               className='group relative overflow-hidden rounded-2xl border border-slate-700/40 bg-slate-800/20 backdrop-blur-sm transition-all duration-500'
             >
               <div className='absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/10 via-purple-500/5 to-cyan-500/10 opacity-0 transition-opacity duration-500' />
-              
+
               <div className='absolute inset-0 rounded-2xl bg-gradient-to-b from-white/[0.02] to-transparent' />
-              
+
               <div className='absolute left-8 right-8 top-0 h-px bg-gradient-to-r from-transparent via-slate-500/30 to-transparent' />
               <CardContent className='relative z-10 flex flex-col items-center justify-between gap-6 px-5 py-6 md:flex-row md:items-center md:gap-8 md:px-10'>
                 <div className='flex-1 text-center md:text-left'>
@@ -184,7 +184,9 @@ export function ContactSection() {
                       Select a Time
                     </Button>
                     <Button
-                      onClick={() => { window.open('https://cal.com/deven-shah-l0qkjk/quick-chat', '_blank') }}
+                      onClick={() => {
+                        window.open('https://cal.com/deven-shah-l0qkjk/quick-chat', '_blank');
+                      }}
                       size='lg'
                       className='flex w-full items-center justify-center gap-2 rounded-full border-0 bg-zinc-600 px-8 py-4 text-lg font-bold text-white outline-none ring-0 transition-all duration-200 hover:bg-zinc-700 focus-visible:ring-4 focus-visible:ring-blue-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 md:w-auto'
                       tabIndex={0}

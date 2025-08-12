@@ -122,16 +122,16 @@ export function GuidedTour() {
 
     setIsTyping(true);
     setDisplayedText('');
-    
+
     const text = currentStepData.content;
     let currentIndex = 0;
-    
+
     const typeNextChar = () => {
       if (currentIndex < text.length) {
         setDisplayedText(text.substring(0, currentIndex + 1));
         currentIndex++;
         let delay = 15;
-        
+
         setTimeout(typeNextChar, delay);
       } else {
         setIsTyping(false);
@@ -139,7 +139,7 @@ export function GuidedTour() {
     };
 
     const startTimeout = setTimeout(typeNextChar, 150);
-    
+
     return () => {
       clearTimeout(startTimeout);
     };
@@ -482,8 +482,7 @@ export function GuidedTour() {
         <motion.div
           initial={{ boxShadow: '0 0 0 rgba(59, 130, 246, 0)' }}
           animate={{
-            boxShadow:
-              '0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(59, 130, 246, 0.1)',
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(59, 130, 246, 0.1)',
           }}
           transition={{ duration: 0.3, delay: 0.1 }}
         >
@@ -507,10 +506,10 @@ export function GuidedTour() {
                     initial={{ opacity: 0, y: 4, filter: 'blur(1px)' }}
                     animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
                     exit={{ opacity: 0, y: -2, filter: 'blur(1px)' }}
-                    transition={{ 
-                      duration: 0.15, 
+                    transition={{
+                      duration: 0.15,
                       ease: [0.16, 1, 0.3, 1],
-                      filter: { duration: 0.1 }
+                      filter: { duration: 0.1 },
                     }}
                     className='flex flex-1 flex-col'
                   >
@@ -544,9 +543,9 @@ export function GuidedTour() {
                       </Button>
                     </div>
 
-                    <div className='flex-1 mb-7 flex flex-col justify-start overflow-hidden'>
-                      <div className='overflow-y-auto scrollbar-thin scrollbar-track-slate-800 scrollbar-thumb-slate-600'>
-                        <p className='text-sm leading-relaxed text-slate-300 pr-2'>
+                    <div className='mb-7 flex flex-1 flex-col justify-start overflow-hidden'>
+                      <div className='scrollbar-thin scrollbar-track-slate-800 scrollbar-thumb-slate-600 overflow-y-auto'>
+                        <p className='pr-2 text-sm leading-relaxed text-slate-300'>
                           {displayedText}
                         </p>
                       </div>
@@ -554,7 +553,7 @@ export function GuidedTour() {
                   </motion.div>
                 </AnimatePresence>
 
-                <div className='flex items-center justify-between gap-3 mt-auto'>
+                <div className='mt-auto flex items-center justify-between gap-3'>
                   <Button
                     variant='outline'
                     onClick={prevStep}
