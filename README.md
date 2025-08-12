@@ -251,13 +251,3 @@ useEffect(() => {
 - **VS Code Extensions**: Recommended extensions for optimal DX
 
 ---
-
-## 🌟 **Unique Selling Points**
-
-1. **First-of-its-kind Quantum IDE**: Browser-based quantum programming environment
-2. **Interactive Storytelling**: Guided tour that tells a compelling professional narrative
-3. **Real-time Data**: Live integrations that showcase current activity and availability
-4. **Performance Excellence**: Lighthouse 100 score with excellent UX
-5. **Technical Innovation**: WebAssembly, advanced animations, and modern architecture
-
----
