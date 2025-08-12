@@ -150,7 +150,7 @@ export function GuidedTour() {
         setTimeout(() => {
           setCurrentStep(currentStep + 1);
           setIsTransitioning(false);
-        }, 400);
+        }, 500);
       } else {
         setCurrentStep(currentStep + 1);
         setIsTransitioning(false);
@@ -167,7 +167,7 @@ export function GuidedTour() {
         setTimeout(() => {
           setCurrentStep(currentStep - 1);
           setIsTransitioning(false);
-        }, 400);
+        }, 500);
       } else {
         setCurrentStep(currentStep - 1);
         setIsTransitioning(false);
@@ -190,16 +190,16 @@ export function GuidedTour() {
 
   const updateTooltipPosition = useCallback(() => {
     const viewportWidth = window.innerWidth;
-    const margin = 20;
+    const margin = 24;
 
-    const tooltipWidth = 380;
-    const mobileWidth = 320;
+    const tooltipWidth = 400;
+    const mobileWidth = 340;
 
     if (viewportWidth < 768) {
       setTooltipPosition({
         top: `${margin}px`,
         right: `${margin}px`,
-        width: `${Math.min(mobileWidth, viewportWidth - 40)}px`,
+        width: `${Math.min(mobileWidth, viewportWidth - 48)}px`,
       });
     } else {
       setTooltipPosition({
@@ -406,21 +406,22 @@ export function GuidedTour() {
   }, [isTourOpen, currentStep, nextStep, prevStep, handleCloseTour]);
 
   const getStepIcon = () => {
+    const iconClass = 'h-5 w-5 text-blue-400';
     switch (currentStepData && currentStepData.type) {
       case 'intro':
-        return <Rocket className='h-5 w-5 text-blue-400' />;
+        return <Rocket className={iconClass} />;
       case 'experience':
-        return <Briefcase className='h-5 w-5 text-blue-400' />;
+        return <Briefcase className={iconClass} />;
       case 'projects':
-        return <Play className='h-5 w-5 text-blue-400' />;
+        return <Play className={iconClass} />;
       case 'education':
-        return <GraduationCap className='h-5 w-5 text-blue-400' />;
+        return <GraduationCap className={iconClass} />;
       case 'certification':
-        return <Award className='h-5 w-5 text-blue-400' />;
+        return <Award className={iconClass} />;
       case 'cta':
-        return <Calendar className='h-5 w-5 text-blue-400' />;
+        return <Calendar className={iconClass} />;
       default:
-        return <Calendar className='h-5 w-5 text-blue-400' />;
+        return <Calendar className={iconClass} />;
     }
   };
 
@@ -432,10 +433,15 @@ export function GuidedTour() {
         {!isTransitioning && (
           <motion.div
             key={currentStep}
-            initial={{ opacity: 0, scale: 0.98, y: 12 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.98, y: 12 }}
-            transition={{ duration: 0.32, ease: 'easeInOut' }}
+            initial={{ opacity: 0, scale: 0.96, y: 16, filter: 'blur(4px)' }}
+            animate={{ opacity: 1, scale: 1, y: 0, filter: 'blur(0px)' }}
+            exit={{ opacity: 0, scale: 0.96, y: -8, filter: 'blur(2px)' }}
+            transition={{ 
+              duration: 0.4, 
+              ease: [0.16, 1, 0.3, 1],
+              opacity: { duration: 0.3 },
+              filter: { duration: 0.25 }
+            }}
             className='tour-tooltip-container fixed right-8 top-8 z-[101]'
             style={{
               ...tooltipPosition,
@@ -447,64 +453,118 @@ export function GuidedTour() {
               transform: undefined,
             }}
           >
-            <Card className='flex h-auto w-full max-w-[380px] flex-col rounded-2xl border border-slate-700 bg-slate-900 p-0'>
-              <CardContent className='flex h-full flex-col p-6'>
-                {/* Header */}
-                <div className='mb-4 flex items-center justify-between'>
-                  <div className='flex min-w-0 items-center gap-2'>
-                    {getStepIcon()}
-                    <h3 className='truncate text-base font-bold text-white'>
-                      {currentStepData ? currentStepData.title : ''}
-                    </h3>
+            <motion.div
+              initial={{ boxShadow: '0 0 0 rgba(59, 130, 246, 0)' }}
+              animate={{ boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(59, 130, 246, 0.1)' }}
+              transition={{ duration: 0.3, delay: 0.1 }}
+            >
+              <Card className='relative flex h-auto w-full max-w-[400px] flex-col overflow-hidden rounded-xl border border-slate-800/80 bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 p-0 backdrop-blur-xl'>
+                {/* Subtle gradient overlay */}
+                <div className='absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-purple-500/5 pointer-events-none' />
+                
+                <CardContent className='relative flex h-full flex-col p-7'>
+                  {/* Progress indicator */}
+                  <div className='mb-5 flex h-1 w-full overflow-hidden rounded-full bg-slate-800'>
+                    <motion.div
+                      className='h-full bg-gradient-to-r from-blue-500 to-blue-400'
+                      initial={{ width: '0%' }}
+                      animate={{ width: `${((currentStep + 1) / tourSteps.length) * 100}%` }}
+                      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                    />
                   </div>
-                  <Button
-                    variant='ghost'
-                    size='icon'
-                    onClick={handleCloseTour}
-                    className='h-7 w-7 p-0 text-slate-400 hover:bg-slate-800 hover:text-white'
-                  >
-                    <X className='h-4 w-4' />
-                  </Button>
-                </div>
 
-                <div className='mb-6 flex flex-1 flex-col justify-center'>
-                  <p className='text-sm leading-relaxed text-slate-200'>
-                    {currentStepData ? currentStepData.content : ''}
-                  </p>
-                </div>
-
-                <div className='mt-auto flex items-center justify-between gap-2'>
-                  <Button
-                    variant='outline'
-                    onClick={prevStep}
-                    disabled={currentStep === 0 || isTransitioning}
-                    className='h-8 rounded-lg border-slate-700 px-4 text-xs text-slate-400 hover:bg-slate-800 hover:text-white disabled:opacity-50'
-                  >
-                    <ChevronLeft className='mr-1 h-3 w-3' />
-                    Previous
-                  </Button>
-                  <div className='flex gap-2'>
-                    {currentStep === tourSteps.length - 1 ? (
-                      <Button
-                        onClick={handleCloseTour}
-                        className='h-8 rounded-lg bg-blue-600 px-4 text-xs font-semibold text-white shadow-none hover:bg-blue-700'
+                  {/* Header */}
+                  <div className='mb-5 flex items-start justify-between'>
+                    <div className='flex min-w-0 items-center gap-3'>
+                      <motion.div
+                        initial={{ scale: 0.8, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{ duration: 0.3, delay: 0.2 }}
+                        className='flex h-9 w-9 items-center justify-center rounded-lg bg-blue-500/10 ring-1 ring-blue-500/20'
                       >
-                        Finish Tour
-                      </Button>
-                    ) : (
-                      <Button
-                        onClick={nextStep}
-                        disabled={isTransitioning}
-                        className='h-8 rounded-lg bg-blue-600 px-4 text-xs font-semibold text-white shadow-none hover:bg-blue-700'
-                      >
-                        Next
-                        <ChevronRight className='ml-1 h-3 w-3' />
-                      </Button>
-                    )}
+                        {getStepIcon()}
+                      </motion.div>
+                      <div className='flex min-w-0 flex-col'>
+                        <motion.h3 
+                          initial={{ opacity: 0, y: 4 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.3, delay: 0.15 }}
+                          className='truncate text-lg font-semibold tracking-tight text-white'
+                        >
+                          {currentStepData ? currentStepData.title : ''}
+                        </motion.h3>
+                        <motion.span 
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ duration: 0.3, delay: 0.25 }}
+                          className='text-xs font-medium text-slate-400'
+                        >
+                          Step {currentStep + 1} of {tourSteps.length}
+                        </motion.span>
+                      </div>
+                    </div>
+                    <Button
+                      variant='ghost'
+                      size='icon'
+                      onClick={handleCloseTour}
+                      className='h-8 w-8 rounded-lg p-0 text-slate-400 transition-colors hover:bg-slate-800/60 hover:text-white'
+                    >
+                      <X className='h-4 w-4' />
+                    </Button>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
+
+                  {/* Content */}
+                  <motion.div 
+                    className='mb-7 flex flex-1 flex-col justify-center'
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.2 }}
+                  >
+                    <p className='text-sm leading-relaxed text-slate-300'>
+                      {currentStepData ? currentStepData.content : ''}
+                    </p>
+                  </motion.div>
+
+                  {/* Navigation */}
+                  <motion.div 
+                    className='flex items-center justify-between gap-3'
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: 0.3 }}
+                  >
+                    <Button
+                      variant='outline'
+                      onClick={prevStep}
+                      disabled={currentStep === 0 || isTransitioning}
+                      className='h-9 rounded-lg border-slate-700/60 bg-transparent px-4 text-sm text-slate-300 transition-all hover:border-slate-600 hover:bg-slate-800/40 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed'
+                    >
+                      <ChevronLeft className='mr-1.5 h-3.5 w-3.5' />
+                      Previous
+                    </Button>
+                    
+                    <div className='flex gap-2'>
+                      {currentStep === tourSteps.length - 1 ? (
+                        <Button
+                          onClick={handleCloseTour}
+                          className='h-9 rounded-lg bg-gradient-to-r from-blue-600 to-blue-500 px-5 text-sm font-medium text-white shadow-lg shadow-blue-500/25 transition-all hover:from-blue-500 hover:to-blue-400 hover:shadow-blue-500/40'
+                        >
+                          Complete Tour
+                        </Button>
+                      ) : (
+                        <Button
+                          onClick={nextStep}
+                          disabled={isTransitioning}
+                          className='h-9 rounded-lg bg-gradient-to-r from-blue-600 to-blue-500 px-5 text-sm font-medium text-white shadow-lg shadow-blue-500/25 transition-all hover:from-blue-500 hover:to-blue-400 hover:shadow-blue-500/40 disabled:opacity-60'
+                        >
+                          Continue
+                          <ChevronRight className='ml-1.5 h-3.5 w-3.5' />
+                        </Button>
+                      )}
+                    </div>
+                  </motion.div>
+                </CardContent>
+              </Card>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
