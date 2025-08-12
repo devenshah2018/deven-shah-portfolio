@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { GraduationCap, Briefcase, Zap } from 'lucide-react';
+import { GraduationCap, Briefcase, Zap, ExternalLink } from 'lucide-react';
 import { SkillModal } from '@/components/skill-modal';
 import { RotatingTweets } from '@/components/rotating-tweets';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -1079,28 +1079,39 @@ export function AboutSection() {
               </div>
               <div className='h-5' />
               <div className='mt-8'>
-                <div className='mb-4 flex items-center gap-3'>
-                  <div className='h-6 w-6 text-orange-500'>
-                    <svg className='h-6 w-6' fill='currentColor' viewBox='0 0 24 24'>
-                      <path d='M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.599h4.172L10.463 0l-7 13.828h4.172' />
-                    </svg>
+                <div className='mb-4 flex items-center justify-between'>
+                  <div className='flex items-center gap-3'>
+                    <div className='h-6 w-6 text-orange-500'>
+                      <svg className='h-6 w-6' fill='currentColor' viewBox='0 0 24 24'>
+                        <path d='M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.599h4.172L10.463 0l-7 13.828h4.172' />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 className='text-lg font-semibold text-white sm:text-xl'>
+                        Activity Dashboard
+                      </h3>
+                      <p className='text-xs text-slate-400'>
+                        Powered by{' '}
+                        <a
+                          href='https://www.strava.com/'
+                          target='_blank'
+                          rel='noopener noreferrer'
+                          className='text-orange-400 underline decoration-dotted transition-colors hover:text-orange-300'
+                        >
+                          Strava
+                        </a>
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className='text-lg font-semibold text-white sm:text-xl'>
-                      Activity Dashboard
-                    </h3>
-                    <p className='text-xs text-slate-400'>
-                      Powered by{' '}
-                      <a
-                        href='https://www.strava.com/athletes/123793208'
-                        target='_blank'
-                        rel='noopener noreferrer'
-                        className='text-orange-400 underline decoration-dotted transition-colors hover:text-orange-300'
-                      >
-                        Strava
-                      </a>
-                    </p>
-                  </div>
+                  
+                  <button
+                    onClick={() => window.open('https://www.strava.com/athletes/123793208', '_blank')}
+                    className='group flex items-center justify-center gap-2 rounded-lg border border-orange-600/40 bg-orange-800/20 px-3 py-1.5 text-xs font-medium text-orange-300 backdrop-blur-sm transition-all duration-200 hover:border-orange-500/60 hover:bg-orange-800/30 hover:text-orange-200 focus:outline-none focus:ring-2 focus:ring-orange-400/60 focus:ring-offset-2 focus:ring-offset-slate-900'
+                    aria-label='View Strava Profile'
+                  >
+                    <ExternalLink className='h-3 w-3' />
+                    <span className='hidden sm:inline'>View Profile</span>
+                  </button>
                 </div>
 
                 <div className='overflow-hidden rounded-xl backdrop-blur-sm'>
