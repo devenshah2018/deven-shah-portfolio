@@ -153,7 +153,6 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
       const script = document.createElement("script");
       script.src = "/qode-wasm-loader.js";
       script.onload = () => {
-        console.log("Qode WASM loader script loaded");
         resolve(true);
       };
       script.onerror = (error) => {
@@ -166,12 +165,10 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
 
   const loadQodeInterpreter = async () => {
     if (isLoadingRef.current || interpreter) {
-      console.log("Interpreter already loading or loaded, skipping...");
       return;
     }
 
     isLoadingRef.current = true;
-    console.log("Starting interpreter load...");
 
     const isInitialState =
       output.includes("Execute your quantum program to begin") ||
@@ -197,7 +194,6 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
         const module = await window.createQodeInterpreter();
         setInterpreter(module);
         setInterpreterReady(true);
-        console.log("Interpreter loaded successfully:", module);
 
         if (isInitialState) {
           setOutput(
@@ -239,7 +235,6 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
 
       setInterpreter(fallbackInterpreter);
       setInterpreterReady(true);
-      console.log("Fallback interpreter created");
     } finally {
       isLoadingRef.current = false;
     }

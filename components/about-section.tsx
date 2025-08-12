@@ -952,11 +952,9 @@ export function AboutSection() {
       try {
         const cachedData = localStorage.getItem("stravaStats");
         if (cachedData) {
-          console.log("Using cached Strava data from localStorage");
           setStravaStats(JSON.parse(cachedData));
           return;
         }
-        console.log("Fetching new Strava data from API");
         const stats = await getStravaStats();
 
         if (stats) {
@@ -967,7 +965,6 @@ export function AboutSection() {
         console.error("Failed to fetch Strava stats:", error);
         const cachedData = localStorage.getItem("stravaStats");
         if (cachedData) {
-          console.log("Using cached Strava data as fallback after API error");
           setStravaStats(JSON.parse(cachedData));
         }
       }
