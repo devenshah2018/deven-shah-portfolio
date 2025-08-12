@@ -1,14 +1,8 @@
-"use client";
+'use client';
 
-import React from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
 import {
   Play,
   RotateCcw,
@@ -17,10 +11,10 @@ import {
   Code,
   FileText,
   Terminal,
-  ChevronRight
-} from "lucide-react";
-import { useState, useEffect, useRef } from "react";
-import { ScrollArea } from "@/components/ui/scroll-area";
+  ChevronRight,
+} from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 declare global {
   interface Window {
@@ -37,7 +31,7 @@ declare global {
 
 interface QodeIdeModalProps {
   open: boolean;
-  onOpenChange: (open: boolean) => void;
+  onOpenChange?: (open: boolean) => void;
 }
 
 const qodeExamples = {
@@ -98,28 +92,28 @@ TERM`,
 export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
   const [code, setCode] = useState(qodeExamples.basic);
   const [output, setOutput] = useState<string>(
-    "QODE QUANTUM DEVELOPMENT ENVIRONMENT\n" +
-      "=====================================\n\n" +
-      "System Status: Ready\n" +
-      "Interpreter: Initializing...\n" +
-      "Memory: Available\n\n" +
-      "Execute your quantum program to begin.\n",
+    'QODE QUANTUM DEVELOPMENT ENVIRONMENT\n' +
+      '=====================================\n\n' +
+      'System Status: Ready\n' +
+      'Interpreter: Initializing...\n' +
+      'Memory: Available\n\n' +
+      'Execute your quantum program to begin.\n'
   );
   const [isRunning, setIsRunning] = useState(false);
   const [interpreter, setInterpreter] = useState<any>(null);
   const [interpreterReady, setInterpreterReady] = useState(false);
   const [showExamples, setShowExamples] = useState(false);
-  const [currentExample, setCurrentExample] = useState("basic");
+  const [currentExample, setCurrentExample] = useState('basic');
   const editorRef = useRef<HTMLTextAreaElement>(null);
   const interpreterLoadedRef = useRef(false);
   const isLoadingRef = useRef(false);
 
-  const [hotkeyLabel, setHotkeyLabel] = useState<"Cmd" | "Ctrl">("Cmd");
+  const [hotkeyLabel, setHotkeyLabel] = useState<'Cmd' | 'Ctrl'>('Cmd');
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    if (typeof window !== 'undefined') {
       const platform = window.navigator.platform.toLowerCase();
-      if (platform.includes("mac")) setHotkeyLabel("Cmd");
-      else setHotkeyLabel("Ctrl");
+      if (platform.includes('mac')) setHotkeyLabel('Cmd');
+      else setHotkeyLabel('Ctrl');
     }
   }, []);
 
@@ -133,14 +127,14 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
   useEffect(() => {
     if (!open) return;
     const handler = (e: KeyboardEvent) => {
-      const isMac = hotkeyLabel === "Cmd";
-      if ((isMac ? e.metaKey : e.ctrlKey) && e.key === "Enter") {
+      const isMac = hotkeyLabel === 'Cmd';
+      if ((isMac ? e.metaKey : e.ctrlKey) && e.key === 'Enter') {
         e.preventDefault();
         if (!isRunning) runQodeProgram();
       }
     };
-    window.addEventListener("keydown", handler);
-    return () => window.removeEventListener("keydown", handler);
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
   }, [open, isRunning, hotkeyLabel]);
 
   const loadQodeWasmLoader = async () => {
@@ -150,13 +144,13 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
         return;
       }
 
-      const script = document.createElement("script");
-      script.src = "/qode-wasm-loader.js";
+      const script = document.createElement('script');
+      script.src = '/qode-wasm-loader.js';
       script.onload = () => {
         resolve(true);
       };
-      script.onerror = (error) => {
-        console.error("Failed to load WASM loader script:", error);
+      script.onerror = error => {
+        console.error('Failed to load WASM loader script:', error);
         reject(error);
       };
       document.head.appendChild(script);
@@ -171,13 +165,12 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
     isLoadingRef.current = true;
 
     const isInitialState =
-      output.includes("Execute your quantum program to begin") ||
-      output.includes("Interpreter: Initializing...");
+      output.includes('Execute your quantum program to begin') ||
+      output.includes('Interpreter: Initializing...');
 
     if (isInitialState) {
       setOutput(
-        "SYSTEM: Loading quantum interpreter...\n" +
-          "STATUS: Initializing WebAssembly module...\n",
+        'SYSTEM: Loading quantum interpreter...\n' + 'STATUS: Initializing WebAssembly module...\n'
       );
     }
 
@@ -185,40 +178,38 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
       await loadQodeWasmLoader();
 
       if (isInitialState) {
-        setOutput(
-          (prev) => prev + "STATUS: Configuring quantum state vectors...\n",
-        );
+        setOutput(prev => prev + 'STATUS: Configuring quantum state vectors...\n');
       }
 
       if (window.createQodeInterpreter) {
-        const module = await window.createQodeInterpreter();
-        setInterpreter(module);
+        const createdModule = await window.createQodeInterpreter();
+        setInterpreter(createdModule);
         setInterpreterReady(true);
 
         if (isInitialState) {
           setOutput(
-            "QODE QUANTUM DEVELOPMENT ENVIRONMENT\n" +
-              "=====================================\n\n" +
-              "SYSTEM STATUS: OPERATIONAL\n" +
-              "INTERPRETER: WebAssembly Ready\n" +
-              "Ready for quantum program execution.\n",
+            'QODE QUANTUM DEVELOPMENT ENVIRONMENT\n' +
+              '=====================================\n\n' +
+              'SYSTEM STATUS: OPERATIONAL\n' +
+              'INTERPRETER: WebAssembly Ready\n' +
+              'Ready for quantum program execution.\n'
           );
         }
       } else {
-        throw new Error("WASM loader not available");
+        throw new Error('WASM loader not available');
       }
     } catch (error) {
-      console.error("Failed to load Qode interpreter:", error);
+      console.error('Failed to load Qode interpreter:', error);
 
       if (isInitialState) {
         setOutput(
-          "SYSTEM WARNING: Hardware interpreter unavailable\n" +
-            "FALLBACK: Simulation mode activated\n\n" +
-            "AVAILABLE FEATURES:\n" +
-            "- Syntax validation\n" +
-            "- Gate operation simulation\n" +
-            "- Educational output\n\n" +
-            "Ready for quantum program simulation.\n",
+          'SYSTEM WARNING: Hardware interpreter unavailable\n' +
+            'FALLBACK: Simulation mode activated\n\n' +
+            'AVAILABLE FEATURES:\n' +
+            '- Syntax validation\n' +
+            '- Gate operation simulation\n' +
+            '- Educational output\n\n' +
+            'Ready for quantum program simulation.\n'
         );
       }
 
@@ -227,7 +218,7 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
           Promise.resolve({
             success: true,
             output: simulateQodeProgram(code),
-            errors: "",
+            errors: '',
             exitCode: 0,
           }),
         simulation: true,
@@ -242,13 +233,13 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
 
   const runQodeProgram = async () => {
     setIsRunning(true);
-    setOutput("EXEC: Compiling quantum circuit...\n");
+    setOutput('EXEC: Compiling quantum circuit...\n');
 
-    await new Promise((resolve) => setTimeout(resolve, 600));
-    setOutput((prev) => prev + "INIT: Quantum state initialization...\n");
+    await new Promise(resolve => setTimeout(resolve, 600));
+    setOutput(prev => prev + 'INIT: Quantum state initialization...\n');
 
-    await new Promise((resolve) => setTimeout(resolve, 400));
-    setOutput((prev) => prev + "RUN:  Executing quantum operations...\n\n");
+    await new Promise(resolve => setTimeout(resolve, 400));
+    setOutput(prev => prev + 'RUN:  Executing quantum operations...\n\n');
 
     try {
       if (interpreter && interpreterReady) {
@@ -257,8 +248,8 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
         await executeSimulation();
       }
     } catch (error) {
-      console.error("Execution error:", error);
-      setOutput((prev) => prev + `ERROR: Execution failed - ${error}\n`);
+      console.error('Execution error:', error);
+      setOutput(prev => prev + `ERROR: Execution failed - ${error}\n`);
     }
 
     setIsRunning(false);
@@ -267,27 +258,23 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
   const executeWithWasm = async () => {
     try {
       if (interpreter && interpreter.executeQode) {
-        setOutput(
-          (prev) => prev + "LOAD: Program loaded into quantum memory\n",
-        );
-        setOutput((prev) => prev + "EXEC: WebAssembly interpreter active\n\n");
+        setOutput(prev => prev + 'LOAD: Program loaded into quantum memory\n');
+        setOutput(prev => prev + 'EXEC: WebAssembly interpreter active\n\n');
 
         const result = await interpreter.executeQode(code);
 
         if (result.success) {
-          setOutput((prev) => prev + result.output + "\n");
-          setOutput(
-            (prev) => prev + `DONE: Execution completed successfully\n`,
-          );
+          setOutput(prev => prev + result.output + '\n');
+          setOutput(prev => prev + `DONE: Execution completed successfully\n`);
         } else {
-          setOutput((prev) => prev + result.output + "\n");
+          setOutput(prev => prev + result.output + '\n');
           if (result.errors) {
-            setOutput((prev) => prev + "ERRORS:\n" + result.errors + "\n");
+            setOutput(prev => prev + 'ERRORS:\n' + result.errors + '\n');
           }
-          setOutput((prev) => prev + `FAIL: Exit code ${result.exitCode}\n`);
+          setOutput(prev => prev + `FAIL: Exit code ${result.exitCode}\n`);
         }
       } else {
-        throw new Error("WASM interpreter not properly initialized");
+        throw new Error('WASM interpreter not properly initialized');
       }
     } catch (error) {
       throw new Error(`WASM execution failed: ${error}`);
@@ -295,42 +282,39 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
   };
 
   const executeSimulation = async () => {
-    await new Promise((resolve) => setTimeout(resolve, 800));
+    await new Promise(resolve => setTimeout(resolve, 800));
 
     const simulation = simulateQodeProgram(code);
-    setOutput((prev) => prev + simulation + "\nDONE: Simulation complete.\n");
+    setOutput(prev => prev + simulation + '\nDONE: Simulation complete.\n');
   };
 
   const simulateQodeProgram = (qodeCode: string): string => {
     const lines = qodeCode
-      .split("\n")
-      .map((line) => line.trim())
-      .filter((line) => line && !line.startsWith("["));
+      .split('\n')
+      .map(line => line.trim())
+      .filter(line => line && !line.startsWith('['));
 
-    const qubits = new Map<
-      string,
-      { state: string; prob0: number; prob1: number }
-    >();
+    const qubits = new Map<string, { state: string; prob0: number; prob1: number }>();
     const operationLog: string[] = [];
     let operations = 0;
-    let output = "";
+    let output = '';
 
     for (const line of lines) {
       const qubitMatches = line.match(/\bq\d+/g);
       if (qubitMatches) {
-        qubitMatches.forEach((qubit) => {
+        qubitMatches.forEach(qubit => {
           if (!qubits.has(qubit)) {
-            qubits.set(qubit, { state: "|0⟩", prob0: 1.0, prob1: 0.0 });
+            qubits.set(qubit, { state: '|0⟩', prob0: 1.0, prob1: 0.0 });
           }
         });
       }
 
-      if (line.includes("!H")) {
+      if (line.includes('!H')) {
         const qubit = line.match(/!H\s+(q\d+)/)?.[1];
         if (qubit && qubits.has(qubit)) {
           operations++;
           const qubitState = qubits.get(qubit)!;
-          qubitState.state = "(|0⟩ + |1⟩)/√2";
+          qubitState.state = '(|0⟩ + |1⟩)/√2';
           qubitState.prob0 = 0.5;
           qubitState.prob1 = 0.5;
           output += `Hadamard gate applied to qubit ${qubit}\n`;
@@ -338,7 +322,7 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
         }
       }
 
-      if (line.includes("!X")) {
+      if (line.includes('!X')) {
         const qubit = line.match(/!X\s+(q\d+)/)?.[1];
         if (qubit && qubits.has(qubit)) {
           operations++;
@@ -346,14 +330,13 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
           const temp = qubitState.prob0;
           qubitState.prob0 = qubitState.prob1;
           qubitState.prob1 = temp;
-          qubitState.state =
-            qubitState.prob0 > qubitState.prob1 ? "|0⟩" : "|1⟩";
+          qubitState.state = qubitState.prob0 > qubitState.prob1 ? '|0⟩' : '|1⟩';
           output += `Pauli-X gate applied to qubit ${qubit}\n`;
           operationLog.push(`Pauli-X gate operation to qubit ${qubit}`);
         }
       }
 
-      if (line.includes("!Y")) {
+      if (line.includes('!Y')) {
         const qubit = line.match(/!Y\s+(q\d+)/)?.[1];
         if (qubit && qubits.has(qubit)) {
           operations++;
@@ -361,35 +344,35 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
           const temp = qubitState.prob0;
           qubitState.prob0 = qubitState.prob1;
           qubitState.prob1 = temp;
-          qubitState.state = "i|0⟩ - i|1⟩";
+          qubitState.state = 'i|0⟩ - i|1⟩';
           output += `Pauli-Y gate applied to qubit ${qubit}\n`;
           operationLog.push(`Pauli-Y gate operation to qubit ${qubit}`);
         }
       }
 
-      if (line.includes("!Z")) {
+      if (line.includes('!Z')) {
         const qubit = line.match(/!Z\s+(q\d+)/)?.[1];
         if (qubit && qubits.has(qubit)) {
           operations++;
           const qubitState = qubits.get(qubit)!;
-          qubitState.state = qubitState.prob1 > 0 ? "|0⟩ - |1⟩" : "|0⟩";
+          qubitState.state = qubitState.prob1 > 0 ? '|0⟩ - |1⟩' : '|0⟩';
           output += `Pauli-Z gate applied to qubit ${qubit}\n`;
           operationLog.push(`Pauli-Z gate operation to qubit ${qubit}`);
         }
       }
 
-      if (line.includes("!S")) {
+      if (line.includes('!S')) {
         const qubit = line.match(/!S\s+(q\d+)/)?.[1];
         if (qubit && qubits.has(qubit)) {
           operations++;
           const qubitState = qubits.get(qubit)!;
-          qubitState.state = qubitState.prob1 > 0 ? "|0⟩ + i|1⟩" : "|0⟩";
+          qubitState.state = qubitState.prob1 > 0 ? '|0⟩ + i|1⟩' : '|0⟩';
           output += `Phase-S gate applied to qubit ${qubit}\n`;
           operationLog.push(`Phase-S gate operation to qubit ${qubit}`);
         }
       }
 
-      if (line.includes("!I")) {
+      if (line.includes('!I')) {
         const qubit = line.match(/!I\s+(q\d+)/)?.[1];
         if (qubit && qubits.has(qubit)) {
           operations++;
@@ -399,7 +382,7 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
         }
       }
 
-      if (line.includes("#>")) {
+      if (line.includes('#>')) {
         const textMatch = line.match(/\$([A-Za-z0-9_]+)/);
         if (textMatch) {
           operations++;
@@ -412,7 +395,7 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
     output += `Quantum circuit execution summary:\n`;
     output += `Total quantum operations: ${operations}\n`;
 
-    operationLog.forEach((step) => {
+    operationLog.forEach(step => {
       output += `${step}\n`;
     });
 
@@ -424,121 +407,78 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
   const loadExample = (exampleKey: string) => {
     setCurrentExample(exampleKey);
     setCode(qodeExamples[exampleKey as keyof typeof qodeExamples]);
-    setOutput(
-      `LOAD: Example program loaded [${exampleKey}]\n\nReady for execution.\n`,
-    );
+    setOutput(`LOAD: Example program loaded [${exampleKey}]\n\nReady for execution.\n`);
   };
 
   const resetCode = () => {
     setCode(qodeExamples.basic);
-    setCurrentExample("basic");
-    setOutput("RESET: Code reset to basic example\n\nReady for execution.\n");
-  };
-
-  const saveProgram = () => {
-    const blob = new Blob([code], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "quantum_program.qc";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  };
-
-  const loadProgram = () => {
-    const input = document.createElement("input");
-    input.type = "file";
-    input.accept = ".qc,.txt";
-    input.onchange = (e) => {
-      const file = (e.target as HTMLInputElement).files?.[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const content = e.target?.result as string;
-          setCode(content);
-          setOutput(
-            `LOAD: Program imported [${file.name}]\n\nReady for execution.\n`,
-          );
-        };
-        reader.readAsText(file);
-      }
-    };
-    input.click();
-  };
-
-  const copyCode = () => {
-    navigator.clipboard.writeText(code);
+    setCurrentExample('basic');
+    setOutput('RESET: Code reset to basic example\n\nReady for execution.\n');
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={onOpenChange || (() => {})}>
       <DialogContent
-        className="max-w-[95vw] w-[95vw] max-h-[95vh] p-0 flex flex-col transition-all duration-200 bg-slate-950 border-slate-700 shadow-2xl !max-w-none"
-        onInteractOutside={(e) => e.preventDefault()}
+        className='flex max-h-[95vh] w-[95vw] !max-w-none flex-col border-slate-700 bg-slate-950 p-0 shadow-2xl transition-all duration-200'
+        onInteractOutside={e => e.preventDefault()}
       >
-        <div className="px-6 py-3 bg-slate-900 rounded-t-lg">
-          <div className="flex items-center justify-between pr-8">
-            <div className="flex items-center gap-3">
-              <div className="w-6 h-6 bg-blue-600 rounded flex items-center justify-center">
-                <Code className="w-3 h-3 text-white" />
+        <div className='rounded-t-lg bg-slate-900 px-6 py-3'>
+          <div className='flex items-center justify-between pr-8'>
+            <div className='flex items-center gap-3'>
+              <div className='flex h-6 w-6 items-center justify-center rounded bg-blue-600'>
+                <Code className='h-3 w-3 text-white' />
               </div>
               <div>
-                <DialogTitle className="text-base font-medium text-white">
-                  Qode IDE
-                </DialogTitle>
-                <DialogDescription className="text-slate-400 text-xs">
+                <DialogTitle className='text-base font-medium text-white'>Qode IDE</DialogTitle>
+                <DialogDescription className='text-xs text-slate-400'>
                   Quantum Development Environment
                 </DialogDescription>
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              <div className="flex items-center gap-2 px-3 py-1 bg-slate-800 rounded-md">
+            <div className='flex items-center gap-3'>
+              <div className='flex items-center gap-2 rounded-md bg-slate-800 px-3 py-1'>
                 <div
-                  className={`w-2 h-2 rounded-full ${interpreterReady ? "bg-green-400" : "bg-yellow-400"}`}
+                  className={`h-2 w-2 rounded-full ${interpreterReady ? 'bg-green-400' : 'bg-yellow-400'}`}
                 />
-                <span className="text-xs text-slate-300">
-                  {interpreterReady ? "Ready" : "Loading"}
+                <span className='text-xs text-slate-300'>
+                  {interpreterReady ? 'Ready' : 'Loading'}
                 </span>
               </div>
               <Button
-                variant="outline"
-                size="sm"
-                onClick={() =>
-                  window.open("https://github.com/devenshah2018/qode", "_blank")
-                }
-                className="border-slate-600 text-slate-300 hover:bg-slate-800 text-xs"
+                variant='outline'
+                size='sm'
+                onClick={() => window.open('https://github.com/devenshah2018/qode', '_blank')}
+                className='border-slate-600 text-xs text-slate-300 hover:bg-slate-800'
               >
-                <ExternalLink className="h-3 w-3 mr-2" />
+                <ExternalLink className='mr-2 h-3 w-3' />
                 Docs
               </Button>
             </div>
           </div>
         </div>
 
-        <div className="px-6 py-2 bg-slate-900/30">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
+        <div className='bg-slate-900/30 px-6 py-2'>
+          <div className='flex items-center justify-between'>
+            <div className='flex items-center gap-2'>
               <Button
-                variant="ghost"
-                size="sm"
+                variant='ghost'
+                size='sm'
                 onClick={runQodeProgram}
                 disabled={isRunning}
-                className="bg-green-600 hover:bg-green-700 focus:bg-green-700 text-white text-sm h-7 px-3 relative"
+                className='relative h-7 bg-green-600 px-3 text-sm text-white hover:bg-green-700 focus:bg-green-700'
               >
                 {isRunning ? (
                   <>
-                    <Loader2 className="mr-2 h-3 w-3 animate-spin" />
+                    <Loader2 className='mr-2 h-3 w-3 animate-spin' />
                     Running...
                   </>
                 ) : (
                   <>
-                    <Play className="mr-2 h-3 w-3" />
+                    <Play className='mr-2 h-3 w-3' />
                     Run
                     <span
-                      className="ml-2 text-xs text-green-100 font-mono tracking-tight align-middle"
-                      style={{ fontSize: "11px", marginLeft: "6px" }}
+                      className='ml-2 align-middle font-mono text-xs tracking-tight text-green-100'
+                      style={{ fontSize: '11px', marginLeft: '6px' }}
                     >
                       {hotkeyLabel}+Enter
                     </span>
@@ -546,93 +486,90 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
                 )}
               </Button>
               <Button
-                variant="ghost"
-                size="sm"
+                variant='ghost'
+                size='sm'
                 onClick={resetCode}
-                className="text-slate-400 hover:text-slate-200 hover:bg-slate-800 text-sm h-7"
+                className='h-7 text-sm text-slate-400 hover:bg-slate-800 hover:text-slate-200'
               >
-                <RotateCcw className="h-3 w-3 mr-2" />
+                <RotateCcw className='mr-2 h-3 w-3' />
                 Reset
               </Button>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className='flex items-center gap-2'>
               <Button
-                variant="ghost"
-                size="sm"
+                variant='ghost'
+                size='sm'
                 onClick={() => setShowExamples(!showExamples)}
-                className="text-slate-400 hover:text-slate-200 hover:bg-slate-800 text-sm h-7"
+                className='h-7 text-sm text-slate-400 hover:bg-slate-800 hover:text-slate-200'
               >
                 Examples
-                <ChevronRight className="h-3 w-3 ml-1" />
+                <ChevronRight className='ml-1 h-3 w-3' />
               </Button>
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 flex-1 overflow-hidden relative">
-          <div className="flex flex-col bg-slate-950 overflow-hidden border-r border-slate-700">
-            <div className="px-4 py-1 bg-slate-900/20">
-              <div className="flex items-center gap-2">
-                <FileText className="w-3 h-3 text-slate-500" />
-                <span className="text-xs text-slate-400">Editor</span>
+        <div className='relative grid flex-1 grid-cols-1 gap-0 overflow-hidden lg:grid-cols-2'>
+          <div className='flex flex-col overflow-hidden border-r border-slate-700 bg-slate-950'>
+            <div className='bg-slate-900/20 px-4 py-1'>
+              <div className='flex items-center gap-2'>
+                <FileText className='h-3 w-3 text-slate-500' />
+                <span className='text-xs text-slate-400'>Editor</span>
               </div>
             </div>
-            <div className="flex-1 relative">
-              <ScrollArea className="absolute inset-0">
+            <div className='relative flex-1'>
+              <ScrollArea className='absolute inset-0'>
                 <Textarea
                   ref={editorRef}
                   value={code}
-                  onChange={(e) => setCode(e.target.value)}
-                  className="h-[70vh] w-full resize-none border-0 rounded-none text-sm p-4 focus-visible:ring-0 focus-visible:ring-offset-0 bg-slate-950 text-slate-200 font-mono leading-relaxed"
-                  placeholder="Write your quantum program here...
+                  onChange={e => setCode(e.target.value)}
+                  className='h-[70vh] w-full resize-none rounded-none border-0 bg-slate-950 p-4 font-mono text-sm leading-relaxed text-slate-200 focus-visible:ring-0 focus-visible:ring-offset-0'
+                  placeholder='Write your quantum program here...
 
                     Example:
                     q1 q2             // Initialize qubits
                     !H q1             // Hadamard gate
                     !X q2             // Pauli-X gate
                     !I q1             // Check state
-                    TERM"
-                  spellCheck="false"
+                    TERM'
+                  spellCheck='false'
                   style={{
-                    fontFamily: "JetBrains Mono, SF Mono, Consolas, monospace",
-                    lineHeight: "1.6",
+                    fontFamily: 'JetBrains Mono, SF Mono, Consolas, monospace',
+                    lineHeight: '1.6',
                   }}
                 />
               </ScrollArea>
             </div>
           </div>
 
-          <div className="flex flex-col bg-black overflow-hidden">
-            <div className="px-4 py-1 bg-slate-900/20">
-              <div className="flex items-center gap-2">
-                <Terminal className="w-3 h-3 text-slate-500" />
-                <span className="text-xs text-slate-400">Output</span>
+          <div className='flex flex-col overflow-hidden bg-black'>
+            <div className='bg-slate-900/20 px-4 py-1'>
+              <div className='flex items-center gap-2'>
+                <Terminal className='h-3 w-3 text-slate-500' />
+                <span className='text-xs text-slate-400'>Output</span>
               </div>
             </div>
-            <div className="flex-1 relative min-h-[200px]">
-              <ScrollArea className="absolute inset-0 h-full w-full">
-                <div className="min-h-full h-full w-full p-4 text-sm overflow-auto bg-black text-slate-300 font-mono leading-relaxed space-y-1">
+            <div className='relative min-h-[200px] flex-1'>
+              <ScrollArea className='absolute inset-0 h-full w-full'>
+                <div className='h-full min-h-full w-full space-y-1 overflow-auto bg-black p-4 font-mono text-sm leading-relaxed text-slate-300'>
                   {(() => {
-                    const lines = output.split("\n");
-                    const summaryStart = lines.findIndex((l) =>
-                      l.startsWith("Quantum circuit execution summary:"),
+                    const lines = output.split('\n');
+                    const summaryStart = lines.findIndex(l =>
+                      l.startsWith('Quantum circuit execution summary:')
                     );
                     let summaryLines: string[] = [];
                     let mainLines: string[] = lines;
                     if (summaryStart !== -1) {
                       let summaryEnd = lines.findIndex(
                         (l, i) =>
-                          i > summaryStart &&
-                          l.startsWith("Quantum circuit execution terminated."),
+                          i > summaryStart && l.startsWith('Quantum circuit execution terminated.')
                       );
                       if (summaryEnd !== -1) {
                         summaryEnd += 1; // include the terminated line
                         summaryLines = lines.slice(summaryStart, summaryEnd);
                         const afterSummaryLines = lines.slice(summaryEnd);
-                        mainLines = lines
-                          .slice(0, summaryStart)
-                          .concat(afterSummaryLines);
+                        mainLines = lines.slice(0, summaryStart).concat(afterSummaryLines);
                       } else {
                         summaryLines = lines.slice(summaryStart);
                         mainLines = lines.slice(0, summaryStart);
@@ -641,81 +578,68 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
                     return (
                       <>
                         {mainLines.map((line, index) => {
-                          if (line.startsWith("Hadamard gate applied")) {
+                          if (line.startsWith('Hadamard gate applied')) {
                             return (
                               <div
                                 key={index}
-                                className="h-6 flex items-center py-0.5 bg-slate-800/30 rounded px-2 border-l-4 border-purple-400"
+                                className='flex h-6 items-center rounded border-l-4 border-purple-400 bg-slate-800/30 px-2 py-0.5'
                               >
-                                <span className="text-purple-300 font-semibold">
-                                  {line}
-                                </span>
+                                <span className='font-semibold text-purple-300'>{line}</span>
                               </div>
                             );
                           }
-                          if (line.startsWith("Pauli-X gate applied")) {
+                          if (line.startsWith('Pauli-X gate applied')) {
                             return (
                               <div
                                 key={index}
-                                className="h-6 flex items-center py-0.5 bg-slate-800/30 rounded px-2 border-l-4 border-purple-400"
+                                className='flex h-6 items-center rounded border-l-4 border-purple-400 bg-slate-800/30 px-2 py-0.5'
                               >
-                                <span className="text-purple-300 font-semibold">
-                                  {line}
-                                </span>
+                                <span className='font-semibold text-purple-300'>{line}</span>
                               </div>
                             );
                           }
-                          if (line.startsWith("Pauli-Y gate applied")) {
+                          if (line.startsWith('Pauli-Y gate applied')) {
                             return (
                               <div
                                 key={index}
-                                className="h-6 flex items-center py-0.5 bg-slate-800/30 rounded px-2 border-l-4 border-purple-400"
+                                className='flex h-6 items-center rounded border-l-4 border-purple-400 bg-slate-800/30 px-2 py-0.5'
                               >
-                                <span className="text-purple-300 font-semibold">
-                                  {line}
-                                </span>
+                                <span className='font-semibold text-purple-300'>{line}</span>
                               </div>
                             );
                           }
-                          if (line.startsWith("Pauli-Z gate applied")) {
+                          if (line.startsWith('Pauli-Z gate applied')) {
                             return (
                               <div
                                 key={index}
-                                className="h-6 flex items-center py-0.5 bg-slate-800/30 rounded px-2 border-l-4 border-purple-400"
+                                className='flex h-6 items-center rounded border-l-4 border-purple-400 bg-slate-800/30 px-2 py-0.5'
                               >
-                                <span className="text-purple-300 font-semibold">
-                                  {line}
-                                </span>
+                                <span className='font-semibold text-purple-300'>{line}</span>
                               </div>
                             );
                           }
-                          if (line.startsWith("Phase-S gate applied")) {
+                          if (line.startsWith('Phase-S gate applied')) {
                             return (
                               <div
                                 key={index}
-                                className="h-6 flex items-center py-0.5 bg-slate-800/30 rounded px-2 border-l-4 border-purple-400"
+                                className='flex h-6 items-center rounded border-l-4 border-purple-400 bg-slate-800/30 px-2 py-0.5'
                               >
-                                <span className="text-purple-300 font-semibold">
-                                  {line}
-                                </span>
+                                <span className='font-semibold text-purple-300'>{line}</span>
                               </div>
                             );
                           }
-                          if (
-                            line.startsWith("Qubit") &&
-                            line.includes("state:")
-                          ) {
+                          if (line.startsWith('Qubit') && line.includes('state:')) {
                             const match = line.match(
-                              /Qubit (q\d+) state: \|0⟩ probability: ([0-9.]+), \|1⟩ probability: ([0-9.]+)/,
+                              /Qubit (q\d+) state: \|0⟩ probability: ([0-9.]+), \|1⟩ probability: ([0-9.]+)/
                             );
                             if (match) {
                               const [, qubit, prob0, prob1] = match;
                               return (
                                 <div
                                   key={index}
-                                  className="h-6 flex items-center py-0.5 bg-slate-800/30 rounded px-2 border-l-4 border-orange-400"
+                                  className='flex h-6 items-center rounded border-l-4 border-orange-400 bg-slate-800/30 px-2 py-0.5'
                                 >
-                                  <span className="text-orange-300 font-semibold">
+                                  <span className='font-semibold text-orange-300'>
                                     {qubit} → |0⟩: {prob0}, |1⟩: {prob1}
                                   </span>
                                 </div>
@@ -723,102 +647,70 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
                             }
                           }
                           if (
-                            line.startsWith("EXEC:") ||
-                            line.startsWith("INIT:") ||
-                            line.startsWith("RUN:") ||
-                            line.startsWith("LOAD:")
+                            line.startsWith('EXEC:') ||
+                            line.startsWith('INIT:') ||
+                            line.startsWith('RUN:') ||
+                            line.startsWith('LOAD:')
                           ) {
                             return (
-                              <div
-                                key={index}
-                                className="h-6 flex items-center py-0.5"
-                              >
-                                <span className="text-blue-400 font-semibold">
-                                  {line}
-                                </span>
+                              <div key={index} className='flex h-6 items-center py-0.5'>
+                                <span className='font-semibold text-blue-400'>{line}</span>
                               </div>
                             );
                           }
-                          if (
-                            line.startsWith("DONE:") ||
-                            line.includes("complete")
-                          ) {
+                          if (line.startsWith('DONE:') || line.includes('complete')) {
                             return (
-                              <div
-                                key={index}
-                                className="h-6 flex items-center py-0.5"
-                              >
-                                <span className="text-green-400 font-semibold">
-                                  {line}
-                                </span>
+                              <div key={index} className='flex h-6 items-center py-0.5'>
+                                <span className='font-semibold text-green-400'>{line}</span>
                               </div>
                             );
                           }
-                          if (
-                            line.startsWith("ERROR:") ||
-                            line.startsWith("FAIL:")
-                          ) {
+                          if (line.startsWith('ERROR:') || line.startsWith('FAIL:')) {
                             return (
                               <div
                                 key={index}
-                                className="h-6 flex items-center py-0.5 bg-red-900/20 rounded px-2 border-l-4 border-red-400"
+                                className='flex h-6 items-center rounded border-l-4 border-red-400 bg-red-900/20 px-2 py-0.5'
                               >
-                                <span className="text-red-300 font-semibold">
-                                  {line}
-                                </span>
+                                <span className='font-semibold text-red-300'>{line}</span>
                               </div>
                             );
                           }
-                          if (
-                            line.startsWith(
-                              "Quantum circuit execution summary:",
-                            )
-                          ) {
+                          if (line.startsWith('Quantum circuit execution summary:')) {
                             return (
                               <div
                                 key={index}
-                                className="h-6 flex items-center py-0.5 bg-blue-900/30 rounded px-2 border-l-4 border-blue-400"
+                                className='flex h-6 items-center rounded border-l-4 border-blue-400 bg-blue-900/30 px-2 py-0.5'
                               >
-                                <span className="text-blue-200 font-semibold italic">
-                                  {line}
-                                </span>
+                                <span className='font-semibold italic text-blue-200'>{line}</span>
                               </div>
                             );
                           }
-                          if (
-                            line.includes("_") &&
-                            !line.includes("Console output to")
-                          ) {
-                            const logText = line
-                              .replace("#> $", "")
-                              .replace(/_/g, " ");
+                          if (line.includes('_') && !line.includes('Console output to')) {
+                            const logText = line.replace('#> $', '').replace(/_/g, ' ');
                             return (
                               <div
                                 key={index}
-                                className="h-6 flex items-center py-0.5 rounded px-2"
+                                className='flex h-6 items-center rounded px-2 py-0.5'
                               >
-                                <span className="text-blue-200 font-normal text-[13px] tracking-tight mr-2">
+                                <span className='mr-2 text-[13px] font-normal tracking-tight text-blue-200'>
                                   →
                                 </span>
-                                <span className="text-blue-200 font-normal text-[13px] tracking-tight">
+                                <span className='text-[13px] font-normal tracking-tight text-blue-200'>
                                   {logText}
                                 </span>
                               </div>
                             );
                           }
                           return (
-                            <div
-                              key={index}
-                              className="h-6 flex items-center py-0.5"
-                            >
-                              <span className="text-slate-300">{line}</span>
+                            <div key={index} className='flex h-6 items-center py-0.5'>
+                              <span className='text-slate-300'>{line}</span>
                             </div>
                           );
                         })}
                         {summaryLines.length > 0 && (
-                          <div className="mt-6 mb-2 px-6 py-4 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-xl border border-slate-700 shadow-lg flex flex-col gap-2">
-                            <div className="flex items-center gap-2 mb-1">
-                              <span className="text-[15px] text-blue-300 tracking-tight">
+                          <div className='mb-2 mt-6 flex flex-col gap-2 rounded-xl border border-slate-700 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 px-6 py-4 shadow-lg'>
+                            <div className='mb-1 flex items-center gap-2'>
+                              <span className='text-[15px] tracking-tight text-blue-300'>
                                 Execution Summary
                               </span>
                             </div>
@@ -827,14 +719,12 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
                                 key={idx}
                                 className={
                                   idx === 0
-                                    ? "hidden"
+                                    ? 'hidden'
                                     : idx === 1
-                                      ? "text-slate-300 text-[14px] mb-1"
-                                      : line.startsWith(
-                                            "Quantum circuit execution terminated.",
-                                          )
-                                        ? "mt-2 text-slate-400 text-xs tracking-wide"
-                                        : "text-slate-200 text-[13px] font-mono"
+                                      ? 'mb-1 text-[14px] text-slate-300'
+                                      : line.startsWith('Quantum circuit execution terminated.')
+                                        ? 'mt-2 text-xs tracking-wide text-slate-400'
+                                        : 'font-mono text-[13px] text-slate-200'
                                 }
                               >
                                 {line}
@@ -846,9 +736,9 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
                     );
                   })()}
                   {isRunning && (
-                    <div className="flex items-center gap-2 mt-2">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
-                      <span className="text-blue-400">Running...</span>
+                    <div className='mt-2 flex items-center gap-2'>
+                      <div className='h-2 w-2 animate-pulse rounded-full bg-blue-400'></div>
+                      <span className='text-blue-400'>Running...</span>
                     </div>
                   )}
                 </div>
@@ -857,77 +747,70 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
           </div>
 
           <div
-            className={`absolute top-0 right-0 h-full w-80 bg-slate-900/95 backdrop-blur-sm border-l border-slate-700 transform transition-transform duration-300 ease-in-out z-50 shadow-xl ${
-              showExamples ? "translate-x-0" : "translate-x-full"
+            className={`absolute right-0 top-0 z-50 h-full w-80 transform border-l border-slate-700 bg-slate-900/95 shadow-xl backdrop-blur-sm transition-transform duration-300 ease-in-out ${
+              showExamples ? 'translate-x-0' : 'translate-x-full'
             }`}
           >
-            <div className="flex flex-col h-full">
-              <div className="flex items-center justify-between p-4 border-b border-slate-700/50 bg-slate-800/50">
-                <h3 className="text-sm font-semibold text-white">
-                  Code Examples
-                </h3>
+            <div className='flex h-full flex-col'>
+              <div className='flex items-center justify-between border-b border-slate-700/50 bg-slate-800/50 p-4'>
+                <h3 className='text-sm font-semibold text-white'>Code Examples</h3>
                 <Button
-                  variant="ghost"
-                  size="sm"
+                  variant='ghost'
+                  size='sm'
                   onClick={() => setShowExamples(false)}
-                  className="text-slate-400 hover:text-slate-200 hover:bg-slate-700/50 h-6 w-6 p-0 rounded-md"
+                  className='h-6 w-6 rounded-md p-0 text-slate-400 hover:bg-slate-700/50 hover:text-slate-200'
                 >
                   ×
                 </Button>
               </div>
 
-              <div className="flex-1 p-4 space-y-3 overflow-y-auto">
+              <div className='flex-1 space-y-3 overflow-y-auto p-4'>
                 {Object.entries({
                   basic: {
-                    heading: "Basic Qubit Operations",
-                    summary: "Init, Pauli-X, Hadamard, state check.",
+                    heading: 'Basic Qubit Operations',
+                    summary: 'Init, Pauli-X, Hadamard, state check.',
                   },
                   superposition: {
-                    heading: "Superposition & Phase Gates",
-                    summary: "Create superposition, apply phase ops.",
+                    heading: 'Superposition & Phase Gates',
+                    summary: 'Create superposition, apply phase ops.',
                   },
                   advanced: {
-                    heading: "Advanced Multi-Qubit Circuit",
-                    summary: "Multi-qubit, sequential gates, analysis.",
+                    heading: 'Advanced Multi-Qubit Circuit',
+                    summary: 'Multi-qubit, sequential gates, analysis.',
                   },
                   compact: {
-                    heading: "Compact Syntax Demo",
-                    summary: "Rapid circuit prototyping syntax.",
+                    heading: 'Compact Syntax Demo',
+                    summary: 'Rapid circuit prototyping syntax.',
                   },
                 }).map(([key, { heading, summary }], idx, arr) => (
-                  <div key={key} className="w-full">
+                  <div key={key} className='w-full'>
                     <button
-                      type="button"
+                      type='button'
                       onClick={() => {
                         loadExample(key);
                         setShowExamples(false);
                       }}
-                      className={`
-                        w-full flex flex-row items-stretch px-0 py-0 min-h-[60px] rounded-lg border transition-all duration-150 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 relative group
-                        ${
-                          currentExample === key
-                            ? "bg-blue-600/90 border-blue-600 text-white shadow-lg hover:bg-blue-700/90"
-                            : "bg-slate-900/80 border-slate-700 text-slate-200 hover:bg-slate-800/90 hover:border-blue-500 hover:shadow-md"
-                        }
-                      `}
+                      className={`group relative flex min-h-[60px] w-full flex-row items-stretch rounded-lg border px-0 py-0 shadow-sm transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+                        currentExample === key
+                          ? 'border-blue-600 bg-blue-600/90 text-white shadow-lg hover:bg-blue-700/90'
+                          : 'border-slate-700 bg-slate-900/80 text-slate-200 hover:border-blue-500 hover:bg-slate-800/90 hover:shadow-md'
+                      } `}
                     >
                       <div
-                        className={`h-full w-1 rounded-l-lg transition-all duration-150 ${currentExample === key ? "bg-blue-400" : "group-hover:bg-blue-300 group-hover:opacity-80 bg-transparent"}`}
+                        className={`h-full w-1 rounded-l-lg transition-all duration-150 ${currentExample === key ? 'bg-blue-400' : 'bg-transparent group-hover:bg-blue-300 group-hover:opacity-80'}`}
                       ></div>
-                      <div className="flex flex-col justify-center px-5 py-2 w-full text-left gap-1">
-                        <span className="text-[15px] font-semibold text-slate-100 tracking-tight leading-tight truncate mb-0.5">
+                      <div className='flex w-full flex-col justify-center gap-1 px-5 py-2 text-left'>
+                        <span className='mb-0.5 truncate text-[15px] font-semibold leading-tight tracking-tight text-slate-100'>
                           {heading}
                         </span>
                         <span
-                          className={`text-xs text-slate-400 truncate ${currentExample === key ? "text-blue-100" : ""}`}
+                          className={`truncate text-xs text-slate-400 ${currentExample === key ? 'text-blue-100' : ''}`}
                         >
                           {summary}
                         </span>
                       </div>
                     </button>
-                    {idx < arr.length - 1 && (
-                      <div className="border-b border-slate-800 mx-2" />
-                    )}
+                    {idx < arr.length - 1 && <div className='mx-2 border-b border-slate-800' />}
                   </div>
                 ))}
               </div>
@@ -936,23 +819,23 @@ export function QodeIdeModal({ open, onOpenChange }: QodeIdeModalProps) {
 
           {showExamples && (
             <div
-              className="absolute inset-0 bg-black/30 backdrop-blur-sm z-40 transition-opacity duration-300"
+              className='absolute inset-0 z-40 bg-black/30 backdrop-blur-sm transition-opacity duration-300'
               onClick={() => setShowExamples(false)}
             />
           )}
         </div>
 
-        <div className="px-6 py-2 bg-slate-900 rounded-b-lg">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <span className="text-xs text-slate-400">Qode v1.0</span>
+        <div className='rounded-b-lg bg-slate-900 px-6 py-2'>
+          <div className='flex items-center justify-between'>
+            <div className='flex items-center gap-4'>
+              <span className='text-xs text-slate-400'>Qode v1.0</span>
             </div>
-            <div className="flex items-center gap-2">
+            <div className='flex items-center gap-2'>
               <div
-                className={`w-2 h-2 rounded-full ${interpreterReady ? "bg-green-400" : "bg-yellow-400"}`}
+                className={`h-2 w-2 rounded-full ${interpreterReady ? 'bg-green-400' : 'bg-yellow-400'}`}
               />
-              <span className="text-xs text-slate-400">
-                {interpreterReady ? "Ready" : "Loading"}
+              <span className='text-xs text-slate-400'>
+                {interpreterReady ? 'Ready' : 'Loading'}
               </span>
             </div>
           </div>

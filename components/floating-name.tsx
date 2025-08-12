@@ -1,13 +1,11 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useState, useEffect } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 export function FloatingName() {
   const [isVisible, setIsVisible] = useState(false);
-  const [heroNameElement, setHeroNameElement] = useState<HTMLElement | null>(
-    null,
-  );
+  const [heroNameElement, setHeroNameElement] = useState<HTMLElement | null>(null);
   const [navElement, setNavElement] = useState<HTMLElement | null>(null);
   const [startPosition, setStartPosition] = useState({ top: 0, left: 0 });
   const [endPosition, setEndPosition] = useState({ top: 0, left: 0 });
@@ -15,8 +13,8 @@ export function FloatingName() {
   const { scrollY } = useScroll();
 
   useEffect(() => {
-    const heroName = document.getElementById("hero-name");
-    const nav = document.querySelector("nav");
+    const heroName = document.getElementById('hero-name');
+    const nav = document.querySelector('nav');
 
     setHeroNameElement(heroName);
     setNavElement(nav);
@@ -46,10 +44,9 @@ export function FloatingName() {
       const heroRect = heroNameElement.getBoundingClientRect();
       const scrollProgress = window.scrollY;
 
-      const shouldShow =
-        scrollProgress > 200 && heroRect.bottom < window.innerHeight * 0.8;
+      const shouldShow = scrollProgress > 200 && heroRect.bottom < window.innerHeight * 0.8;
 
-      const heroElement = document.getElementById("hero");
+      const heroElement = document.getElementById('hero');
       const heroIsInView =
         heroElement &&
         heroElement.getBoundingClientRect().bottom > 0 &&
@@ -60,46 +57,25 @@ export function FloatingName() {
     };
 
     updatePositions();
-    window.addEventListener("scroll", handleScroll);
-    window.addEventListener("resize", updatePositions);
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', updatePositions);
     handleScroll();
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", updatePositions);
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', updatePositions);
     };
   }, [heroNameElement, navElement]);
 
-  const animationProgress = useTransform(
-    scrollY,
-    [200, 600],
-    [0, 1],
-    { clamp: true },
-  );
+  const animationProgress = useTransform(scrollY, [200, 600], [0, 1], { clamp: true });
 
-  const y = useTransform(
-    animationProgress,
-    [0, 1],
-    [0, endPosition.top - startPosition.top],
-  );
+  const y = useTransform(animationProgress, [0, 1], [0, endPosition.top - startPosition.top]);
 
-  const x = useTransform(
-    animationProgress,
-    [0, 1],
-    [0, endPosition.left - startPosition.left],
-  );
+  const x = useTransform(animationProgress, [0, 1], [0, endPosition.left - startPosition.left]);
 
-  const scale = useTransform(
-    animationProgress,
-    [0, 1],
-    [1, 0.35],
-  );
+  const scale = useTransform(animationProgress, [0, 1], [1, 0.35]);
 
-  const opacity = useTransform(
-    animationProgress,
-    [0, 0.2, 0.8, 1],
-    [0, 1, 1, 0],
-  );
+  const opacity = useTransform(animationProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
   if (!isVisible || !heroNameElement || !navElement) {
     return null;
@@ -107,7 +83,7 @@ export function FloatingName() {
 
   return (
     <motion.div
-      className="fixed z-40 pointer-events-none"
+      className='pointer-events-none fixed z-40'
       style={{
         top: startPosition.top,
         left: startPosition.left,
@@ -115,7 +91,7 @@ export function FloatingName() {
         x,
         scale,
         opacity,
-        transformOrigin: "left center",
+        transformOrigin: 'left center',
       }}
       initial={{ opacity: 0 }}
       animate={{
@@ -127,9 +103,9 @@ export function FloatingName() {
       }}
     >
       <motion.h1
-        className="text-5xl sm:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent leading-tight whitespace-nowrap"
+        className='whitespace-nowrap bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-5xl font-bold leading-tight text-transparent sm:text-6xl lg:text-7xl'
         style={{
-          fontSize: "inherit",
+          fontSize: 'inherit',
         }}
       >
         Deven Shah

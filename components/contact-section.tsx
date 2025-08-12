@@ -1,13 +1,10 @@
-"use client";
+'use client';
 
-import React, { useEffect } from "react";
-import {
-  Card,
-  CardContent,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import React, { useEffect, useState } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import {
   Mail,
   Linkedin,
@@ -17,27 +14,26 @@ import {
   MessageSquare,
   Loader2,
   ThumbsUp,
-} from "lucide-react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXTwitter } from "@fortawesome/free-brands-svg-icons";
-import { motion } from "framer-motion";
-import { useState } from "react";
-import "@calcom/atoms/globals.min.css";
-import { getCalApi } from "@calcom/embed-react";
+} from 'lucide-react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXTwitter } from '@fortawesome/free-brands-svg-icons';
+import { motion } from 'framer-motion';
+import '@calcom/atoms/globals.min.css';
+import { getCalApi } from '@calcom/embed-react';
 
 export function ContactSection() {
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
+    name: '',
+    email: '',
+    subject: '',
+    message: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     (async function () {
-      const cal = await getCalApi({ namespace: "quick-chat" });
-      cal("ui", { hideEventTypeDetails: false, layout: "month_view" });
+      const cal = await getCalApi({ namespace: 'quick-chat' });
+      cal('ui', { hideEventTypeDetails: false, layout: 'month_view' });
     })();
   }, []);
 
@@ -47,23 +43,21 @@ export function ContactSection() {
 
     try {
       const mailtoLink = `mailto:devenshah2018@gmail.com?subject=${encodeURIComponent(
-        `[Portfolio Contact] ${formData.subject}`,
+        `[Portfolio Contact] ${formData.subject}`
       )}&body=${encodeURIComponent(`${formData.message}`)}`;
 
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise(resolve => setTimeout(resolve, 1000));
       window.location.href = mailtoLink;
-      setFormData({ name: "", email: "", subject: "", message: "" });
+      setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (error) {
-      console.error("Error submitting form:", error);
+      console.error('Error submitting form:', error);
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    setFormData((prev) => ({
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData(prev => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
@@ -71,70 +65,67 @@ export function ContactSection() {
 
   const socialLinks = [
     {
-      name: "Email",
+      name: 'Email',
       icon: Mail,
-      url: "mailto:devenshah2018@gmail.com",
-      handle: "devenshah2018@gmail.com",
-      gradient: "from-red-500 to-pink-500",
+      url: 'mailto:devenshah2018@gmail.com',
+      handle: 'devenshah2018@gmail.com',
+      gradient: 'from-red-500 to-pink-500',
     },
     {
-      name: "LinkedIn",
+      name: 'LinkedIn',
       icon: Linkedin,
-      url: "https://www.linkedin.com/in/deven-a-shah/",
-      handle: "/in/deven-a-shah",
-      gradient: "from-blue-500 to-cyan-500",
+      url: 'https://www.linkedin.com/in/deven-a-shah/',
+      handle: '/in/deven-a-shah',
+      gradient: 'from-blue-500 to-cyan-500',
     },
     {
-      name: "GitHub",
+      name: 'GitHub',
       icon: Github,
-      url: "https://github.com/devenshah2018",
-      handle: "/devenshah2018",
-      gradient: "from-slate-500 to-slate-600",
+      url: 'https://github.com/devenshah2018',
+      handle: '/devenshah2018',
+      gradient: 'from-slate-500 to-slate-600',
     },
     {
-      name: "Twitter",
+      name: 'Twitter',
       icon: faXTwitter,
-      url: "https://x.com/devenshah2018",
-      handle: "@devenshah2018",
-      gradient: "from-slate-700 to-slate-800",
+      url: 'https://x.com/devenshah2018',
+      handle: '@devenshah2018',
+      gradient: 'from-slate-700 to-slate-800',
     },
   ];
 
   return (
-    <section
-      id="contact"
-      className="py-32 bg-gradient-to-b from-slate-950 to-slate-900"
-    >
-      <div className="container mx-auto px-6 lg:px-8">
+    <section id='contact' className='bg-gradient-to-b from-slate-950 to-slate-900 py-32'>
+      <div className='container mx-auto px-6 lg:px-8'>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="max-w-7xl mx-auto"
+          className='mx-auto max-w-7xl'
         >
-          <div className="text-center mb-20">
+          <div className='mb-20 text-center'>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="mb-6"
+              className='mb-6'
             >
-              <h2 className="text-5xl sm:text-6xl font-bold mb-4 bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent tracking-tight">
+              <h2 className='mb-4 bg-gradient-to-r from-white to-slate-300 bg-clip-text text-5xl font-bold tracking-tight text-transparent sm:text-6xl'>
                 Let's Connect
               </h2>
-              <div className="h-1 w-20 bg-gradient-to-r from-blue-500 to-indigo-500 mx-auto rounded-full" />
+              <div className='mx-auto h-1 w-20 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500' />
             </motion.div>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               viewport={{ once: true }}
-              className="text-xl text-slate-400 max-w-4xl mx-auto font-light leading-relaxed"
+              className='mx-auto max-w-4xl text-xl font-light leading-relaxed text-slate-400'
             >
-              Have a project, an opportunity, or just want to chat about tech?
-              I'd love to hear from you.
+              Have a project, an opportunity, or just want to chat about tech? I'd love to hear from
+              you.
             </motion.p>
           </div>
 
@@ -143,50 +134,47 @@ export function ContactSection() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
             viewport={{ once: true }}
-            className="mb-16"
+            className='mb-16'
           >
             <Card
-              id="book-a-call-container"
-              className="bg-transparent border-0 rounded-2xl transition-all duration-500 relative overflow-hidden"
+              id='book-a-call-container'
+              className='relative overflow-hidden rounded-2xl border-0 bg-transparent transition-all duration-500'
             >
-              <CardContent className="py-6 px-5 md:px-10 flex flex-col md:flex-row items-center md:items-center justify-between gap-6 md:gap-8 relative z-10">
-                <div className="flex-1 text-center md:text-left">
-                  <h3 className="text-2xl font-extrabold text-white mb-2 flex items-center gap-3 justify-center md:justify-start tracking-tight">
-                    <CalendarCheck2 className="h-7 w-7 text-blue-400" />
+              <CardContent className='relative z-10 flex flex-col items-center justify-between gap-6 px-5 py-6 md:flex-row md:items-center md:gap-8 md:px-10'>
+                <div className='flex-1 text-center md:text-left'>
+                  <h3 className='mb-2 flex items-center justify-center gap-3 text-2xl font-extrabold tracking-tight text-white md:justify-start'>
+                    <CalendarCheck2 className='h-7 w-7 text-blue-400' />
                     Book a Call
                   </h3>
-                  <p className="text-base text-slate-400 font-light max-w-xl mx-auto md:mx-0">
-                    Schedule a quick chat to discuss opportunities,
-                    collaborations, or just to talk tech.
+                  <p className='mx-auto max-w-xl text-base font-light text-slate-400 md:mx-0'>
+                    Schedule a quick chat to discuss opportunities, collaborations, or just to talk
+                    tech.
                   </p>
-                  <p className="text-xs text-slate-400 mt-3">
-                    Powered by{" "}
+                  <p className='mt-3 text-xs text-slate-400'>
+                    Powered by{' '}
                     <a
-                      href="https://cal.com/deven-shah-l0qkjk/quick-chat"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-400 hover:text-blue-300 transition-colors underline decoration-dotted"
+                      href='https://cal.com/deven-shah-l0qkjk/quick-chat'
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className='text-blue-400 underline decoration-dotted transition-colors hover:text-blue-300'
                     >
                       Cal.com
                     </a>
                   </p>
                 </div>
-                <div className="flex-shrink-0 flex flex-col items-center md:items-end w-full md:w-auto gap-3">
-                  <div className="flex flex-row gap-3 w-full md:w-auto">
+                <div className='flex w-full flex-shrink-0 flex-col items-center gap-3 md:w-auto md:items-end'>
+                  <div className='flex w-full flex-row gap-3 md:w-auto'>
                     <Button
-                      data-cal-namespace="quick-chat"
-                      data-cal-link="deven-shah-l0qkjk/quick-chat"
+                      data-cal-namespace='quick-chat'
+                      data-cal-link='deven-shah-l0qkjk/quick-chat'
                       data-cal-config='{"layout":"month_view"}'
-                      size="lg"
-                      className="w-full md:w-auto min-w-[180px] bg-blue-600 hover:bg-blue-700 focus-visible:ring-4 focus-visible:ring-blue-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 text-white border-0 px-8 py-4 text-lg font-bold transition-all duration-200 rounded-full flex items-center justify-center gap-2 outline-none ring-0"
-                      aria-controls="cal-embed-container"
-                      aria-label="Show calendar to select a time with Deven Shah"
+                      size='lg'
+                      className='flex w-full min-w-[180px] items-center justify-center gap-2 rounded-full border-0 bg-blue-600 px-8 py-4 text-lg font-bold text-white outline-none ring-0 transition-all duration-200 hover:bg-blue-700 focus-visible:ring-4 focus-visible:ring-blue-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 md:w-auto'
+                      aria-controls='cal-embed-container'
+                      aria-label='Show calendar to select a time with Deven Shah'
                       tabIndex={0}
                     >
-                      <CalendarCheck2
-                        className="mr-3 h-5 w-5"
-                        aria-hidden="true"
-                      />
+                      <CalendarCheck2 className='mr-3 h-5 w-5' aria-hidden='true' />
                       Select a Time
                     </Button>
                   </div>
@@ -195,121 +183,109 @@ export function ContactSection() {
             </Card>
           </motion.div>
 
-          <div className="grid lg:grid-cols-5 gap-8 lg:gap-12">
+          <div className='grid gap-8 lg:grid-cols-5 lg:gap-12'>
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.7, delay: 0.2 }}
               viewport={{ once: true }}
-              className="lg:col-span-3"
+              className='lg:col-span-3'
             >
-              <Card className="gap-0 bg-transparent border-none backdrop-blur-sm h-full overflow-hidden">
-                <div className="px-8 py-6 border-b border-slate-700/30">
-                  <div className="flex items-center gap-3">
+              <Card className='h-full gap-0 overflow-hidden border-none bg-transparent backdrop-blur-sm'>
+                <div className='border-b border-slate-700/30 px-8 py-6'>
+                  <div className='flex items-center gap-3'>
                     <div>
-                      <h3 className="text-2xl font-extrabold text-white mb-2 flex items-center gap-3 justify-center md:justify-start tracking-tight">
-                        <MessageSquare className="h-7 w-7 text-blue-400" />
+                      <h3 className='mb-2 flex items-center justify-center gap-3 text-2xl font-extrabold tracking-tight text-white md:justify-start'>
+                        <MessageSquare className='h-7 w-7 text-blue-400' />
                         Send a Message
                       </h3>
-                      <p className="text-base text-slate-400 font-light max-w-xl mx-auto md:mx-0">
+                      <p className='mx-auto max-w-xl text-base font-light text-slate-400 md:mx-0'>
                         I'll get back to you within 24 hours
                       </p>
                     </div>
                   </div>
                 </div>
 
-                <div className="p-8">
-                  <form onSubmit={handleSubmit} className="space-y-3">
-                    <div className="grid sm:grid-cols-2 gap-6">
-                      <div className="space-y-3">
-                        <label
-                          htmlFor="name"
-                          className="block text-sm font-medium text-slate-300"
-                        >
+                <div className='p-8'>
+                  <form onSubmit={handleSubmit} className='space-y-3'>
+                    <div className='grid gap-6 sm:grid-cols-2'>
+                      <div className='space-y-3'>
+                        <label htmlFor='name' className='block text-sm font-medium text-slate-300'>
                           Full Name *
                         </label>
                         <Input
-                          id="name"
-                          name="name"
+                          id='name'
+                          name='name'
                           value={formData.name}
                           onChange={handleInputChange}
-                          placeholder="John Doe"
+                          placeholder='John Doe'
                           required
-                          className="h-11 bg-slate-800/40 border-slate-600/50 text-white placeholder:text-slate-500 focus:border-blue-400/60 focus:ring-1 focus:ring-blue-400/20 rounded-lg transition-all duration-200"
+                          className='h-11 rounded-lg border-slate-600/50 bg-slate-800/40 text-white transition-all duration-200 placeholder:text-slate-500 focus:border-blue-400/60 focus:ring-1 focus:ring-blue-400/20'
                         />
                       </div>
-                      <div className="space-y-3">
-                        <label
-                          htmlFor="email"
-                          className="block text-sm font-medium text-slate-300"
-                        >
+                      <div className='space-y-3'>
+                        <label htmlFor='email' className='block text-sm font-medium text-slate-300'>
                           Email Address *
                         </label>
                         <Input
-                          id="email"
-                          name="email"
-                          type="email"
+                          id='email'
+                          name='email'
+                          type='email'
                           value={formData.email}
                           onChange={handleInputChange}
-                          placeholder="john@company.com"
+                          placeholder='john@company.com'
                           required
-                          className="h-11 bg-slate-800/40 border-slate-600/50 text-white placeholder:text-slate-500 focus:border-blue-400/60 focus:ring-1 focus:ring-blue-400/20 rounded-lg transition-all duration-200"
+                          className='h-11 rounded-lg border-slate-600/50 bg-slate-800/40 text-white transition-all duration-200 placeholder:text-slate-500 focus:border-blue-400/60 focus:ring-1 focus:ring-blue-400/20'
                         />
                       </div>
                     </div>
 
-                    <div className="space-y-3">
-                      <label
-                        htmlFor="subject"
-                        className="block text-sm font-medium text-slate-300"
-                      >
+                    <div className='space-y-3'>
+                      <label htmlFor='subject' className='block text-sm font-medium text-slate-300'>
                         Subject *
                       </label>
                       <Input
-                        id="subject"
-                        name="subject"
+                        id='subject'
+                        name='subject'
                         value={formData.subject}
                         onChange={handleInputChange}
-                        placeholder="Project Collaboration Opportunity"
+                        placeholder='Project Collaboration Opportunity'
                         required
-                        className="h-11 bg-slate-800/40 border-slate-600/50 text-white placeholder:text-slate-500 focus:border-blue-400/60 focus:ring-1 focus:ring-blue-400/20 rounded-lg transition-all duration-200"
+                        className='h-11 rounded-lg border-slate-600/50 bg-slate-800/40 text-white transition-all duration-200 placeholder:text-slate-500 focus:border-blue-400/60 focus:ring-1 focus:ring-blue-400/20'
                       />
                     </div>
 
-                    <div className="space-y-3">
-                      <label
-                        htmlFor="message"
-                        className="block text-sm font-medium text-slate-300"
-                      >
+                    <div className='space-y-3'>
+                      <label htmlFor='message' className='block text-sm font-medium text-slate-300'>
                         Message *
                       </label>
                       <Textarea
-                        id="message"
-                        name="message"
+                        id='message'
+                        name='message'
                         value={formData.message}
                         onChange={handleInputChange}
-                        placeholder="Tell me about your project, opportunity, or just say hello..."
+                        placeholder='Tell me about your project, opportunity, or just say hello...'
                         rows={5}
                         required
-                        className="bg-slate-800/40 border-slate-600/50 text-white placeholder:text-slate-500 focus:border-blue-400/60 focus:ring-1 focus:ring-blue-400/20 rounded-lg resize-none transition-all duration-200"
+                        className='resize-none rounded-lg border-slate-600/50 bg-slate-800/40 text-white transition-all duration-200 placeholder:text-slate-500 focus:border-blue-400/60 focus:ring-1 focus:ring-blue-400/20'
                       />
                     </div>
 
-                    <div className="pt-4">
+                    <div className='pt-4'>
                       <Button
-                        type="submit"
-                        size="lg"
-                        className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white border-0 font-medium hover:shadow-blue-500/20 transition-all duration-200 rounded-lg"
+                        type='submit'
+                        size='lg'
+                        className='h-12 w-full rounded-lg border-0 bg-blue-600 font-medium text-white transition-all duration-200 hover:bg-blue-700 hover:shadow-blue-500/20'
                         disabled={isSubmitting}
                       >
                         {isSubmitting ? (
                           <>
-                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                            <Loader2 className='mr-2 h-4 w-4 animate-spin' />
                             Sending...
                           </>
                         ) : (
                           <>
-                            <Send className="mr-2 h-4 w-4" />
+                            <Send className='mr-2 h-4 w-4' />
                             Send Message
                           </>
                         )}
@@ -325,69 +301,63 @@ export function ContactSection() {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.7, delay: 0.3 }}
               viewport={{ once: true }}
-              className="lg:col-span-2"
+              className='lg:col-span-2'
             >
-              <Card className="gap-0 bg-transparent border-none backdrop-blur-sm h-full overflow-hidden">
-                <div className="px-8 py-6 border-b border-slate-700/30">
-                  <div className="flex items-center gap-3">
+              <Card className='h-full gap-0 overflow-hidden border-none bg-transparent backdrop-blur-sm'>
+                <div className='border-b border-slate-700/30 px-8 py-6'>
+                  <div className='flex items-center gap-3'>
                     <div>
-                      <h3 className="text-2xl font-extrabold text-white mb-2 flex items-center gap-3 justify-center md:justify-start tracking-tight">
-                        <ThumbsUp className="h-7 w-7 text-blue-400" />
+                      <h3 className='mb-2 flex items-center justify-center gap-3 text-2xl font-extrabold tracking-tight text-white md:justify-start'>
+                        <ThumbsUp className='h-7 w-7 text-blue-400' />
                         Connect With Me
                       </h3>
-                      <p className="text-base text-slate-400 font-light max-w-xl mx-auto md:mx-0">
+                      <p className='mx-auto max-w-xl text-base font-light text-slate-400 md:mx-0'>
                         Find me on these platforms
                       </p>
                     </div>
                   </div>
                 </div>
 
-                <div className="p-8 space-y-8">
-                  {socialLinks.map((social) => (
+                <div className='space-y-8 p-8'>
+                  {socialLinks.map(social => (
                     <a
                       key={social.name}
                       href={social.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-4 p-4 rounded-lg bg-slate-800/20 hover:bg-slate-800/40 border border-slate-700/30 hover:border-slate-600/50 transition-all duration-200 group"
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className='group flex items-center gap-4 rounded-lg border border-slate-700/30 bg-slate-800/20 p-4 transition-all duration-200 hover:border-slate-600/50 hover:bg-slate-800/40'
                     >
                       <div
-                        className={`w-10 h-10 rounded-lg bg-gradient-to-br ${social.gradient} flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform duration-200`}
+                        className={`h-10 w-10 rounded-lg bg-gradient-to-br ${social.gradient} flex flex-shrink-0 items-center justify-center transition-transform duration-200 group-hover:scale-105`}
                       >
-                        {social.name === "Twitter" ? (
-                          <FontAwesomeIcon
-                            icon={faXTwitter}
-                            className="h-4 w-4 text-white"
-                          />
+                        {social.name === 'Twitter' ? (
+                          <FontAwesomeIcon icon={faXTwitter} className='h-4 w-4 text-white' />
                         ) : (
-                          React.createElement(
-                            social.icon as React.ComponentType<any>,
-                            {
-                              className: "h-4 w-4 text-white",
-                            },
-                          )
+                          React.createElement(social.icon as React.ComponentType<any>, {
+                            className: 'h-4 w-4 text-white',
+                          })
                         )}
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="font-medium text-white text-sm group-hover:text-blue-200 transition-colors duration-200">
+                      <div className='min-w-0 flex-1'>
+                        <p className='text-sm font-medium text-white transition-colors duration-200 group-hover:text-blue-200'>
                           {social.name}
                         </p>
-                        <p className="text-xs text-slate-400 group-hover:text-slate-300 transition-colors duration-200 truncate">
+                        <p className='truncate text-xs text-slate-400 transition-colors duration-200 group-hover:text-slate-300'>
                           {social.handle}
                         </p>
                       </div>
-                      <div className="flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                      <div className='flex-shrink-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100'>
                         <svg
-                          className="w-4 h-4 text-slate-400"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
+                          className='h-4 w-4 text-slate-400'
+                          fill='none'
+                          stroke='currentColor'
+                          viewBox='0 0 24 24'
                         >
                           <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
+                            strokeLinecap='round'
+                            strokeLinejoin='round'
                             strokeWidth={2}
-                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                            d='M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14'
                           />
                         </svg>
                       </div>

@@ -1,5 +1,5 @@
-declare module "github-contribution-calendar" {
-  import * as React from "react";
+declare module 'github-contribution-calendar' {
+  import * as React from 'react';
   export interface GitHubCalendarProps {
     token?: string; // GitHub access token for private contributions
     username: string;

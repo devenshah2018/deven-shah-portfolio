@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, ReactNode } from 'react';
 
 interface TourContextType {
   isTourOpen: boolean;
@@ -31,7 +31,7 @@ export function TourProvider({ children }: { children: ReactNode }) {
 export function useTour() {
   const context = useContext(TourContext);
   if (context === undefined) {
-    throw new Error("useTour must be used within a TourProvider");
+    throw new Error('useTour must be used within a TourProvider');
   }
   return context;
 }
