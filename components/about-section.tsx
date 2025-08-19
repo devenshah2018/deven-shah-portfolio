@@ -67,9 +67,9 @@ const skillMappings = [
     ],
     projects: [
       {
-        title: 'MCP Model Server',
+        title: 'Model Distribution Server',
         subtitle: 'Local ML Inference TCP Server',
-        id: 'mcp-model-server',
+        id: 'model-distribution-server',
         icon: Zap,
       },
       {
@@ -493,9 +493,9 @@ const skillMappings = [
     ],
     projects: [
       {
-        title: 'MCP Model Server',
+        title: 'Model Distribution Server',
         subtitle: 'Local ML Inference TCP Server',
-        id: 'mcp-model-server',
+        id: 'model-distribution-server',
         icon: Zap,
       },
       {
@@ -600,9 +600,9 @@ const skillMappings = [
     ],
     projects: [
       {
-        title: 'MCP Model Server',
+        title: 'Model Distribution Server',
         subtitle: 'Local ML Inference TCP Server',
-        id: 'mcp-model-server',
+        id: 'model-distribution-server',
         icon: Zap,
       },
       {
@@ -690,9 +690,9 @@ const skillMappings = [
     ],
     projects: [
       {
-        title: 'MCP Model Server',
+        title: 'Model Distribution Server',
         subtitle: 'Local ML Inference TCP Server',
-        id: 'mcp-model-server',
+        id: 'model-distribution-server',
         icon: Zap,
       },
       {
@@ -759,9 +759,9 @@ const skillMappings = [
     ],
     projects: [
       {
-        title: 'MCP Model Server',
+        title: 'Model Distribution Server',
         subtitle: 'Local ML Inference TCP Server',
-        id: 'mcp-model-server',
+        id: 'model-distribution-server',
         icon: Zap,
       },
       {
