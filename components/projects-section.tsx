@@ -64,7 +64,8 @@ const projects = [
       'ANTLR',
       'CMake',
     ],
-    type: 'ide',
+    type: 'github',
+    link: 'https://github.com/devenshah2018/qode',
     status: 'In Progress',
     gradient: 'from-purple-500 via-blue-500 to-cyan-500',
     icon: Code,
@@ -72,8 +73,7 @@ const projects = [
     achievements: [
       'WebAssembly compilation support',
       'Complete quantum gate library',
-      'Educational documentation',
-      'Interactive web simulator',
+      'Educational documentation'
     ],
   },
   {
@@ -83,12 +83,13 @@ const projects = [
     period: '08/2024 – 12/2024',
     sortDate: '2024-08',
     description:
-      'SOC2 compliance platform launched on VSCode Marketplace, accepted into Microsoft for Startups.',
+      'SOC2 compliance platform leveraging AI and deep cybersecurity technology launched on VSCode Marketplace.',
     fullDescription:
-      'Ares is an enterprise-grade security compliance platform that automates SOC2 Type 1 and OWASP compliance checking. Built as a VSCode extension using Rust for performance-critical operations and TypeScript for the user interface. Successfully launched on the VSCode Marketplace and accepted into prestigious accelerator programs including Microsoft for Startups and Buildspace S5.',
-    technologies: ['Rust', 'TypeScript', 'VSCode Extension'],
+      'Ares is an enterprise-grade security compliance platform that automates SOC2 Type 1 and OWASP compliance checking. Built as a VSCode extension using Rust for performance-critical operations and TypeScript for the user interface. Successfully launched on the VSCode Marketplace.',
+    technologies: ['Rust', 'Python', 'TypeScript', 'VSCode Extension'],
     allTechnologies: [
       'Rust',
+      'Python',
       'TypeScript',
       'VSCode Extension API',
       'Security Frameworks',
@@ -101,7 +102,7 @@ const projects = [
     status: 'Live',
     gradient: 'from-red-500 via-orange-500 to-yellow-500',
     icon: Award,
-    highlights: ['VSCode Marketplace launch', 'Microsoft for Startups', 'Automated compliance'],
+    highlights: ['VSCode Marketplace launch', 'Automated code security', 'SOC2 compliance'],
     achievements: [
       '100+ active organizations',
       'Microsoft for Startups acceptance',
