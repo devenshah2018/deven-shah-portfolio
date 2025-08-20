@@ -134,62 +134,65 @@ export function ContactSection() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
             viewport={{ once: true }}
-            className='mb-16'
+            className='mb-12 sm:mb-16'
           >
             <Card
               id='book-a-call-container'
-              className='group relative overflow-hidden rounded-2xl border border-slate-700/40 bg-slate-800/20 backdrop-blur-sm transition-all duration-500'
+              className='group relative overflow-hidden rounded-xl border border-slate-700/40 bg-slate-800/20 backdrop-blur-sm transition-all duration-500 sm:rounded-2xl'
             >
-              <div className='absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/10 via-purple-500/5 to-cyan-500/10 opacity-0 transition-opacity duration-500' />
+              <div className='absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500/10 via-purple-500/5 to-cyan-500/10 opacity-0 transition-opacity duration-500 sm:rounded-2xl' />
 
-              <div className='absolute inset-0 rounded-2xl bg-gradient-to-b from-white/[0.02] to-transparent' />
+              <div className='absolute inset-0 rounded-xl bg-gradient-to-b from-white/[0.02] to-transparent sm:rounded-2xl' />
 
-              <div className='absolute left-8 right-8 top-0 h-px bg-gradient-to-r from-transparent via-slate-500/30 to-transparent' />
-              <CardContent className='relative z-10 flex flex-col items-center justify-between gap-6 px-5 py-6 md:flex-row md:items-center md:gap-8 md:px-10'>
-                <div className='flex-1 text-center md:text-left'>
-                  <h3 className='mb-2 flex items-center justify-center gap-3 text-2xl font-extrabold tracking-tight text-white md:justify-start'>
-                    <CalendarCheck2 className='h-7 w-7 text-blue-400' />
-                    Book a Call
-                  </h3>
-                  <p className='mx-auto max-w-xl text-sm font-light text-slate-400 md:mx-0'>
-                    Have a project, an opportunity, or just want to chat about tech? I'd love to hear from you.
-                  </p>
-                  <p className='mt-3 text-xs text-slate-400'>
-                    Powered by{' '}
-                    <a
-                      href='https://cal.com/'
-                      target='_blank'
-                      rel='noopener noreferrer'
-                      className='text-blue-400 underline decoration-dotted transition-colors hover:text-blue-300'
-                    >
-                      Cal.com
-                    </a>
-                  </p>
-                </div>
-                <div className='flex w-full flex-shrink-0 flex-col items-center gap-3 md:w-auto md:items-end'>
-                  <div className='flex w-full flex-row gap-3 md:w-auto'>
+              <div className='absolute left-4 right-4 top-0 h-px bg-gradient-to-r from-transparent via-slate-500/30 to-transparent sm:left-8 sm:right-8' />
+              
+              <CardContent className='relative z-10 p-4 sm:p-6 md:p-8'>
+                <div className='flex flex-col items-center gap-6 md:flex-row md:items-center md:justify-between md:gap-8'>
+                  <div className='flex-1 text-center md:text-left'>
+                    <h3 className='mb-3 flex items-center justify-center gap-2 text-xl font-extrabold tracking-tight text-white sm:mb-2 sm:gap-3 sm:text-2xl md:justify-start'>
+                      <CalendarCheck2 className='h-6 w-6 text-blue-400 sm:h-7 sm:w-7' />
+                      <span className='truncate'>Book a Call</span>
+                    </h3>
+                    <p className='mx-auto max-w-xl text-sm font-light leading-relaxed text-slate-400 sm:text-base md:mx-0 md:text-sm'>
+                      Have a project, an opportunity, or just want to chat about tech? I'd love to hear from you.
+                    </p>
+                    <p className='mt-2 text-xs text-slate-400 sm:mt-3'>
+                      Powered by{' '}
+                      <a
+                        href='https://cal.com/'
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        className='text-blue-400 underline decoration-dotted transition-colors hover:text-blue-300'
+                      >
+                        Cal.com
+                      </a>
+                    </p>
+                  </div>
+                  
+                  <div className='flex w-full flex-shrink-0 flex-col gap-3 sm:flex-row sm:gap-2 md:w-auto md:items-end'>
                     <Button
                       data-cal-namespace='quick-chat'
                       data-cal-link='deven-shah-l0qkjk/quick-chat'
                       data-cal-config='{"layout":"month_view"}'
                       size='lg'
-                      className='flex w-full min-w-[180px] items-center justify-center gap-2 rounded-full border-0 bg-blue-600 px-8 py-4 text-lg font-bold text-white outline-none ring-0 transition-all duration-200 hover:bg-blue-700 focus-visible:ring-4 focus-visible:ring-blue-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 md:w-auto'
+                      className='flex h-12 w-full items-center justify-center gap-2 rounded-full border-0 bg-blue-600 px-4 text-base font-semibold text-white outline-none ring-0 transition-all duration-200 hover:bg-blue-700 focus-visible:ring-4 focus-visible:ring-blue-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 sm:h-14 sm:min-w-[160px] sm:gap-3 sm:px-6 sm:text-lg sm:font-bold md:w-auto'
                       aria-controls='cal-embed-container'
                       aria-label='Show calendar to select a time with Deven Shah'
                       tabIndex={0}
                     >
-                      <CalendarCheck2 className='mr-3 h-5 w-5' aria-hidden='true' />
-                      Select a Time
+                      <CalendarCheck2 className='h-4 w-4 sm:h-5 sm:w-5' aria-hidden='true' />
+                      <span className='truncate'>Select a Time</span>
                     </Button>
                     <Button
                       onClick={() => {
                         window.open('https://cal.com/deven-shah-l0qkjk/quick-chat', '_blank');
                       }}
                       size='lg'
-                      className='flex w-full items-center justify-center gap-2 rounded-full border-0 bg-zinc-600 px-8 py-4 text-lg font-bold text-white outline-none ring-0 transition-all duration-200 hover:bg-zinc-700 focus-visible:ring-4 focus-visible:ring-blue-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 md:w-auto'
+                      className='hidden h-12 w-16 items-center justify-center rounded-full border-0 bg-zinc-600 text-base font-semibold text-white outline-none ring-0 transition-all duration-200 hover:bg-zinc-700 focus-visible:ring-4 focus-visible:ring-blue-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 sm:flex sm:h-14 sm:w-16 sm:text-lg sm:font-bold'
+                      aria-label='Open calendar in new tab'
                       tabIndex={0}
                     >
-                      <ExternalLink className='h-5 w-5' aria-hidden='true' />
+                      <ExternalLink className='h-4 w-4 sm:h-5 sm:w-5' aria-hidden='true' />
                     </Button>
                   </div>
                 </div>
