@@ -101,22 +101,18 @@ export function EducationSection() {
           </div>
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className='w-full'>
-            <TabsList
-              className='mx-auto mb-8 flex h-12 w-full max-w-md rounded-2xl bg-transparent p-1 backdrop-blur-md'
-              style={{ minWidth: 320 }}
-            >
+            <TabsList className='mx-auto mb-8 flex h-11 w-full max-w-sm rounded-xl bg-transparent p-1 backdrop-blur-md sm:h-12 sm:max-w-md sm:rounded-2xl'>
               <TabsTrigger
                 value='education'
-                className='relative flex h-10 flex-1 items-center justify-center gap-2 rounded-xl text-base font-bold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/60 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=inactive]:text-slate-200 data-[state=active]:shadow-lg data-[state=active]:shadow-blue-500/25'
-                role='tab'
-                aria-selected={activeTab === 'education'}
+                className='relative flex h-9 flex-1 items-center justify-center gap-1.5 rounded-lg text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/60 data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=inactive]:text-slate-200 data-[state=active]:shadow-lg data-[state=active]:shadow-blue-500/25 sm:h-10 sm:gap-2 sm:rounded-xl sm:text-base'
               >
-                <GraduationCap className='h-5 w-5' />
-                Education
+                <GraduationCap className='h-4 w-4 sm:h-5 sm:w-5' />
+                <span className='hidden xs:inline'>Education</span>
+                <span className='xs:hidden'>Education</span>
                 {activeTab === 'education' && (
                   <motion.div
                     layoutId='tabIndicator'
-                    className='absolute inset-0 -z-10 rounded-xl bg-blue-600'
+                    className='absolute inset-0 -z-10 rounded-lg bg-blue-600 sm:rounded-xl'
                     initial={false}
                     transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                   />
@@ -124,16 +120,15 @@ export function EducationSection() {
               </TabsTrigger>
               <TabsTrigger
                 value='certifications'
-                className='relative flex h-10 flex-1 items-center justify-center gap-2 rounded-xl text-base font-bold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400/60 data-[state=active]:bg-orange-600 data-[state=active]:text-white data-[state=inactive]:text-slate-200 data-[state=active]:shadow-lg data-[state=active]:shadow-slate-500/20'
-                role='tab'
-                aria-selected={activeTab === 'certifications'}
+                className='relative flex h-9 flex-1 items-center justify-center gap-1.5 rounded-lg text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400/60 data-[state=active]:bg-orange-600 data-[state=active]:text-white data-[state=inactive]:text-slate-200 data-[state=active]:shadow-lg data-[state=active]:shadow-orange-500/20 sm:h-10 sm:gap-2 sm:rounded-xl sm:text-base'
               >
-                <Award className='h-5 w-5' />
-                Certifications
+                <Award className='h-4 w-4 sm:h-5 sm:w-5' />
+                <span className='hidden xs:inline'>Certifications</span>
+                <span className='xs:hidden'>Certifications</span>
                 {activeTab === 'certifications' && (
                   <motion.div
                     layoutId='tabIndicator'
-                    className='absolute inset-0 -z-10 rounded-xl bg-orange-500'
+                    className='absolute inset-0 -z-10 rounded-lg bg-orange-500 sm:rounded-xl'
                     initial={false}
                     transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                   />
@@ -141,7 +136,7 @@ export function EducationSection() {
               </TabsTrigger>
             </TabsList>
 
-            <TabsContent value='education' className='space-y-8'>
+            <TabsContent value='education' className='space-y-4 sm:space-y-8'>
               {educationData.map((edu, index) => {
                 const displayedCourses = showAllCourses
                   ? edu.coursework
@@ -150,25 +145,23 @@ export function EducationSection() {
                 return (
                   <motion.div
                     key={index}
-                    initial={{ opacity: 0, y: 30 }}
+                    initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ 
-                      duration: 0.6, 
-                      delay: index * 0.15,
+                      duration: 0.5, 
+                      delay: index * 0.1,
                       ease: [0.22, 1, 0.36, 1]
                     }}
                     viewport={{ once: true }}
                   >
-                    <Card className='group relative overflow-hidden rounded-2xl border-none bg-transparent transition-all duration-500'>
-                      {/* Enterprise glow effect */}
-                      
+                    <Card className='group relative overflow-hidden rounded-xl bg-transparent border border-none backdrop-blur-sm transition-all duration-300 sm:rounded-2xl'>
                       {/* Active indicator for current education */}
                       {edu.isActive && (
                         <>
-                          <div className='absolute right-6 top-6 flex items-center gap-2'>
-                            <div className='relative flex h-3 w-3 items-center justify-center'>
-                              <div className='absolute h-3 w-3 animate-ping rounded-full bg-emerald-400/75' />
-                              <div className='relative h-2 w-2 rounded-full bg-emerald-400' />
+                          <div className='absolute right-3 top-3 flex items-center gap-1.5 sm:right-6 sm:top-6 sm:gap-2'>
+                            <div className='relative flex h-2.5 w-2.5 items-center justify-center sm:h-3 sm:w-3'>
+                              <div className='absolute h-2.5 w-2.5 animate-ping rounded-full bg-emerald-400/75 sm:h-3 sm:w-3' />
+                              <div className='relative h-1.5 w-1.5 rounded-full bg-emerald-400 sm:h-2 sm:w-2' />
                             </div>
                             <span className='text-xs font-semibold uppercase tracking-wider text-emerald-400'>
                               Current
@@ -177,27 +170,27 @@ export function EducationSection() {
                         </>
                       )}
 
-                      <CardContent className='relative p-8'>
-                        <div className='flex items-start gap-6'>
+                      <CardContent className='relative p-4 sm:p-8'>
+                        <div className='flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-6'>
                           {/* Enhanced logo section */}
-                          <div className='relative flex-shrink-0'>
-                            <div className='relative h-20 w-20 rounded-2xl border border-slate-600/30 bg-white/8 p-4 shadow-xl backdrop-blur-sm'>
+                          <div className='relative flex-shrink-0 self-center sm:self-start'>
+                            <div className='relative h-16 w-16 rounded-xl border border-slate-600/30 bg-white/8 p-3 shadow-lg backdrop-blur-sm sm:h-20 sm:w-20 sm:rounded-2xl sm:p-4 sm:shadow-xl'>
                               <img
                                 src={edu.logo}
                                 alt={`${edu.institution} logo`}
                                 className='h-full w-full object-contain brightness-110 contrast-110 filter'
                               />
                             </div>
-                            <div className='absolute -bottom-2 -right-2 flex h-8 w-8 items-center justify-center rounded-xl border-2 border-slate-900 bg-gradient-to-br from-blue-600 to-indigo-700 shadow-lg'>
-                              <edu.icon className='h-4 w-4 text-white' />
+                            <div className='absolute -bottom-1.5 -right-1.5 flex h-6 w-6 items-center justify-center rounded-lg border-2 border-slate-900 bg-gradient-to-br from-blue-600 to-indigo-700 shadow-md sm:-bottom-2 sm:-right-2 sm:h-8 sm:w-8 sm:rounded-xl sm:shadow-lg'>
+                              <edu.icon className='h-3 w-3 text-white sm:h-4 sm:w-4' />
                             </div>
                           </div>
 
                           <div className='min-w-0 flex-1'>
                             {/* Header section */}
-                            <div className='mb-6 flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between'>
-                              <div className='min-w-0 flex-1'>
-                                <h3 className='mb-2 text-2xl font-bold leading-tight text-white'>
+                            <div className='mb-4 flex flex-col gap-3 sm:mb-6 sm:gap-4 lg:flex-row lg:items-start lg:justify-between'>
+                              <div className='min-w-0 flex-1 text-center sm:text-left'>
+                                <h3 className='mb-1 text-lg font-bold leading-tight text-white sm:mb-2 sm:text-2xl'>
                                   {edu.degree}
                                 </h3>
                                 <a
@@ -210,28 +203,28 @@ export function EducationSection() {
                                   }
                                   target='_blank'
                                   rel='noopener noreferrer'
-                                  className='group/link inline-flex items-center gap-2 text-lg font-semibold text-slate-300 transition-all duration-300 hover:text-blue-400'
+                                  className='group/link inline-flex items-center gap-1.5 text-base font-semibold text-slate-300 transition-all duration-300 hover:text-blue-400 sm:gap-2 sm:text-lg'
                                 >
-                                  {edu.institution}
-                                  <ExternalLink className='h-4 w-4 transition-all duration-300 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5' />
+                                  <span className='truncate'>{edu.institution}</span>
+                                  <ExternalLink className='h-3 w-3 flex-shrink-0 transition-all duration-300 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 sm:h-4 sm:w-4' />
                                 </a>
                                 {edu.concentration && (
-                                  <p className='mt-2 flex items-center gap-2 text-sm text-slate-400'>
-                                    <span className='h-1.5 w-1.5 rounded-full bg-blue-400' />
+                                  <p className='mt-1.5 flex items-center justify-center gap-1.5 text-xs text-slate-400 sm:justify-start sm:gap-2 sm:text-sm'>
+                                    <span className='h-1 w-1 flex-shrink-0 rounded-full bg-blue-400 sm:h-1.5 sm:w-1.5' />
                                     <span className='font-medium text-slate-300'>Concentration:</span>
-                                    {edu.concentration}
+                                    <span className='truncate'>{edu.concentration}</span>
                                   </p>
                                 )}
                               </div>
                               
                               {/* Professional badges */}
-                              <div className='flex flex-wrap gap-3 lg:flex-col lg:items-end'>
-                                <Badge className='bg-transparent px-0 py-2 border border-none text-sm font-semibold text-slate-200 backdrop-blur-sm'>
-                                  <Calendar className='mr-2 h-4 w-4' />
+                              <div className='flex flex-wrap justify-between gap-2 sm:justify-start sm:gap-3 lg:flex-col lg:items-end'>
+                                <Badge className='bg-transparent px-0 py-1.5 text-xs font-semibold text-slate-200 backdrop-blur-sm sm:px-0 sm:py-2 sm:text-sm'>
+                                  <Calendar className='mr-1.5 h-3 w-3 sm:mr-2 sm:h-4 sm:w-4' />
                                   {edu.period}
                                 </Badge>
                                 <Badge
-                                  className={`px-4 py-2 text-sm font-semibold shadow-lg backdrop-blur-sm ${
+                                  className={`px-3 py-1.5 text-xs font-semibold shadow-lg backdrop-blur-sm sm:px-4 sm:py-2 sm:text-sm ${
                                     edu.status === 'Current'
                                       ? 'border-emerald-500/50 bg-emerald-500/20 text-emerald-300'
                                       : 'border-blue-500/50 bg-blue-500/20 text-blue-300'
@@ -244,18 +237,18 @@ export function EducationSection() {
 
                             {/* Coursework section */}
                             {edu.coursework && edu.coursework.length > 0 && (
-                              <div className='rounded-xl bg-transparent pt-6 backdrop-blur-sm'>
-                                <div className='mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between'>
-                                  <h4 className='flex items-center gap-3 text-lg font-semibold text-white'>
-                                    Academic Coursework
-                                    <span className='rounded-full bg-slate-700/80 px-3 py-1 text-sm font-medium text-slate-300'>
+                              <div className='rounded-lg backdrop-blur-sm sm:rounded-xl sm:p-6'>
+                                <div className='mb-3 flex flex-col justify-end gap-2 sm:mb-4 sm:gap-3 sm:flex-row sm:items-center sm:justify-between'>
+                                  <h4 className='flex items-center justify-between gap-2 text-base font-semibold text-white sm:justify-start sm:gap-3 sm:text-lg'>
+                                    <span>Academic Coursework</span>
+                                    <span className='rounded-full bg-slate-700/80 px-2 py-0.5 text-xs font-medium text-slate-300 sm:px-3 sm:py-1 sm:text-sm'>
                                       {edu.coursework.length} courses
                                     </span>
                                   </h4>
                                   {edu.coursework.length > 6 && (
                                     <button
                                       onClick={() => setShowAllCourses(!showAllCourses)}
-                                      className='flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold text-blue-400 shadow-lg backdrop-blur-sm transition-all duration-300 bg-transparent focus:outline-none focus:ring-2 focus:ring-blue-400/50'
+                                      className='ml-auto flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold text-blue-400 backdrop-blur-sm transition-all duration-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-400/50 sm:mx-0 sm:gap-2 sm:rounded-xl sm:px-4 sm:py-2 sm:text-sm'
                                     >
                                       <span>
                                         {showAllCourses
@@ -266,7 +259,7 @@ export function EducationSection() {
                                         animate={{ rotate: showAllCourses ? 180 : 0 }}
                                         transition={{ duration: 0.3, ease: 'easeInOut' }}
                                       >
-                                        <svg className='h-4 w-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                                        <svg className='h-3 w-3 sm:h-4 sm:w-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
                                           <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M19 9l-7 7-7-7' />
                                         </svg>
                                       </motion.div>
@@ -274,22 +267,22 @@ export function EducationSection() {
                                   )}
                                 </div>
                                 
-                                <div className='grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3'>
+                                <div className='grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-3 lg:grid-cols-3'>
                                   {displayedCourses && displayedCourses.map((course, courseIndex) => (
                                     <motion.div
                                       key={courseIndex}
                                       initial={{ opacity: 0, scale: 0.9 }}
                                       animate={{ opacity: 1, scale: 1 }}
                                       transition={{
-                                      duration: 0.3,
-                                      delay: courseIndex * 0.05,
-                                      ease: [0.22, 1, 0.36, 1]
+                                        duration: 0.3,
+                                        delay: courseIndex * 0.03,
+                                        ease: [0.22, 1, 0.36, 1]
                                       }}
-                                      className='group/course relative flex items-center gap-3 rounded-lg border border-transparent bg-transparent px-4 py-3 shadow-lg backdrop-blur-sm transition-all duration-300 hover:border-blue-500/50'
+                                      className='group/course relative flex items-center gap-2 rounded-md px-3 py-2 backdrop-blur-sm transition-all duration-300 hover:border-blue-500/50 hover:bg-slate-800/90 sm:gap-3 sm:rounded-lg sm:px-4 sm:py-3'
                                     >
-                                      <div className='h-2 w-2 flex-shrink-0 rounded-full bg-gradient-to-r from-blue-400 to-indigo-500 transition-all duration-300 group-hover/course:scale-110' />
-                                      <span className='text-sm font-medium leading-tight text-slate-200 group-hover/course:text-white'>
-                                      {course}
+                                      <div className='h-1.5 w-1.5 flex-shrink-0 rounded-full bg-gradient-to-r from-blue-400 to-indigo-500 transition-all duration-300 group-hover/course:scale-110 sm:h-2 sm:w-2' />
+                                      <span className='text-xs font-medium leading-tight text-slate-200 group-hover/course:text-white sm:text-sm'>
+                                        {course}
                                       </span>
                                     </motion.div>
                                   ))}
@@ -305,78 +298,76 @@ export function EducationSection() {
               })}
             </TabsContent>
 
-            <TabsContent value='certifications' className='space-y-8'>
+            <TabsContent value='certifications' className='space-y-4 sm:space-y-8'>
               {certificationData.map((cert, index) => (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ 
-                    duration: 0.6, 
-                    delay: index * 0.15,
+                    duration: 0.5, 
+                    delay: index * 0.1,
                     ease: [0.22, 1, 0.36, 1]
                   }}
                   viewport={{ once: true }}
                 >
-                  <Card className='group relative overflow-hidden rounded-2xl border-none bg-transparent transition-all duration-500'>
-                    {/* Enterprise glow effect */}
-                    
+                  <Card className='group relative overflow-hidden rounded-xl bg-transparent border border-none backdrop-blur-sm transition-all duration-300 sm:rounded-2xl'>
                     {/* Active indicator */}
-                    <div className='absolute right-6 top-6 flex items-center gap-2'>
-                      <div className='relative flex h-3 w-3 items-center justify-center'>
-                        <div className='absolute h-3 w-3 animate-ping rounded-full bg-emerald-400/75' />
-                        <div className='relative h-2 w-2 rounded-full bg-emerald-400' />
+                    <div className='absolute right-3 top-3 flex items-center gap-1.5 sm:right-6 sm:top-6 sm:gap-2'>
+                      <div className='relative flex h-2.5 w-2.5 items-center justify-center sm:h-3 sm:w-3'>
+                        <div className='absolute h-2.5 w-2.5 animate-ping rounded-full bg-emerald-400/75 sm:h-3 sm:w-3' />
+                        <div className='relative h-1.5 w-1.5 rounded-full bg-emerald-400 sm:h-2 sm:w-2' />
                       </div>
                       <span className='text-xs font-semibold uppercase tracking-wider text-emerald-400'>
                         Valid
                       </span>
                     </div>
 
-                    <CardContent className='relative p-8'>
-                      <div className='flex items-start gap-6'>
+                    <CardContent className='relative p-4 sm:p-8'>
+                      <div className='flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-6'>
                         {/* Enhanced logo section */}
-                        <div className='relative flex-shrink-0'>
-                          <div className='relative h-20 w-20 rounded-2xl border border-slate-600/30 bg-white/8 p-4 shadow-xl backdrop-blur-sm'>
+                        <div className='relative flex-shrink-0 self-center sm:self-start'>
+                          <div className='relative h-16 w-16 rounded-xl border border-slate-600/30 bg-white/8 p-3 shadow-lg backdrop-blur-sm sm:h-20 sm:w-20 sm:rounded-2xl sm:p-4 sm:shadow-xl'>
                             <img
                               src={cert.logo}
                               alt={`${cert.issuer} logo`}
                               className='h-full w-full object-contain brightness-110 contrast-110 filter'
                             />
                           </div>
-                          <div className='absolute -bottom-2 -right-2 flex h-8 w-8 items-center justify-center rounded-xl border-2 border-slate-900 bg-gradient-to-br from-orange-600 to-yellow-600 shadow-lg'>
-                            <cert.icon className='h-4 w-4 text-white' />
+                          <div className='absolute -bottom-1.5 -right-1.5 flex h-6 w-6 items-center justify-center rounded-lg border-2 border-slate-900 bg-gradient-to-br from-orange-600 to-yellow-600 shadow-md sm:-bottom-2 sm:-right-2 sm:h-8 sm:w-8 sm:rounded-xl sm:shadow-lg'>
+                            <cert.icon className='h-3 w-3 text-white sm:h-4 sm:w-4' />
                           </div>
                         </div>
 
                         <div className='min-w-0 flex-1'>
                           {/* Header section */}
-                          <div className='mb-6 flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between'>
-                            <div className='min-w-0 flex-1'>
-                              <h3 className='mb-2 text-2xl font-bold leading-tight text-white'>
+                          <div className='mb-4 flex flex-col gap-3 sm:mb-6 sm:gap-4 lg:flex-row lg:items-start lg:justify-between'>
+                            <div className='min-w-0 flex-1 text-center sm:text-left'>
+                              <h3 className='mb-1 text-lg font-bold leading-tight text-white sm:mb-2 sm:text-2xl'>
                                 {cert.title}
                               </h3>
                               <a
                                 href={cert.verificationUrl}
                                 target='_blank'
                                 rel='noopener noreferrer'
-                                className='group/link inline-flex items-center gap-2 text-lg font-semibold text-slate-300 transition-all duration-300 hover:text-orange-400'
+                                className='group/link inline-flex items-center gap-1.5 text-base font-semibold text-slate-300 transition-all duration-300 hover:text-orange-400 sm:gap-2 sm:text-lg'
                               >
-                                {cert.issuer}
-                                <ExternalLink className='h-4 w-4 transition-all duration-300 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5' />
+                                <span className='truncate'>{cert.issuer}</span>
+                                <ExternalLink className='h-3 w-3 flex-shrink-0 transition-all duration-300 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 sm:h-4 sm:w-4' />
                               </a>
                               {cert.credentialId && (
-                                <div className='mt-2 flex items-center gap-2 text-sm text-slate-400'>
+                                <div className='mt-2 flex flex-col items-center gap-2 text-xs text-slate-400 sm:flex-row sm:items-start sm:text-sm'>
                                   <span className='font-medium text-slate-300'>Credential ID:</span>
                                   <div className='group/copy relative'>
                                     <button
                                       onClick={() => {
                                         navigator.clipboard.writeText(cert.credentialId);
                                       }}
-                                      className='inline-flex items-center gap-2 rounded-lg border border-slate-700/50 bg-slate-800/80 px-3 py-1.5 font-mono text-xs text-orange-400 transition-all duration-300 hover:border-orange-500/50 hover:bg-slate-800/90 hover:text-orange-300 focus:outline-none focus:ring-2 focus:ring-orange-400/50'
+                                      className='inline-flex items-center gap-1.5 rounded-md border border-slate-700/50 bg-slate-800/80 px-2.5 py-1 font-mono text-xs text-orange-400 transition-all duration-300 hover:border-orange-500/50 hover:bg-slate-800/90 hover:text-orange-300 focus:outline-none focus:ring-2 focus:ring-orange-400/50 sm:gap-2 sm:rounded-lg sm:px-3 sm:py-1.5'
                                     >
-                                      <span>{cert.credentialId}</span>
+                                      <span className='truncate max-w-[120px] sm:max-w-none'>{cert.credentialId}</span>
                                       <svg 
-                                        className='h-3.5 w-3.5 transition-all duration-200 group-hover/copy:scale-110' 
+                                        className='h-3 w-3 flex-shrink-0 transition-all duration-200 group-hover/copy:scale-110 sm:h-3.5 sm:w-3.5' 
                                         fill='none' 
                                         stroke='currentColor' 
                                         viewBox='0 0 24 24'
@@ -398,16 +389,17 @@ export function EducationSection() {
                             </div>
                             
                             {/* Professional badges */}
-                            <div className='flex flex-wrap gap-3 lg:flex-col lg:items-end'>
-                              <Badge className='bg-transparent px-0 py-2 border border-none text-sm font-semibold text-slate-200 backdrop-blur-sm'>
-                                <Calendar className='mr-2 h-4 w-4' />
+                            <div className='flex flex-wrap justify-between gap-2 sm:justify-start sm:gap-3 lg:flex-col lg:items-end'>
+                              <Badge className='bg-transparent px-0 py-1.5 text-xs font-semibold text-slate-200 backdrop-blur-sm sm:px-0 sm:py-2 sm:text-sm'>
+                                <Calendar className='mr-1.5 h-3 w-3 sm:mr-2 sm:h-4 sm:w-4' />
                                 {cert.period}
                               </Badge>
-                              <Badge className='border-emerald-500/50 bg-emerald-500/20 px-4 py-2 text-sm font-semibold text-emerald-300 shadow-lg backdrop-blur-sm'>
+                              <Badge className='border-emerald-500/50 bg-emerald-500/20 px-3 py-1.5 text-xs font-semibold text-emerald-300 backdrop-blur-sm sm:px-4 sm:py-2 sm:text-sm'>
                                 {cert.status}
                               </Badge>
                             </div>
                           </div>
+
                         </div>
                       </div>
                     </CardContent>
