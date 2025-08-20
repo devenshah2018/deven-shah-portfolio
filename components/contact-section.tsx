@@ -145,7 +145,7 @@ export function ContactSection() {
               <div className='absolute inset-0 rounded-xl bg-gradient-to-b from-white/[0.02] to-transparent sm:rounded-2xl' />
 
               <div className='absolute left-4 right-4 top-0 h-px bg-gradient-to-r from-transparent via-slate-500/30 to-transparent sm:left-8 sm:right-8' />
-              
+
               <CardContent className='relative z-10 p-4 sm:p-6 md:p-8'>
                 <div className='flex flex-col items-center gap-6 md:flex-row md:items-center md:justify-between md:gap-8'>
                   <div className='flex-1 text-center md:text-left'>
@@ -154,7 +154,8 @@ export function ContactSection() {
                       <span className='truncate'>Book a Call</span>
                     </h3>
                     <p className='mx-auto max-w-xl text-sm font-light leading-relaxed text-slate-400 sm:text-base md:mx-0 md:text-sm'>
-                      Have a project, an opportunity, or just want to chat about tech? I'd love to hear from you.
+                      Have a project, an opportunity, or just want to chat about tech? I'd love to
+                      hear from you.
                     </p>
                     <p className='mt-2 text-xs text-slate-400 sm:mt-3'>
                       Powered by{' '}
@@ -168,7 +169,7 @@ export function ContactSection() {
                       </a>
                     </p>
                   </div>
-                  
+
                   <div className='flex w-full flex-shrink-0 flex-col gap-3 sm:flex-row sm:gap-2 md:w-auto md:items-end'>
                     <Button
                       data-cal-namespace='quick-chat'

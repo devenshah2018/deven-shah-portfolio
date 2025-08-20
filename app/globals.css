@@ -280,28 +280,38 @@ html {
 /* Responsive tooltip adjustments for toast style */
 @media (max-width: 768px) {
   .tour-tooltip {
-    max-width: calc(100vw - 40px) !important;
-    min-width: 280px !important;
-    max-height: 350px !important;
+    max-width: calc(100vw - 24px) !important;
+    min-width: 260px !important;
+    max-height: 240px !important;
     margin: 0 !important;
   }
 
   .tour-tooltip-title {
-    font-size: 0.8rem !important;
-    line-height: 1.3 !important;
+    font-size: 0.775rem !important;
+    line-height: 1.25 !important;
   }
 
   .tour-tooltip-content {
-    font-size: 0.7rem !important;
-    line-height: 1.5 !important;
+    font-size: 0.675rem !important;
+    line-height: 1.4 !important;
   }
 }
 
 @media (max-width: 480px) {
   .tour-tooltip {
-    max-width: calc(100vw - 20px) !important;
-    min-width: 250px !important;
-    max-height: 300px !important;
+    max-width: calc(100vw - 16px) !important;
+    min-width: 240px !important;
+    max-height: 220px !important;
+  }
+
+  .tour-tooltip-title {
+    font-size: 0.75rem !important;
+    line-height: 1.2 !important;
+  }
+
+  .tour-tooltip-content {
+    font-size: 0.65rem !important;
+    line-height: 1.35 !important;
   }
 }
 
@@ -313,6 +323,25 @@ html {
 /* Additional safety for very small screens */
 @media (max-height: 600px) {
   .tour-tooltip {
-    max-height: 280px !important;
+    max-height: 200px !important;
+  }
+}
+
+/* Extra small mobile devices */
+@media (max-width: 360px) {
+  .tour-tooltip {
+    max-width: calc(100vw - 12px) !important;
+    min-width: 220px !important;
+    max-height: 200px !important;
+  }
+
+  .tour-tooltip-title {
+    font-size: 0.7rem !important;
+    line-height: 1.15 !important;
+  }
+
+  .tour-tooltip-content {
+    font-size: 0.6rem !important;
+    line-height: 1.3 !important;
   }
 }

@@ -22,7 +22,11 @@ export function Footer() {
 
           <div className='flex items-center gap-4'>
             <Button variant='ghost' size='icon' asChild>
-              <a href='https://linkedin.com/in/deven-a-shah' target='_blank' rel='noopener noreferrer'>
+              <a
+                href='https://linkedin.com/in/deven-a-shah'
+                target='_blank'
+                rel='noopener noreferrer'
+              >
                 <Linkedin className='h-4 w-4' />
               </a>
             </Button>

@@ -221,21 +221,31 @@ export function GuidedTour() {
 
   const updateTooltipPosition = useCallback(() => {
     const viewportWidth = window.innerWidth;
-    const margin = 24;
-
-    const tooltipWidth = 400;
-    const mobileWidth = 340;
+    const margin = 12; // Reduced margin for better mobile usage
 
     if (viewportWidth < 768) {
+      // Mobile: much smaller width and optimized positioning
+      const mobileWidth = Math.min(280, viewportWidth - 24); // Smaller modal on mobile
       setTooltipPosition({
         top: `${margin}px`,
-        right: `${margin}px`,
-        width: `${Math.min(mobileWidth, viewportWidth - 48)}px`,
+        left: '50%',
+        width: `${mobileWidth}px`,
+        transform: 'translateX(-50%)',
+      });
+    } else if (viewportWidth < 1024) {
+      // Tablet: medium sizing
+      const tabletWidth = Math.min(340, viewportWidth - 40);
+      setTooltipPosition({
+        top: `${margin * 1.2}px`,
+        right: `${margin * 1.2}px`,
+        width: `${tabletWidth}px`,
       });
     } else {
+      // Desktop: keep current positioning
+      const tooltipWidth = 400;
       setTooltipPosition({
-        top: `${margin}px`,
-        right: `${margin}px`,
+        top: `${margin * 1.5}px`,
+        right: `${margin * 1.5}px`,
         width: `${tooltipWidth}px`,
       });
     }
@@ -437,7 +447,7 @@ export function GuidedTour() {
   }, [isTourOpen, currentStep, nextStep, prevStep, handleCloseTour]);
 
   const getStepIcon = () => {
-    const iconClass = 'h-5 w-5 text-blue-400';
+    const iconClass = 'h-4 w-4 text-blue-400 md:h-5 md:w-5';
     switch (currentStepData && currentStepData.type) {
       case 'intro':
         return <Rocket className={iconClass} />;
@@ -486,11 +496,11 @@ export function GuidedTour() {
           }}
           transition={{ duration: 0.3, delay: 0.1 }}
         >
-          <Card className='relative flex h-[300px] w-full max-w-[400px] flex-col overflow-hidden rounded-xl border border-slate-800/80 bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 p-0 backdrop-blur-xl'>
+          <Card className='relative flex h-[240px] w-full max-w-[400px] flex-col overflow-hidden rounded-xl border border-slate-800/80 bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 p-0 backdrop-blur-xl md:h-[300px]'>
             <div className='pointer-events-none absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-purple-500/5' />
 
-            <CardContent className='relative flex h-full flex-col p-7'>
-              <div className='mb-5 flex h-1 w-full overflow-hidden rounded-full bg-slate-800'>
+            <CardContent className='relative flex h-full flex-col p-4 md:p-7'>
+              <div className='mb-3 flex h-1 w-full overflow-hidden rounded-full bg-slate-800 md:mb-5'>
                 <motion.div
                   className='h-full bg-gradient-to-r from-blue-500 to-blue-400'
                   initial={false}
@@ -514,18 +524,18 @@ export function GuidedTour() {
                     className='flex flex-1 flex-col'
                   >
                     {/* Header */}
-                    <div className='mb-5 flex items-start justify-between'>
-                      <div className='flex min-w-0 items-center gap-3'>
+                    <div className='mb-3 flex items-start justify-between md:mb-5'>
+                      <div className='flex min-w-0 items-center gap-2 md:gap-3'>
                         <motion.div
                           initial={{ scale: 0.9, opacity: 0 }}
                           animate={{ scale: 1, opacity: 1 }}
                           transition={{ duration: 0.15, delay: 0.05 }}
-                          className='flex h-9 w-9 items-center justify-center rounded-lg bg-blue-500/10 ring-1 ring-blue-500/20'
+                          className='flex h-7 w-7 items-center justify-center rounded-lg bg-blue-500/10 ring-1 ring-blue-500/20 md:h-9 md:w-9'
                         >
                           {getStepIcon()}
                         </motion.div>
                         <div className='flex min-w-0 flex-col'>
-                          <h3 className='truncate text-lg font-semibold tracking-tight text-white'>
+                          <h3 className='truncate text-base font-semibold tracking-tight text-white md:text-lg'>
                             {currentStepData ? currentStepData.title : ''}
                           </h3>
                           <span className='text-xs font-medium text-slate-400'>
@@ -537,15 +547,15 @@ export function GuidedTour() {
                         variant='ghost'
                         size='icon'
                         onClick={handleCloseTour}
-                        className='h-8 w-8 rounded-lg p-0 text-slate-400 transition-colors hover:bg-slate-800/60 hover:text-white'
+                        className='h-7 w-7 rounded-lg p-0 text-slate-400 transition-colors hover:bg-slate-800/60 hover:text-white md:h-8 md:w-8'
                       >
-                        <X className='h-4 w-4' />
+                        <X className='h-3 w-3 md:h-4 md:w-4' />
                       </Button>
                     </div>
 
-                    <div className='mb-7 flex flex-1 flex-col justify-start overflow-hidden'>
+                    <div className='mb-4 flex flex-1 flex-col justify-start overflow-hidden md:mb-7'>
                       <div className='scrollbar-thin scrollbar-track-slate-800 scrollbar-thumb-slate-600 overflow-y-auto'>
-                        <p className='pr-2 text-sm leading-relaxed text-slate-300'>
+                        <p className='pr-2 text-xs leading-relaxed text-slate-300 md:text-sm'>
                           {displayedText}
                         </p>
                       </div>
@@ -553,14 +563,14 @@ export function GuidedTour() {
                   </motion.div>
                 </AnimatePresence>
 
-                <div className='mt-auto flex items-center justify-between gap-3'>
+                <div className='mt-auto flex items-center justify-between gap-2 md:gap-3'>
                   <Button
                     variant='outline'
                     onClick={prevStep}
                     disabled={currentStep === 0 || isTransitioning || isTyping}
-                    className='h-9 rounded-lg border-slate-700/60 bg-transparent px-4 text-sm text-slate-300 transition-all hover:border-slate-600 hover:bg-slate-800/40 hover:text-white disabled:cursor-not-allowed disabled:opacity-40'
+                    className='h-8 rounded-lg border-slate-700/60 bg-transparent px-3 text-xs text-slate-300 transition-all hover:border-slate-600 hover:bg-slate-800/40 hover:text-white disabled:cursor-not-allowed disabled:opacity-40 md:h-9 md:px-4 md:text-sm'
                   >
-                    <ChevronLeft className='mr-1.5 h-3.5 w-3.5' />
+                    <ChevronLeft className='mr-1 h-3 w-3 md:mr-1.5 md:h-3.5 md:w-3.5' />
                     Previous
                   </Button>
 
@@ -569,7 +579,7 @@ export function GuidedTour() {
                       <Button
                         onClick={handleCloseTour}
                         disabled={isTyping}
-                        className='h-9 rounded-lg bg-gradient-to-r from-blue-600 to-blue-500 px-5 text-sm font-medium text-white shadow-lg shadow-blue-500/25 transition-all hover:from-blue-500 hover:to-blue-400 hover:shadow-blue-500/40 disabled:opacity-60'
+                        className='h-8 rounded-lg bg-gradient-to-r from-blue-600 to-blue-500 px-4 text-xs font-medium text-white shadow-lg shadow-blue-500/25 transition-all hover:from-blue-500 hover:to-blue-400 hover:shadow-blue-500/40 disabled:opacity-60 md:h-9 md:px-5 md:text-sm'
                       >
                         Complete Tour
                       </Button>
@@ -577,10 +587,10 @@ export function GuidedTour() {
                       <Button
                         onClick={nextStep}
                         disabled={isTransitioning || isTyping}
-                        className='h-9 rounded-lg bg-blue-500 px-5 text-sm font-medium text-white transition-all hover:from-blue-500 hover:to-blue-400 disabled:opacity-60'
+                        className='h-8 rounded-lg bg-blue-500 px-4 text-xs font-medium text-white transition-all hover:from-blue-500 hover:to-blue-400 disabled:opacity-60 md:h-9 md:px-5 md:text-sm'
                       >
                         Continue
-                        <ChevronRight className='ml-1.5 h-3.5 w-3.5' />
+                        <ChevronRight className='ml-1 h-3 w-3 md:ml-1.5 md:h-3.5 md:w-3.5' />
                       </Button>
                     )}
                   </div>

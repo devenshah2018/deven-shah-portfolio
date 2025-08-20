@@ -73,7 +73,7 @@ const projects = [
     achievements: [
       'WebAssembly compilation support',
       'Complete quantum gate library',
-      'Educational documentation'
+      'Educational documentation',
     ],
   },
   {

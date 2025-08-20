@@ -140,21 +140,23 @@ export function EducationSection() {
               {educationData.map((edu, index) => {
                 const displayedCourses = showAllCourses
                   ? edu.coursework
-                  : edu.coursework ? edu.coursework.slice(0, 6) : null;
+                  : edu.coursework
+                    ? edu.coursework.slice(0, 6)
+                    : null;
 
                 return (
                   <motion.div
                     key={index}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ 
-                      duration: 0.5, 
+                    transition={{
+                      duration: 0.5,
                       delay: index * 0.1,
-                      ease: [0.22, 1, 0.36, 1]
+                      ease: [0.22, 1, 0.36, 1],
                     }}
                     viewport={{ once: true }}
                   >
-                    <Card className='group relative overflow-hidden rounded-xl bg-transparent border border-none backdrop-blur-sm transition-all duration-300 sm:rounded-2xl'>
+                    <Card className='group relative overflow-hidden rounded-xl border border-none bg-transparent backdrop-blur-sm transition-all duration-300 sm:rounded-2xl'>
                       {/* Active indicator for current education */}
                       {edu.isActive && (
                         <>
@@ -174,11 +176,11 @@ export function EducationSection() {
                         <div className='flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-6'>
                           {/* Enhanced logo section */}
                           <div className='relative flex-shrink-0 self-center sm:self-start'>
-                            <div className='relative h-16 w-16 rounded-xl border border-slate-600/30 bg-white/8 p-3 shadow-lg backdrop-blur-sm sm:h-20 sm:w-20 sm:rounded-2xl sm:p-4 sm:shadow-xl'>
+                            <div className='bg-white/8 relative h-16 w-16 rounded-xl border border-slate-600/30 p-3 shadow-lg backdrop-blur-sm sm:h-20 sm:w-20 sm:rounded-2xl sm:p-4 sm:shadow-xl'>
                               <img
                                 src={edu.logo}
                                 alt={`${edu.institution} logo`}
-                                className='h-full w-full object-contain brightness-110 contrast-110 filter'
+                                className='contrast-110 h-full w-full object-contain brightness-110 filter'
                               />
                             </div>
                             <div className='absolute -bottom-1.5 -right-1.5 flex h-6 w-6 items-center justify-center rounded-lg border-2 border-slate-900 bg-gradient-to-br from-blue-600 to-indigo-700 shadow-md sm:-bottom-2 sm:-right-2 sm:h-8 sm:w-8 sm:rounded-xl sm:shadow-lg'>
@@ -206,17 +208,19 @@ export function EducationSection() {
                                   className='group/link inline-flex items-center gap-1.5 text-base font-semibold text-slate-300 transition-all duration-300 hover:text-blue-400 sm:gap-2 sm:text-lg'
                                 >
                                   <span className='truncate'>{edu.institution}</span>
-                                  <ExternalLink className='h-3 w-3 flex-shrink-0 transition-all duration-300 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 sm:h-4 sm:w-4' />
+                                  <ExternalLink className='h-3 w-3 flex-shrink-0 transition-all duration-300 group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5 sm:h-4 sm:w-4' />
                                 </a>
                                 {edu.concentration && (
                                   <p className='mt-1.5 flex items-center justify-center gap-1.5 text-xs text-slate-400 sm:justify-start sm:gap-2 sm:text-sm'>
                                     <span className='h-1 w-1 flex-shrink-0 rounded-full bg-blue-400 sm:h-1.5 sm:w-1.5' />
-                                    <span className='font-medium text-slate-300'>Concentration:</span>
+                                    <span className='font-medium text-slate-300'>
+                                      Concentration:
+                                    </span>
                                     <span className='truncate'>{edu.concentration}</span>
                                   </p>
                                 )}
                               </div>
-                              
+
                               {/* Professional badges */}
                               <div className='flex flex-wrap justify-between gap-2 sm:justify-start sm:gap-3 lg:flex-col lg:items-end'>
                                 <Badge className='bg-transparent px-0 py-1.5 text-xs font-semibold text-slate-200 backdrop-blur-sm sm:px-0 sm:py-2 sm:text-sm'>
@@ -238,7 +242,7 @@ export function EducationSection() {
                             {/* Coursework section */}
                             {edu.coursework && edu.coursework.length > 0 && (
                               <div className='rounded-lg backdrop-blur-sm sm:rounded-xl sm:p-6'>
-                                <div className='mb-3 flex flex-col justify-end gap-2 sm:mb-4 sm:gap-3 sm:flex-row sm:items-center sm:justify-between'>
+                                <div className='mb-3 flex flex-col justify-end gap-2 sm:mb-4 sm:flex-row sm:items-center sm:justify-between sm:gap-3'>
                                   <h4 className='flex items-center justify-between gap-2 text-base font-semibold text-white sm:justify-start sm:gap-3 sm:text-lg'>
                                     <span>Academic Coursework</span>
                                     <span className='rounded-full bg-slate-700/80 px-2 py-0.5 text-xs font-medium text-slate-300 sm:px-3 sm:py-1 sm:text-sm'>
@@ -250,42 +254,49 @@ export function EducationSection() {
                                       onClick={() => setShowAllCourses(!showAllCourses)}
                                       className='ml-auto flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold text-blue-400 backdrop-blur-sm transition-all duration-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-400/50 sm:mx-0 sm:gap-2 sm:rounded-xl sm:px-4 sm:py-2 sm:text-sm'
                                     >
-                                      <span>
-                                        {showAllCourses
-                                          ? 'Show Less'
-                                          : `View All`}
-                                      </span>
+                                      <span>{showAllCourses ? 'Show Less' : `View All`}</span>
                                       <motion.div
                                         animate={{ rotate: showAllCourses ? 180 : 0 }}
                                         transition={{ duration: 0.3, ease: 'easeInOut' }}
                                       >
-                                        <svg className='h-3 w-3 sm:h-4 sm:w-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                                          <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M19 9l-7 7-7-7' />
+                                        <svg
+                                          className='h-3 w-3 sm:h-4 sm:w-4'
+                                          fill='none'
+                                          stroke='currentColor'
+                                          viewBox='0 0 24 24'
+                                        >
+                                          <path
+                                            strokeLinecap='round'
+                                            strokeLinejoin='round'
+                                            strokeWidth={2}
+                                            d='M19 9l-7 7-7-7'
+                                          />
                                         </svg>
                                       </motion.div>
                                     </button>
                                   )}
                                 </div>
-                                
+
                                 <div className='grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-3 lg:grid-cols-3'>
-                                  {displayedCourses && displayedCourses.map((course, courseIndex) => (
-                                    <motion.div
-                                      key={courseIndex}
-                                      initial={{ opacity: 0, scale: 0.9 }}
-                                      animate={{ opacity: 1, scale: 1 }}
-                                      transition={{
-                                        duration: 0.3,
-                                        delay: courseIndex * 0.03,
-                                        ease: [0.22, 1, 0.36, 1]
-                                      }}
-                                      className='group/course relative flex items-center gap-2 rounded-md px-3 py-2 backdrop-blur-sm transition-all duration-300 hover:border-blue-500/50 hover:bg-slate-800/90 sm:gap-3 sm:rounded-lg sm:px-4 sm:py-3'
-                                    >
-                                      <div className='h-1.5 w-1.5 flex-shrink-0 rounded-full bg-gradient-to-r from-blue-400 to-indigo-500 transition-all duration-300 group-hover/course:scale-110 sm:h-2 sm:w-2' />
-                                      <span className='text-xs font-medium leading-tight text-slate-200 group-hover/course:text-white sm:text-sm'>
-                                        {course}
-                                      </span>
-                                    </motion.div>
-                                  ))}
+                                  {displayedCourses &&
+                                    displayedCourses.map((course, courseIndex) => (
+                                      <motion.div
+                                        key={courseIndex}
+                                        initial={{ opacity: 0, scale: 0.9 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        transition={{
+                                          duration: 0.3,
+                                          delay: courseIndex * 0.03,
+                                          ease: [0.22, 1, 0.36, 1],
+                                        }}
+                                        className='group/course relative flex items-center gap-2 rounded-md px-3 py-2 backdrop-blur-sm transition-all duration-300 hover:border-blue-500/50 hover:bg-slate-800/90 sm:gap-3 sm:rounded-lg sm:px-4 sm:py-3'
+                                      >
+                                        <div className='h-1.5 w-1.5 flex-shrink-0 rounded-full bg-gradient-to-r from-blue-400 to-indigo-500 transition-all duration-300 group-hover/course:scale-110 sm:h-2 sm:w-2' />
+                                        <span className='text-xs font-medium leading-tight text-slate-200 group-hover/course:text-white sm:text-sm'>
+                                          {course}
+                                        </span>
+                                      </motion.div>
+                                    ))}
                                 </div>
                               </div>
                             )}
@@ -304,14 +315,14 @@ export function EducationSection() {
                   key={index}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ 
-                    duration: 0.5, 
+                  transition={{
+                    duration: 0.5,
                     delay: index * 0.1,
-                    ease: [0.22, 1, 0.36, 1]
+                    ease: [0.22, 1, 0.36, 1],
                   }}
                   viewport={{ once: true }}
                 >
-                  <Card className='group relative overflow-hidden rounded-xl bg-transparent border border-none backdrop-blur-sm transition-all duration-300 sm:rounded-2xl'>
+                  <Card className='group relative overflow-hidden rounded-xl border border-none bg-transparent backdrop-blur-sm transition-all duration-300 sm:rounded-2xl'>
                     {/* Active indicator */}
                     <div className='absolute right-3 top-3 flex items-center gap-1.5 sm:right-6 sm:top-6 sm:gap-2'>
                       <div className='relative flex h-2.5 w-2.5 items-center justify-center sm:h-3 sm:w-3'>
@@ -327,11 +338,11 @@ export function EducationSection() {
                       <div className='flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-6'>
                         {/* Enhanced logo section */}
                         <div className='relative flex-shrink-0 self-center sm:self-start'>
-                          <div className='relative h-16 w-16 rounded-xl border border-slate-600/30 bg-white/8 p-3 shadow-lg backdrop-blur-sm sm:h-20 sm:w-20 sm:rounded-2xl sm:p-4 sm:shadow-xl'>
+                          <div className='bg-white/8 relative h-16 w-16 rounded-xl border border-slate-600/30 p-3 shadow-lg backdrop-blur-sm sm:h-20 sm:w-20 sm:rounded-2xl sm:p-4 sm:shadow-xl'>
                             <img
                               src={cert.logo}
                               alt={`${cert.issuer} logo`}
-                              className='h-full w-full object-contain brightness-110 contrast-110 filter'
+                              className='contrast-110 h-full w-full object-contain brightness-110 filter'
                             />
                           </div>
                           <div className='absolute -bottom-1.5 -right-1.5 flex h-6 w-6 items-center justify-center rounded-lg border-2 border-slate-900 bg-gradient-to-br from-orange-600 to-yellow-600 shadow-md sm:-bottom-2 sm:-right-2 sm:h-8 sm:w-8 sm:rounded-xl sm:shadow-lg'>
@@ -353,7 +364,7 @@ export function EducationSection() {
                                 className='group/link inline-flex items-center gap-1.5 text-base font-semibold text-slate-300 transition-all duration-300 hover:text-orange-400 sm:gap-2 sm:text-lg'
                               >
                                 <span className='truncate'>{cert.issuer}</span>
-                                <ExternalLink className='h-3 w-3 flex-shrink-0 transition-all duration-300 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 sm:h-4 sm:w-4' />
+                                <ExternalLink className='h-3 w-3 flex-shrink-0 transition-all duration-300 group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5 sm:h-4 sm:w-4' />
                               </a>
                               {cert.credentialId && (
                                 <div className='mt-2 flex flex-col items-center gap-2 text-xs text-slate-400 sm:flex-row sm:items-start sm:text-sm'>
@@ -365,18 +376,20 @@ export function EducationSection() {
                                       }}
                                       className='inline-flex items-center gap-1.5 rounded-md border border-slate-700/50 bg-slate-800/80 px-2.5 py-1 font-mono text-xs text-orange-400 transition-all duration-300 hover:border-orange-500/50 hover:bg-slate-800/90 hover:text-orange-300 focus:outline-none focus:ring-2 focus:ring-orange-400/50 sm:gap-2 sm:rounded-lg sm:px-3 sm:py-1.5'
                                     >
-                                      <span className='truncate max-w-[120px] sm:max-w-none'>{cert.credentialId}</span>
-                                      <svg 
-                                        className='h-3 w-3 flex-shrink-0 transition-all duration-200 group-hover/copy:scale-110 sm:h-3.5 sm:w-3.5' 
-                                        fill='none' 
-                                        stroke='currentColor' 
+                                      <span className='max-w-[120px] truncate sm:max-w-none'>
+                                        {cert.credentialId}
+                                      </span>
+                                      <svg
+                                        className='h-3 w-3 flex-shrink-0 transition-all duration-200 group-hover/copy:scale-110 sm:h-3.5 sm:w-3.5'
+                                        fill='none'
+                                        stroke='currentColor'
                                         viewBox='0 0 24 24'
                                       >
-                                        <path 
-                                          strokeLinecap='round' 
-                                          strokeLinejoin='round' 
-                                          strokeWidth={2} 
-                                          d='M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z' 
+                                        <path
+                                          strokeLinecap='round'
+                                          strokeLinejoin='round'
+                                          strokeWidth={2}
+                                          d='M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z'
                                         />
                                       </svg>
                                     </button>
@@ -387,7 +400,7 @@ export function EducationSection() {
                                 </div>
                               )}
                             </div>
-                            
+
                             {/* Professional badges */}
                             <div className='flex flex-wrap justify-between gap-2 sm:justify-start sm:gap-3 lg:flex-col lg:items-end'>
                               <Badge className='bg-transparent px-0 py-1.5 text-xs font-semibold text-slate-200 backdrop-blur-sm sm:px-0 sm:py-2 sm:text-sm'>
@@ -399,7 +412,6 @@ export function EducationSection() {
                               </Badge>
                             </div>
                           </div>
-
                         </div>
                       </div>
                     </CardContent>

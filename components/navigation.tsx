@@ -416,7 +416,7 @@ export function Navigation({ onStartTour }: NavigationProps) {
                       className='w-full border-blue-400/50 bg-gradient-to-r from-blue-500/20 to-indigo-500/20 font-mono text-lg font-semibold text-blue-300 shadow-lg transition-all duration-300 hover:border-blue-300 hover:bg-gradient-to-r hover:from-blue-500/30 hover:to-indigo-500/30 hover:text-white hover:shadow-blue-500/25'
                     >
                       <Route className='mr-2 h-5 w-5' />
-                      Take Guided Tour
+                      Take Tour
                     </Button>
                   </motion.div>
 
