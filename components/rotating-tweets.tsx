@@ -48,6 +48,11 @@ const TWEETS = [
     text: `Cross-Site Scripting is a very common security flaw. @strivesai analyzes your code to ensure it has the proper CORS and other critical security policies to secure your data. Backed by GDPR, ISO, and OWASP, your code will be bulletproof 🔒🚀`,
     date: '1:01 PM · Jul 31, 2024',
   },
+  {
+    id: '10',
+    text: `Incredible past few months. 10xed (or at least caught up with y’all) in engineering scalable ML systems thru trial & collaboration. Excited to share more soon 🙌`,
+    date: '12:24 AM · Aug 20, 2025',
+  },
 ];
 
 interface RotatingTweetsProps {
