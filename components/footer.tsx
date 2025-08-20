@@ -16,7 +16,7 @@ export function Footer() {
           <div className='text-center md:text-left'>
             <h3 className='mb-2 text-lg font-bold'>Deven Shah</h3>
             <p className='text-sm text-muted-foreground'>
-              Co-founder/CTO at Suno Analytics | Graduate MSCS Student at Boston University
+              Co-founder & CTO at Suno Analytics | Graduate MSCS Student at Boston University
             </p>
           </div>
 
@@ -46,8 +46,7 @@ export function Footer() {
         <Separator className='my-6' />
 
         <div className='flex flex-col items-center justify-between gap-4 text-sm text-muted-foreground md:flex-row'>
-          <p>© 2024 Deven Shah. All rights reserved.</p>
-          <p>Built with Next.js, TypeScript, and Tailwind CSS</p>
+          <p>© 2025 Deven Shah. All rights reserved.</p>
         </div>
       </div>
     </footer>
