@@ -1137,16 +1137,26 @@ export function AboutSection() {
                   {/* Mobile Timeline Connector */}
                   <div className='absolute left-6 top-10 h-3 w-3 -translate-x-1/2 transform rounded-full border-2 border-slate-900 bg-blue-400 sm:hidden'></div>
 
-                  <div className='flex h-20 flex-col justify-between rounded-lg border border-slate-500 bg-slate-900 p-3 backdrop-blur-sm transition-colors duration-200 hover:border-blue-400/50'>
+                  <div className='group relative flex h-20 flex-col justify-between overflow-hidden rounded-lg border border-slate-500 bg-slate-900/90 p-3 backdrop-blur-sm transition-all duration-300 hover:border-blue-400/60 hover:bg-slate-900/95 hover:shadow-lg hover:shadow-blue-500/10'>
                     <div className='absolute -top-0.5 left-3 right-3 hidden h-1 rounded-full bg-blue-400/60 sm:block'></div>
-                    <div className='mb-1 flex min-w-0 items-center gap-1 text-xs font-semibold text-blue-400'>
-                      <span className='truncate'>2024-Present</span>
-                      <div className='h-1 w-1 flex-shrink-0 animate-pulse rounded-full bg-green-400'></div>
+                    
+                    {/* Live indicator subtle glow */}
+                    <div className='absolute inset-0 rounded-lg bg-gradient-to-r from-blue-500/5 via-transparent to-emerald-500/5 opacity-60'></div>
+                    
+                    <div className='relative z-10 mb-1 flex min-w-0 items-center justify-between gap-2 text-xs font-semibold text-blue-400'>
+                      <span className='truncate'>2024</span>
+                      <div className='flex items-center gap-1'>
+                        <div className='relative flex h-2 w-2 items-center justify-center'>
+                          <div className='absolute h-2 w-2 animate-ping rounded-full bg-emerald-400/75'></div>
+                          <div className='relative h-1.5 w-1.5 rounded-full bg-emerald-400'></div>
+                        </div>
+                        <span className='text-[10px] font-medium uppercase tracking-wider text-emerald-400/90'>ACTIVE</span>
+                      </div>
                     </div>
-                    <div className='mb-1 line-clamp-2 text-xs font-bold leading-tight text-white sm:text-sm'>
+                    <div className='relative z-10 mb-1 line-clamp-2 text-xs font-bold leading-tight text-white sm:text-sm'>
                       Co-Founder & CTO
                     </div>
-                    <div className='truncate text-xs text-slate-400'>Suno Analytics</div>
+                    <div className='relative z-10 truncate text-xs text-slate-400'>Suno Analytics</div>
                   </div>
                 </motion.div>
 
@@ -1161,16 +1171,26 @@ export function AboutSection() {
                   {/* Mobile Timeline Connector */}
                   <div className='absolute left-6 top-10 h-3 w-3 -translate-x-1/2 transform rounded-full border-2 border-slate-900 bg-amber-400 sm:hidden'></div>
 
-                  <div className='flex h-20 flex-col justify-between rounded-lg border border-slate-500 bg-slate-900 p-3 backdrop-blur-sm transition-colors duration-200 hover:border-amber-400/50'>
+                  <div className='group relative flex h-20 flex-col justify-between overflow-hidden rounded-lg border border-slate-500 bg-slate-900/90 p-3 backdrop-blur-sm transition-all duration-300 hover:border-amber-400/60 hover:bg-slate-900/95 hover:shadow-lg hover:shadow-amber-500/10'>
                     <div className='absolute -top-0.5 left-3 right-3 hidden h-1 rounded-full bg-amber-400/60 sm:block'></div>
-                    <div className='mb-1 flex min-w-0 items-center gap-1 text-xs font-semibold text-amber-400'>
-                      <span className='truncate'>Present</span>
-                      <div className='h-1 w-1 flex-shrink-0 animate-pulse rounded-full bg-green-400'></div>
+                    
+                    {/* Live indicator subtle glow */}
+                    <div className='absolute inset-0 rounded-lg bg-gradient-to-r from-amber-500/5 via-transparent to-blue-500/5 opacity-60'></div>
+                    
+                    <div className='relative z-10 mb-1 flex min-w-0 items-center justify-between gap-2 text-xs font-semibold text-amber-400'>
+                      <span className='truncate'>2025</span>
+                      <div className='flex items-center gap-1'>
+                        <div className='relative flex h-2 w-2 items-center justify-center'>
+                          <div className='absolute h-2 w-2 animate-ping rounded-full bg-emerald-400/75'></div>
+                          <div className='relative h-1.5 w-1.5 rounded-full bg-emerald-400'></div>
+                        </div>
+                        <span className='text-[10px] font-medium uppercase tracking-wider text-emerald-400/90'>ACTIVE</span>
+                      </div>
                     </div>
-                    <div className='mb-1 line-clamp-2 text-xs font-bold leading-tight text-white sm:text-sm'>
+                    <div className='relative z-10 mb-1 line-clamp-2 text-xs font-bold leading-tight text-white sm:text-sm'>
                       M.S. Computer Science
                     </div>
-                    <div className='truncate text-xs text-slate-400'>Boston University</div>
+                    <div className='relative z-10 truncate text-xs text-slate-400'>Boston University</div>
                   </div>
                 </motion.div>
               </div>
