@@ -125,8 +125,7 @@ export function ContactSection() {
               viewport={{ once: true }}
               className='mx-auto max-w-4xl text-xl font-light leading-relaxed text-slate-400'
             >
-              Have a project, an opportunity, or just want to chat about tech? I'd love to hear from
-              you.
+              Innovation starts with collaboration—let’s connect!
             </motion.p>
           </div>
 
@@ -152,9 +151,8 @@ export function ContactSection() {
                     <CalendarCheck2 className='h-7 w-7 text-blue-400' />
                     Book a Call
                   </h3>
-                  <p className='mx-auto max-w-xl text-base font-light text-slate-400 md:mx-0'>
-                    Schedule a quick chat to discuss opportunities, collaborations, or just to talk
-                    tech.
+                  <p className='mx-auto max-w-xl text-sm font-light text-slate-400 md:mx-0'>
+                    Have a project, an opportunity, or just want to chat about tech? I'd love to hear from you.
                   </p>
                   <p className='mt-3 text-xs text-slate-400'>
                     Powered by{' '}
