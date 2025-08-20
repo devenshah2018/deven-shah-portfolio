@@ -12,20 +12,20 @@ const educationData = [
     id: 'bu-masters',
     degree: 'M.S. in Computer Science',
     institution: 'Boston University',
-    period: 'Present',
-    status: 'In Progress',
+    period: '2025 – Present',
+    status: 'Current',
     concentration: 'Data Analytics',
-    coursework: [],
     gradient: 'from-blue-500 to-cyan-500',
     icon: GraduationCap,
     logo: '/bu-logo.png',
+    isActive: true,
   },
   {
     id: 'sjsu-bachelors',
     degree: 'B.S. in Software Engineering',
     institution: 'San Jose State University',
-    period: '08/2018 – 12/2022',
-    status: 'Completed',
+    period: '2018 – 2022',
+    status: 'Graduated',
     coursework: [
       'Data Structures & Algorithms',
       'Assembly Language Programming',
@@ -34,23 +34,30 @@ const educationData = [
       'Information Security',
       'Machine Learning & Big Data',
       'Computer Networks',
+      'Software Architecture & Design',
+      'Database Management Systems',
+      'Web Development Technologies',
     ],
     gradient: 'from-indigo-500 to-purple-500',
     icon: GraduationCap,
     logo: '/sjsu-logo.png',
+    isActive: false,
   },
 ];
 
 const certificationData = [
   {
     id: 'aws-cloud-practitioner',
-    title: 'AWS Cloud Practitioner Certification',
+    title: 'AWS Certified Cloud Practitioner',
     issuer: 'Amazon Web Services',
-    period: '02/2023',
+    period: '2023',
     status: 'Active',
+    credentialId: 'ZEM1DCJCTEFEQEKT',
+    validUntil: 'Feb 2026',
     gradient: 'from-orange-500 to-yellow-500',
     icon: Award,
     logo: '/aws-logo.jpg',
+    verificationUrl: 'https://aws.amazon.com/verification',
   },
 ];
 
@@ -95,7 +102,7 @@ export function EducationSection() {
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className='w-full'>
             <TabsList
-              className='mx-auto mb-8 flex h-12 w-full max-w-md rounded-2xl border border-slate-600/60 bg-slate-800/90 p-1 shadow-xl ring-1 ring-slate-500/20 backdrop-blur-md'
+              className='mx-auto mb-8 flex h-12 w-full max-w-md rounded-2xl bg-transparent p-1 backdrop-blur-md'
               style={{ minWidth: 320 }}
             >
               <TabsTrigger
@@ -117,7 +124,7 @@ export function EducationSection() {
               </TabsTrigger>
               <TabsTrigger
                 value='certifications'
-                className='relative flex h-10 flex-1 items-center justify-center gap-2 rounded-xl text-base font-bold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400/60 data-[state=active]:bg-slate-700 data-[state=active]:text-white data-[state=inactive]:text-slate-200 data-[state=active]:shadow-lg data-[state=active]:shadow-slate-500/20'
+                className='relative flex h-10 flex-1 items-center justify-center gap-2 rounded-xl text-base font-bold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400/60 data-[state=active]:bg-orange-600 data-[state=active]:text-white data-[state=inactive]:text-slate-200 data-[state=active]:shadow-lg data-[state=active]:shadow-slate-500/20'
                 role='tab'
                 aria-selected={activeTab === 'certifications'}
               >
@@ -126,7 +133,7 @@ export function EducationSection() {
                 {activeTab === 'certifications' && (
                   <motion.div
                     layoutId='tabIndicator'
-                    className='absolute inset-0 -z-10 rounded-xl bg-slate-700'
+                    className='absolute inset-0 -z-10 rounded-xl bg-orange-500'
                     initial={false}
                     transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                   />
@@ -134,48 +141,63 @@ export function EducationSection() {
               </TabsTrigger>
             </TabsList>
 
-            <TabsContent
-              value='education'
-              className='space-y-4'
-              role='tabpanel'
-              aria-labelledby='education-tab'
-            >
+            <TabsContent value='education' className='space-y-8'>
               {educationData.map((edu, index) => {
                 const displayedCourses = showAllCourses
                   ? edu.coursework
-                  : edu.coursework.slice(0, 4);
+                  : edu.coursework ? edu.coursework.slice(0, 6) : null;
 
                 return (
                   <motion.div
                     key={index}
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    transition={{ 
+                      duration: 0.6, 
+                      delay: index * 0.15,
+                      ease: [0.22, 1, 0.36, 1]
+                    }}
                     viewport={{ once: true }}
                   >
-                    <Card
-                      data-item-id={edu.id}
-                      className='group overflow-hidden rounded-xl border-none bg-transparent backdrop-blur-sm transition-all duration-500'
-                    >
-                      <CardContent className='p-0'>
-                        <div className='flex items-start gap-4 p-6'>
+                    <Card className='group relative overflow-hidden rounded-2xl border-none bg-transparent transition-all duration-500'>
+                      {/* Enterprise glow effect */}
+                      
+                      {/* Active indicator for current education */}
+                      {edu.isActive && (
+                        <>
+                          <div className='absolute right-6 top-6 flex items-center gap-2'>
+                            <div className='relative flex h-3 w-3 items-center justify-center'>
+                              <div className='absolute h-3 w-3 animate-ping rounded-full bg-emerald-400/75' />
+                              <div className='relative h-2 w-2 rounded-full bg-emerald-400' />
+                            </div>
+                            <span className='text-xs font-semibold uppercase tracking-wider text-emerald-400'>
+                              Current
+                            </span>
+                          </div>
+                        </>
+                      )}
+
+                      <CardContent className='relative p-8'>
+                        <div className='flex items-start gap-6'>
+                          {/* Enhanced logo section */}
                           <div className='relative flex-shrink-0'>
-                            <div className='h-16 w-16 rounded-xl border border-slate-600/30 bg-white/5 p-3 shadow-md backdrop-blur-sm'>
+                            <div className='relative h-20 w-20 rounded-2xl border border-slate-600/30 bg-white/8 p-4 shadow-xl backdrop-blur-sm'>
                               <img
                                 src={edu.logo}
                                 alt={`${edu.institution} logo`}
-                                className='h-full w-full object-contain brightness-110 filter'
+                                className='h-full w-full object-contain brightness-110 contrast-110 filter'
                               />
                             </div>
-                            <div className='absolute -bottom-1.5 -right-1.5 flex h-6 w-6 items-center justify-center rounded-lg border-2 border-slate-900 bg-gradient-to-br from-blue-500 to-indigo-600 shadow-md'>
-                              <edu.icon className='h-3 w-3 text-white' />
+                            <div className='absolute -bottom-2 -right-2 flex h-8 w-8 items-center justify-center rounded-xl border-2 border-slate-900 bg-gradient-to-br from-blue-600 to-indigo-700 shadow-lg'>
+                              <edu.icon className='h-4 w-4 text-white' />
                             </div>
                           </div>
 
                           <div className='min-w-0 flex-1'>
-                            <div className='mb-4 flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between'>
-                              <div className='min-w-0'>
-                                <h3 className='mb-1 text-xl font-bold leading-tight text-white'>
+                            {/* Header section */}
+                            <div className='mb-6 flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between'>
+                              <div className='min-w-0 flex-1'>
+                                <h3 className='mb-2 text-2xl font-bold leading-tight text-white'>
                                   {edu.degree}
                                 </h3>
                                 <a
@@ -188,34 +210,31 @@ export function EducationSection() {
                                   }
                                   target='_blank'
                                   rel='noopener noreferrer'
-                                  className='inline-flex items-center gap-2 bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text pl-0.5 pr-1.5 text-base font-semibold text-transparent transition-all duration-300'
+                                  className='group/link inline-flex items-center gap-2 text-lg font-semibold text-slate-300 transition-all duration-300 hover:text-blue-400'
                                 >
                                   {edu.institution}
-                                  <ExternalLink className='h-4 w-4 text-slate-400 transition-colors group-hover/link:text-blue-400' />
+                                  <ExternalLink className='h-4 w-4 transition-all duration-300 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5' />
                                 </a>
                                 {edu.concentration && (
-                                  <p className='text-sm text-slate-400'>
-                                    <span className='font-medium text-slate-300'>
-                                      Concentration:
-                                    </span>{' '}
+                                  <p className='mt-2 flex items-center gap-2 text-sm text-slate-400'>
+                                    <span className='h-1.5 w-1.5 rounded-full bg-blue-400' />
+                                    <span className='font-medium text-slate-300'>Concentration:</span>
                                     {edu.concentration}
                                   </p>
                                 )}
                               </div>
-                              <div className='flex flex-wrap gap-2 lg:flex-col lg:items-end'>
-                                <Badge
-                                  variant='outline'
-                                  className='border-slate-600 bg-slate-800/50 px-3 py-1.5 text-xs font-medium text-slate-200 shadow-sm transition-all duration-200'
-                                >
-                                  <Calendar className='mr-1.5 h-3 w-3' />
+                              
+                              {/* Professional badges */}
+                              <div className='flex flex-wrap gap-3 lg:flex-col lg:items-end'>
+                                <Badge className='bg-transparent px-0 py-2 border border-none text-sm font-semibold text-slate-200 backdrop-blur-sm'>
+                                  <Calendar className='mr-2 h-4 w-4' />
                                   {edu.period}
                                 </Badge>
                                 <Badge
-                                  variant='outline'
-                                  className={`px-3 py-1.5 text-xs font-medium shadow-sm transition-all duration-200 ${
-                                    edu.status === 'In Progress'
-                                      ? 'border-amber-500/40 bg-amber-500/20 text-amber-300'
-                                      : 'border-emerald-500/40 bg-emerald-500/20 text-emerald-300'
+                                  className={`px-4 py-2 text-sm font-semibold shadow-lg backdrop-blur-sm ${
+                                    edu.status === 'Current'
+                                      ? 'border-emerald-500/50 bg-emerald-500/20 text-emerald-300'
+                                      : 'border-blue-500/50 bg-blue-500/20 text-blue-300'
                                   }`}
                                 >
                                   {edu.status}
@@ -223,80 +242,54 @@ export function EducationSection() {
                               </div>
                             </div>
 
-                            {edu.coursework.length > 0 && (
-                              <div className='border-t border-slate-700/30 pt-4'>
-                                <div className='mb-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between'>
-                                  <h4 className='flex items-center gap-2 text-sm font-semibold text-slate-200'>
-                                    <div className='h-1.5 w-1.5 rounded-full bg-gradient-to-r from-blue-400 to-indigo-500'></div>
-                                    Relevant Coursework
-                                    <span className='text-xs font-normal text-slate-400'>
-                                      ({edu.coursework.length})
+                            {/* Coursework section */}
+                            {edu.coursework && edu.coursework.length > 0 && (
+                              <div className='rounded-xl bg-transparent pt-6 backdrop-blur-sm'>
+                                <div className='mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between'>
+                                  <h4 className='flex items-center gap-3 text-lg font-semibold text-white'>
+                                    Academic Coursework
+                                    <span className='rounded-full bg-slate-700/80 px-3 py-1 text-sm font-medium text-slate-300'>
+                                      {edu.coursework.length} courses
                                     </span>
                                   </h4>
-                                  {edu.coursework.length > 4 && (
+                                  {edu.coursework.length > 6 && (
                                     <button
                                       onClick={() => setShowAllCourses(!showAllCourses)}
-                                      className='flex w-fit items-center gap-2 rounded-lg border border-slate-700 bg-slate-800/80 px-3 py-1 text-xs font-semibold text-blue-500 shadow-sm transition-all duration-200 hover:bg-blue-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-400/70 sm:w-auto'
-                                      aria-label={
-                                        showAllCourses ? 'Show fewer courses' : 'Show all courses'
-                                      }
-                                      tabIndex={0}
-                                      style={{
-                                        cursor: 'pointer',
-                                        minWidth: 110,
-                                      }}
+                                      className='flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold text-blue-400 shadow-lg backdrop-blur-sm transition-all duration-300 bg-transparent focus:outline-none focus:ring-2 focus:ring-blue-400/50'
                                     >
                                       <span>
                                         {showAllCourses
                                           ? 'Show Less'
-                                          : `Show All (${edu.coursework.length})`}
+                                          : `View All`}
                                       </span>
                                       <motion.div
-                                        animate={{
-                                          rotate: showAllCourses ? 180 : 0,
-                                        }}
-                                        transition={{ duration: 0.2 }}
-                                        className='inline-block'
+                                        animate={{ rotate: showAllCourses ? 180 : 0 }}
+                                        transition={{ duration: 0.3, ease: 'easeInOut' }}
                                       >
-                                        <svg
-                                          className='h-3 w-3'
-                                          fill='none'
-                                          stroke='currentColor'
-                                          viewBox='0 0 24 24'
-                                        >
-                                          <path
-                                            strokeLinecap='round'
-                                            strokeLinejoin='round'
-                                            strokeWidth={2}
-                                            d='M19 9l-7 7-7-7'
-                                          />
+                                        <svg className='h-4 w-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                                          <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M19 9l-7 7-7-7' />
                                         </svg>
                                       </motion.div>
                                     </button>
                                   )}
                                 </div>
-                                <div className='grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3'>
-                                  {displayedCourses.map((course, courseIndex) => (
+                                
+                                <div className='grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3'>
+                                  {displayedCourses && displayedCourses.map((course, courseIndex) => (
                                     <motion.div
                                       key={courseIndex}
-                                      initial={{ opacity: 0, scale: 0.95 }}
+                                      initial={{ opacity: 0, scale: 0.9 }}
                                       animate={{ opacity: 1, scale: 1 }}
                                       transition={{
-                                        duration: 0.2,
-                                        delay: courseIndex * 0.05,
+                                      duration: 0.3,
+                                      delay: courseIndex * 0.05,
+                                      ease: [0.22, 1, 0.36, 1]
                                       }}
-                                      className='flex h-[32px] min-h-[32px] w-full items-center gap-2 rounded-lg border border-slate-800 bg-slate-900/95 px-2.5 py-1 shadow-sm'
-                                      style={{
-                                        justifyContent: 'flex-start',
-                                        alignItems: 'center',
-                                      }}
+                                      className='group/course relative flex items-center gap-3 rounded-lg border border-transparent bg-transparent px-4 py-3 shadow-lg backdrop-blur-sm transition-all duration-300 hover:border-blue-500/50'
                                     >
-                                      <span className='h-1.5 w-1.5 flex-shrink-0 rounded-full bg-slate-700'></span>
-                                      <span
-                                        className='flex-1 truncate whitespace-normal break-words text-left text-[0.82rem] font-medium leading-tight text-slate-300'
-                                        title={course}
-                                      >
-                                        {course}
+                                      <div className='h-2 w-2 flex-shrink-0 rounded-full bg-gradient-to-r from-blue-400 to-indigo-500 transition-all duration-300 group-hover/course:scale-110' />
+                                      <span className='text-sm font-medium leading-tight text-slate-200 group-hover/course:text-white'>
+                                      {course}
                                       </span>
                                     </motion.div>
                                   ))}
@@ -312,86 +305,108 @@ export function EducationSection() {
               })}
             </TabsContent>
 
-            <TabsContent
-              value='certifications'
-              className='space-y-4'
-              role='tabpanel'
-              aria-labelledby='certifications-tab'
-            >
+            <TabsContent value='certifications' className='space-y-8'>
               {certificationData.map((cert, index) => (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  transition={{ 
+                    duration: 0.6, 
+                    delay: index * 0.15,
+                    ease: [0.22, 1, 0.36, 1]
+                  }}
                   viewport={{ once: true }}
                 >
-                  <Card
-                    data-item-id={cert.id}
-                    className='group overflow-hidden rounded-xl border-none bg-transparent backdrop-blur-sm transition-all duration-500'
-                  >
-                    <CardContent className='p-0'>
-                      <div className='flex items-start gap-4 p-6'>
+                  <Card className='group relative overflow-hidden rounded-2xl border-none bg-transparent transition-all duration-500'>
+                    {/* Enterprise glow effect */}
+                    
+                    {/* Active indicator */}
+                    <div className='absolute right-6 top-6 flex items-center gap-2'>
+                      <div className='relative flex h-3 w-3 items-center justify-center'>
+                        <div className='absolute h-3 w-3 animate-ping rounded-full bg-emerald-400/75' />
+                        <div className='relative h-2 w-2 rounded-full bg-emerald-400' />
+                      </div>
+                      <span className='text-xs font-semibold uppercase tracking-wider text-emerald-400'>
+                        Valid
+                      </span>
+                    </div>
+
+                    <CardContent className='relative p-8'>
+                      <div className='flex items-start gap-6'>
+                        {/* Enhanced logo section */}
                         <div className='relative flex-shrink-0'>
-                          <div className='h-16 w-16 rounded-xl border border-slate-600/30 bg-white/5 p-3 shadow-md backdrop-blur-sm'>
+                          <div className='relative h-20 w-20 rounded-2xl border border-slate-600/30 bg-white/8 p-4 shadow-xl backdrop-blur-sm'>
                             <img
                               src={cert.logo}
                               alt={`${cert.issuer} logo`}
-                              className='h-full w-full object-contain brightness-110 filter'
+                              className='h-full w-full object-contain brightness-110 contrast-110 filter'
                             />
                           </div>
-                          <div className='absolute -bottom-1.5 -right-1.5 flex h-6 w-6 items-center justify-center rounded-lg border-2 border-slate-900 bg-gradient-to-br from-orange-500 to-yellow-500 shadow-md'>
-                            <cert.icon className='h-3 w-3 text-white' />
+                          <div className='absolute -bottom-2 -right-2 flex h-8 w-8 items-center justify-center rounded-xl border-2 border-slate-900 bg-gradient-to-br from-orange-600 to-yellow-600 shadow-lg'>
+                            <cert.icon className='h-4 w-4 text-white' />
                           </div>
                         </div>
 
                         <div className='min-w-0 flex-1'>
-                          <div className='mb-3 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between'>
-                            <div className='min-w-0'>
-                              <h3 className='mb-1 text-xl font-bold leading-tight text-white'>
+                          {/* Header section */}
+                          <div className='mb-6 flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between'>
+                            <div className='min-w-0 flex-1'>
+                              <h3 className='mb-2 text-2xl font-bold leading-tight text-white'>
                                 {cert.title}
                               </h3>
                               <a
-                                href={
-                                  cert.issuer === 'Amazon Web Services'
-                                    ? 'https://aws.amazon.com/certification/certified-cloud-practitioner/'
-                                    : '#'
-                                }
+                                href={cert.verificationUrl}
                                 target='_blank'
                                 rel='noopener noreferrer'
-                                className='inline-flex items-center gap-2 bg-gradient-to-r from-orange-400 to-yellow-400 bg-clip-text pl-0.5 pr-1.5 text-base font-semibold text-transparent transition-all duration-300'
+                                className='group/link inline-flex items-center gap-2 text-lg font-semibold text-slate-300 transition-all duration-300 hover:text-orange-400'
                               >
                                 {cert.issuer}
-                                <ExternalLink className='h-4 w-4 text-slate-400 transition-colors group-hover/link:text-blue-400' />
+                                <ExternalLink className='h-4 w-4 transition-all duration-300 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5' />
                               </a>
+                              {cert.credentialId && (
+                                <div className='mt-2 flex items-center gap-2 text-sm text-slate-400'>
+                                  <span className='font-medium text-slate-300'>Credential ID:</span>
+                                  <div className='group/copy relative'>
+                                    <button
+                                      onClick={() => {
+                                        navigator.clipboard.writeText(cert.credentialId);
+                                      }}
+                                      className='inline-flex items-center gap-2 rounded-lg border border-slate-700/50 bg-slate-800/80 px-3 py-1.5 font-mono text-xs text-orange-400 transition-all duration-300 hover:border-orange-500/50 hover:bg-slate-800/90 hover:text-orange-300 focus:outline-none focus:ring-2 focus:ring-orange-400/50'
+                                    >
+                                      <span>{cert.credentialId}</span>
+                                      <svg 
+                                        className='h-3.5 w-3.5 transition-all duration-200 group-hover/copy:scale-110' 
+                                        fill='none' 
+                                        stroke='currentColor' 
+                                        viewBox='0 0 24 24'
+                                      >
+                                        <path 
+                                          strokeLinecap='round' 
+                                          strokeLinejoin='round' 
+                                          strokeWidth={2} 
+                                          d='M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z' 
+                                        />
+                                      </svg>
+                                    </button>
+                                    <div className='pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 rounded-md bg-slate-900 px-2 py-1 text-xs text-white opacity-0 shadow-lg transition-opacity duration-200 group-hover/copy:opacity-100'>
+                                      Click to copy
+                                    </div>
+                                  </div>
+                                </div>
+                              )}
                             </div>
-                            <div className='flex flex-shrink-0 gap-2'>
-                              <Badge
-                                variant='outline'
-                                className='border-slate-600 bg-slate-800/50 px-3 py-1.5 text-xs font-medium text-slate-200 shadow-sm'
-                              >
-                                <Calendar className='mr-1.5 h-3 w-3' />
+                            
+                            {/* Professional badges */}
+                            <div className='flex flex-wrap gap-3 lg:flex-col lg:items-end'>
+                              <Badge className='bg-transparent px-0 py-2 border border-none text-sm font-semibold text-slate-200 backdrop-blur-sm'>
+                                <Calendar className='mr-2 h-4 w-4' />
                                 {cert.period}
                               </Badge>
-                              <Badge
-                                variant='outline'
-                                className='border-emerald-500/40 bg-emerald-500/20 px-3 py-1.5 text-xs font-medium text-emerald-300 shadow-sm'
-                              >
+                              <Badge className='border-emerald-500/50 bg-emerald-500/20 px-4 py-2 text-sm font-semibold text-emerald-300 shadow-lg backdrop-blur-sm'>
                                 {cert.status}
                               </Badge>
                             </div>
-                          </div>
-
-                          <div className='border-t border-slate-700/30 pt-3'>
-                            <h4 className='mb-2 flex items-center gap-2 text-sm font-semibold text-slate-200'>
-                              <div className='h-1.5 w-1.5 rounded-full bg-orange-400'></div>
-                              Professional Certification
-                            </h4>
-                            <p className='text-sm leading-relaxed text-slate-400'>
-                              Industry-recognized certification demonstrating expertise in cloud
-                              computing fundamentals, AWS services, security, and best practices for
-                              cloud architecture.
-                            </p>
                           </div>
                         </div>
                       </div>
