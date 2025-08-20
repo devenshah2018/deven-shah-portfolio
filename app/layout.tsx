@@ -9,11 +9,11 @@ import { LayoutWrapper } from '@/components/layout-wrapper';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://deven.shah'),
-  title: 'Deven Shah - Co-founder/CTO | Software Engineer',
+  metadataBase: new URL('https://deven-shah-portfolio.vercel.app'),
+  title: 'Deven Shah - Software Engineer',
   description:
-    'Portfolio of Deven Shah, Co-founder/CTO of Suno Analytics and Graduate MSCS student at Boston University',
-  keywords: ['Deven Shah', 'Software Engineer', 'CTO', 'Suno Analytics', 'Portfolio'],
+    'Portfolio of Deven Shah, the Co-founder & CTO of Suno Analytics and Graduate MSCS student at Boston University',
+  keywords: ['Deven Shah', 'Software Engineer', 'CTO', 'Suno Analytics', 'Portfolio', 'Patelco', 'NetApp'],
   authors: [{ name: 'Deven Shah' }],
   openGraph: {
     title: 'Deven Shah - Co-founder/CTO | Software Engineer',
