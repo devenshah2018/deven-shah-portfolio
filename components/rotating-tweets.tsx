@@ -53,6 +53,11 @@ const TWEETS = [
     text: `Incredible past few months. 10xed (or at least caught up with y’all) in engineering scalable ML systems thru trial & collaboration. Excited to share more soon 🙌`,
     date: '12:24 AM · Aug 20, 2025',
   },
+    {
+    id: '11',
+    text: `Incredible past few months. 10xed (or at least caught up with y’all) in engineering scalable ML systems thru trial & collaboration. Excited to share more soon 🙌`,
+    date: '05:36 PM · Aug 20, 2025',
+  },
 ];
 
 interface RotatingTweetsProps {
