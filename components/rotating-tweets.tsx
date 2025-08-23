@@ -53,12 +53,31 @@ const TWEETS = [
     text: `Incredible past few months. 10xed (or at least caught up with y’all) in engineering scalable ML systems thru trial & collaboration. Excited to share more soon 🙌`,
     date: '12:24 AM · Aug 20, 2025',
   },
-    {
+  {
     id: '11',
-    text: `Incredible past few months. 10xed (or at least caught up with y’all) in engineering scalable ML systems thru trial & collaboration. Excited to share more soon 🙌`,
+    text: `My first crack at creating a model distribution server using MLflow and MinIO. Next I want to expand the registry with a couple more models and increase observability across MLflow/MinIO.`,
     date: '05:36 PM · Aug 20, 2025',
   },
+  {
+    id: '12',
+    text: `@Minio blessing us with local S3 is a gamechanger ⚡️`,
+    date: '04:27 PM · Aug 21, 2025',
+  },
+  {
+    id: '13',
+    text: `I like to think of an agent as a car and MCP as a road. Agents can run on top of MCPs but they aren’t alternatives. MCPs are kinda like building blocks for agents`,
+    date: '12:12 PM · Aug 23, 2025',
+  },
 ];
+
+const shuffleArray = (array: any[]) => {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+};
 
 interface RotatingTweetsProps {
   className?: string;
@@ -66,16 +85,17 @@ interface RotatingTweetsProps {
 
 export function RotatingTweets({ className }: RotatingTweetsProps) {
   const [index, setIndex] = useState(0);
+  const [shuffledTweets] = useState(() => shuffleArray(TWEETS));
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     timeoutRef.current = setTimeout(() => {
-      setIndex(prev => (prev + 1) % TWEETS.length);
+      setIndex(prev => (prev + 1) % shuffledTweets.length);
     }, 10000);
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
-  }, [index]);
+  }, [index, shuffledTweets.length]);
 
   return (
     <div
@@ -84,16 +104,16 @@ export function RotatingTweets({ className }: RotatingTweetsProps) {
     >
       <div className='relative min-h-[220px] w-full'>
         <AnimatePresence mode='wait' initial={false}>
-          {TWEETS[index] && (
+          {shuffledTweets[index] && (
             <motion.div
-              key={TWEETS[index].id}
+              key={shuffledTweets[index].id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.5 }}
               className='absolute inset-0 h-auto min-h-[220px] w-full'
               tabIndex={0}
-              aria-label={`View tweet: ${TWEETS[index].text}`}
+              aria-label={`View tweet: ${shuffledTweets[index].text}`}
             >
               <div className='flex h-auto min-h-[220px] w-full flex-col overflow-hidden rounded-2xl border border-[#26282b] bg-[#18191b] shadow-xl'>
                 <div className='flex items-center gap-3 px-6 pb-2 pt-5'>
@@ -109,11 +129,26 @@ export function RotatingTweets({ className }: RotatingTweetsProps) {
                     <span className='text-sm text-[#8899a6]'>@devenshah2018</span>
                   </div>
                   <span className='ml-auto text-xs text-[#8899a6]'>
-                    {TWEETS[index].date.replace(/\b(\w{3}) (\d{4})\b/, 'Feb 4')}
+                    {shuffledTweets[index].date.replace(/\b(\w{3}) (\d{4})\b/, 'Feb 4')}
                   </span>
                 </div>
                 <div className='whitespace-pre-line px-6 pb-5 text-left text-lg leading-snug text-white'>
-                  {TWEETS[index].text}
+                  {shuffledTweets[index].text.split(/(@\w+|#\w+|https?:\/\/\S+)/g).map((part: string, i: number) => {
+                    if (part.match(/^@\w+$/)) {
+                      return <span key={i} className='text-blue-400 font-semibold'>{part}</span>;
+                    }
+                    if (part.match(/^#\w+$/)) {
+                      return <span key={i} className='text-blue-400'>{part}</span>;
+                    }
+                    if (part.match(/^https?:\/\/\S+$/)) {
+                      return (
+                        <a key={i} href={part} target='_blank' rel='noopener noreferrer' className='text-blue-400 underline'>
+                          {part}
+                        </a>
+                      );
+                    }
+                    return <span key={i}>{part}</span>;
+                  })}
                 </div>
               </div>
             </motion.div>
