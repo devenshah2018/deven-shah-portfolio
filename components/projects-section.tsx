@@ -16,7 +16,9 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { QodeIdeModal } from '@/components/qode-ide-modal';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import dynamic from 'next/dynamic';
+const ReadMeMarkdown = dynamic(() => import('./ReadMeMarkdown'), { ssr: false });
 
 const projects = [
   {
@@ -43,6 +45,7 @@ const projects = [
       'Advanced animation system',
       'Real-time Strava integration',
     ],
+    readMe: true
   },
   {
     id: 'qode-project',
@@ -73,6 +76,7 @@ const projects = [
       'Complete quantum gate library',
       'Educational documentation',
     ],
+    readMe: true
   },
   {
     id: 'ares-project',
@@ -199,7 +203,7 @@ const projects = [
       'Feature Selection',
     ],
     type: 'github',
-    link: 'https://github.com/devenshah/braf-classifier',
+    link: 'https://github.com/devenshah2018/small-molecule-mutation-prediction',
     status: 'Completed',
     gradient: 'from-green-500 via-emerald-500 to-teal-500',
     icon: Zap,
@@ -214,6 +218,7 @@ const projects = [
       'Automated performance logging',
       'Tunable variance thresholds',
     ],
+    readMe: true
   },
 ];
 
@@ -221,6 +226,8 @@ export function ProjectsSection() {
   const [qodeModalOpen, setQodeModalOpen] = useState(false);
   const [allProjectsExpanded, setAllProjectsExpanded] = useState(false);
   const [showAllProjects, setShowAllProjects] = useState(false);
+  const [readMeModalOpen, setReadMeModalOpen] = useState(false);
+  const [readMeContent, setReadMeContent] = useState('');
 
   const toggleAllProjects = () => {
     setAllProjectsExpanded(!allProjectsExpanded);
@@ -241,6 +248,24 @@ export function ProjectsSection() {
       window.open('https://github.com/devenshah', '_blank');
     }
   };
+
+  async function handleViewReadMe(project: typeof projects[0]) {
+    setReadMeContent('Loading...');
+    setReadMeModalOpen(true);
+    try {
+      const repoUrl = project.link.replace('https://github.com/', '');
+      const apiUrl = `https://raw.githubusercontent.com/${repoUrl}/main/README.md`;
+      const res = await fetch(apiUrl);
+      if (res.ok) {
+        const text = await res.text();
+        setReadMeContent(text);
+      } else {
+        setReadMeContent('README not found or repo is private.');
+      }
+    } catch {
+      setReadMeContent('Failed to load README.');
+    }
+  }
 
   return (
     <section id='projects' className='bg-gradient-to-b from-slate-950 to-slate-900 py-20 sm:py-28'>
@@ -420,6 +445,17 @@ export function ProjectsSection() {
                               Live
                             </Button>
                           )}
+                          {project.readMe && (
+                            <Button
+                              onClick={() => handleViewReadMe(project)}
+                              variant='outline'
+                              size='sm'
+                              className='h-7 border-slate-600 px-3 py-1 text-xs hover:border-blue-500 text-blue-300'
+                            >
+                              <Code className='mr-1 h-3 w-3' />
+                              README
+                            </Button>
+                          )}
                         </div>
                         <Button
                           onClick={() => handleProjectAction(project)}
@@ -484,6 +520,33 @@ export function ProjectsSection() {
       </div>
 
       <QodeIdeModal open={qodeModalOpen} onOpenChange={setQodeModalOpen} />
+
+      {readMeModalOpen && (
+        <div
+          className='fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/80 backdrop-blur-sm'
+          onClick={() => setReadMeModalOpen(false)}
+        >
+          <Card
+            className='w-full max-w-5xl h-[90vh] flex flex-col bg-slate-950 p-8 rounded-2xl shadow-2xl border border-blue-900/30'
+            onClick={e => e.stopPropagation()}
+          >
+            <CardHeader className='mb-2'>
+              <CardTitle className='text-3xl font-extrabold text-white flex items-center gap-3'>
+                <Code className='h-7 w-7 text-blue-400 drop-shadow' />
+                <span className='text-blue-400'>README.md</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className='flex-1 overflow-y-auto'>
+              <div className='prose prose-invert prose-xl w-full text-slate-100 text-lg bg-slate-950/80 rounded-2xl shadow-inner p-6'>
+                <ReadMeMarkdown readMeContent={readMeContent} />
+              </div>
+            </CardContent>
+            <div className='flex justify-end mt-4'>
+              <Button onClick={() => setReadMeModalOpen(false)} variant='outline' className='text-blue-300 border-blue-500'>Close</Button>
+            </div>
+          </Card>
+        </div>
+      )}
     </section>
   );
 }
