@@ -96,7 +96,7 @@ export function ContactSection() {
   ];
 
   return (
-    <section id='contact' className='bg-gradient-to-b from-slate-950 to-slate-900 py-32'>
+    <section id='contact' className='bg-gradient-to-b from-slate-900 to-slate-950 py-32'>
       <div className='container mx-auto px-6 lg:px-8'>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
