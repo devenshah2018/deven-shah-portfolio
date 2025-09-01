@@ -68,6 +68,15 @@ const TWEETS = [
     text: `I like to think of an agent as a car and MCP as a road. Agents can run on top of MCPs but they aren’t alternatives. MCPs are kinda like building blocks for agents`,
     date: '12:12 PM · Aug 23, 2025',
   },
+  {
+    id: '14',
+    text: `Is the AI bubble finally bursting??
+
+Vibe coding was never going to last and we often get mistaken that today's AI is still just a tool, not some AGI sorcery. 
+
+The future = devs + AI. You can’t replace an engineer.`,
+    date: '07:23 PM · Aug 29, 2025',
+  },
 ];
 
 const shuffleArray = (array: any[]) => {
