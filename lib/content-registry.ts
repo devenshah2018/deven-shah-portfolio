@@ -1231,6 +1231,10 @@ export const EDUCATION = [
     icon: GraduationCap,
     logo: '/bu-logo.png',
     isActive: true,
+    coursework: [
+        'Operating Systems',
+        'Analysis of Algorithms'
+    ]
   },
   {
     id: 'sjsu-bachelors',
@@ -1241,14 +1245,12 @@ export const EDUCATION = [
     coursework: [
       'Data Structures & Algorithms',
       'Assembly Language Programming',
-      'Operating Systems',
       'Object Oriented Design',
       'Information Security',
       'Machine Learning & Big Data',
       'Computer Networks',
       'Software Architecture & Design',
       'Database Management Systems',
-      'Web Development Technologies',
     ],
     gradient: 'from-indigo-500 to-purple-500',
     icon: GraduationCap,
