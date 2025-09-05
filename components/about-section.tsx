@@ -6,7 +6,7 @@ import { ExternalLink } from 'lucide-react';
 import { SkillModal } from '@/components/skill-modal';
 import { RotatingTweets } from '@/components/rotating-tweets';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXTwitter } from '@fortawesome/free-brands-svg-icons';
+import { faXTwitter, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { getStravaStats } from '@/lib/utils';
 import { CATEGORIZED_SKILLS, LINKS, SKILL_CATEGORIES, SKILL_MAPPINGS } from '@/lib/content-registry';
 
@@ -15,6 +15,8 @@ export function AboutSection() {
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const [currentAchievementIndex, setCurrentAchievementIndex] = useState(0);
+  const [currentPostType, setCurrentPostType] = useState<'tweet' | 'linkedin'>('tweet');
+
   interface ActivityTotals {
     count: number;
     distance: number;
@@ -108,6 +110,9 @@ export function AboutSection() {
     const educationCount = skillMapping.education?.length || 0;
     return experienceCount + projectCount + educationCount;
   };
+
+  // Listen for post type changes from RotatingTweets
+  const handlePostTypeChange = (type: 'tweet' | 'linkedin') => setCurrentPostType(type);
 
   return (
     <section id='about' className='bg-gradient-to-b from-slate-950 to-slate-900 py-32'>
@@ -341,11 +346,11 @@ export function AboutSection() {
             <div className='flex'>
               <div className='relative min-h-[320px] w-full max-w-md overflow-visible'>
                 <h3 className='mb-3 flex items-center gap-2 text-2xl font-bold text-white'>
-                  <FontAwesomeIcon icon={faXTwitter} className='h-6 w-6 text-blue-400' />
+                  <FontAwesomeIcon icon={currentPostType === 'linkedin' ? faLinkedin : faXTwitter} className='h-6 w-6 text-blue-400' />
                   Recent Thoughts
                 </h3>
                 <div>
-                  <RotatingTweets />
+                  <RotatingTweets onPostTypeChange={handlePostTypeChange} />
                 </div>
               </div>
             </div>

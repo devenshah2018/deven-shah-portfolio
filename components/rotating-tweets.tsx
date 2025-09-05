@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { TWEETS } from '@/lib/content-registry';
+import { TWEETS, LINKEDIN_POSTS } from '@/lib/content-registry';
 
 const shuffleArray = (array: any[]) => {
   const arr = [...array];
@@ -14,21 +14,36 @@ const shuffleArray = (array: any[]) => {
 
 interface RotatingTweetsProps {
   className?: string;
+  onPostTypeChange?: (type: 'tweet' | 'linkedin') => void;
 }
 
-export function RotatingTweets({ className }: RotatingTweetsProps) {
+export function RotatingTweets({ className, onPostTypeChange }: RotatingTweetsProps) {
+  const [shuffledPosts, setShuffledPosts] = useState<any[]>([]);
   const [index, setIndex] = useState(0);
-  const [shuffledTweets] = useState(() => shuffleArray(TWEETS));
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Shuffle posts on mount (client only)
   useEffect(() => {
-    timeoutRef.current = setTimeout(() => {
-      setIndex(prev => (prev + 1) % shuffledTweets.length);
+    setShuffledPosts(shuffleArray([
+      ...TWEETS.map(t => ({ ...t, type: 'tweet' })),
+      ...LINKEDIN_POSTS.map(l => ({ ...l, type: 'linkedin' })),
+    ]));
+  }, []);
+
+  // Rotate posts every 5 seconds
+  useEffect(() => {
+    if (!shuffledPosts.length) return;
+    const interval = setInterval(() => {
+      setIndex(prev => (prev + 1) % shuffledPosts.length);
     }, 10000);
-    return () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    };
-  }, [index, shuffledTweets.length]);
+    return () => clearInterval(interval);
+  }, [shuffledPosts]);
+
+  // Notify parent of post type change
+  useEffect(() => {
+    if (onPostTypeChange && shuffledPosts.length) {
+      onPostTypeChange(shuffledPosts[index]?.type || 'tweet');
+    }
+  }, [index, shuffledPosts, onPostTypeChange]);
 
   return (
     <div
@@ -37,51 +52,87 @@ export function RotatingTweets({ className }: RotatingTweetsProps) {
     >
       <div className='relative min-h-[220px] w-full'>
         <AnimatePresence mode='wait' initial={false}>
-          {shuffledTweets[index] && (
+          {shuffledPosts.length > 0 && shuffledPosts[index] && (
             <motion.div
-              key={shuffledTweets[index].id}
+              key={shuffledPosts[index].id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.5 }}
               className='absolute inset-0 h-auto min-h-[220px] w-full'
               tabIndex={0}
-              aria-label={`View tweet: ${shuffledTweets[index].text}`}
+              aria-label={`View post: ${shuffledPosts[index].text}`}
             >
               <div className='flex h-auto min-h-[220px] w-full flex-col overflow-hidden rounded-2xl border border-[#26282b] bg-[#18191b] shadow-xl'>
                 <div className='flex items-center gap-3 px-6 pb-2 pt-5'>
                   <span className='inline-flex h-12 w-12 items-center justify-center rounded-full border border-[#26282b] bg-[#23272f]'>
-                    <img
-                      src='/x-profile.png'
-                      alt='Deven Shah profile'
-                      className='h-10 w-10 rounded-full object-cover'
-                    />
+                    {shuffledPosts[index].type === 'linkedin' ? (
+                      <img
+                        src='/linkedin-profile.jpeg'
+                        alt='Deven Shah profile'
+                        className='h-10 w-10 rounded-full object-cover'
+                      />
+                    ) : (
+                      <img
+                        src='/x-profile.png'
+                        alt='Deven Shah profile'
+                        className='h-10 w-10 rounded-full object-cover'
+                      />
+                    )}
                   </span>
                   <div className='flex flex-col items-start'>
                     <span className='font-semibold leading-tight text-white'>Deven Shah</span>
-                    <span className='text-sm text-[#8899a6]'>@devenshah2018</span>
+                    <span className='text-sm text-[#8899a6]'>
+                      {shuffledPosts[index].type === 'linkedin' ? '@deven-a-shah' : '@devenshah2018'}
+                    </span>
                   </div>
                   <span className='ml-auto text-xs text-[#8899a6]'>
-                    {shuffledTweets[index].date.replace(/\b(\w{3}) (\d{4})\b/, 'Feb 4')}
+                    {shuffledPosts[index].date}
                   </span>
                 </div>
                 <div className='whitespace-pre-line px-6 pb-5 text-left text-lg leading-snug text-white'>
-                  {shuffledTweets[index].text.split(/(@\w+|#\w+|https?:\/\/\S+)/g).map((part: string, i: number) => {
-                    if (part.match(/^@\w+$/)) {
-                      return <span key={i} className='text-blue-400 font-semibold'>{part}</span>;
+                  {(() => {
+                    const post = shuffledPosts[index];
+                    let tags: string[] = [];
+                    let hashtags: string[] = [];
+                    if (post.type === 'linkedin') {
+                      tags = post.tags || [];
+                      hashtags = post.hashtags || [];
                     }
-                    if (part.match(/^#\w+$/)) {
-                      return <span key={i} className='text-blue-400'>{part}</span>;
-                    }
-                    if (part.match(/^https?:\/\/\S+$/)) {
-                      return (
-                        <a key={i} href={part} target='_blank' rel='noopener noreferrer' className='text-blue-400 underline'>
-                          {part}
-                        </a>
-                      );
-                    }
-                    return <span key={i}>{part}</span>;
-                  })}
+                    // Combine tags and hashtags for LinkedIn, else empty
+                    const highlightList = post.type === 'linkedin' ? [...(tags || []), ...(hashtags || [])] : [];
+                    // Build regex to split on tags/hashtags/mentions/links
+                    const splitRegex = new RegExp(`(${[...highlightList.map(s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')), '@\\w+', '#\\w+', 'https?:\\/\\/\\S+'].filter(Boolean).join('|')})`, 'g');
+                    // Remove 'hashtag' prefix from LinkedIn hashtags in the text before rendering
+                    const cleanText = post.type === 'linkedin' && post.hashtags && post.hashtags.length
+                      ? post.text.replace(/hashtag(?=#\w+)/g, '')
+                      : post.text;
+                    return cleanText.split(splitRegex).map((part: string, i: number) => {
+                      if (post.type === 'linkedin' && highlightList.includes(part)) {
+                        // Style tags and hashtags differently
+                        if ((hashtags || []).includes(part)) {
+                          return <span key={i} className='text-blue-400 font-semibold'>{part}</span>;
+                        }
+                        if ((tags || []).includes(part)) {
+                          return <span key={i} className='text-emerald-400 font-semibold'>{part}</span>;
+                        }
+                      }
+                      if (part.match(/^@\w+$/)) {
+                        return <span key={i} className='text-blue-400 font-semibold'>{part}</span>;
+                      }
+                      if (part.match(/^#\w+$/)) {
+                        return <span key={i} className='text-blue-400'>{part}</span>;
+                      }
+                      if (part.match(/^https?:\/\/\S+$/)) {
+                        return (
+                          <a key={i} href={part} target='_blank' rel='noopener noreferrer' className='text-blue-400 underline'>
+                            {part}
+                          </a>
+                        );
+                      }
+                      return <span key={i}>{part}</span>;
+                    });
+                  })()}
                 </div>
               </div>
             </motion.div>

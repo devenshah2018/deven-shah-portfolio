@@ -88,6 +88,37 @@ The future = devs + AI. You can’t replace an engineer.`,
   },
 ];
 
+export const LINKEDIN_POSTS = [
+    {
+        id: '1',
+        text: `Thrilled to be among the selected students to participate in the Build Projects this semester! I’ll be working on a drone path planning system for high-quality image capture, applying robotics and software development concepts under the guidance of an industry expert.
+
+Grateful to The Build Fellowship by Open Avenues and Boston University for this opportunity. Can’t wait to get started!`,
+        date: '08:34 PM · Aug 31, 2025',
+        tags: ['The Build Fellowship by Open Avenues', 'Boston University']
+    },
+        {
+        id: '2',
+        text: `I’m happy to share that I am pursuing my Master's in Computer Science at Boston University! 
+
+Excited to expand my knowledge at the intersection of AI and cybersecurity, take on challenging projects, and connect with brilliant minds. I look forward to meeting new peers and making the most of this next chapter in my academic and professional growth.`,
+        date: '07:40 PM · Aug 15, 2025',
+        tags: ['Boston University']
+    },
+            {
+        id: '3',
+        text: `Exciting news! I just finished my first day as an Associate Application Developer at Patelco. Can't wait to learn and grow with such a dynamic team. Here's to a bright future! hashtag#newjob hashtag#associateapplicationdeveloper hashtag#patelco`,
+        date: '08:52 PM · Apr 10, 2023',
+        hashtags: ['#newjob', '#associateapplicationdeveloper', '#patelco']
+    },
+            {
+        id: '4',
+        text: `I’m happy to share that I’ve obtained a new certification: Amazon Web Services Cloud Practitioner from Amazon Web Services (AWS)!`,
+        date: '03:56 PM · Feb 15, 2023',
+        tags: ['Amazon Web Services (AWS)']
+    }
+]
+
 export const SKILLS = {
   languages: [
     'Python',
