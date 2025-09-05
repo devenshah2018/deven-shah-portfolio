@@ -141,8 +141,7 @@ export function AboutSection() {
             >
               Passionate builder bridging advanced technology with real-world impact. I architect,
               code, and launch products at the intersection of AI, analytics, and security. As a
-              frequent Spartan Race competitor and current Ironman 140.6 trainee, physical fitness
-              has become a cornerstone of my life, driving my discipline and resilience.
+              frequent Spartan Race competitor, physical fitness has become a cornerstone of my life, driving my discipline and resilience.
             </motion.p>
           </div>
 
@@ -480,47 +479,7 @@ export function AboutSection() {
                       </div>
 
                       <div className='sm:col-span-1'>
-                        <div className='group relative flex h-[60px] flex-col justify-center overflow-hidden rounded-lg border border-slate-600/40 bg-gradient-to-br from-slate-800/40 via-orange-900/20 to-amber-900/15 p-2 backdrop-blur-sm transition-all duration-500 ease-out hover:border-orange-400/30 hover:shadow-lg hover:shadow-orange-500/5 sm:h-[70px] sm:p-3'>
-                          <div className='from-orange-400/3 via-amber-400/2 to-orange-400/3 absolute inset-0 bg-gradient-to-r opacity-0 transition-opacity duration-700 ease-out group-hover:opacity-100'></div>
-
-                          <div className='relative z-10 flex h-full flex-col justify-center space-y-1'>
-                            <div className='flex items-center gap-2'>
-                              <div className='relative'>
-                                <svg
-                                  className='h-3 w-3 text-orange-400 transition-colors duration-300 group-hover:text-orange-400 sm:h-4 sm:w-4'
-                                  fill='currentColor'
-                                  viewBox='0 0 24 24'
-                                >
-                                  <path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z' />
-                                </svg>
-                                <div className='absolute inset-0 scale-150 rounded-full bg-orange-400/10 opacity-0 blur-sm transition-opacity duration-500 group-hover:opacity-100'></div>
-                              </div>
-                              <div className='truncate text-sm font-semibold leading-tight text-slate-100 transition-colors duration-300 group-hover:text-white sm:text-base'>
-                                Ironman 140.6
-                              </div>
-                            </div>
-
-                            <div className='flex items-center justify-between'>
-                              <span className='text-xs font-medium text-slate-400 transition-colors duration-300 group-hover:text-slate-300 sm:text-sm'>
-                                Triathlon
-                              </span>
-                              <div className='flex items-center gap-1 font-medium text-amber-400/70 transition-colors duration-300 group-hover:text-amber-400'>
-                                <svg
-                                  className='h-2.5 w-2.5 sm:h-3 sm:w-3'
-                                  fill='currentColor'
-                                  viewBox='0 0 24 24'
-                                >
-                                  <path d='M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z' />
-                                </svg>
-                                <span className='text-xs font-medium sm:text-sm'>Oct 2025</span>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className='absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-orange-500/20 to-transparent'></div>
-
-                          <div className='absolute right-0 top-0 h-2 w-2 rounded-bl-lg bg-gradient-to-br from-orange-400/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100'></div>
-                        </div>
+                        {/* Ironman 140.6 card removed */}
                       </div>
                     </div>
                   </div>
