@@ -6,60 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { GraduationCap, Award, Calendar, ExternalLink } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { useState } from 'react';
-
-const educationData = [
-  {
-    id: 'bu-masters',
-    degree: 'M.S. in Computer Science',
-    institution: 'Boston University',
-    period: '2025 – Present',
-    status: 'Current',
-    concentration: 'Data Analytics',
-    gradient: 'from-blue-500 to-cyan-500',
-    icon: GraduationCap,
-    logo: '/bu-logo.png',
-    isActive: true,
-  },
-  {
-    id: 'sjsu-bachelors',
-    degree: 'B.S. in Software Engineering',
-    institution: 'San Jose State University',
-    period: '2018 – 2022',
-    status: 'Graduated',
-    coursework: [
-      'Data Structures & Algorithms',
-      'Assembly Language Programming',
-      'Operating Systems',
-      'Object Oriented Design',
-      'Information Security',
-      'Machine Learning & Big Data',
-      'Computer Networks',
-      'Software Architecture & Design',
-      'Database Management Systems',
-      'Web Development Technologies',
-    ],
-    gradient: 'from-indigo-500 to-purple-500',
-    icon: GraduationCap,
-    logo: '/sjsu-logo.png',
-    isActive: false,
-  },
-];
-
-const certificationData = [
-  {
-    id: 'aws-cloud-practitioner',
-    title: 'AWS Certified Cloud Practitioner',
-    issuer: 'Amazon Web Services',
-    period: '2023',
-    status: 'Active',
-    credentialId: 'ZEM1DCJCTEFEQEKT',
-    validUntil: 'Feb 2026',
-    gradient: 'from-orange-500 to-yellow-500',
-    icon: Award,
-    logo: '/aws-logo.jpg',
-    verificationUrl: 'https://aws.amazon.com/verification',
-  },
-];
+import { CERTIFICATIONS, EDUCATION } from '@/lib/content-registry';
 
 export function EducationSection() {
   const [activeTab, setActiveTab] = useState('education');
@@ -137,7 +84,7 @@ export function EducationSection() {
             </TabsList>
 
             <TabsContent value='education' className='space-y-4 sm:space-y-8'>
-              {educationData.map((edu, index) => {
+              {EDUCATION.map((edu, index) => {
                 const displayedCourses = showAllCourses
                   ? edu.coursework
                   : edu.coursework
@@ -310,7 +257,7 @@ export function EducationSection() {
             </TabsContent>
 
             <TabsContent value='certifications' className='space-y-4 sm:space-y-8'>
-              {certificationData.map((cert, index) => (
+              {CERTIFICATIONS.map((cert, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, y: 20 }}

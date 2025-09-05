@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { LINKS } from '@/lib/content-registry';
 import { Github, Linkedin, Mail, ArrowUp } from 'lucide-react';
 
 export function Footer() {
@@ -23,7 +24,7 @@ export function Footer() {
           <div className='flex items-center gap-4'>
             <Button variant='ghost' size='icon' asChild>
               <a
-                href='https://linkedin.com/in/deven-a-shah'
+                href={LINKS.linkedin}
                 target='_blank'
                 rel='noopener noreferrer'
               >
@@ -31,12 +32,12 @@ export function Footer() {
               </a>
             </Button>
             <Button variant='ghost' size='icon' asChild>
-              <a href='https://github.com/devenshah2018' target='_blank' rel='noopener noreferrer'>
+              <a href={LINKS.github} target='_blank' rel='noopener noreferrer'>
                 <Github className='h-4 w-4' />
               </a>
             </Button>
             <Button variant='ghost' size='icon' asChild>
-              <a href='mailto:devenshah2018@gmail.com'>
+              <a href={`mailto:${LINKS.email}`}>
                 <Mail className='h-4 w-4' />
               </a>
             </Button>

@@ -21,6 +21,7 @@ import { faXTwitter } from '@fortawesome/free-brands-svg-icons';
 import { motion } from 'framer-motion';
 import '@calcom/atoms/globals.min.css';
 import { getCalApi } from '@calcom/embed-react';
+import { LINKS } from '@/lib/content-registry';
 
 export function ContactSection() {
   const [formData, setFormData] = useState({
@@ -43,7 +44,7 @@ export function ContactSection() {
     setIsSubmitting(true);
 
     try {
-      const mailtoLink = `mailto:devenshah2018@gmail.com?subject=${encodeURIComponent(
+      const mailtoLink = `mailto:${LINKS.email}?subject=${encodeURIComponent(
         `[Portfolio Contact] ${formData.subject}`
       )}&body=${encodeURIComponent(`${formData.message}`)}`;
 
@@ -68,28 +69,28 @@ export function ContactSection() {
     {
       name: 'Email',
       icon: Mail,
-      url: 'mailto:devenshah2018@gmail.com',
-      handle: 'devenshah2018@gmail.com',
+      url: `mailto:${LINKS.email}`,
+      handle: LINKS.email,
       gradient: 'from-red-500 to-pink-500',
     },
     {
       name: 'LinkedIn',
       icon: Linkedin,
-      url: 'https://www.linkedin.com/in/deven-a-shah/',
+      url: LINKS.linkedin,
       handle: '/in/deven-a-shah',
       gradient: 'from-blue-500 to-cyan-500',
     },
     {
       name: 'GitHub',
       icon: Github,
-      url: 'https://github.com/devenshah2018',
+      url: LINKS.github,
       handle: '/devenshah2018',
       gradient: 'from-slate-500 to-slate-600',
     },
     {
       name: 'Twitter',
       icon: faXTwitter,
-      url: 'https://x.com/devenshah2018',
+      url: LINKS.x,
       handle: '@devenshah2018',
       gradient: 'from-slate-700 to-slate-800',
     },

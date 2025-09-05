@@ -14,65 +14,7 @@ import {
   ChevronUp,
 } from 'lucide-react';
 import { motion } from 'framer-motion';
-
-const experiences = [
-  {
-    id: 'suno-analytics',
-    title: 'Co-Founder & CTO',
-    company: 'Suno Analytics',
-    companyLogo: '/suno-logo.jpeg',
-    location: 'Remote',
-    period: '12/2024 – Present',
-    description:
-      'Built an e-commerce analytics platform offering deep insights and AI agents for inventory management.',
-    achievements: [
-      'Led a global development team, improving project timelines and consistently delivering key initiatives to clients',
-      'Developed AI agents via LangGraph, intuitive interfaces using React, and scalable PostgreSQL backend systems',
-      'Designed system architecture for high availability and performance, ensuring robust data handling',
-      'Conduct client discovery and demos, driving engagement with companies up to $50M ARR',
-    ],
-    featured: true,
-    gradient: 'from-blue-500 to-cyan-500',
-    link: 'https://www.sunoanalytics.com',
-  },
-  {
-    id: 'patelco',
-    title: 'Application Developer',
-    company: 'Patelco',
-    companyLogo: '/patelco-logo.png',
-    location: 'Dublin, CA',
-    period: '04/2023 – 04/2024',
-    description:
-      'Responsible for developing full-stack applications to streamline the acquisition of new Patelco members.',
-    achievements: [
-      'Developed full-stack features using Azure and ASP.NET, improving member acquisition with SFDC expertise',
-      'Lead administrative tool development for acquisition monitoring, ensuring alignment with business needs',
-      'Automated fraud request submission process, reducing handling time and ensuring SLA compliance',
-      'Created a virtual appointment scheduling system, reducing branch visits for members (Q2 Hackathon winner)',
-      'Developed a HELOAN/HELOC rate update automation web app to achieve a 1000% increase in efficiency',
-    ],
-    gradient: 'from-indigo-500 to-purple-500',
-    link: 'https://www.patelco.org',
-  },
-  {
-    id: 'netapp',
-    title: 'Solutions Architect Intern',
-    company: 'NetApp',
-    companyLogo: '/netapp-logo.png',
-    location: 'San Jose, CA',
-    period: '05/2021 – 12/2022',
-    description:
-      'Automated big data management and supported sales meetings by gathering client requirements.',
-    achievements: [
-      'Automated data backup solutions, cutting RMAN time by 50% using Oracle and ONTAP expertise',
-      'Developed scripts for performance insights, enhancing data analysis with Oracle and SQL skills',
-      'Created alert system for storage health, reducing monitoring time by 90% with Python and Bash',
-      'Migrated legacy system API to REST, improving integration with modern applications',
-    ],
-    gradient: 'from-emerald-500 to-teal-500',
-    link: 'https://www.netapp.com',
-  },
-];
+import { EXPERIENCES } from '@/lib/content-registry';
 
 export function ExperienceSection() {
   const [allExpanded, setAllExpanded] = useState(false);
@@ -115,7 +57,7 @@ export function ExperienceSection() {
             </motion.p>
           </div>
           <div className='grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3'>
-            {experiences.map((exp, index) => (
+            {EXPERIENCES.map((exp, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 30 }}
@@ -125,7 +67,7 @@ export function ExperienceSection() {
                 className='relative'
               >
                 {/* Separator line - positioned exactly between cards */}
-                {index < experiences.length - 1 && (
+                {index < EXPERIENCES.length - 1 && (
                   <>
                     {/* Mobile horizontal separator */}
                     <div className='absolute left-1/2 top-full h-px w-32 -translate-x-1/2 translate-y-4 bg-gradient-to-r from-transparent via-slate-600 to-transparent md:hidden' />

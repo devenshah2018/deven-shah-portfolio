@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Route } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { LINKS } from '@/lib/content-registry';
 
 interface NavigationProps {
   onStartTour?: () => void;
@@ -129,7 +130,7 @@ export function Navigation({ onStartTour }: NavigationProps) {
                         <div className='rounded-lg border border-slate-700/40 bg-slate-950/90 p-2 shadow-xl backdrop-blur-lg'>
                           <div className='flex items-center gap-2'>
                             <a
-                              href='https://github.com/devenshah2018'
+                              href={LINKS.github}
                               target='_blank'
                               rel='noopener noreferrer'
                               className='group/item flex h-7 w-7 items-center justify-center rounded bg-slate-800/30 text-slate-500 transition-all duration-150 hover:scale-105 hover:bg-slate-700/50 hover:text-slate-200'
@@ -141,7 +142,7 @@ export function Navigation({ onStartTour }: NavigationProps) {
                             </a>
 
                             <a
-                              href='https://www.linkedin.com/in/deven-a-shah/'
+                              href={LINKS.linkedin}
                               target='_blank'
                               rel='noopener noreferrer'
                               className='group/item flex h-7 w-7 items-center justify-center rounded bg-slate-800/30 text-slate-500 transition-all duration-150 hover:scale-105 hover:bg-blue-600/15 hover:text-blue-400'
@@ -153,7 +154,7 @@ export function Navigation({ onStartTour }: NavigationProps) {
                             </a>
 
                             <a
-                              href='mailto:devenshah2018@gmail.com'
+                              href={`mailto:${LINKS.email}`}
                               className='group/item flex h-7 w-7 items-center justify-center rounded bg-slate-800/30 text-slate-500 transition-all duration-150 hover:scale-105 hover:bg-green-600/15 hover:text-green-400'
                               aria-label='Email Contact'
                             >
@@ -173,7 +174,7 @@ export function Navigation({ onStartTour }: NavigationProps) {
                             </a>
 
                             <a
-                              href='https://x.com/devenshah2018'
+                              href={LINKS.x}
                               target='_blank'
                               rel='noopener noreferrer'
                               className='group/item flex h-7 w-7 items-center justify-center rounded bg-slate-800/30 text-slate-500 transition-all duration-150 hover:scale-105 hover:bg-slate-600/20 hover:text-slate-200'

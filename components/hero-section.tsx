@@ -7,6 +7,7 @@ import { Download, Mail, Github, Linkedin, Activity } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
+import { LINKS } from '@/lib/content-registry';
 
 const GitHubCalendar = dynamic(
   () =>
@@ -95,13 +96,13 @@ export function HeroSection() {
             transition={{ duration: 0.8, delay: 0.8 }}
             className='mb-10 flex items-center justify-center gap-6'
           >
-            <Link href='https://github.com/devenshah2018' target='_blank' rel='noopener noreferrer'>
+            <Link href={LINKS.github} target='_blank' rel='noopener noreferrer'>
               <Button variant='ghost' size='lg' className='p-3 hover:bg-gray-800'>
                 <Github className='h-6 w-6' />
               </Button>
             </Link>
             <Link
-              href='https://linkedin.com/in/deven-a-shah'
+              href={LINKS.linkedin}
               target='_blank'
               rel='noopener noreferrer'
             >
@@ -109,14 +110,13 @@ export function HeroSection() {
                 <Linkedin className='h-6 w-6' />
               </Button>
             </Link>
-            <Link href='mailto:devenshah2018@gmail.com' target='_blank' rel='noopener noreferrer'>
+            <Link href={`mailto:${LINKS.email}`} target='_blank' rel='noopener noreferrer'>
               <Button variant='ghost' size='lg' className='p-3 hover:bg-gray-800'>
                 <Mail className='h-6 w-6' />
               </Button>
             </Link>
-            <Link href='https://x.com/devenshah2018' target='_blank' rel='noopener noreferrer'>
+            <Link href={LINKS.x} target='_blank' rel='noopener noreferrer'>
               <Button variant='ghost' size='lg' className='p-3 hover:bg-gray-800'>
-                {/* X icon using SVG for X (Twitter) */}
                 <FontAwesomeIcon icon={faXTwitter} className='h-6 w-6 text-white' />
               </Button>
             </Link>
