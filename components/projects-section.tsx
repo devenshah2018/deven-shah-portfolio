@@ -3,24 +3,44 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import {
-  ExternalLink,
-  Code,
-  Calendar,
-  Award,
-  Zap,
-  ChevronDown,
-  ChevronUp,
-  Github,
-  Globe,
-} from 'lucide-react';
+import { Code, Calendar, Award, Zap } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { QodeIdeModal } from '@/components/qode-ide-modal';
-import React, { useState } from 'react';
-import dynamic from 'next/dynamic';
-const ReadMeMarkdown = dynamic(() => import('./ReadMeMarkdown'), { ssr: false });
+import React, { useState, useMemo } from 'react';
 
-const projects = [
+type Project = {
+  id: string;
+  title: string;
+  subtitle: string;
+  period: string;
+  sortDate: string;
+  description: string;
+  fullDescription?: string;
+  technologies: string[];
+  allTechnologies?: string[];
+  type: string;
+  link: string;
+  status: string;
+  gradient?: string;
+  icon: any;
+  highlights?: string[];
+  achievements?: string[];
+  readMe?: boolean;
+  categories?: string[];
+};
+
+const projectCategories = [
+  { key: 'all', label: 'All' },
+  { key: 'web', label: 'Web' },
+  { key: 'ai', label: 'AI/ML' },
+  { key: 'security', label: 'Security' },
+  { key: 'devops', label: 'DevOps' },
+  { key: 'quantum', label: 'Quantum' },
+  { key: 'data', label: 'Data' },
+  { key: 'infra', label: 'Infrastructure' },
+  { key: 'other', label: 'Other' },
+];
+
+const projects: Project[] = [
   {
     id: 'portfolio-project',
     title: 'Portfolio Website',
@@ -45,7 +65,8 @@ const projects = [
       'Advanced animation system',
       'Real-time Strava integration',
     ],
-    readMe: true
+    readMe: true,
+    categories: ['web'],
   },
   {
     id: 'qode-project',
@@ -63,7 +84,7 @@ const projects = [
       'WebAssembly',
       'Quantum Computing',
       'Compiler Design',
-      'Language Design'
+      'Language Design',
     ],
     type: 'github',
     link: 'https://github.com/devenshah2018/qode',
@@ -76,7 +97,8 @@ const projects = [
       'Complete quantum gate library',
       'Educational documentation',
     ],
-    readMe: true
+    readMe: true,
+    categories: ['quantum', 'web'],
   },
   {
     id: 'ares-project',
@@ -111,6 +133,7 @@ const projects = [
       'Buildspace S5 cohort member',
       '4.8/5 marketplace rating',
     ],
+    categories: ['security', 'devops'],
   },
   {
     id: 'crypto-forecasting-project',
@@ -145,6 +168,7 @@ const projects = [
       'Synthetic data innovation',
       'Academic research contribution',
     ],
+    categories: ['ai', 'data'],
   },
   {
     id: 'model-distribution-server',
@@ -180,6 +204,7 @@ const projects = [
       'ONNX format conversion support',
       'Dockerized deployment pipeline',
     ],
+    categories: ['ai', 'infra', 'devops'],
   },
   {
     id: 'molecule-mutation-prediction',
@@ -218,58 +243,33 @@ const projects = [
       'Automated performance logging',
       'Tunable variance thresholds',
     ],
-    readMe: true
+    readMe: true,
+    categories: ['ai', 'data'],
   },
 ];
 
+function getProjectCategories(project: Project): string[] {
+  return project.categories || ['other'];
+}
+
 export function ProjectsSection() {
-  const [qodeModalOpen, setQodeModalOpen] = useState(false);
-  const [allProjectsExpanded, setAllProjectsExpanded] = useState(false);
-  const [showAllProjects, setShowAllProjects] = useState(false);
-  const [readMeModalOpen, setReadMeModalOpen] = useState(false);
-  const [readMeContent, setReadMeContent] = useState('');
+  const [activeCategory, setActiveCategory] = useState<string>('all');
 
-  const toggleAllProjects = () => {
-    setAllProjectsExpanded(!allProjectsExpanded);
-  };
-
-  const displayedProjects = showAllProjects
-    ? projects.sort((a, b) => b.sortDate.localeCompare(a.sortDate))
-    : projects.sort((a, b) => b.sortDate.localeCompare(a.sortDate)).slice(0, 6);
-
-  const handleProjectAction = (project: (typeof projects)[0]) => {
-    if (project.type === 'ide') {
-      setQodeModalOpen(true);
-    } else if (project.type === 'link') {
-      window.open(project.link, '_blank');
-    } else if (project.type === 'github') {
-      window.open(project.link, '_blank');
-    } else {
-      window.open('https://github.com/devenshah', '_blank');
-    }
-  };
-
-  async function handleViewReadMe(project: typeof projects[0]) {
-    setReadMeContent('Loading...');
-    setReadMeModalOpen(true);
-    try {
-      const repoUrl = project.link.replace('https://github.com/', '');
-      const apiUrl = `https://raw.githubusercontent.com/${repoUrl}/main/README.md`;
-      const res = await fetch(apiUrl);
-      if (res.ok) {
-        const text = await res.text();
-        setReadMeContent(text);
-      } else {
-        setReadMeContent('README not found or repo is private.');
-      }
-    } catch {
-      setReadMeContent('Failed to load README.');
-    }
-  }
+  const filteredProjects = useMemo(() => {
+    return projects.filter((project: Project) => {
+      const matchesCategory =
+        activeCategory === 'all' ||
+        getProjectCategories(project).includes(activeCategory);
+      return matchesCategory;
+    });
+  }, [activeCategory]);
 
   return (
-    <section id='projects' className='bg-gradient-to-b from-slate-950 to-slate-900 py-20 sm:py-28'>
-      <div className='container mx-auto px-2 sm:px-6 lg:px-8'>
+    <section
+      id='projects'
+      className='bg-gradient-to-b from-slate-950 to-slate-900 py-24'
+    >
+      <div className='container mx-auto px-4 lg:px-8'>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -277,7 +277,7 @@ export function ProjectsSection() {
           viewport={{ once: true }}
           className='mx-auto max-w-7xl'
         >
-          <div className='relative mb-10 text-center sm:mb-16'>
+          <div className='mb-10 text-center'>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -286,7 +286,7 @@ export function ProjectsSection() {
               className='mb-4'
             >
               <h2 className='mb-2 bg-gradient-to-r from-white to-slate-300 bg-clip-text text-4xl font-bold tracking-tight text-transparent sm:text-5xl'>
-                Featured Projects
+                Projects
               </h2>
               <div className='mx-auto h-1 w-16 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500' />
             </motion.div>
@@ -297,256 +297,119 @@ export function ProjectsSection() {
               viewport={{ once: true }}
               className='mx-auto max-w-3xl text-base font-light leading-relaxed text-slate-400 sm:text-lg'
             >
-              Quantum, security, and ML—each project is a leap forward.
+              Explore a wide range of projects—filter, search, and discover.
             </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              viewport={{ once: true }}
-              className='absolute right-0'
-            >
-              <Button
-                onClick={toggleAllProjects}
-                variant='outline'
-                size='sm'
-                className='border-slate-700 bg-slate-800/50 text-slate-300 hover:border-slate-600 hover:bg-slate-700/50'
-              >
-                {allProjectsExpanded ? (
-                  <>
-                    <ChevronUp className='mr-2 h-4 w-4' />
-                    Collapse
-                  </>
-                ) : (
-                  <>
-                    <ChevronDown className='mr-2 h-4 w-4' />
-                    Expand
-                  </>
-                )}
-              </Button>
-            </motion.div>
           </div>
 
-          <div className='grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3'>
-            {displayedProjects.map((project, index) => {
-              return (
-                <motion.div
-                  key={project.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.15 }}
-                  viewport={{ once: true }}
-                  className='group'
+          {/* Category Filter Bar */}
+          <div className='mb-8 flex flex-wrap gap-2 justify-center'>
+            {projectCategories.map((cat) => (
+              <Button
+                key={cat.key}
+                variant={activeCategory === cat.key ? 'default' : 'outline'}
+                className={`rounded-full px-5 py-2 text-sm font-semibold transition-all ${
+                  activeCategory === cat.key
+                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white'
+                    : 'border-slate-700 bg-slate-900/50 text-slate-300 hover:border-blue-500 hover:text-blue-400'
+                }`}
+                onClick={() => setActiveCategory(cat.key)}
+              >
+                {cat.label}
+              </Button>
+            ))}
+          </div>
+
+          {/* Projects Grid */}
+          <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3'>
+            {filteredProjects.length === 0 && (
+              <div className='col-span-full text-center text-slate-500 py-12'>
+                No projects found.
+              </div>
+            )}
+            {filteredProjects.map((project: Project, idx: number) => (
+              <motion.div
+                key={project.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: idx * 0.08 }}
+                viewport={{ once: true }}
+                className='group'
+              >
+                <Card
+                  className='flex flex-col h-full border-none bg-transparent transition-all duration-300 rounded-xl overflow-hidden'
                 >
-                  <Card
-                    data-item-id={project.id}
-                    className='flex h-full flex-col gap-0 overflow-hidden rounded-xl border border-transparent bg-transparent backdrop-blur-sm transition-all duration-500 hover:border-2 hover:border-blue-500'
-                  >
-                    <CardHeader className='pb-4'>
-                      <div className='mb-4 flex items-center justify-between'>
-                        <span
-                          className={`flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-semibold ${
-                            project.status === 'Live'
-                              ? 'border-emerald-700/50 bg-emerald-950/50 text-emerald-300'
-                              : project.status === 'In Progress'
-                                ? 'border-blue-700/50 bg-blue-950/50 text-blue-300'
-                                : project.status === 'Completed'
-                                  ? 'border-amber-700/50 bg-amber-950/50 text-amber-300'
-                                  : 'border-slate-700/50 bg-slate-900/50 text-slate-300'
-                          }`}
-                        >
-                          {project.status === 'Live' && (
-                            <div className='relative'>
-                              <div className='h-2 w-2 rounded-full bg-emerald-400'></div>
-                              <div className='absolute inset-0 h-2 w-2 animate-ping rounded-full bg-emerald-400 opacity-75'></div>
-                            </div>
-                          )}
-                          {project.status}
-                        </span>
-                        <p className='flex items-center gap-1 text-xs text-slate-500'>
-                          <Calendar className='h-3 w-3' />
-                          {project.period}
-                        </p>
-                      </div>
-                      <CardTitle className='mb-1 text-xl font-bold text-white transition-colors'>
+                  <CardHeader className='pb-3 flex flex-row items-start gap-3 justify-between'>
+                    <div className='flex items-center gap-3 flex-1 min-w-0'>
+                      <CardTitle className='text-lg font-bold text-white break-words whitespace-normal'>
                         {project.title}
                       </CardTitle>
-                      <p className='mb-2 text-sm text-slate-400'>{project.subtitle}</p>
-                    </CardHeader>
-                    <CardContent className='flex flex-1 flex-col pt-0'>
-                      <div className='flex-1 space-y-4'>
-                        <p className='text-sm leading-relaxed text-slate-300'>
-                          {allProjectsExpanded ? project.fullDescription : project.description}
-                        </p>
-
-                        <div className='flex flex-wrap gap-2'>
-                          {(allProjectsExpanded
-                            ? project.allTechnologies
-                            : project.technologies
-                          ).map((tech, i) => (
-                            <Badge
-                              key={i}
-                              variant='outline'
-                              className='border-slate-700 bg-slate-800/50 text-xs text-slate-300'
-                            >
-                              {tech}
-                            </Badge>
-                          ))}
-                        </div>
-
-                        <ul className='space-y-1'>
-                          {(allProjectsExpanded ? project.achievements : project.highlights).map(
-                            (item, i) => (
-                              <li key={i} className='flex items-start gap-2 text-xs text-slate-400'>
-                                <span className='mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-blue-400'></span>
-                                {item}
-                              </li>
-                            )
-                          )}
-                        </ul>
-
-                        {allProjectsExpanded && (project as any).metrics && (
-                          <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: 'auto' }}
-                            exit={{ opacity: 0, height: 0 }}
-                            className='rounded-lg border border-slate-700/50 bg-slate-800/30 p-3'
+                    </div>
+                    <div className='flex flex-col items-end flex-shrink-0 min-w-[0]'>
+                      <span
+                        className='flex items-center gap-1 rounded px-2 py-0.5 text-xs font-medium text-slate-400 max-w-[140px] whitespace-nowrap overflow-hidden text-ellipsis'
+                        title={project.period}
+                      >
+                        <Calendar className='h-3 w-3 mr-1 text-slate-400' />
+                        {project.period}
+                      </span>
+                    </div>
+                  </CardHeader>
+                  <CardContent className='flex-1 flex flex-col justify-between pt-0'>
+                    <div>
+                      <div className='flex flex-wrap gap-1 mb-2'>
+                        {project.technologies?.slice(0, 4).map((tech: string, i: number) => (
+                          <Badge
+                            key={i}
+                            variant='outline'
+                            className='border-slate-700 bg-slate-800/50 text-xs text-slate-300'
                           >
-                            <p className='mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400'>
-                              Project Metrics
-                            </p>
-                            <div className='grid grid-cols-2 gap-2'>
-                              {Object.entries((project as any).metrics).map(
-                                ([key, value]: [string, any]) => (
-                                  <div key={key} className='text-center'>
-                                    <p className='text-lg font-bold text-white'>{value}</p>
-                                    <p className='text-xs capitalize text-slate-400'>
-                                      {key.replace(/([A-Z])/g, ' $1').toLowerCase()}
-                                    </p>
-                                  </div>
-                                )
-                              )}
-                            </div>
-                          </motion.div>
-                        )}
+                            {tech}
+                          </Badge>
+                        ))}
                       </div>
-
-                      <div className='mt-auto flex items-center justify-between pt-4'>
-                        <div className='flex gap-2'>
-                          {allProjectsExpanded && (project as any).liveLink && (
-                            <Button
-                              onClick={() => window.open((project as any).liveLink, '_blank')}
-                              variant='outline'
-                              size='sm'
-                              className='h-7 border-slate-600 px-3 py-1 text-xs hover:border-slate-500'
-                            >
-                              <Globe className='mr-1 h-3 w-3' />
-                              Live
-                            </Button>
-                          )}
-                          {project.readMe && (
-                            <Button
-                              onClick={() => handleViewReadMe(project)}
-                              variant='outline'
-                              size='sm'
-                              className='h-7 border-slate-600 px-3 py-1 text-xs hover:border-blue-500 text-blue-300'
-                            >
-                              <Code className='mr-1 h-3 w-3' />
-                              README
-                            </Button>
-                          )}
-                        </div>
-                        <Button
-                          onClick={() => handleProjectAction(project)}
-                          className='h-7 bg-gradient-to-r from-blue-600 to-blue-700 px-3 py-1 text-xs text-white hover:from-blue-500 hover:to-blue-600'
-                          size='sm'
+                      <p className='text-sm text-slate-300 mb-2'>
+                        {project.description}
+                      </p>
+                    </div>
+                    <div className='flex items-center justify-between mt-2'>
+                      <span
+                        className={`rounded-full px-2 py-0.5 text-sm ${
+                          project.status === 'Live'
+                            ? 'bg-emerald-900/60 text-emerald-300'
+                            : project.status === 'In Progress'
+                            ? 'bg-blue-900/60 text-blue-300'
+                            : 'bg-slate-800/60 text-slate-400'
+                        }`}
+                      >
+                        {project.status}
+                      </span>
+                      <Button
+                        asChild
+                        variant='outline'
+                        className='border-blue-700 text-blue-300 hover:border-blue-500 hover:text-blue-400 text-xs px-3 py-1 h-8 ml-2'
+                      >
+                        <a
+                          href={project.link}
+                          target='_blank'
+                          rel='noopener noreferrer'
                         >
-                          {project.type === 'ide' && (
+                          {project.type === 'github' ? (
                             <>
-                              <Code className='mr-1 h-3 w-3' />
-                              Try IDE
+                              <Code className='mr-1 h-4 w-4 inline' />Code
                             </>
+                          ) : (
+                            <>View</>
                           )}
-                          {(project.type === 'video' || project.type === 'link') && (
-                            <>
-                              <ExternalLink className='mr-1 h-3 w-3' />
-                              View
-                            </>
-                          )}
-                          {project.type === 'github' && (
-                            <>
-                              <Github className='mr-1 h-3 w-3' />
-                              Code
-                            </>
-                          )}
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              );
-            })}
+                        </a>
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
           </div>
-
-          {projects.length > 6 && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              viewport={{ once: true }}
-              className='mt-12 text-center'
-            >
-              <Button
-                onClick={() => setShowAllProjects(!showAllProjects)}
-                variant='outline'
-                className='border-slate-700 bg-slate-800/50 px-8 py-3 text-slate-300 hover:border-slate-600 hover:bg-slate-700/50'
-              >
-                {showAllProjects ? (
-                  <>
-                    <ChevronUp className='mr-2 h-4 w-4' />
-                    Show Less Projects
-                  </>
-                ) : (
-                  <>
-                    <ChevronDown className='mr-2 h-4 w-4' />
-                    Show All Projects ({projects.length - 6} more)
-                  </>
-                )}
-              </Button>
-            </motion.div>
-          )}
         </motion.div>
       </div>
-
-      <QodeIdeModal open={qodeModalOpen} onOpenChange={setQodeModalOpen} />
-
-      {readMeModalOpen && (
-        <div
-          className='fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/80 backdrop-blur-sm'
-          onClick={() => setReadMeModalOpen(false)}
-        >
-          <Card
-            className='w-full max-w-5xl h-[90vh] flex flex-col bg-slate-950 p-8 rounded-2xl shadow-2xl border border-blue-900/30'
-            onClick={e => e.stopPropagation()}
-          >
-            <CardHeader className='mb-2'>
-              <CardTitle className='text-3xl font-extrabold text-white flex items-center gap-3'>
-                <Code className='h-7 w-7 text-blue-400 drop-shadow' />
-                <span className='text-blue-400'>README.md</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent className='flex-1 overflow-y-auto'>
-              <div className='prose prose-invert prose-xl w-full text-slate-100 text-lg bg-slate-950/80 rounded-2xl shadow-inner p-6'>
-                <ReadMeMarkdown readMeContent={readMeContent} />
-              </div>
-            </CardContent>
-            <div className='flex justify-end mt-4'>
-              <Button onClick={() => setReadMeModalOpen(false)} variant='outline' className='text-blue-300 border-blue-500'>Close</Button>
-            </div>
-          </Card>
-        </div>
-      )}
     </section>
   );
 }
