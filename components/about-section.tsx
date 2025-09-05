@@ -8,7 +8,7 @@ import { RotatingTweets } from '@/components/rotating-tweets';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXTwitter } from '@fortawesome/free-brands-svg-icons';
 import { getStravaStats } from '@/lib/utils';
-import { CATEGORIZED_SKILLS, SKILL_CATEGORIES, SKILL_MAPPINGS } from '@/lib/content-registry';
+import { CATEGORIZED_SKILLS, LINKS, SKILL_CATEGORIES, SKILL_MAPPINGS } from '@/lib/content-registry';
 
 export function AboutSection() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -380,7 +380,7 @@ export function AboutSection() {
 
                   <button
                     onClick={() =>
-                      window.open('https://www.strava.com/athletes/123793208', '_blank')
+                      window.open(LINKS.strava, '_blank')
                     }
                     className='group flex items-center justify-center gap-2 rounded-lg border border-orange-600/40 bg-orange-800/20 px-3 py-1.5 text-xs font-medium text-orange-300 backdrop-blur-sm transition-all duration-200 hover:border-orange-500 hover:bg-orange-800/30 hover:text-orange-200 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-slate-900'
                     aria-label='View Strava Profile'

@@ -187,7 +187,7 @@ export function ContactSection() {
                     </Button>
                     <Button
                       onClick={() => {
-                        window.open('https://cal.com/deven-shah-l0qkjk/quick-chat', '_blank');
+                        window.open(LINKS.cal, '_blank');
                       }}
                       size='lg'
                       className='hidden h-12 w-16 items-center justify-center rounded-full border-0 bg-zinc-600 text-base font-semibold text-white outline-none ring-0 transition-all duration-200 hover:bg-zinc-700 focus-visible:ring-4 focus-visible:ring-blue-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 sm:flex sm:h-14 sm:w-16 sm:text-lg sm:font-bold'
