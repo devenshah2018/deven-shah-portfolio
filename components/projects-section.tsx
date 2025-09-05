@@ -22,6 +22,12 @@ export function ProjectsSection() {
         activeCategory === 'all' ||
         getProjectCategories(project).includes(activeCategory);
       return matchesCategory;
+    }).sort((a, b) => {
+      // Sort by descending start date (sortDate field, format: YYYY-MM)
+      if (a.sortDate && b.sortDate) {
+        return b.sortDate.localeCompare(a.sortDate);
+      }
+      return 0;
     });
   }, [activeCategory]);
 
@@ -139,6 +145,8 @@ export function ProjectsSection() {
                             ? 'bg-emerald-900/60 text-emerald-300'
                             : project.status === 'In Progress'
                             ? 'bg-blue-900/60 text-blue-300'
+                            : project.status === 'Paused'
+                            ? 'bg-yellow-900/60 text-yellow-300'
                             : 'bg-slate-800/60 text-slate-400'
                         }`}
                       >

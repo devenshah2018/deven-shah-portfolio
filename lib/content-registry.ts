@@ -200,6 +200,12 @@ export const SKILL_MAPPINGS = [
         id: 'crypto-forecasting-project',
         icon: Zap,
       },
+      {
+        title: "Automated Drone Path Planning",
+        subtitle: "High-Quality Image Capture System to Support Drone Path Planning",
+        id: 'drone-build-project',
+        icon: Zap,
+      }
     ],
     education: [
       {
@@ -1032,13 +1038,13 @@ export const EXPERIENCES = [
 
 export const PROJECT_CATEGORIES = [
   { key: 'all', label: 'All' },
-  { key: 'web', label: 'Web' },
-  { key: 'ai', label: 'AI/ML' },
-  { key: 'security', label: 'Security' },
-  { key: 'devops', label: 'DevOps' },
-  { key: 'quantum', label: 'Quantum' },
-  { key: 'data', label: 'Data' },
-  { key: 'infra', label: 'Infrastructure' },
+  { key: 'web', label: 'Web Applications' },
+  { key: 'ai', label: 'Data Science & Machine Learning' },
+  { key: 'security', label: 'Security & Compliance Tools' },
+  { key: 'devops', label: 'Cloud & DevOps Engineering' },
+  { key: 'research', label: 'Research & Experimental' },
+  { key: 'open', label: 'Open Source & Contributions' },
+    { key: 'infra', label: 'Embedded Systems & Infrastructure' },
   { key: 'other', label: 'Other' },
 ];
 
@@ -1055,14 +1061,6 @@ export const PROJECTS: Project[] = [
     type: 'github',
     link: 'https://github.com/devenshah2018/deven-shah-portfolio',
     status: 'Live',
-    gradient: 'from-purple-500 via-blue-500 to-cyan-500',
-    highlights: ['Interactive guided tour', 'Live IDE integration', 'Responsive design'],
-    achievements: [
-      '100% Lighthouse Performance Score',
-      'Mobile-first responsive design',
-      'Advanced animation system',
-      'Real-time Strava integration',
-    ],
     readMe: true,
     categories: ['web'],
   },
@@ -1077,16 +1075,9 @@ export const PROJECTS: Project[] = [
     technologies: getProjectSkillsFromMapping('qode-project'),
     type: 'github',
     link: 'https://github.com/devenshah2018/qode',
-    status: 'In Progress',
-    gradient: 'from-purple-500 via-blue-500 to-cyan-500',
-    highlights: ['Pure C implementation', 'Quantum circuit virtualization', 'Real-time execution'],
-    achievements: [
-      'WebAssembly compilation support',
-      'Complete quantum gate library',
-      'Educational documentation',
-    ],
+    status: 'Paused',
     readMe: true,
-    categories: ['quantum', 'web'],
+    categories: ['research'],
   },
   {
     id: 'ares-project',
@@ -1100,15 +1091,7 @@ export const PROJECTS: Project[] = [
     type: 'link',
     link: 'http://marketplace.visualstudio.com/items?itemName=strive-ai.strive',
     status: 'Live',
-    gradient: 'from-red-500 via-orange-500 to-yellow-500',
-    highlights: ['VSCode Marketplace launch', 'Automated code security', 'SOC2 compliance'],
-    achievements: [
-      '100+ active organizations',
-      'Microsoft for Startups acceptance',
-      'Buildspace S5 cohort member',
-      '4.8/5 marketplace rating',
-    ],
-    categories: ['security', 'devops'],
+    categories: ['security', 'ai'],
   },
   {
     id: 'crypto-forecasting-project',
@@ -1122,15 +1105,7 @@ export const PROJECTS: Project[] = [
     type: 'github',
     link: 'https://github.com/b-devera/crypto-forecasting-model',
     status: 'Completed',
-    gradient: 'from-green-500 via-emerald-500 to-teal-500',
-    highlights: ['SJSU Expo presentation', 'Synthetic dataset design', 'Trend prediction model'],
-    achievements: [
-      '85% prediction accuracy',
-      'SJSU Expo finalist',
-      'Synthetic data innovation',
-      'Academic research contribution',
-    ],
-    categories: ['ai', 'data'],
+    categories: ['ai', 'research'],
   },
   {
     id: 'model-distribution-server',
@@ -1144,14 +1119,6 @@ export const PROJECTS: Project[] = [
     type: 'github',
     link: 'https://github.com/devenshah2018/model-distribution-server',
     status: 'In Progress',
-    gradient: 'from-emerald-500 via-teal-500 to-cyan-500',
-    highlights: ['MLOps platform', 'Model versioning', 'Scalable storage'],
-    achievements: [
-      'Dual FastAPI server architecture',
-      'MLflow model registry integration',
-      'ONNX format conversion support',
-      'Dockerized deployment pipeline',
-    ],
     categories: ['ai', 'infra', 'devops'],
   },
   {
@@ -1166,20 +1133,23 @@ export const PROJECTS: Project[] = [
     type: 'github',
     link: 'https://github.com/devenshah2018/small-molecule-mutation-prediction',
     status: 'Completed',
-    gradient: 'from-green-500 via-emerald-500 to-teal-500',
-    highlights: [
-      'BRAF V600E mutation targeting',
-      'PubChem compound analysis',
-      'Configurable hyperparameters',
-    ],
-    achievements: [
-      'High-performance compound classification',
-      'ROC curve visualization system',
-      'Automated performance logging',
-      'Tunable variance thresholds',
-    ],
     readMe: true,
-    categories: ['ai', 'data'],
+    categories: ['ai', 'research'],
+  },
+    {
+    id: 'drone-build-project',
+    title: 'Automated Drone Path Planning',
+    subtitle: 'High-Quality Image Capture System to Support Drone Path Planning',
+    period: '09/2025 – Present',
+    sortDate: '2025-09',
+    description:
+      'Capturing high-quality image datasets for applications such as mapping, surveys, digital 3D models, and AI. Supported by The Build Fellowship.',
+    technologies: getProjectSkillsFromMapping('drone-build-project'),
+    type: 'github',
+    link: '',
+    status: 'In Progress',
+    readMe: false,
+    categories: ['ai', 'research'],
   },
 ];
 
