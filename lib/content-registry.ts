@@ -1,4 +1,4 @@
-import { GraduationCap, Briefcase, Zap, Code, Award } from 'lucide-react';
+import { GraduationCap, Briefcase, Zap, Award } from 'lucide-react';
 import { Project } from './types';
 
 export const LINKS = {
@@ -1020,15 +1020,11 @@ export const PROJECTS: Project[] = [
     sortDate: '2025-06',
     description:
       'Personal portfolio built with React, featuring interactive demos, live IDE, and responsive design.',
-    fullDescription:
-      'A comprehensive personal portfolio showcasing my projects, skills, and professional experience. Built with modern React patterns and featuring interactive elements like a live quantum IDE, guided tour system, and responsive design that adapts to all screen sizes. The site includes advanced features like Strava integration for athletic achievements and a sophisticated project showcase.',
-    technologies: ['React', 'TypeScript', 'Tailwind CSS'],
-    allTechnologies: ['React', 'TypeScript', 'Tailwind CSS', 'Next.js'],
+    technologies: getProjectSkillsFromMapping('portfolio-project'),
     type: 'github',
     link: 'https://github.com/devenshah2018/deven-shah-portfolio',
     status: 'Live',
     gradient: 'from-purple-500 via-blue-500 to-cyan-500',
-    icon: Code,
     highlights: ['Interactive guided tour', 'Live IDE integration', 'Responsive design'],
     achievements: [
       '100% Lighthouse Performance Score',
@@ -1047,21 +1043,11 @@ export const PROJECTS: Project[] = [
     sortDate: '2024-10',
     description:
       'Lightweight quantum programming language in C with intuitive syntax for quantum operations and circuits.',
-    fullDescription:
-      'Qode is a comprehensive quantum programming language designed for educational and research purposes. Written entirely in C for maximum performance, it provides an intuitive syntax for quantum operations, gate manipulations, and circuit simulations. The language includes a complete interpreter, virtual quantum machine, and WebAssembly compilation for browser execution.',
-    technologies: ['C', 'Quantum Computing', 'Compiler Design'],
-    allTechnologies: [
-      'C',
-      'WebAssembly',
-      'Quantum Computing',
-      'Compiler Design',
-      'Language Design',
-    ],
+    technologies: getProjectSkillsFromMapping('qode-project'),
     type: 'github',
     link: 'https://github.com/devenshah2018/qode',
     status: 'In Progress',
     gradient: 'from-purple-500 via-blue-500 to-cyan-500',
-    icon: Code,
     highlights: ['Pure C implementation', 'Quantum circuit virtualization', 'Real-time execution'],
     achievements: [
       'WebAssembly compilation support',
@@ -1079,24 +1065,11 @@ export const PROJECTS: Project[] = [
     sortDate: '2024-08',
     description:
       'SOC2 compliance platform leveraging AI and deep cybersecurity technology launched on VSCode Marketplace.',
-    fullDescription:
-      'Ares is an enterprise-grade security compliance platform that automates SOC2 Type 1 and OWASP compliance checking. Built as a VSCode extension using Rust for performance-critical operations and TypeScript for the user interface. Successfully launched on the VSCode Marketplace.',
-    technologies: ['Rust', 'Python', 'TypeScript', 'VSCode Extension'],
-    allTechnologies: [
-      'Rust',
-      'Python',
-      'TypeScript',
-      'VSCode Extension API',
-      'Security Frameworks',
-      'OWASP',
-      'SOC2',
-      'Node.js',
-    ],
+    technologies: getProjectSkillsFromMapping('ares-project'),
     type: 'link',
     link: 'http://marketplace.visualstudio.com/items?itemName=strive-ai.strive',
     status: 'Live',
     gradient: 'from-red-500 via-orange-500 to-yellow-500',
-    icon: Award,
     highlights: ['VSCode Marketplace launch', 'Automated code security', 'SOC2 compliance'],
     achievements: [
       '100+ active organizations',
@@ -1114,24 +1087,11 @@ export const PROJECTS: Project[] = [
     sortDate: '2022-12',
     description:
       'ML model for cryptocurrency trend forecasting using synthetic data. Presented at SJSU Fall 2022 Expo.',
-    fullDescription:
-      'A comprehensive machine learning model designed to forecast cryptocurrency market trends using synthetic data generation and advanced prediction algorithms. The project involved extensive research into time-series analysis, market volatility patterns, and synthetic data generation techniques. Successfully presented at the SJSU Fall 2022 Computer Science Expo as my undergraduate capstone project.',
-    technologies: ['Python', 'Machine Learning', 'Data Science'],
-    allTechnologies: [
-      'Python',
-      'TensorFlow',
-      'Pandas',
-      'NumPy',
-      'Scikit-learn',
-      'Matplotlib',
-      'Jupyter',
-      'Time Series Analysis',
-    ],
+    technologies: getProjectSkillsFromMapping('crypto-forecasting-project'),
     type: 'github',
     link: 'https://github.com/b-devera/crypto-forecasting-model',
     status: 'Completed',
     gradient: 'from-green-500 via-emerald-500 to-teal-500',
-    icon: Zap,
     highlights: ['SJSU Expo presentation', 'Synthetic dataset design', 'Trend prediction model'],
     achievements: [
       '85% prediction accuracy',
@@ -1149,25 +1109,11 @@ export const PROJECTS: Project[] = [
     sortDate: '2025-08',
     description:
       'A comprehensive MLOps platform for training, managing, and serving ML models with MLflow and MinIO S3 storage.',
-    fullDescription:
-      'An MLOps platform featuring dual FastAPI servers for training and inference, integrated with MLflow for model registry and versioning. The system provides automated ML pipelines with RandomForest regression, ONNX format conversion, and scalable storage using PostgreSQL and MinIO S3-compatible object storage. Built with Docker Compose for easy deployment and includes comprehensive REST APIs for model lifecycle management. Coupled with a client user interface for seamless interaction.',
-    technologies: ['Python', 'MinIO', 'MLflow'],
-    allTechnologies: [
-      'Python',
-      'FastAPI',
-      'MLflow',
-      'MinIO S3',
-      'Docker',
-      'ONNX',
-      'Scikit-learn',
-      'Pandas',
-      'Docker',
-    ],
+    technologies: getProjectSkillsFromMapping('model-distribution-server'),
     type: 'github',
     link: 'https://github.com/devenshah2018/model-distribution-server',
     status: 'In Progress',
     gradient: 'from-emerald-500 via-teal-500 to-cyan-500',
-    icon: Zap,
     highlights: ['MLOps platform', 'Model versioning', 'Scalable storage'],
     achievements: [
       'Dual FastAPI server architecture',
@@ -1185,24 +1131,11 @@ export const PROJECTS: Project[] = [
     sortDate: '2023-06',
     description:
       'Support vector machine to identify compounds that inhibit BRAF V600E mutation using PubChem chemical data.',
-    fullDescription:
-      'A comprehensive machine learning model using support vector machines to identify chemical compounds capable of inhibiting the BRAF V600E mutation, a critical target in cancer therapy. The system analyzes chemical compounds retrieved from PubChem database and programmatically determines which molecular attributes affect compound identification. Features configurable hyperparameters, variance thresholds, and multiple kernel options for optimal performance tuning.',
-    technologies: ['Python', 'Machine Learning', 'SVM'],
-    allTechnologies: [
-      'Python',
-      'Scikit-learn',
-      'Pandas',
-      'NumPy',
-      'Matplotlib',
-      'PubChem',
-      'Support Vector Machines',
-      'Feature Selection',
-    ],
+    technologies: getProjectSkillsFromMapping('molecule-mutation-prediction'),
     type: 'github',
     link: 'https://github.com/devenshah2018/small-molecule-mutation-prediction',
     status: 'Completed',
     gradient: 'from-green-500 via-emerald-500 to-teal-500',
-    icon: Zap,
     highlights: [
       'BRAF V600E mutation targeting',
       'PubChem compound analysis',
@@ -1274,3 +1207,19 @@ export const CERTIFICATIONS = [
     verificationUrl: 'https://aws.amazon.com/verification',
   },
 ];
+
+function getProjectSkillsFromMapping(projectId: string) {
+    const mapping = SKILL_MAPPINGS;
+    const skills: string[] = [];
+    mapping.forEach((skill) => {
+        if (skill.projects) {
+            skill.projects.forEach((project) => {
+                if (project.id === projectId) {
+                    skills.push(skill.skill);
+                }
+            });
+        }
+    });
+    return skills;
+    
+}

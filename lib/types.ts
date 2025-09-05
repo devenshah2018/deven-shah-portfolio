@@ -12,7 +12,6 @@ export type Project = {
   link: string;
   status: string;
   gradient?: string;
-  icon: any;
   highlights?: string[];
   achievements?: string[];
   readMe?: boolean;
