@@ -8,7 +8,7 @@ export type Project = {
   fullDescription?: string;
   technologies: string[];
   allTechnologies?: string[];
-  type: string;
+  entry_point: string;
   link: string;
   status: string;
   gradient?: string;
@@ -16,4 +16,5 @@ export type Project = {
   achievements?: string[];
   readMe?: boolean;
   categories?: string[];
+  accessible_at: ('github' | 'vscode' | 'kaggle' | 'hosted')[];
 };

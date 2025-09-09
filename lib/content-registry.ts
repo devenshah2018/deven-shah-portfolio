@@ -1058,12 +1058,13 @@ export const PROJECTS: Project[] = [
     description:
       'Personal portfolio built with React, featuring interactive demos, live IDE, and responsive design.',
     technologies: getProjectSkillsFromMapping('portfolio-project'),
-    type: 'github',
+    entry_point: 'github',
     link: 'https://github.com/devenshah2018/deven-shah-portfolio',
     status: 'Live',
     readMe: true,
     categories: ['web'],
-  },
+    accessible_at: ['hosted', 'github']
+    },
   {
     id: 'qode-project',
     title: 'Qode',
@@ -1073,11 +1074,12 @@ export const PROJECTS: Project[] = [
     description:
       'Lightweight quantum programming language in C with intuitive syntax for quantum operations and circuits.',
     technologies: getProjectSkillsFromMapping('qode-project'),
-    type: 'github',
+    entry_point: 'github',
     link: 'https://github.com/devenshah2018/qode',
     status: 'Paused',
     readMe: true,
     categories: ['research'],
+    accessible_at: ['github']
   },
   {
     id: 'ares-project',
@@ -1088,10 +1090,11 @@ export const PROJECTS: Project[] = [
     description:
       'SOC2 compliance platform leveraging AI and deep cybersecurity technology launched on VSCode Marketplace.',
     technologies: getProjectSkillsFromMapping('ares-project'),
-    type: 'link',
+    entry_point: 'vscode',
     link: 'http://marketplace.visualstudio.com/items?itemName=strive-ai.strive',
     status: 'Live',
     categories: ['security', 'ai'],
+    accessible_at: ['vscode']
   },
   {
     id: 'crypto-forecasting-project',
@@ -1102,10 +1105,11 @@ export const PROJECTS: Project[] = [
     description:
       'ML model for cryptocurrency trend forecasting using synthetic data. Presented at SJSU Fall 2022 Expo.',
     technologies: getProjectSkillsFromMapping('crypto-forecasting-project'),
-    type: 'github',
+    entry_point: 'github',
     link: 'https://github.com/b-devera/crypto-forecasting-model',
     status: 'Completed',
     categories: ['ai', 'research'],
+    accessible_at: ['github']
   },
   {
     id: 'model-distribution-server',
@@ -1116,10 +1120,11 @@ export const PROJECTS: Project[] = [
     description:
       'A comprehensive MLOps platform for training, managing, and serving ML models with MLflow and MinIO S3 storage.',
     technologies: getProjectSkillsFromMapping('model-distribution-server'),
-    type: 'github',
+    entry_point: 'github',
     link: 'https://github.com/devenshah2018/model-distribution-server',
     status: 'In Progress',
     categories: ['ai', 'infra', 'devops'],
+    accessible_at: ['github']
   },
   {
     id: 'molecule-mutation-prediction',
@@ -1130,11 +1135,12 @@ export const PROJECTS: Project[] = [
     description:
       'Support vector machine to identify compounds that inhibit BRAF V600E mutation using PubChem chemical data.',
     technologies: getProjectSkillsFromMapping('molecule-mutation-prediction'),
-    type: 'github',
+    entry_point: 'github',
     link: 'https://github.com/devenshah2018/small-molecule-mutation-prediction',
     status: 'Completed',
     readMe: true,
     categories: ['ai', 'research'],
+    accessible_at: ['github']
   },
     {
     id: 'drone-build-project',
@@ -1145,11 +1151,60 @@ export const PROJECTS: Project[] = [
     description:
       'Capturing high-quality image datasets for applications such as mapping, surveys, digital 3D models, and AI. Supported by The Build Fellowship.',
     technologies: getProjectSkillsFromMapping('drone-build-project'),
-    type: 'github',
+    entry_point: 'github',
     link: '',
     status: 'In Progress',
     readMe: false,
     categories: ['ai', 'research'],
+    accessible_at: ['github']
+  },
+    {
+    id: 'crypto-correlations-project',
+    title: 'Cryptocurrency Price Correlations',
+    subtitle: 'Notebook Analyzing Crypto Asset Relationships',
+    period: '07/2022',
+    sortDate: '2022-07',
+    description:
+      'Kaggle notebook analyzing correlations between cryptocurrency prices using Python, Pandas, and Pearson Correlation.',
+    technologies: getProjectSkillsFromMapping('crypto-correlations-project'),
+    entry_point: 'kaggle',
+    link: 'https://www.kaggle.com/code/devenashah/cryptocurrency-price-correlations',
+    status: 'Completed',
+    readMe: false,
+    categories: ['ai'],
+    accessible_at: ['kaggle', 'github']
+  },
+      {
+    id: 'bull-bear-stocks-project',
+    title: 'Tracking Bear/Bull Runs',
+    subtitle: 'Tracking Bull and Bear Markets in Stocks using ADX',
+    period: '05/2022',
+    sortDate: '2022-05',
+    description:
+      'Using the Average Directional Index (ADX) to identify and visualize bull and bear market trends in stock data with Python and Pandas.',
+    technologies: getProjectSkillsFromMapping('bull-bear-stocks-project'),
+    entry_point: 'kaggle',
+    link: 'https://www.kaggle.com/code/devenashah/tracking-bear-bull-runs-using-adx',
+    status: 'Completed',
+    readMe: false,
+    categories: ['ai'],
+    accessible_at: ['kaggle', 'github']
+  },
+        {
+    id: 'quantum-protein-binding',
+    title: 'Optimal Protein Binding Using Quantum Computing',
+    subtitle: 'Using Grover`s algorithm to find optimal protein binding',
+    period: '09/2024',
+    sortDate: '2024-09',
+    description:
+      'Exploring Grover`s algorithm for optimal protein-ligand binding site identification, enhancing drug discovery with quantum computing.',
+    technologies: getProjectSkillsFromMapping('quantum-protein-binding'),
+    entry_point: 'kaggle',
+    link: 'https://www.kaggle.com/code/devenashah/optimal-protein-binding-using-quantum-computing',
+    status: 'Completed',
+    readMe: false,
+    categories: ['ai'],
+    accessible_at: ['kaggle', 'github']
   },
 ];
 

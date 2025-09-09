@@ -3,7 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Code, Calendar } from 'lucide-react';
+import { Code, Calendar, ExternalLink } from 'lucide-react';
 import { motion } from 'framer-motion';
 import React, { useState, useMemo } from 'react';
 import { PROJECTS, PROJECT_CATEGORIES } from '@/lib/content-registry';
@@ -11,6 +11,33 @@ import { Project } from '@/lib/types';
 
 function getProjectCategories(project: Project): string[] {
   return project.categories || ['other'];
+}
+
+function getAccessibleAtIcons(accessible_at: string[]) {
+  const iconMap: Record<string, { src: string; alt: string }> = {
+    github: { src: '/github-icon.svg', alt: 'GitHub' },
+    kaggle: { src: '/kaggle-icon.png', alt: 'Kaggle' },
+    vscode: { src: '/vscode-icon.png', alt: 'VSCode' },
+    hosted: { src: '/globe.svg', alt: 'Web' },
+    web: { src: '/globe.svg', alt: 'Web' },
+  };
+  return (
+    <div className='flex -space-x-2 mr-2'>
+      {accessible_at.map((val: string, i: number) => {
+        const icon = iconMap[val];
+        if (!icon) return null;
+        return (
+          <img
+            key={i}
+            src={icon.src}
+            alt={icon.alt}
+            className='h-6 w-6 rounded-full bg-slate-100 p-1 border-2 border-slate-200 shadow'
+            style={{ zIndex: 10 - i }}
+          />
+        );
+      })}
+    </div>
+  );
 }
 
 export function ProjectsSection() {
@@ -152,25 +179,40 @@ export function ProjectsSection() {
                       >
                         {project.status}
                       </span>
-                      <Button
-                        asChild
-                        variant='outline'
-                        className='border-blue-700 text-blue-300 hover:border-blue-500 hover:text-blue-400 text-xs px-3 py-1 h-8 ml-2'
-                      >
-                        <a
-                          href={project.link}
-                          target='_blank'
-                          rel='noopener noreferrer'
+                      <div className='flex items-center gap-1 ml-2'>
+                        {/* Accessible At Icons Row - now on the left of the button */}
+                        {Array.isArray(project.accessible_at) && project.accessible_at.length > 0 && (
+                          getAccessibleAtIcons(project.accessible_at)
+                        )}
+                        <Button
+                          asChild
+                          variant="outline"
+                          className="border-2 border-blue-700/80 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-blue-200 font-semibold shadow-lg hover:from-blue-900 hover:to-indigo-900 hover:text-white hover:border-blue-400 transition-all duration-200 rounded-full text-xs px-4 py-2 h-9 flex items-center gap-2 focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:outline-none"
                         >
-                          {project.type === 'github' ? (
-                            <>
-                              <Code className='mr-1 h-4 w-4 inline' />Code
-                            </>
-                          ) : (
-                            <>View</>
-                          )}
-                        </a>
-                      </Button>
+                          <a
+                            href={project.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2"
+                          >
+                            {(() => {
+                              const entry = project.entry_point;
+                              const icons: Record<string, { icon: React.ReactNode; label: string }> = {
+                                github: { icon: <Code className="mr-1 h-4 w-4 inline" />, label: 'Code' },
+                                kaggle: { icon: <ExternalLink className="mr-1 h-4 w-4 inline" />, label: 'Kaggle' },
+                                vscode: { icon: <ExternalLink className="mr-1 h-4 w-4 inline" />, label: 'VSCode' },
+                              };
+                              const { icon, label } = icons[entry] || { icon: <ExternalLink className="mr-1 h-4 w-4 inline" />, label: 'View' };
+                              return (
+                                <>
+                                  {icon}
+                                  <span className="tracking-wide font-medium text-sm">{label}</span>
+                                </>
+                              );
+                            })()}
+                          </a>
+                        </Button>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
