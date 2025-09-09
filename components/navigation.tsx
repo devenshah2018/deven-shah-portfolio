@@ -7,6 +7,8 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Route } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LINKS } from '@/lib/content-registry';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faKaggle } from '@fortawesome/free-brands-svg-icons';
 
 interface NavigationProps {
   onStartTour?: () => void;
@@ -183,6 +185,15 @@ export function Navigation({ onStartTour }: NavigationProps) {
                               <svg className='h-3 w-3' fill='currentColor' viewBox='0 0 24 24'>
                                 <path d='M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z' />
                               </svg>
+                            </a>
+                            <a
+                              href={LINKS.kaggle}
+                              target='_blank'
+                              rel='noopener noreferrer'
+                              className='group/item flex h-7 w-7 items-center justify-center rounded bg-slate-800/30 text-slate-500 transition-all duration-150 hover:scale-105 hover:bg-slate-600/20 hover:text-slate-200'
+                              aria-label='Kaggle Profile'
+                            >
+                            <FontAwesomeIcon icon={faKaggle} className='h-3 w-3' />
                             </a>
                           </div>
                         </div>

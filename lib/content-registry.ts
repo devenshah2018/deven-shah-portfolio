@@ -8,7 +8,7 @@ export const LINKS = {
     email: 'devenshah2018@gmail.com',
     strava: 'https://www.strava.com/athletes/123793208',
     cal: 'https://cal.com/deven-shah-l0qkjk/quick-chat',
-    kaggle: 'https://www.kaggle.com/devenashah'
+    kaggle: 'https://www.kaggle.com/devenashah',
 }
 
 export const TWEETS = [
@@ -204,6 +204,24 @@ export const SKILL_MAPPINGS = [
         title: "Automated Drone Path Planning",
         subtitle: "High-Quality Image Capture System to Support Drone Path Planning",
         id: 'drone-build-project',
+        icon: Zap,
+      },
+      {
+        title: 'Cryptocurrency Price Correlations',
+        subtitle: 'Notebook Analyzing Crypto Asset Relationships',
+        id: 'crypto-correlations-project',
+        icon: Zap,
+      },
+      {
+        title: 'Tracking Bear/Bull Runs',
+        subtitle: 'Tracking Bull and Bear Markets in Stocks using ADX',
+        id: 'bull-bear-stocks-project',
+        icon: Zap,
+      },
+      {
+        title: 'Optimal Protein Binding Using Quantum Computing',
+        subtitle: 'Using Grover`s algorithm to find optimal protein binding',
+        id: 'quantum-protein-binding',
         icon: Zap,
       }
     ],
@@ -841,6 +859,24 @@ export const SKILL_MAPPINGS = [
         id: 'crypto-forecasting-project',
         icon: Zap,
       },
+            {
+        title: 'Cryptocurrency Price Correlations',
+        subtitle: 'Notebook Analyzing Crypto Asset Relationships',
+        id: 'crypto-correlations-project',
+        icon: Zap,
+      },
+      {
+        title: 'Tracking Bear/Bull Runs',
+        subtitle: 'Tracking Bull and Bear Markets in Stocks using ADX',
+        id: 'bull-bear-stocks-project',
+        icon: Zap,
+      },
+      {
+        title: 'Optimal Protein Binding Using Quantum Computing',
+        subtitle: 'Using Grover`s algorithm to find optimal protein binding',
+        id: 'quantum-protein-binding',
+        icon: Zap,
+      }
     ],
     education: [
       {
@@ -910,6 +946,24 @@ export const SKILL_MAPPINGS = [
         id: 'crypto-forecasting-project',
         icon: Zap,
       },
+            {
+        title: 'Cryptocurrency Price Correlations',
+        subtitle: 'Notebook Analyzing Crypto Asset Relationships',
+        id: 'crypto-correlations-project',
+        icon: Zap,
+      },
+      {
+        title: 'Tracking Bear/Bull Runs',
+        subtitle: 'Tracking Bull and Bear Markets in Stocks using ADX',
+        id: 'bull-bear-stocks-project',
+        icon: Zap,
+      },
+      {
+        title: 'Optimal Protein Binding Using Quantum Computing',
+        subtitle: 'Using Grover`s algorithm to find optimal protein binding',
+        id: 'quantum-protein-binding',
+        icon: Zap,
+      }
     ],
     education: [
       {

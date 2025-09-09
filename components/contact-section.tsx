@@ -17,7 +17,7 @@ import {
   ExternalLink,
 } from 'lucide-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXTwitter } from '@fortawesome/free-brands-svg-icons';
+import { faKaggle, faXTwitter } from '@fortawesome/free-brands-svg-icons';
 import { motion } from 'framer-motion';
 import '@calcom/atoms/globals.min.css';
 import { getCalApi } from '@calcom/embed-react';
@@ -92,6 +92,13 @@ export function ContactSection() {
       icon: faXTwitter,
       url: LINKS.x,
       handle: '@devenshah2018',
+      gradient: 'from-slate-700 to-slate-800',
+    },
+    {
+      name: 'Kaggle',
+      icon: faKaggle,
+      url: LINKS.kaggle,
+      handle: '@devenashah',
       gradient: 'from-slate-700 to-slate-800',
     },
   ];
@@ -337,7 +344,7 @@ export function ContactSection() {
                   </div>
                 </div>
 
-                <div className='space-y-8 p-8'>
+                <div className='space-y-3 p-8'>
                   {socialLinks.map(social => (
                     <a
                       key={social.name}
@@ -351,6 +358,8 @@ export function ContactSection() {
                       >
                         {social.name === 'Twitter' ? (
                           <FontAwesomeIcon icon={faXTwitter} className='h-4 w-4 text-white' />
+                        ) : social.name === 'Kaggle' ? (
+                          <FontAwesomeIcon icon={faKaggle} className='h-4 w-4 text-white' />
                         ) : (
                           React.createElement(social.icon as React.ComponentType<any>, {
                             className: 'h-4 w-4 text-white',

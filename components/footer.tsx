@@ -3,6 +3,8 @@
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { LINKS } from '@/lib/content-registry';
+import { faKaggle } from '@fortawesome/free-brands-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Github, Linkedin, Mail, ArrowUp } from 'lucide-react';
 
 export function Footer() {
@@ -37,6 +39,11 @@ export function Footer() {
               </a>
             </Button>
             <Button variant='ghost' size='icon' asChild>
+              <a href={LINKS.github} target='_blank' rel='noopener noreferrer'>
+                <FontAwesomeIcon icon={faKaggle} className='h-4 w-4' />
+              </a>
+            </Button>
+            <Button variant='ghost' size='icon' asChild>
               <a href={`mailto:${LINKS.email}`}>
                 <Mail className='h-4 w-4' />
               </a>
@@ -45,6 +52,7 @@ export function Footer() {
             <Button variant='ghost' size='icon' onClick={scrollToTop}>
               <ArrowUp className='h-4 w-4' />
             </Button>
+
           </div>
         </div>
 
