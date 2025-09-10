@@ -101,11 +101,7 @@ export function HeroSection() {
                 <Github className='h-6 w-6' />
               </Button>
             </Link>
-            <Link
-              href={LINKS.linkedin}
-              target='_blank'
-              rel='noopener noreferrer'
-            >
+            <Link href={LINKS.linkedin} target='_blank' rel='noopener noreferrer'>
               <Button variant='ghost' size='lg' className='p-3 hover:bg-gray-800'>
                 <Linkedin className='h-6 w-6' />
               </Button>

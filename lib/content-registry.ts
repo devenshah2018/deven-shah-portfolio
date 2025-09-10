@@ -2,15 +2,15 @@ import { GraduationCap, Briefcase, Zap, Award } from 'lucide-react';
 import { Project } from './types';
 
 export const LINKS = {
-    linkedin: 'https://www.linkedin.com/in/deven-a-shah/',
-    github: 'https://github.com/devenshah2018',
-    x: 'https://x.com/devenshah2018',
-    email: 'devenshah2018@gmail.com',
-    strava: 'https://www.strava.com/athletes/123793208',
-    cal: 'https://cal.com/deven-shah-l0qkjk/quick-chat',
-    kaggle: 'https://www.kaggle.com/devenashah',
-    hevy: 'https://hevy.com/user/devenshah'
-}
+  linkedin: 'https://www.linkedin.com/in/deven-a-shah/',
+  github: 'https://github.com/devenshah2018',
+  x: 'https://x.com/devenshah2018',
+  email: 'devenshah2018@gmail.com',
+  strava: 'https://www.strava.com/athletes/123793208',
+  cal: 'https://cal.com/deven-shah-l0qkjk/quick-chat',
+  kaggle: 'https://www.kaggle.com/devenashah',
+  hevy: 'https://hevy.com/user/devenshah',
+};
 
 export const TWEETS = [
   {
@@ -90,35 +90,35 @@ The future = devs + AI. You can’t replace an engineer.`,
 ];
 
 export const LINKEDIN_POSTS = [
-    {
-        id: '1',
-        text: `Thrilled to be among the selected students to participate in the Build Projects this semester! I’ll be working on a drone path planning system for high-quality image capture, applying robotics and software development concepts under the guidance of an industry expert.
+  {
+    id: '1',
+    text: `Thrilled to be among the selected students to participate in the Build Projects this semester! I’ll be working on a drone path planning system for high-quality image capture, applying robotics and software development concepts under the guidance of an industry expert.
 
 Grateful to The Build Fellowship by Open Avenues and Boston University for this opportunity. Can’t wait to get started!`,
-        date: '08:34 PM · Aug 31, 2025',
-        tags: ['The Build Fellowship by Open Avenues', 'Boston University']
-    },
-        {
-        id: '2',
-        text: `I’m happy to share that I am pursuing my Master's in Computer Science at Boston University! 
+    date: '08:34 PM · Aug 31, 2025',
+    tags: ['The Build Fellowship by Open Avenues', 'Boston University'],
+  },
+  {
+    id: '2',
+    text: `I’m happy to share that I am pursuing my Master's in Computer Science at Boston University! 
 
 Excited to expand my knowledge at the intersection of AI and cybersecurity, take on challenging projects, and connect with brilliant minds. I look forward to meeting new peers and making the most of this next chapter in my academic and professional growth.`,
-        date: '07:40 PM · Aug 15, 2025',
-        tags: ['Boston University']
-    },
-            {
-        id: '3',
-        text: `Exciting news! I just finished my first day as an Associate Application Developer at Patelco. Can't wait to learn and grow with such a dynamic team. Here's to a bright future! hashtag#newjob hashtag#associateapplicationdeveloper hashtag#patelco`,
-        date: '08:52 PM · Apr 10, 2023',
-        hashtags: ['#newjob', '#associateapplicationdeveloper', '#patelco']
-    },
-            {
-        id: '4',
-        text: `I’m happy to share that I’ve obtained a new certification: Amazon Web Services Cloud Practitioner from Amazon Web Services (AWS)!`,
-        date: '03:56 PM · Feb 15, 2023',
-        tags: ['Amazon Web Services (AWS)']
-    }
-]
+    date: '07:40 PM · Aug 15, 2025',
+    tags: ['Boston University'],
+  },
+  {
+    id: '3',
+    text: `Exciting news! I just finished my first day as an Associate Application Developer at Patelco. Can't wait to learn and grow with such a dynamic team. Here's to a bright future! hashtag#newjob hashtag#associateapplicationdeveloper hashtag#patelco`,
+    date: '08:52 PM · Apr 10, 2023',
+    hashtags: ['#newjob', '#associateapplicationdeveloper', '#patelco'],
+  },
+  {
+    id: '4',
+    text: `I’m happy to share that I’ve obtained a new certification: Amazon Web Services Cloud Practitioner from Amazon Web Services (AWS)!`,
+    date: '03:56 PM · Feb 15, 2023',
+    tags: ['Amazon Web Services (AWS)'],
+  },
+];
 
 export const SKILLS = {
   languages: [
@@ -202,8 +202,8 @@ export const SKILL_MAPPINGS = [
         icon: Zap,
       },
       {
-        title: "Automated Drone Path Planning",
-        subtitle: "High-Quality Image Capture System to Support Drone Path Planning",
+        title: 'Automated Drone Path Planning',
+        subtitle: 'High-Quality Image Capture System to Support Drone Path Planning',
         id: 'drone-build-project',
         icon: Zap,
       },
@@ -224,7 +224,7 @@ export const SKILL_MAPPINGS = [
         subtitle: 'Using Grover`s algorithm to find optimal protein binding',
         id: 'quantum-protein-binding',
         icon: Zap,
-      }
+      },
     ],
     education: [
       {
@@ -860,7 +860,7 @@ export const SKILL_MAPPINGS = [
         id: 'crypto-forecasting-project',
         icon: Zap,
       },
-            {
+      {
         title: 'Cryptocurrency Price Correlations',
         subtitle: 'Notebook Analyzing Crypto Asset Relationships',
         id: 'crypto-correlations-project',
@@ -877,7 +877,7 @@ export const SKILL_MAPPINGS = [
         subtitle: 'Using Grover`s algorithm to find optimal protein binding',
         id: 'quantum-protein-binding',
         icon: Zap,
-      }
+      },
     ],
     education: [
       {
@@ -947,7 +947,7 @@ export const SKILL_MAPPINGS = [
         id: 'crypto-forecasting-project',
         icon: Zap,
       },
-            {
+      {
         title: 'Cryptocurrency Price Correlations',
         subtitle: 'Notebook Analyzing Crypto Asset Relationships',
         id: 'crypto-correlations-project',
@@ -964,7 +964,7 @@ export const SKILL_MAPPINGS = [
         subtitle: 'Using Grover`s algorithm to find optimal protein binding',
         id: 'quantum-protein-binding',
         icon: Zap,
-      }
+      },
     ],
     education: [
       {
@@ -1025,12 +1025,10 @@ export const SKILL_CATEGORIES = [
 ];
 
 export const CATEGORIZED_SKILLS = Object.fromEntries(
-    Object.entries(SKILLS).map(([category, skills]) => [category, skills])
+  Object.entries(SKILLS).map(([category, skills]) => [category, skills])
 );
 
-CATEGORIZED_SKILLS['all'] = Array.from(
-    new Set(Object.values(SKILLS).flat())
-);
+CATEGORIZED_SKILLS['all'] = Array.from(new Set(Object.values(SKILLS).flat()));
 
 export const EXPERIENCES = [
   {
@@ -1099,7 +1097,7 @@ export const PROJECT_CATEGORIES = [
   { key: 'devops', label: 'Cloud & DevOps Engineering' },
   { key: 'research', label: 'Research & Experimental' },
   { key: 'open', label: 'Open Source & Contributions' },
-    { key: 'infra', label: 'Embedded Systems & Infrastructure' },
+  { key: 'infra', label: 'Embedded Systems & Infrastructure' },
   { key: 'other', label: 'Other' },
 ];
 
@@ -1118,8 +1116,8 @@ export const PROJECTS: Project[] = [
     status: 'Live',
     readMe: true,
     categories: ['web'],
-    accessible_at: ['hosted', 'github']
-    },
+    accessible_at: ['hosted', 'github'],
+  },
   {
     id: 'qode-project',
     title: 'Qode',
@@ -1134,7 +1132,7 @@ export const PROJECTS: Project[] = [
     status: 'Paused',
     readMe: true,
     categories: ['research'],
-    accessible_at: ['github']
+    accessible_at: ['github'],
   },
   {
     id: 'ares-project',
@@ -1149,7 +1147,7 @@ export const PROJECTS: Project[] = [
     link: 'http://marketplace.visualstudio.com/items?itemName=strive-ai.strive',
     status: 'Live',
     categories: ['security', 'ai'],
-    accessible_at: ['vscode']
+    accessible_at: ['vscode'],
   },
   {
     id: 'crypto-forecasting-project',
@@ -1164,7 +1162,7 @@ export const PROJECTS: Project[] = [
     link: 'https://github.com/b-devera/crypto-forecasting-model',
     status: 'Completed',
     categories: ['ai', 'research'],
-    accessible_at: ['github']
+    accessible_at: ['github'],
   },
   {
     id: 'model-distribution-server',
@@ -1179,7 +1177,7 @@ export const PROJECTS: Project[] = [
     link: 'https://github.com/devenshah2018/model-distribution-server',
     status: 'In Progress',
     categories: ['ai', 'infra', 'devops'],
-    accessible_at: ['github']
+    accessible_at: ['github'],
   },
   {
     id: 'molecule-mutation-prediction',
@@ -1195,9 +1193,9 @@ export const PROJECTS: Project[] = [
     status: 'Completed',
     readMe: true,
     categories: ['ai', 'research'],
-    accessible_at: ['github']
+    accessible_at: ['github'],
   },
-    {
+  {
     id: 'drone-build-project',
     title: 'Automated Drone Path Planning',
     subtitle: 'High-Quality Image Capture System to Support Drone Path Planning',
@@ -1211,9 +1209,9 @@ export const PROJECTS: Project[] = [
     status: 'In Progress',
     readMe: false,
     categories: ['ai', 'research'],
-    accessible_at: ['github']
+    accessible_at: ['github'],
   },
-    {
+  {
     id: 'crypto-correlations-project',
     title: 'Cryptocurrency Price Correlations',
     subtitle: 'Notebook Analyzing Crypto Asset Relationships',
@@ -1227,9 +1225,9 @@ export const PROJECTS: Project[] = [
     status: 'Completed',
     readMe: false,
     categories: ['ai'],
-    accessible_at: ['kaggle', 'github']
+    accessible_at: ['kaggle', 'github'],
   },
-      {
+  {
     id: 'bull-bear-stocks-project',
     title: 'Tracking Bear/Bull Runs',
     subtitle: 'Tracking Bull and Bear Markets in Stocks using ADX',
@@ -1243,9 +1241,9 @@ export const PROJECTS: Project[] = [
     status: 'Completed',
     readMe: false,
     categories: ['ai'],
-    accessible_at: ['kaggle', 'github']
+    accessible_at: ['kaggle', 'github'],
   },
-        {
+  {
     id: 'quantum-protein-binding',
     title: 'Optimal Protein Binding Using Quantum Computing',
     subtitle: 'Using Grover`s algorithm to find optimal protein binding',
@@ -1259,7 +1257,7 @@ export const PROJECTS: Project[] = [
     status: 'Completed',
     readMe: false,
     categories: ['ai'],
-    accessible_at: ['kaggle', 'github']
+    accessible_at: ['kaggle', 'github'],
   },
 ];
 
@@ -1275,10 +1273,7 @@ export const EDUCATION = [
     icon: GraduationCap,
     logo: '/bu-logo.png',
     isActive: true,
-    coursework: [
-        'Operating Systems',
-        'Analysis of Algorithms'
-    ]
+    coursework: ['Operating Systems', 'Analysis of Algorithms'],
   },
   {
     id: 'sjsu-bachelors',
@@ -1320,17 +1315,16 @@ export const CERTIFICATIONS = [
 ];
 
 function getProjectSkillsFromMapping(projectId: string) {
-    const mapping = SKILL_MAPPINGS;
-    const skills: string[] = [];
-    mapping.forEach((skill) => {
-        if (skill.projects) {
-            skill.projects.forEach((project) => {
-                if (project.id === projectId) {
-                    skills.push(skill.skill);
-                }
-            });
+  const mapping = SKILL_MAPPINGS;
+  const skills: string[] = [];
+  mapping.forEach(skill => {
+    if (skill.projects) {
+      skill.projects.forEach(project => {
+        if (project.id === projectId) {
+          skills.push(skill.skill);
         }
-    });
-    return skills;
-    
+      });
+    }
+  });
+  return skills;
 }

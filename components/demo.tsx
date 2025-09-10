@@ -10,7 +10,12 @@ import { ExternalLink } from 'lucide-react';
 function formatDate(iso: string) {
   const date = new Date(iso);
   return date.toLocaleString('en-US', {
-    month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true,
   });
 }
 
@@ -46,13 +51,15 @@ export default function DemoGallery() {
               <Card className='flex h-full flex-col overflow-hidden rounded-2xl border border-slate-800/70 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 shadow-2xl transition-all duration-500 hover:border-blue-500/80 hover:shadow-blue-500/30'>
                 <CardHeader className='pb-2'>
                   <div className='flex items-center justify-between'>
-                    <div className='flex gap-2 items-center'>
+                    <div className='flex items-center gap-2'>
                       {demo.project && (
-                        <Badge className='bg-gradient-to-r from-blue-700/80 to-blue-400/60 text-blue-100 border border-blue-700/40 px-2 py-1 text-xs font-semibold rounded-full shadow-sm'>
+                        <Badge className='rounded-full border border-blue-700/40 bg-gradient-to-r from-blue-700/80 to-blue-400/60 px-2 py-1 text-xs font-semibold text-blue-100 shadow-sm'>
                           {demo.project}
                         </Badge>
                       )}
-                      <span className='text-xs text-slate-400 font-mono tracking-wide'>{formatDate(demo.timestamp)}</span>
+                      <span className='font-mono text-xs tracking-wide text-slate-400'>
+                        {formatDate(demo.timestamp)}
+                      </span>
                     </div>
                     {demo.public_url && (
                       <Button
@@ -68,14 +75,16 @@ export default function DemoGallery() {
                       </Button>
                     )}
                   </div>
-                  <CardTitle className='mt-2 text-xl font-bold text-white drop-shadow-sm'>{demo.title}</CardTitle>
+                  <CardTitle className='mt-2 text-xl font-bold text-white drop-shadow-sm'>
+                    {demo.title}
+                  </CardTitle>
                 </CardHeader>
                 <CardContent className='flex flex-1 flex-col pt-0'>
                   <div className='relative mb-4 aspect-video w-full overflow-hidden rounded-xl border border-slate-800/40 bg-black shadow-lg'>
                     <video
                       src={demo.path}
                       controls
-                      className='h-full w-full object-cover rounded-xl transition-all duration-300 focus-visible:ring-2 focus-visible:ring-blue-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900'
+                      className='h-full w-full rounded-xl object-cover transition-all duration-300 focus-visible:ring-2 focus-visible:ring-blue-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900'
                       preload='metadata'
                     />
                     {demo.public_url && (
@@ -91,7 +100,9 @@ export default function DemoGallery() {
                     )}
                   </div>
                   <div className='mt-auto flex items-center justify-between'>
-                    <span className='text-xs text-slate-500 font-mono'>{demo.path.replace('/demos/', '')}</span>
+                    <span className='font-mono text-xs text-slate-500'>
+                      {demo.path.replace('/demos/', '')}
+                    </span>
                   </div>
                 </CardContent>
               </Card>

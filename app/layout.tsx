@@ -13,7 +13,15 @@ export const metadata: Metadata = {
   title: 'Deven Shah - Software Engineer',
   description:
     'Portfolio of Deven Shah, the Co-founder & CTO of Suno Analytics and Graduate MSCS student at Boston University',
-  keywords: ['Deven Shah', 'Software Engineer', 'CTO', 'Suno Analytics', 'Portfolio', 'Patelco', 'NetApp'],
+  keywords: [
+    'Deven Shah',
+    'Software Engineer',
+    'CTO',
+    'Suno Analytics',
+    'Portfolio',
+    'Patelco',
+    'NetApp',
+  ],
   authors: [{ name: 'Deven Shah' }],
   openGraph: {
     title: 'Deven Shah - Co-founder/CTO | Software Engineer',

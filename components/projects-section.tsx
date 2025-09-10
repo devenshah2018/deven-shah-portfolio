@@ -22,7 +22,7 @@ function getAccessibleAtIcons(accessible_at: string[]) {
     web: { src: '/globe.svg', alt: 'Web' },
   };
   return (
-    <div className='flex -space-x-2 mr-2'>
+    <div className='mr-2 flex -space-x-2'>
       {accessible_at.map((val: string, i: number) => {
         const icon = iconMap[val];
         if (!icon) return null;
@@ -31,7 +31,7 @@ function getAccessibleAtIcons(accessible_at: string[]) {
             key={i}
             src={icon.src}
             alt={icon.alt}
-            className='h-6 w-6 rounded-full bg-slate-100 p-1 border-2 border-slate-200 shadow'
+            className='h-6 w-6 rounded-full border-2 border-slate-200 bg-slate-100 p-1 shadow'
             style={{ zIndex: 10 - i }}
           />
         );
@@ -46,8 +46,7 @@ export function ProjectsSection() {
   const filteredProjects = useMemo(() => {
     return PROJECTS.filter((project: Project) => {
       const matchesCategory =
-        activeCategory === 'all' ||
-        getProjectCategories(project).includes(activeCategory);
+        activeCategory === 'all' || getProjectCategories(project).includes(activeCategory);
       return matchesCategory;
     }).sort((a, b) => {
       // Sort by descending start date (sortDate field, format: YYYY-MM)
@@ -59,10 +58,7 @@ export function ProjectsSection() {
   }, [activeCategory]);
 
   return (
-    <section
-      id='projects'
-      className='bg-gradient-to-b from-slate-950 to-slate-900 py-24'
-    >
+    <section id='projects' className='bg-gradient-to-b from-slate-950 to-slate-900 py-24'>
       <div className='container mx-auto px-4 lg:px-8'>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -96,8 +92,8 @@ export function ProjectsSection() {
           </div>
 
           {/* Category Filter Bar */}
-          <div className='mb-8 flex flex-wrap gap-2 justify-center'>
-            {PROJECT_CATEGORIES.map((cat) => (
+          <div className='mb-8 flex flex-wrap justify-center gap-2'>
+            {PROJECT_CATEGORIES.map(cat => (
               <Button
                 key={cat.key}
                 variant={activeCategory === cat.key ? 'default' : 'outline'}
@@ -116,7 +112,7 @@ export function ProjectsSection() {
           {/* Projects Grid */}
           <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3'>
             {filteredProjects.length === 0 && (
-              <div className='col-span-full text-center text-slate-500 py-12'>
+              <div className='col-span-full py-12 text-center text-slate-500'>
                 No projects found.
               </div>
             )}
@@ -129,28 +125,26 @@ export function ProjectsSection() {
                 viewport={{ once: true }}
                 className='group'
               >
-                <Card
-                  className='flex flex-col h-full border-none bg-transparent transition-all duration-300 rounded-xl overflow-hidden'
-                >
-                  <CardHeader className='pb-3 flex flex-row items-start gap-3 justify-between'>
-                    <div className='flex items-center gap-3 flex-1 min-w-0'>
-                      <CardTitle className='text-lg font-bold text-white break-words whitespace-normal'>
+                <Card className='flex h-full flex-col overflow-hidden rounded-xl border-none bg-transparent transition-all duration-300'>
+                  <CardHeader className='flex flex-row items-start justify-between gap-3 pb-3'>
+                    <div className='flex min-w-0 flex-1 items-center gap-3'>
+                      <CardTitle className='whitespace-normal break-words text-lg font-bold text-white'>
                         {project.title}
                       </CardTitle>
                     </div>
-                    <div className='flex flex-col items-end flex-shrink-0 min-w-[0]'>
+                    <div className='flex min-w-[0] flex-shrink-0 flex-col items-end'>
                       <span
-                        className='flex items-center gap-1 rounded px-2 py-0.5 text-xs font-medium text-slate-400 max-w-[140px] whitespace-nowrap overflow-hidden text-ellipsis'
+                        className='flex max-w-[140px] items-center gap-1 overflow-hidden text-ellipsis whitespace-nowrap rounded px-2 py-0.5 text-xs font-medium text-slate-400'
                         title={project.period}
                       >
-                        <Calendar className='h-3 w-3 mr-1 text-slate-400' />
+                        <Calendar className='mr-1 h-3 w-3 text-slate-400' />
                         {project.period}
                       </span>
                     </div>
                   </CardHeader>
-                  <CardContent className='flex-1 flex flex-col justify-between pt-0'>
+                  <CardContent className='flex flex-1 flex-col justify-between pt-0'>
                     <div>
-                      <div className='flex flex-wrap gap-1 mb-2'>
+                      <div className='mb-2 flex flex-wrap gap-1'>
                         {project.technologies?.slice(0, 4).map((tech: string, i: number) => (
                           <Badge
                             key={i}
@@ -161,52 +155,65 @@ export function ProjectsSection() {
                           </Badge>
                         ))}
                       </div>
-                      <p className='text-sm text-slate-300 mb-2'>
-                        {project.description}
-                      </p>
+                      <p className='mb-2 text-sm text-slate-300'>{project.description}</p>
                     </div>
-                    <div className='flex items-center justify-between mt-2'>
+                    <div className='mt-2 flex items-center justify-between'>
                       <span
                         className={`rounded-full px-2 py-0.5 text-sm ${
                           project.status === 'Live'
                             ? 'bg-emerald-900/60 text-emerald-300'
                             : project.status === 'In Progress'
-                            ? 'bg-blue-900/60 text-blue-300'
-                            : project.status === 'Paused'
-                            ? 'bg-yellow-900/60 text-yellow-300'
-                            : 'bg-slate-800/60 text-slate-400'
+                              ? 'bg-blue-900/60 text-blue-300'
+                              : project.status === 'Paused'
+                                ? 'bg-yellow-900/60 text-yellow-300'
+                                : 'bg-slate-800/60 text-slate-400'
                         }`}
                       >
                         {project.status}
                       </span>
-                      <div className='flex items-center gap-1 ml-2'>
+                      <div className='ml-2 flex items-center gap-1'>
                         {/* Accessible At Icons Row - now on the left of the button */}
-                        {Array.isArray(project.accessible_at) && project.accessible_at.length > 0 && (
-                          getAccessibleAtIcons(project.accessible_at)
-                        )}
+                        {Array.isArray(project.accessible_at) &&
+                          project.accessible_at.length > 0 &&
+                          getAccessibleAtIcons(project.accessible_at)}
                         <Button
                           asChild
-                          variant="outline"
-                          className="border-2 border-blue-700/80 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-blue-200 font-semibold shadow-lg hover:from-blue-900 hover:to-indigo-900 hover:text-white hover:border-blue-400 transition-all duration-200 rounded-full text-xs px-4 py-2 h-9 flex items-center gap-2 focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:outline-none"
+                          variant='outline'
+                          className='flex h-9 items-center gap-2 rounded-full border-2 border-blue-700/80 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 px-4 py-2 text-xs font-semibold text-blue-200 shadow-lg transition-all duration-200 hover:border-blue-400 hover:from-blue-900 hover:to-indigo-900 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2'
                         >
                           <a
                             href={project.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-2"
+                            target='_blank'
+                            rel='noopener noreferrer'
+                            className='flex items-center gap-2'
                           >
                             {(() => {
                               const entry = project.entry_point;
-                              const icons: Record<string, { icon: React.ReactNode; label: string }> = {
-                                github: { icon: <Code className="mr-1 h-4 w-4 inline" />, label: 'Code' },
-                                kaggle: { icon: <ExternalLink className="mr-1 h-4 w-4 inline" />, label: 'Kaggle' },
-                                vscode: { icon: <ExternalLink className="mr-1 h-4 w-4 inline" />, label: 'VSCode' },
+                              const icons: Record<
+                                string,
+                                { icon: React.ReactNode; label: string }
+                              > = {
+                                github: {
+                                  icon: <Code className='mr-1 inline h-4 w-4' />,
+                                  label: 'Code',
+                                },
+                                kaggle: {
+                                  icon: <ExternalLink className='mr-1 inline h-4 w-4' />,
+                                  label: 'Kaggle',
+                                },
+                                vscode: {
+                                  icon: <ExternalLink className='mr-1 inline h-4 w-4' />,
+                                  label: 'VSCode',
+                                },
                               };
-                              const { icon, label } = icons[entry] || { icon: <ExternalLink className="mr-1 h-4 w-4 inline" />, label: 'View' };
+                              const { icon, label } = icons[entry] || {
+                                icon: <ExternalLink className='mr-1 inline h-4 w-4' />,
+                                label: 'View',
+                              };
                               return (
                                 <>
                                   {icon}
-                                  <span className="tracking-wide font-medium text-sm">{label}</span>
+                                  <span className='text-sm font-medium tracking-wide'>{label}</span>
                                 </>
                               );
                             })()}

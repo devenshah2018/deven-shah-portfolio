@@ -95,7 +95,8 @@ export function AboutSection() {
             >
               Passionate builder bridging advanced technology with real-world impact. I architect,
               code, and launch products at the intersection of AI, analytics, and security. As a
-              frequent Spartan Race competitor, physical fitness has become a cornerstone of my life, driving my discipline and resilience.
+              frequent Spartan Race competitor, physical fitness has become a cornerstone of my
+              life, driving my discipline and resilience.
             </motion.p>
           </div>
 
@@ -295,7 +296,10 @@ export function AboutSection() {
             <div className='flex lg:col-span-2'>
               <div className='relative min-h-[320px] w-full max-w-md overflow-visible'>
                 <h3 className='mb-3 flex items-center gap-2 text-2xl font-bold text-white'>
-                  <FontAwesomeIcon icon={currentPostType === 'linkedin' ? faLinkedin : faXTwitter} className='h-6 w-6 text-blue-400' />
+                  <FontAwesomeIcon
+                    icon={currentPostType === 'linkedin' ? faLinkedin : faXTwitter}
+                    className='h-6 w-6 text-blue-400'
+                  />
                   Recent Thoughts
                 </h3>
                 <div>

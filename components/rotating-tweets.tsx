@@ -23,10 +23,12 @@ export function RotatingTweets({ className, onPostTypeChange }: RotatingTweetsPr
 
   // Shuffle posts on mount (client only)
   useEffect(() => {
-    setShuffledPosts(shuffleArray([
-      ...TWEETS.map(t => ({ ...t, type: 'tweet' })),
-      ...LINKEDIN_POSTS.map(l => ({ ...l, type: 'linkedin' })),
-    ]));
+    setShuffledPosts(
+      shuffleArray([
+        ...TWEETS.map(t => ({ ...t, type: 'tweet' })),
+        ...LINKEDIN_POSTS.map(l => ({ ...l, type: 'linkedin' })),
+      ])
+    );
   }, []);
 
   // Rotate posts every 5 seconds
@@ -83,7 +85,9 @@ export function RotatingTweets({ className, onPostTypeChange }: RotatingTweetsPr
                   <div className='flex flex-col items-start'>
                     <span className='font-semibold leading-tight text-white'>Deven Shah</span>
                     <span className='text-sm text-[#8899a6]'>
-                      {shuffledPosts[index].type === 'linkedin' ? '@deven-a-shah' : '@devenshah2018'}
+                      {shuffledPosts[index].type === 'linkedin'
+                        ? '@deven-a-shah'
+                        : '@devenshah2018'}
                     </span>
                   </div>
                   <span className='ml-auto text-xs text-[#8899a6]'>
@@ -100,32 +104,59 @@ export function RotatingTweets({ className, onPostTypeChange }: RotatingTweetsPr
                       hashtags = post.hashtags || [];
                     }
                     // Combine tags and hashtags for LinkedIn, else empty
-                    const highlightList = post.type === 'linkedin' ? [...(tags || []), ...(hashtags || [])] : [];
+                    const highlightList =
+                      post.type === 'linkedin' ? [...(tags || []), ...(hashtags || [])] : [];
                     // Build regex to split on tags/hashtags/mentions/links
-                    const splitRegex = new RegExp(`(${[...highlightList.map(s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')), '@\\w+', '#\\w+', 'https?:\\/\\/\\S+'].filter(Boolean).join('|')})`, 'g');
+                    const splitRegex = new RegExp(
+                      `(${[...highlightList.map(s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')), '@\\w+', '#\\w+', 'https?:\\/\\/\\S+'].filter(Boolean).join('|')})`,
+                      'g'
+                    );
                     // Remove 'hashtag' prefix from LinkedIn hashtags in the text before rendering
-                    const cleanText = post.type === 'linkedin' && post.hashtags && post.hashtags.length
-                      ? post.text.replace(/hashtag(?=#\w+)/g, '')
-                      : post.text;
+                    const cleanText =
+                      post.type === 'linkedin' && post.hashtags && post.hashtags.length
+                        ? post.text.replace(/hashtag(?=#\w+)/g, '')
+                        : post.text;
                     return cleanText.split(splitRegex).map((part: string, i: number) => {
                       if (post.type === 'linkedin' && highlightList.includes(part)) {
                         // Style tags and hashtags differently
                         if ((hashtags || []).includes(part)) {
-                          return <span key={i} className='text-blue-400 font-semibold'>{part}</span>;
+                          return (
+                            <span key={i} className='font-semibold text-blue-400'>
+                              {part}
+                            </span>
+                          );
                         }
                         if ((tags || []).includes(part)) {
-                          return <span key={i} className='text-emerald-400 font-semibold'>{part}</span>;
+                          return (
+                            <span key={i} className='font-semibold text-emerald-400'>
+                              {part}
+                            </span>
+                          );
                         }
                       }
                       if (part.match(/^@\w+$/)) {
-                        return <span key={i} className='text-blue-400 font-semibold'>{part}</span>;
+                        return (
+                          <span key={i} className='font-semibold text-blue-400'>
+                            {part}
+                          </span>
+                        );
                       }
                       if (part.match(/^#\w+$/)) {
-                        return <span key={i} className='text-blue-400'>{part}</span>;
+                        return (
+                          <span key={i} className='text-blue-400'>
+                            {part}
+                          </span>
+                        );
                       }
                       if (part.match(/^https?:\/\/\S+$/)) {
                         return (
-                          <a key={i} href={part} target='_blank' rel='noopener noreferrer' className='text-blue-400 underline'>
+                          <a
+                            key={i}
+                            href={part}
+                            target='_blank'
+                            rel='noopener noreferrer'
+                            className='text-blue-400 underline'
+                          >
                             {part}
                           </a>
                         );

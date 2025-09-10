@@ -25,11 +25,7 @@ export function Footer() {
 
           <div className='flex items-center gap-4'>
             <Button variant='ghost' size='icon' asChild>
-              <a
-                href={LINKS.linkedin}
-                target='_blank'
-                rel='noopener noreferrer'
-              >
+              <a href={LINKS.linkedin} target='_blank' rel='noopener noreferrer'>
                 <Linkedin className='h-4 w-4' />
               </a>
             </Button>
@@ -52,7 +48,6 @@ export function Footer() {
             <Button variant='ghost' size='icon' onClick={scrollToTop}>
               <ArrowUp className='h-4 w-4' />
             </Button>
-
           </div>
         </div>
 

@@ -193,7 +193,7 @@ export function Navigation({ onStartTour }: NavigationProps) {
                               className='group/item flex h-7 w-7 items-center justify-center rounded bg-slate-800/30 text-slate-500 transition-all duration-150 hover:scale-105 hover:bg-slate-600/20 hover:text-slate-200'
                               aria-label='Kaggle Profile'
                             >
-                            <FontAwesomeIcon icon={faKaggle} className='h-3 w-3' />
+                              <FontAwesomeIcon icon={faKaggle} className='h-3 w-3' />
                             </a>
                           </div>
                         </div>
