@@ -1,4 +1,4 @@
-import { supabaseClient } from '@/lib/supabase-client';
+import { SupabaseClient } from '@supabase/supabase-js';
 import axios from 'axios';
 import { NextResponse } from 'next/server';
 
@@ -15,6 +15,13 @@ interface StravaStats {
   biggest_climb_elevation_gain: number;
   biggest_ride_distance: number;
 }
+
+const supabaseUrl = process.env['NEXT_PUBLIC_SUPABASE_URL'] || '';
+const supabaseKey = process.env['NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY'] || '';
+
+const supabaseClient = new SupabaseClient(
+    supabaseUrl, supabaseKey
+);
 
 export async function GET() {
   const accessToken = await axios.post(`${process.env['NEXT_PUBLIC_URL']}/api/strava/authenticate`);
