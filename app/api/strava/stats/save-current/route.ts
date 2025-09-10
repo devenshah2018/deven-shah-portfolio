@@ -40,5 +40,5 @@ export async function GET() {
         console.error('Error saving Strava stats to Supabase:', error);
         return NextResponse.json({ error: 'Failed to save Strava stats' }, { status: 500 });
       }
-    return NextResponse.json(data);
+    return NextResponse.json({data, error});
 }
