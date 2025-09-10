@@ -16,7 +16,7 @@ interface StravaStats {
     biggest_ride_distance: number;
 }
 
-export async function POST() {
+export async function GET() {
     const accessToken = await axios.post(`${process.env['NEXT_PUBLIC_URL']}/api/strava/authenticate`);
     const statsResponse = await axios.post(`${process.env['NEXT_PUBLIC_URL']}/api/strava/stats`, {
         access_token: accessToken.data.access_token,
