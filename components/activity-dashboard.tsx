@@ -46,8 +46,6 @@ export function ActivityDashboard({
         const stravaData = await response.json();
         setStravaStats(stravaData);
         const hevyResponse = await fetch('/api/hevy/get-recent');
-        console.log('Hevy response status:', hevyResponse.status);
-        console.log('Response Content:', await hevyResponse.clone().text());
         const hevyData = await hevyResponse.json();
         setHevyStats(hevyData);
       } catch (error) {
