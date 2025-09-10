@@ -26,7 +26,7 @@ let data, error;
 try {
     const result = await supabaseClient
         .from('strava-stats')
-        .insert({
+        .insert([{
             all_run_totals: stats.all_run_totals,
             all_ride_totals: stats.all_ride_totals,
             all_swim_totals: stats.all_swim_totals,
@@ -38,7 +38,7 @@ try {
             ytd_swim_totals: stats.ytd_swim_totals,
             biggest_climb_elevation_gain: stats.biggest_climb_elevation_gain,
             biggest_ride_distance: stats.biggest_ride_distance,
-        })
+        }])
         .select();
     data = result.data;
     error = result.error;
