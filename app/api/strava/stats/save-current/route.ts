@@ -26,7 +26,7 @@ let data, error;
 try {
     const result = await supabaseClient
         .from('strava-stats')
-        .upsert({
+        .insert({
             all_run_totals: stats.all_run_totals,
             all_ride_totals: stats.all_ride_totals,
             all_swim_totals: stats.all_swim_totals,
