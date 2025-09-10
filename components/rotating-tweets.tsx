@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { TWEETS, LINKEDIN_POSTS } from '@/lib/content-registry';
 
 const shuffleArray = (array: any[]) => {
   const arr = [...array];
@@ -20,23 +19,35 @@ interface RotatingTweetsProps {
 export function RotatingTweets({ className, onPostTypeChange }: RotatingTweetsProps) {
   const [shuffledPosts, setShuffledPosts] = useState<any[]>([]);
   const [index, setIndex] = useState(0);
+  const [fetchedPosts, setFetchedPosts] = useState<any[]>([]);
 
-  // Shuffle posts on mount (client only)
   useEffect(() => {
-    setShuffledPosts(
-      shuffleArray([
-        ...TWEETS.map(t => ({ ...t, type: 'tweet' })),
-        ...LINKEDIN_POSTS.map(l => ({ ...l, type: 'linkedin' })),
-      ])
-    );
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch('/api/posts');
+        const data = await response.json();
+        setFetchedPosts(data);
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+      }
+    }
+    fetchPosts();
   }, []);
 
   // Rotate posts every 5 seconds
   useEffect(() => {
-    if (!shuffledPosts.length) return;
+    if (fetchedPosts.length > 0) {
+      setShuffledPosts(shuffleArray(fetchedPosts));
+      setIndex(0);
+    }
+  }, [fetchedPosts]);
+
+  // Rotate posts every 5 seconds
+  useEffect(() => {
+    if (shuffledPosts.length === 0) return;
     const interval = setInterval(() => {
       setIndex(prev => (prev + 1) % shuffledPosts.length);
-    }, 10000);
+    }, 5000);
     return () => clearInterval(interval);
   }, [shuffledPosts]);
 
