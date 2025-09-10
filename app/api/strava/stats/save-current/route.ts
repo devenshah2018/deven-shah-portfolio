@@ -1,4 +1,5 @@
-import { SupabaseClient } from '@supabase/supabase-js';
+export const dynamic = 'force-dynamic';
+import { supabaseClient } from '@/lib/supabase-client';
 import axios from 'axios';
 import { NextResponse } from 'next/server';
 
@@ -15,10 +16,6 @@ interface StravaStats {
   biggest_climb_elevation_gain: number;
   biggest_ride_distance: number;
 }
-
-const supabaseClient = new SupabaseClient(
-    'https://avtlirighoozmkuvyshp.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF2dGxpcmlnaG9vem1rdXZ5c2hwIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1NzQzMTIwNiwiZXhwIjoyMDczMDA3MjA2fQ.N-DhH6i2frCDq0r4MsRyJeTxX7pxKYj4nv4SdESI_XQ'
-);
 
 export async function GET() {
   const accessToken = await axios.post(`https://deven-shah-portfolio.vercel.app/api/strava/authenticate`);
