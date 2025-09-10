@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://deven-shah-portfolio.vercel.app'),
-  title: 'Deven Shah - Software Engineer',
+  title: 'Deven Shah',
   description:
     'Portfolio of Deven Shah, the Co-founder & CTO of Suno Analytics and Graduate MSCS student at Boston University',
   keywords: [
@@ -24,8 +24,8 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'Deven Shah' }],
   openGraph: {
-    title: 'Deven Shah - Co-founder/CTO | Software Engineer',
-    description: 'Portfolio of Deven Shah, Co-founder/CTO of Suno Analytics',
+    title: 'Deven Shah',
+    description: 'Portfolio of Deven Shah, Co-founder @ Suno | MSCS @ Boston University',
     type: 'website',
   },
 };
