@@ -22,7 +22,7 @@ export async function GET() {
         access_token: accessToken.data.access_token,
     });
     const stats: StravaStats = statsResponse.data;
-    const { data, error } = await supabaseClient.from(process.env['NEXT_SUPABASE_STRAVA_TABLE'] || 'strava_stats')
+    const { data, error } = await supabaseClient.from(process.env['NEXT_SUPABASE_STRAVA_TABLE'] || 'strava-stats')
         .insert({
           all_run_totals: stats.all_run_totals,
           all_ride_totals: stats.all_ride_totals,
