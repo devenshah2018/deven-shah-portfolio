@@ -9,6 +9,7 @@ export const LINKS = {
     strava: 'https://www.strava.com/athletes/123793208',
     cal: 'https://cal.com/deven-shah-l0qkjk/quick-chat',
     kaggle: 'https://www.kaggle.com/devenashah',
+    hevy: 'https://hevy.com/user/devenshah'
 }
 
 export const TWEETS = [

@@ -291,8 +291,8 @@ export function AboutSection() {
           </motion.div>
 
           {/* Twitter and Strava Section */}
-          <div className='mb-20 grid grid-cols-1 gap-12 lg:grid-cols-2'>
-            <div className='flex'>
+          <div className='mb-20 grid grid-cols-1 gap-12 lg:grid-cols-5'>
+            <div className='flex lg:col-span-2'>
               <div className='relative min-h-[320px] w-full max-w-md overflow-visible'>
                 <h3 className='mb-3 flex items-center gap-2 text-2xl font-bold text-white'>
                   <FontAwesomeIcon icon={currentPostType === 'linkedin' ? faLinkedin : faXTwitter} className='h-6 w-6 text-blue-400' />
@@ -304,7 +304,13 @@ export function AboutSection() {
               </div>
             </div>
 
-            <ActivityDashboard pastAchievements={pastAchievements} currentAchievementIndex={currentAchievementIndex} setCurrentAchievementIndex={setCurrentAchievementIndex} />
+            <div className='lg:col-span-3'>
+              <ActivityDashboard
+                pastAchievements={pastAchievements}
+                currentAchievementIndex={currentAchievementIndex}
+                setCurrentAchievementIndex={setCurrentAchievementIndex}
+              />
+            </div>
           </div>
 
           {/* Technical Skills Section - Full Width */}
