@@ -16,16 +16,13 @@ interface StravaStats {
   biggest_ride_distance: number;
 }
 
-const supabaseUrl = process.env['NEXT_PUBLIC_SUPABASE_URL'] || '';
-const supabaseKey = process.env['NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY'] || '';
-
 const supabaseClient = new SupabaseClient(
-    supabaseUrl, supabaseKey
+    'https://avtlirighoozmkuvyshp.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF2dGxpcmlnaG9vem1rdXZ5c2hwIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1NzQzMTIwNiwiZXhwIjoyMDczMDA3MjA2fQ.N-DhH6i2frCDq0r4MsRyJeTxX7pxKYj4nv4SdESI_XQ'
 );
 
 export async function GET() {
-  const accessToken = await axios.post(`${process.env['NEXT_PUBLIC_URL']}/api/strava/authenticate`);
-  const statsResponse = await axios.post(`${process.env['NEXT_PUBLIC_URL']}/api/strava/stats`, {
+  const accessToken = await axios.post(`https://deven-shah-portfolio.vercel.app/api/strava/authenticate`);
+  const statsResponse = await axios.post(`https://deven-shah-portfolio.vercel.app/api/strava/stats`, {
     access_token: accessToken.data.access_token,
   });
   const stats: StravaStats = statsResponse.data;
@@ -51,7 +48,7 @@ try {
     error = result.error;
     if (error) {
         console.error('Error saving Strava stats to Supabase:', error);
-        return NextResponse.json({ error: 'Failed to save Strava stats' }, { status: 500 });
+        return NextResponse.json({ error }, { status: 500 });
     }
 } catch (err) {
     console.error('Unexpected error saving Strava stats:', err);
