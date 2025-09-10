@@ -252,7 +252,7 @@ export function Navigation({ onStartTour }: NavigationProps) {
               <Button
                 onClick={onStartTour}
                 variant='outline'
-                className='rounded-full border-blue-400/50 bg-gradient-to-r from-blue-500/20 to-indigo-500/20 px-4 py-2 font-mono text-sm font-semibold tracking-wide text-blue-300 shadow-lg transition-all duration-300 hover:border-blue-300 hover:bg-gradient-to-r hover:from-blue-500/30 hover:to-indigo-500/30 hover:text-white hover:shadow-blue-500/25'
+                className='rounded-full border-blue-400/50 bg-gradient-to-r from-blue-500/20 to-indigo-500/20 px-4 py-2 font-mono text-sm font-semibold tracking-wide text-blue-300 shadow-lg transition-all duration-300 hover:border-blue-300 hover:bg-gradient-to-r hover:from-blue-500/30 hover:to-indigo-500/30 hover:text-white'
               >
                 <Route className='mr-2 h-4 w-4' />
                 Take Tour

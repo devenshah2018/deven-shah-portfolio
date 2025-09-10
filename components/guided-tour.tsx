@@ -116,33 +116,11 @@ export function GuidedTour() {
 
   const currentStepData = tourSteps[currentStep];
 
-  // Typing effect hook
+  // Typing effect hook (removed, now just set text immediately)
   useEffect(() => {
     if (!currentStepData?.content) return;
-
-    setIsTyping(true);
-    setDisplayedText('');
-
-    const text = currentStepData.content;
-    let currentIndex = 0;
-
-    const typeNextChar = () => {
-      if (currentIndex < text.length) {
-        setDisplayedText(text.substring(0, currentIndex + 1));
-        currentIndex++;
-        let delay = 15;
-
-        setTimeout(typeNextChar, delay);
-      } else {
-        setIsTyping(false);
-      }
-    };
-
-    const startTimeout = setTimeout(typeNextChar, 150);
-
-    return () => {
-      clearTimeout(startTimeout);
-    };
+    setDisplayedText(currentStepData.content);
+    setIsTyping(false);
   }, [currentStep, currentStepData?.content]);
 
   const scrollToTarget = useCallback((target: string) => {

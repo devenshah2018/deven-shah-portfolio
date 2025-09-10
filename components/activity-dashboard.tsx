@@ -139,10 +139,6 @@ export function ActivityDashboard({
     return { totalSets, totalReps, totalVolume };
   }
 
-  const handleExerciseDotClick = (i: number) => {
-    setCurrentExerciseIndex(i);
-  };
-
   const [logoIndex, setLogoIndex] = useState(0);
   useEffect(() => {
     const interval = setInterval(() => {
@@ -403,16 +399,6 @@ export function ActivityDashboard({
                             </div>
                           );
                         })}
-                        <div className='absolute bottom-2 right-4 flex gap-1'>
-                          {hevyStats.workouts[0].exercises.map((_: any, i: number) => (
-                            <button
-                              key={i}
-                              onClick={() => handleExerciseDotClick(i)}
-                              className={`h-2 w-2 rounded-full border-2 border-pink-400/40 transition-all duration-300 ${i === currentExerciseIndex ? 'scale-125 bg-pink-400 shadow' : 'bg-slate-600 hover:bg-pink-300'}`}
-                              aria-label={`View exercise ${i + 1}`}
-                            />
-                          ))}
-                        </div>
                       </div>
                     )}
                   </div>

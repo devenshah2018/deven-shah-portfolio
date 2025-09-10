@@ -983,14 +983,12 @@ export const EXPERIENCES = [
 
 export const PROJECT_CATEGORIES = [
   { key: 'all', label: 'All' },
-  { key: 'web', label: 'Web Applications' },
-  { key: 'ai', label: 'Data Science & Machine Learning' },
-  { key: 'security', label: 'Security & Compliance Tools' },
-  { key: 'devops', label: 'Cloud & DevOps Engineering' },
-  { key: 'research', label: 'Research & Experimental' },
-  { key: 'open', label: 'Open Source & Contributions' },
+  { key: 'web', label: 'Web Apps' },
+  { key: 'ai', label: 'Data Science & AI/ML' },
+  { key: 'security', label: 'Security & Compliance' },
+  { key: 'devops', label: 'Cloud & DevOps' },
+  { key: 'research', label: 'Experimental' },
   { key: 'infra', label: 'Embedded Systems & Infrastructure' },
-  { key: 'other', label: 'Other' },
 ];
 
 export const PROJECTS: Project[] = [

@@ -31,7 +31,7 @@ function getAccessibleAtIcons(accessible_at: string[]) {
             key={i}
             src={icon.src}
             alt={icon.alt}
-            className='h-6 w-6 rounded-full border-2 border-slate-200 bg-slate-100 p-1 shadow'
+            className='h-6 w-6 rounded-full border-2 border-slate-400 bg-slate-100 p-1 shadow'
             style={{ zIndex: 10 - i }}
           />
         );
@@ -92,21 +92,23 @@ export function ProjectsSection() {
           </div>
 
           {/* Category Filter Bar */}
-          <div className='mb-8 flex flex-wrap justify-center gap-2'>
-            {PROJECT_CATEGORIES.map(cat => (
+          <div className='mb-8 flex flex-wrap gap-2 justify-start sm:justify-center'>
+            {[...PROJECT_CATEGORIES]
+              .sort((a, b) => a.label.localeCompare(b.label))
+              .map(cat => (
               <Button
                 key={cat.key}
                 variant={activeCategory === cat.key ? 'default' : 'outline'}
                 className={`rounded-full px-5 py-2 text-sm font-semibold transition-all ${
-                  activeCategory === cat.key
-                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white'
-                    : 'border-slate-700 bg-slate-900/50 text-slate-300 hover:border-blue-500 hover:text-blue-400'
+                activeCategory === cat.key
+                  ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white'
+                  : 'border-slate-700 bg-slate-900/50 text-slate-300 hover:border-blue-500 hover:text-blue-400'
                 }`}
                 onClick={() => setActiveCategory(cat.key)}
               >
                 {cat.label}
               </Button>
-            ))}
+              ))}
           </div>
 
           {/* Projects Grid */}
@@ -179,7 +181,7 @@ export function ProjectsSection() {
                         <Button
                           asChild
                           variant='outline'
-                          className='flex h-9 items-center gap-2 rounded-full border-2 border-blue-700/80 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 px-4 py-2 text-xs font-semibold text-blue-200 shadow-lg transition-all duration-200 hover:border-blue-400 hover:from-blue-900 hover:to-indigo-900 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2'
+                          className='flex h-9 items-center gap-2 rounded-full border-2 border-blue-700/80 bg-transparent px-4 py-2 text-xs font-semibold text-blue-200 shadow-lg transition-all duration-200 hover:border-blue-400 hover:from-blue-900 hover:to-indigo-900 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2'
                         >
                           <a
                             href={project.link}

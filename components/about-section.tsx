@@ -308,6 +308,9 @@ export function AboutSection() {
               </div>
             </div>
 
+            {/* Add extra space only on mobile */}
+            <div className='block h-4 lg:hidden'></div>
+
             <div className='lg:col-span-3'>
               <ActivityDashboard
                 pastAchievements={pastAchievements}
