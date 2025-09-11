@@ -230,6 +230,11 @@ export function ActivityDashboard({
           <div className='grid grid-cols-1 gap-0 md:grid-cols-2'>
             {/* Strava Summary */}
             <div className='flex flex-col justify-center border-b border-slate-700/30 p-3 sm:p-4 md:border-b-0 md:border-r'>
+              <div className='mb-1 flex items-center gap-2'>
+                <span className='rounded bg-slate-800/60 px-2 py-0.5 text-xs font-semibold text-orange-300'>
+                  Lifetime Cardio Totals
+                </span>
+              </div>
               <div className='grid grid-cols-3 divide-x divide-slate-700/30'>
                 <div className='px-1 text-center sm:px-2'>
                   <div className='text-lg font-bold text-green-400 sm:text-2xl'>
@@ -309,21 +314,36 @@ export function ActivityDashboard({
             </div>
             {/* Hevy Summary & Carousel */}
             <div className='flex flex-col justify-center p-3 sm:p-4'>
-              <div className='mb-2 flex items-center gap-2'>
-                <svg className='h-5 w-5 text-pink-400' fill='currentColor' viewBox='0 0 24 24'>
-                  <path d='M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16zm-1-13h2v6h-2zm0 8h2v2h-2z' />
-                </svg>
+              <div className='mb-1 flex items-center gap-2'>
+                <span className='rounded bg-slate-800/60 px-2 py-0.5 text-xs font-semibold text-pink-300'>
+                  Recent Workout
+                </span>
+              </div>
+              <div className='mb-3 flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-3'>
                 <span
-                  className='truncate text-sm font-bold text-slate-200'
+                  className='truncate text-lg font-bold text-slate-200 sm:text-xl'
                   title={hevyStats?.workouts?.[0]?.title || ''}
                 >
                   {hevyStats?.workouts?.[0]?.title || 'No Workout'}
                 </span>
+                {hevyStats?.workouts?.[0]?.location && (
+                  <span className='rounded bg-slate-700/40 px-2 py-0.5 text-xs text-slate-400'>
+                    {hevyStats.workouts[0].location}
+                  </span>
+                )}
+                <span className='rounded bg-slate-800/60 px-2 py-0.5 text-xs text-slate-500'>
+                  {hevyStats?.workouts?.[0]?.start_time &&
+                    new Date(hevyStats.workouts[0].start_time).toLocaleDateString(undefined, {
+                      year: 'numeric',
+                      month: 'short',
+                      day: 'numeric',
+                    })}
+                </span>
               </div>
               {hevyStats?.workouts?.length > 0 ? (
                 <>
-                  <div className='mb-2 flex items-center gap-3'>
-                    <span className='rounded bg-transparent px-2 py-0.5 font-mono text-xs text-slate-400'>
+                  <div className='mb-3 flex flex-wrap items-center gap-3'>
+                    <span className='rounded bg-slate-900/60 px-2 py-0.5 font-mono text-xs text-slate-400'>
                       {new Date(hevyStats.workouts[0].start_time).toLocaleTimeString([], {
                         hour: '2-digit',
                         minute: '2-digit',
@@ -334,13 +354,14 @@ export function ActivityDashboard({
                         minute: '2-digit',
                       })}
                     </span>
-                    <span className='rounded bg-slate-800/60 px-2 py-0.5 text-xs text-slate-500'>
-                      {new Date(hevyStats.workouts[0].start_time).toLocaleDateString(undefined, {
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric',
-                      })}
+                    <span className='rounded bg-slate-900/60 px-2 py-0.5 text-xs text-slate-400'>
+                      {hevyStats.workouts[0].type || 'Workout'}
                     </span>
+                    {hevyStats.workouts[0].notes && (
+                      <span className='rounded bg-slate-900/60 px-2 py-0.5 text-xs italic text-slate-400'>
+                        {hevyStats.workouts[0].notes}
+                      </span>
+                    )}
                   </div>
                   <div
                     className='relative flex min-h-[90px] flex-1 flex-col items-stretch justify-center'
@@ -357,7 +378,7 @@ export function ActivityDashboard({
                           return (
                             <div
                               key={i}
-                              className={`absolute inset-0 flex min-w-[180px] max-w-full flex-col items-start rounded-xl border-none bg-transparent p-4 transition-all duration-500 ease-in-out ${i === currentExerciseIndex ? 'z-10 scale-100 opacity-100' : 'pointer-events-none z-0 scale-95 opacity-0'}`}
+                              className={`absolute inset-0 flex min-w-[180px] max-w-full flex-col items-start rounded-xl border border-slate-700/40 bg-slate-900/80 p-4 shadow transition-all duration-500 ease-in-out ${i === currentExerciseIndex ? 'z-10 scale-100 opacity-100' : 'pointer-events-none z-0 scale-95 opacity-0'}`}
                               aria-hidden={i !== currentExerciseIndex}
                             >
                               <div className='mb-1 flex w-full items-center gap-2'>
@@ -374,7 +395,7 @@ export function ActivityDashboard({
                                 )}
                               </div>
                               {/* Exercise summary */}
-                              <div className='mb-2 mt-4 flex w-full flex-row items-center justify-center gap-6'>
+                              <div className='mb-2 mt-4 flex w-full flex-row flex-wrap items-center justify-center gap-6'>
                                 <span className='text-xs font-bold tracking-wide text-slate-400'>
                                   Sets: <span className='font-mono text-pink-200'>{totalSets}</span>
                                 </span>

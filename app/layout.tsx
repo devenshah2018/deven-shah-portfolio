@@ -27,6 +27,7 @@ export const metadata: Metadata = {
     title: 'Deven Shah',
     description: 'Portfolio of Deven Shah, Co-founder @ Suno | MSCS @ Boston University',
     type: 'website',
+    siteName: 'Deven Shah',
   },
 };
 
