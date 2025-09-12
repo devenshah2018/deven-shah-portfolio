@@ -15,7 +15,7 @@ import {
   Award,
   Rocket,
 } from 'lucide-react';
-import { useTour } from '@/components/tour-context';
+import { useTour } from '@/components/tour/tour-context';
 
 const tourSteps = [
   {

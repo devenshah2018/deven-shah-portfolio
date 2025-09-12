@@ -1,9 +1,9 @@
-import { HeroSection } from '@/components/hero-section';
-import { AboutSection } from '@/components/about-section';
-import { ExperienceSection } from '@/components/experience-section';
-import { ProjectsSection } from '@/components/projects-section';
-import { EducationSection } from '@/components/education-section';
-import { ContactSection } from '@/components/contact-section';
+import { HeroSection } from '@/components/hero/hero-section';
+import { AboutSection } from '@/components/about/about-section';
+import { ExperienceSection } from '@/components/experience/experience-section';
+import { ProjectsSection } from '@/components/projects/projects-section';
+import { EducationSection } from '@/components/education/education-section';
+import { ContactSection } from '@/components/contact/contact-section';
 
 export default function HomePage() {
   return (

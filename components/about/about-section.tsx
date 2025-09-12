@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { SkillModal } from '@/components/skill-modal';
-import { RotatingTweets } from '@/components/rotating-tweets';
+import { SkillModal } from '@/components/about/skill-modal';
+import { RotatingTweets } from '@/components/about/rotating-tweets';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXTwitter, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { CATEGORIZED_SKILLS, SKILL_CATEGORIES, SKILL_MAPPINGS } from '@/lib/content-registry';
