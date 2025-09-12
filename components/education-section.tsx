@@ -165,7 +165,7 @@ export function EducationSection() {
                               </div>
                             </div>
                             {edu.coursework && edu.coursework.length > 0 && (
-                              <div className='mt-4 rounded-2xl bg-gradient-to-br from-slate-800/80 to-slate-900/80 p-6 shadow-lg border border-slate-700/40'>
+                              <div className='mt-4 rounded-2xl bg-transparent border-none p-6 shadow-lg'>
                                 <div className='mb-4 flex items-center justify-between'>
                                   <h4 className='text-lg font-bold text-white tracking-tight'>Academic Coursework</h4>
                                   {edu.coursework.length > 6 && (
@@ -233,7 +233,7 @@ export function EducationSection() {
                     }}
                     viewport={{ once: true }}
                   >
-                    <Card className='group relative flex h-full flex-col overflow-hidden rounded-2xl border-none bg-transparent shadow-lg transition-all duration-300'>
+                    <Card className='group relative flex h-full flex-col overflow-hidden rounded-2xl border-none bg-transparent shadow-lg transition-all duration-300 px-2 py-2 md:px-4 md:py-4'>
                       {/* Active indicator */}
                       <div className='absolute right-4 top-4 flex items-center gap-2'>
                         <div className='relative flex h-3 w-3 items-center justify-center'>
@@ -245,10 +245,10 @@ export function EducationSection() {
                         </span>
                       </div>
 
-                      <CardContent className='relative flex flex-1 flex-col gap-4 p-6'>
-                        <div className='flex items-center gap-4'>
+                      <CardContent className='relative flex flex-1 flex-col gap-6 p-6 md:p-8'>
+                        <div className='flex flex-col sm:flex-row sm:items-center gap-6'>
                           {/* Enhanced logo section */}
-                          <div className='bg-white/8 relative h-20 w-20 rounded-xl border-none bg-transparent p-2 shadow-md backdrop-blur-sm'>
+                          <div className='bg-white/8 relative h-24 w-24 rounded-xl border-none bg-transparent p-3 shadow-md backdrop-blur-sm flex items-center justify-center'>
                             <img
                               src={cert.logo}
                               alt={`${cert.issuer} logo`}
@@ -256,7 +256,7 @@ export function EducationSection() {
                             />
                           </div>
                           <div className='flex-1 min-w-0'>
-                            <h3 className='mb-1 text-lg font-bold leading-tight text-white'>
+                            <h3 className='mb-1 text-lg font-bold leading-tight text-white break-words'>
                               {cert.title}
                             </h3>
                             <a
@@ -304,7 +304,7 @@ export function EducationSection() {
                           </div>
                         </div>
 
-                        <div className='flex flex-wrap items-center gap-2'>
+                        <div className='flex flex-wrap items-center gap-3 mt-4'>
                           <Badge className='bg-transparent px-2 py-1 text-xs font-semibold text-slate-200 backdrop-blur-sm'>
                             <Calendar className='mr-1.5 h-3 w-3' />
                             {cert.period}
