@@ -56,7 +56,7 @@ export default function Timeline() {
       viewport={{ once: true }}
       className="mb-20"
     >
-      <h3 className="mb-10 text-2xl font-bold text-white text-center tracking-tight">Career Timeline</h3>
+      <h3 className="text-2xl font-bold text-white text-center tracking-tight">Career Timeline</h3>
       {/* Timeline Container */}
       <div className="relative flex flex-col items-center sm:flex-row sm:items-center sm:justify-between gap-6 sm:gap-4 pt-8 pb-4 px-2 sm:px-4">
         {/* Desktop Timeline Line - only spans between cards */}
