@@ -58,7 +58,7 @@ export function ProjectsSection() {
   }, [activeCategory]);
 
   return (
-    <section id='projects' className='bg-gradient-to-b from-slate-950 to-slate-900 py-24'>
+    <section id='projects' className='bg-gradient-to-b from-slate-950 to-slate-900 py-20'>
       <div className='container mx-auto px-4 lg:px-8'>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
