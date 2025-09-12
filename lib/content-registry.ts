@@ -983,12 +983,12 @@ export const EXPERIENCES = [
 
 export const PROJECT_CATEGORIES = [
   { key: 'all', label: 'All' },
+  { key: 'featured', label: 'Featured', special: true },
   { key: 'web', label: 'Web Apps' },
   { key: 'ai', label: 'Data Science & AI/ML' },
   { key: 'security', label: 'Security & Compliance' },
   { key: 'devops', label: 'Cloud & DevOps' },
   { key: 'research', label: 'Experimental' },
-  { key: 'infra', label: 'Embedded Systems & Infrastructure' },
 ];
 
 export const PROJECTS: Project[] = [
@@ -1005,7 +1005,7 @@ export const PROJECTS: Project[] = [
     link: 'https://github.com/devenshah2018/deven-shah-portfolio',
     status: 'Live',
     readMe: true,
-    categories: ['web'],
+    categories: ['web', 'featured'],
     accessible_at: ['hosted', 'github'],
   },
   {
@@ -1036,7 +1036,7 @@ export const PROJECTS: Project[] = [
     entry_point: 'vscode',
     link: 'http://marketplace.visualstudio.com/items?itemName=strive-ai.strive',
     status: 'Live',
-    categories: ['security', 'ai'],
+    categories: ['security', 'ai', 'featured'],
     accessible_at: ['vscode'],
   },
   {
@@ -1066,7 +1066,7 @@ export const PROJECTS: Project[] = [
     entry_point: 'github',
     link: 'https://github.com/devenshah2018/model-distribution-server',
     status: 'In Progress',
-    categories: ['ai', 'infra', 'devops'],
+    categories: ['ai', 'devops'],
     accessible_at: ['github'],
   },
   {
@@ -1098,7 +1098,7 @@ export const PROJECTS: Project[] = [
     link: '',
     status: 'In Progress',
     readMe: false,
-    categories: ['ai', 'research'],
+    categories: ['ai', 'research', 'featured'],
     accessible_at: ['github'],
   },
   {

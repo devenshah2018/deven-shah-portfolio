@@ -3,7 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Code, Calendar, ExternalLink } from 'lucide-react';
+import { Code, Calendar, ExternalLink, Star } from 'lucide-react';
 import { motion } from 'framer-motion';
 import React, { useState, useMemo } from 'react';
 import { PROJECTS, PROJECT_CATEGORIES } from '@/lib/content-registry';
@@ -11,6 +11,10 @@ import { Project } from '@/lib/types';
 
 function getProjectCategories(project: Project): string[] {
   return project.categories || ['other'];
+}
+
+function isProjectFeatured(project: Project): boolean {
+  return getProjectCategories(project).includes('featured');
 }
 
 function getAccessibleAtIcons(accessible_at: string[]) {
@@ -41,7 +45,7 @@ function getAccessibleAtIcons(accessible_at: string[]) {
 }
 
 export function ProjectsSection() {
-  const [activeCategory, setActiveCategory] = useState<string>('all');
+  const [activeCategory, setActiveCategory] = useState<string>('featured');
 
   const filteredProjects = useMemo(() => {
     return PROJECTS.filter((project: Project) => {
@@ -93,7 +97,42 @@ export function ProjectsSection() {
 
           {/* Category Filter Bar */}
           <div className='mb-8 flex flex-wrap gap-2 justify-start sm:justify-center'>
-            {[...PROJECT_CATEGORIES]
+            {/* All category first */}
+            {PROJECT_CATEGORIES.filter(cat => cat.key === 'all').map(cat => (
+              <Button
+                key={cat.key}
+                variant={activeCategory === cat.key ? 'default' : 'outline'}
+                className={`rounded-full px-5 py-2 text-sm font-semibold transition-all ${
+                  activeCategory === cat.key
+                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white'
+                    : 'border-slate-700 bg-slate-900/50 text-slate-300 hover:border-blue-500 hover:text-blue-400'
+                }`}
+                onClick={() => setActiveCategory(cat.key)}
+              >
+                {cat.label}
+              </Button>
+            ))}
+            
+            {/* Featured category second with special styling */}
+            {PROJECT_CATEGORIES.filter(cat => cat.key === 'featured').map(cat => (
+              <Button
+                key={cat.key}
+                variant={activeCategory === cat.key ? 'default' : 'outline'}
+                className={`rounded-full px-5 py-2 text-sm font-semibold transition-all ${
+                  activeCategory === cat.key
+                    ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg shadow-amber-500/25'
+                    : 'border-amber-600/50 bg-gradient-to-r from-amber-900/30 to-orange-900/30 text-amber-300 hover:border-amber-500 hover:text-amber-200 hover:shadow-md hover:shadow-amber-500/20'
+                }`}
+                onClick={() => setActiveCategory(cat.key)}
+              >
+                <Star className="mr-1 h-4 w-4" />
+                {cat.label}
+              </Button>
+            ))}
+            
+            {/* Rest of the categories sorted alphabetically */}
+            {PROJECT_CATEGORIES
+              .filter(cat => cat.key !== 'all' && cat.key !== 'featured')
               .sort((a, b) => a.label.localeCompare(b.label))
               .map(cat => (
               <Button
@@ -133,6 +172,11 @@ export function ProjectsSection() {
                       <CardTitle className='whitespace-normal break-words text-lg font-bold text-white'>
                         {project.title}
                       </CardTitle>
+                      {isProjectFeatured(project) && (
+                        <Badge className='border-0 bg-gradient-to-r from-yellow-500 to-orange-500 px-2 py-0.5 text-xs text-white'>
+                          <Star className='h-3 w-3' />
+                        </Badge>
+                      )}
                     </div>
                     <div className='flex min-w-[0] flex-shrink-0 flex-col items-end'>
                       <span
