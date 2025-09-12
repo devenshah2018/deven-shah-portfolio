@@ -86,7 +86,7 @@ export function HeroSection() {
               }}
             >
               <Download className='mr-2 h-5 w-5' />
-              Download Resume
+              Download Résumé
             </Button>
           </motion.div>
 
