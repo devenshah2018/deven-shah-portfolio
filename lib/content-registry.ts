@@ -934,9 +934,9 @@ export const EXPERIENCES = [
       'Built an e-commerce analytics platform offering deep insights and AI agents for inventory management.',
     achievements: [
       'Led a global development team, improving project timelines and consistently delivering key initiatives to clients',
-      'Developed AI agents via LangGraph, intuitive interfaces using React, and scalable PostgreSQL backend systems',
       'Designed system architecture for high availability and performance, ensuring robust data handling',
       'Conduct client discovery and demos, driving engagement with companies up to $50M ARR',
+      'Launched AI-powered analytics features that increased client retention and platform adoption',
     ],
     featured: true,
     gradient: 'from-blue-500 to-cyan-500',
