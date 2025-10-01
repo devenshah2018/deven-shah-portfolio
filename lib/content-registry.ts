@@ -27,9 +27,10 @@ export const SKILLS = {
     'CSS',
     'Bash',
     'Rust',
+    'C++'
   ],
   platforms: ['AWS', 'Salesforce', 'Azure', 'LangGraph', 'GCP'],
-  frameworks: ['React', '.NET', 'Flask', 'TailwindCSS'],
+  frameworks: ['React', '.NET', 'Flask', 'TailwindCSS', 'Angular', 'ASP.NET Core', 'Next.js'],
   frontend: ['TypeScript', 'JavaScript', 'HTML', 'CSS', 'React', 'TailwindCSS'],
   backend: [
     'Python',
@@ -45,7 +46,7 @@ export const SKILLS = {
     'REST API',
     'GraphQL',
   ],
-  database: ['SQL', 'SOQL', 'Oracle', 'PostgreSQL'],
+  database: ['SQL', 'SOQL', 'Oracle', 'PostgreSQL', 'MySQL', 'MongoDB'],
   aimal: ['Python', 'LLMs', 'Sklearn', 'Tensorflow', 'Pytorch', 'LangGraph'],
   devops: ['Docker', 'Github', 'Git', 'GCP', 'AWS', 'Azure'],
   apis: ['C#', 'Python', 'Apex', 'Azure', 'REST API', 'GraphQL', 'TypeScript'],
@@ -694,6 +695,17 @@ export const SKILL_MAPPINGS = [
     ],
   },
   {
+    skill: 'C++',
+    education: [
+      {
+        title: 'M.S. Computer Science',
+        institution: 'Boston University',
+        id: 'bu',
+        icon: GraduationCap,
+      },
+    ],
+  },
+  {
     skill: 'Github',
     experiences: [
       {
@@ -892,6 +904,61 @@ export const SKILL_MAPPINGS = [
   },
   {
     skill: 'GraphQL',
+    experiences: [
+      {
+        title: 'Co-Founder/CTO',
+        company: 'Suno Analytics',
+        id: 'suno-analytics',
+        icon: Briefcase,
+      },
+    ],
+  },
+  {
+    skill: 'MySQL',
+    experiences: [
+      {
+        title: 'Associate Application Developer',
+        company: 'Patelco',
+        id: 'patelco',
+        icon: Briefcase,
+      },
+    ],
+  },
+    {
+    skill: 'MongoDB',
+    experiences: [
+      {
+        title: 'Co-Founder/CTO',
+        company: 'Suno Analytics',
+        id: 'suno-analytics',
+        icon: Briefcase,
+      },
+    ],
+  },
+    {
+    skill: 'Angular',
+    experiences: [
+      {
+        title: 'Associate Application Developer',
+        company: 'Patelco',
+        id: 'patelco',
+        icon: Briefcase,
+      },
+    ],
+  },
+    {
+    skill: 'ASP.NET Core',
+    experiences: [
+      {
+        title: 'Associate Application Developer',
+        company: 'Patelco',
+        id: 'patelco',
+        icon: Briefcase,
+      },
+    ],
+  },
+      {
+    skill: 'Next.js',
     experiences: [
       {
         title: 'Co-Founder/CTO',
