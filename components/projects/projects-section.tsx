@@ -251,6 +251,10 @@ export function ProjectsSection() {
                                   icon: <ExternalLink className='mr-1 inline h-4 w-4' />,
                                   label: 'VSCode',
                                 },
+                                live: {
+                                  icon: <ExternalLink className='mr-1 inline h-4 w-4' />,
+                                  label: 'Live',
+                                },
                               };
                               const { icon, label } = icons[entry] || {
                                 icon: <ExternalLink className='mr-1 inline h-4 w-4' />,

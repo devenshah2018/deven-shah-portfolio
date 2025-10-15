@@ -1154,19 +1154,19 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'drone-build-project',
-    title: 'Automated Drone Path Planning',
+    title: 'Drone Path Planning',
     subtitle: 'High-Quality Image Capture System to Support Drone Path Planning',
     period: '09/2025 – Present',
     sortDate: '2025-09',
     description:
       'Capturing high-quality image datasets for applications such as mapping, surveys, digital 3D models, and AI. Supported by The Build Fellowship.',
     technologies: getProjectSkillsFromMapping('drone-build-project'),
-    entry_point: 'github',
-    link: '',
+    entry_point: 'live',
+    link: 'https://drone-path-planner.vercel.app/',
     status: 'In Progress',
     readMe: false,
     categories: ['ai', 'research', 'featured'],
-    accessible_at: ['github'],
+    accessible_at: ['github', 'hosted'],
   },
   {
     id: 'crypto-correlations-project',
