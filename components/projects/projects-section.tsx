@@ -71,7 +71,7 @@ function getAccessibleAtIcons(accessible_at: string[]) {
             key={i}
             src={icon.src}
             alt={icon.alt}
-            className='h-6 w-6 rounded-full border-2 border-slate-400 bg-slate-100 p-1 shadow'
+            className='h-7 w-7 rounded-full border-2 border-slate-400 bg-slate-100 p-1 shadow-md'
             style={{ zIndex: 10 - i }}
           />
         );
@@ -276,7 +276,7 @@ export function ProjectsSection() {
                     </div>
                     <div className='mt-2 flex items-center justify-between'>
                       {getStatusBadge(project.status, 'md')}
-                      <div className='ml-2 flex items-center gap-1'>
+                      <div className='ml-2 flex items-center gap-2'>
                         {/* Accessible At Icons Row - now on the left of the button */}
                         {Array.isArray(project.accessible_at) &&
                           project.accessible_at.length > 0 &&
@@ -284,7 +284,7 @@ export function ProjectsSection() {
                         <Button
                           asChild
                           variant='outline'
-                          className='flex h-9 items-center gap-2 rounded-full border-2 border-blue-700/80 bg-transparent px-4 py-2 text-xs font-semibold text-blue-200 shadow-lg transition-all duration-200 hover:border-blue-400 hover:from-blue-900 hover:to-indigo-900 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2'
+                          className='group/btn relative h-10 items-center gap-2 overflow-hidden rounded-lg border-2 border-slate-700/60 bg-slate-800/40 px-4 py-2 text-sm font-semibold text-slate-200 shadow-md backdrop-blur-sm transition-all duration-300 hover:border-blue-500/60 hover:bg-slate-800/60 hover:text-white hover:shadow-lg hover:shadow-blue-500/20 hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:ring-offset-2 focus:ring-offset-slate-950'
                         >
                           <a
                             href={project.link}
@@ -299,30 +299,30 @@ export function ProjectsSection() {
                                 { icon: React.ReactNode; label: string }
                               > = {
                                 github: {
-                                  icon: <Code className='mr-1 inline h-4 w-4' />,
+                                  icon: <Code className='h-4 w-4 transition-transform duration-300 group-hover/btn:scale-110' />,
                                   label: 'Code',
                                 },
                                 kaggle: {
-                                  icon: <ExternalLink className='mr-1 inline h-4 w-4' />,
+                                  icon: <ExternalLink className='h-4 w-4 transition-transform duration-300 group-hover/btn:scale-110' />,
                                   label: 'Kaggle',
                                 },
                                 vscode: {
-                                  icon: <ExternalLink className='mr-1 inline h-4 w-4' />,
-                                  label: 'VSCode',
+                                  icon: <ExternalLink className='h-4 w-4 transition-transform duration-300 group-hover/btn:scale-110' />,
+                                  label: 'Extension',
                                 },
                                 live: {
-                                  icon: <ExternalLink className='mr-1 inline h-4 w-4' />,
+                                  icon: <ExternalLink className='h-4 w-4 transition-transform duration-300 group-hover/btn:scale-110' />,
                                   label: 'Live',
                                 },
                               };
                               const { icon, label } = icons[entry] || {
-                                icon: <ExternalLink className='mr-1 inline h-4 w-4' />,
+                                icon: <ExternalLink className='h-4 w-4 transition-transform duration-300 group-hover/btn:scale-110' />,
                                 label: 'View',
                               };
                               return (
                                 <>
                                   {icon}
-                                  <span className='text-sm font-medium tracking-wide'>{label}</span>
+                                  <span className='font-semibold tracking-wide'>{label}</span>
                                 </>
                               );
                             })()}
@@ -390,20 +390,20 @@ export function ProjectsSection() {
                     </div>
 
                     {/* Right Section - Actions */}
-                    <div className='flex items-center gap-2 px-4 py-3 sm:py-0 sm:pr-6'>
+                    <div className='flex items-center gap-3 px-4 py-3 sm:py-0 sm:pr-6'>
                       {Array.isArray(project.accessible_at) &&
                         project.accessible_at.length > 0 &&
                         getAccessibleAtIcons(project.accessible_at)}
                       <Button
                         asChild
                         variant='outline'
-                        className='flex h-9 items-center gap-2 rounded-full border-2 border-blue-700/80 bg-transparent px-5 py-2 text-xs font-semibold text-blue-200 shadow-lg transition-all duration-200 hover:border-blue-400 hover:bg-blue-900/30 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-400'
+                        className='group/btn relative h-10 items-center gap-2.5 overflow-hidden rounded-lg border-2 border-slate-700/60 bg-slate-800/40 px-5 py-2.5 text-sm font-semibold text-slate-200 shadow-md backdrop-blur-sm transition-all duration-300 hover:border-blue-500/60 hover:bg-slate-800/60 hover:text-white hover:shadow-lg hover:shadow-blue-500/20 hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:ring-offset-2 focus:ring-offset-slate-950'
                       >
                         <a
                           href={project.link}
                           target='_blank'
                           rel='noopener noreferrer'
-                          className='flex items-center gap-2'
+                          className='flex items-center gap-2.5'
                         >
                           {(() => {
                             const entry = project.entry_point;
@@ -412,30 +412,30 @@ export function ProjectsSection() {
                               { icon: React.ReactNode; label: string }
                             > = {
                               github: {
-                                icon: <Code className='h-4 w-4' />,
+                                icon: <Code className='h-4 w-4 transition-transform duration-300 group-hover/btn:scale-110' />,
                                 label: 'View Code',
                               },
                               kaggle: {
-                                icon: <ExternalLink className='h-4 w-4' />,
+                                icon: <ExternalLink className='h-4 w-4 transition-transform duration-300 group-hover/btn:scale-110' />,
                                 label: 'View on Kaggle',
                               },
                               vscode: {
-                                icon: <ExternalLink className='h-4 w-4' />,
+                                icon: <ExternalLink className='h-4 w-4 transition-transform duration-300 group-hover/btn:scale-110' />,
                                 label: 'Get Extension',
                               },
                               live: {
-                                icon: <ExternalLink className='h-4 w-4' />,
+                                icon: <ExternalLink className='h-4 w-4 transition-transform duration-300 group-hover/btn:scale-110' />,
                                 label: 'View Live',
                               },
                             };
                             const { icon, label } = icons[entry] || {
-                              icon: <ExternalLink className='h-4 w-4' />,
+                              icon: <ExternalLink className='h-4 w-4 transition-transform duration-300 group-hover/btn:scale-110' />,
                               label: 'View Project',
                             };
                             return (
                               <>
                                 {icon}
-                                <span className='font-medium'>{label}</span>
+                                <span className='font-semibold tracking-wide'>{label}</span>
                               </>
                             );
                           })()}
