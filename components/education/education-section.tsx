@@ -9,6 +9,7 @@ import { useState } from 'react';
 
 export function EducationSection() {
   const [expandedAbstracts, setExpandedAbstracts] = useState<Set<string>>(new Set());
+  const [expandedCoursework, setExpandedCoursework] = useState<Set<string>>(new Set());
 
   const toggleAbstract = (paperId: string) => {
     setExpandedAbstracts(prev => {
@@ -17,6 +18,18 @@ export function EducationSection() {
         newSet.delete(paperId);
       } else {
         newSet.add(paperId);
+      }
+      return newSet;
+    });
+  };
+
+  const toggleCoursework = (eduId: string) => {
+    setExpandedCoursework(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(eduId)) {
+        newSet.delete(eduId);
+      } else {
+        newSet.add(eduId);
       }
       return newSet;
     });
@@ -353,6 +366,49 @@ export function EducationSection() {
                             {edu.status}
                           </Badge>
                         </div>
+
+                        {/* Expandable Coursework Section */}
+                        {edu.coursework && edu.coursework.length > 0 && (
+                          <div className='mt-3 border-t border-slate-700/30 pt-3'>
+                            <button
+                              onClick={() => toggleCoursework(edu.id)}
+                              className='flex w-full items-center justify-between rounded-md px-2 py-1.5 text-xs font-medium text-slate-300 transition-all duration-200 hover:bg-slate-800/40 hover:text-blue-300'
+                            >
+                              <span className='flex items-center gap-1.5'>
+                                <GraduationCap className='h-3 w-3' />
+                                <span>Relevant Coursework ({edu.coursework.length})</span>
+                              </span>
+                              {expandedCoursework.has(edu.id) ? (
+                                <ChevronUp className='h-3 w-3' />
+                              ) : (
+                                <ChevronDown className='h-3 w-3' />
+                              )}
+                            </button>
+                            
+                            {expandedCoursework.has(edu.id) && (
+                              <motion.div
+                                initial={{ opacity: 0, height: 0 }}
+                                animate={{ opacity: 1, height: 'auto' }}
+                                exit={{ opacity: 0, height: 0 }}
+                                transition={{ duration: 0.2 }}
+                                className='mt-2 space-y-1.5 overflow-hidden'
+                              >
+                                {edu.coursework.map((course: string, idx: number) => (
+                                  <motion.div
+                                    key={idx}
+                                    initial={{ opacity: 0, x: -10 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ duration: 0.2, delay: idx * 0.03 }}
+                                    className='flex items-start gap-2 rounded-md bg-slate-800/30 px-2.5 py-1.5 text-[10px] text-slate-300 backdrop-blur-sm'
+                                  >
+                                    <span className='mt-0.5 h-1 w-1 flex-shrink-0 rounded-full bg-blue-400/60' />
+                                    <span className='leading-relaxed'>{course}</span>
+                                  </motion.div>
+                                ))}
+                              </motion.div>
+                            )}
+                          </div>
+                        )}
                       </CardContent>
                     </Card>
                   ))}
