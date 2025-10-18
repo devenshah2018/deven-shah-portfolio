@@ -3,7 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Code, Calendar, ExternalLink, Star, Grid3x3, List, CheckCircle2, Clock, Pause } from 'lucide-react';
+import { Calendar, Star, Grid3x3, List, CheckCircle2, Clock, Pause, ExternalLink, Link } from 'lucide-react';
 import { motion } from 'framer-motion';
 import React, { useState, useMemo } from 'react';
 import { PROJECTS, PROJECT_CATEGORIES } from '@/lib/content-registry';
@@ -53,31 +53,95 @@ function getStatusBadge(status: string, size: 'sm' | 'md' = 'sm') {
   );
 }
 
-function getAccessibleAtIcons(accessible_at: string[]) {
-  const iconMap: Record<string, { src: string; alt: string }> = {
-    github: { src: '/github-icon.svg', alt: 'GitHub' },
-    kaggle: { src: '/kaggle-icon.png', alt: 'Kaggle' },
-    vscode: { src: '/vscode-icon.png', alt: 'VSCode' },
-    hosted: { src: '/globe.svg', alt: 'Web' },
-    web: { src: '/globe.svg', alt: 'Web' },
+function AccessPointBadge({ 
+  type, 
+  url, 
+  label,
+  index,
+}: { 
+  type: string; 
+  url: string; 
+  label?: string | undefined;
+  index: number;
+}) {
+  const [isHovered, setIsHovered] = React.useState(false);
+
+  const iconMap: Record<string, { src: string; alt: string; defaultLabel: string }> = {
+    github: { src: '/github-icon.svg', alt: 'GitHub', defaultLabel: 'Code' },
+    kaggle: { src: '/kaggle-icon.png', alt: 'Kaggle', defaultLabel: 'Kaggle' },
+    vscode: { src: '/vscode-icon.png', alt: 'VSCode', defaultLabel: 'Extension' },
+    hosted: { src: '/globe.svg', alt: 'Web', defaultLabel: 'Live' },
+    web: { src: '/globe.svg', alt: 'Web', defaultLabel: 'Live' },
   };
+
+  const config = iconMap[type];
+  if (!config) return null;
+
+  const displayLabel = label || config.defaultLabel;
+
   return (
-    <div className='mr-2 flex -space-x-2'>
-      {accessible_at.map((val: string, i: number) => {
-        const icon = iconMap[val];
-        if (!icon) return null;
-        return (
-          <img
-            key={i}
-            src={icon.src}
-            alt={icon.alt}
-            className='h-7 w-7 rounded-full border-2 border-slate-400 bg-slate-100 p-1 shadow-md'
-            style={{ zIndex: 10 - i }}
-          />
-        );
-      })}
-    </div>
+    <a
+      href={url}
+      target='_blank'
+      rel='noopener noreferrer'
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className='inline-flex items-center overflow-hidden rounded-full border-2 border-slate-400 bg-slate-100 shadow-md hover:border-blue-400 hover:shadow-lg hover:shadow-blue-500/20 hover:z-20 relative'
+      style={{
+        width: isHovered ? 'auto' : '28px',
+        height: '28px',
+        paddingRight: isHovered ? '12px' : '0px',
+        zIndex: isHovered ? 20 : 10 - index,
+        transition: 'width 300ms cubic-bezier(0.4, 0, 0.2, 1), padding-right 300ms cubic-bezier(0.4, 0, 0.2, 1), border-color 200ms ease, box-shadow 200ms ease',
+      }}
+    >
+      <div className='flex pr-1 h-7 w-7 items-center justify-center flex-shrink-0'>
+        <img
+          src={config.src}
+          alt={config.alt}
+          className='h-3.5 w-3.5 object-contain'
+        />
+      </div>
+      <span 
+        className='whitespace-nowrap text-sm font-semibold text-slate-900'
+        style={{
+          opacity: isHovered ? 1 : 0,
+          width: isHovered ? 'auto' : 0,
+          transition: 'opacity 250ms cubic-bezier(0.4, 0, 0.2, 1)',
+        }}
+      >
+        {displayLabel}
+      </span>
+    </a>
   );
+}
+
+function getAccessPoints(project: Project) {
+  // Use new access_points if available, otherwise fall back to old structure
+  if (project.access_points && project.access_points.length > 0) {
+    return project.access_points;
+  }
+  
+  // Fallback to old structure
+  return project.accessible_at.map(type => ({
+    type,
+    url: project.link,
+    label: undefined,
+  }));
+}
+
+function getWebLink(project: Project) {
+  // Get web/hosted link from access points
+  if (project.access_points && project.access_points.length > 0) {
+    return project.access_points.find(ap => ap.type === 'hosted' || ap.type === 'web');
+  }
+  
+  // Fallback: check if accessible_at includes hosted
+  if (project.accessible_at.includes('hosted')) {
+    return { type: 'hosted' as const, url: project.link, label: undefined };
+  }
+  
+  return null;
 }
 
 export function ProjectsSection() {
@@ -247,21 +311,31 @@ export function ProjectsSection() {
                 viewport={{ once: true }}
                 className='group'
               >
-                <Card className={`relative flex h-full flex-col overflow-hidden rounded-xl border-none bg-transparent transition-all duration-300 gap-2 ${
-                  isProjectFeatured(project) 
-                    ? 'ring-2 ring-amber-500/20' 
-                    : ''
-                }`}>
+                <Card className={`relative flex h-full flex-col overflow-hidden rounded-xl border-none bg-transparent transition-all duration-300 gap-2`}>
                   {isProjectFeatured(project) && (
                     <div className='absolute top-3 right-3 z-10'>
                       <Star className='h-5 w-5 text-amber-400 fill-amber-400/50' />
                     </div>
                   )}
                   <CardHeader className='flex flex-col gap-2 pb-3'>
-                    <div className='flex min-w-0 flex-1 items-start gap-3'>
+                    <div className='flex min-w-0 flex-1 items-center gap-2'>
                       <CardTitle className='whitespace-normal break-words text-lg font-bold text-white leading-tight'>
                         {project.title}
                       </CardTitle>
+                      {getWebLink(project) && (
+                        <a
+                          href={getWebLink(project)!.url}
+                          target='_blank'
+                          rel='noopener noreferrer'
+                          className='flex-shrink-0 inline-flex items-center gap-1.5 px-2 py-1 hover:border-blue-500/50 transition-all duration-200 group/link max-w-[140px]'
+                          title={getWebLink(project)!.url}
+                        >
+                          <Link className='h-3 w-3 flex-shrink-0 text-blue-400 group-hover/link:text-blue-300' />
+                          <span className='text-xs font-bold text-blue-400 group-hover/link:text-blue-300 truncate overflow-hidden'>
+                            {getWebLink(project)!.url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')}
+                          </span>
+                        </a>
+                      )}
                     </div>
                     <div className='flex items-center gap-1'>
                       <Calendar className='h-3 w-3 text-slate-400' />
@@ -287,58 +361,16 @@ export function ProjectsSection() {
                     </div>
                     <div className='mt-2 flex items-center justify-between'>
                       {getStatusBadge(project.status, 'md')}
-                      <div className='ml-2 flex items-center gap-2'>
-                        {/* Accessible At Icons Row - now on the left of the button */}
-                        {Array.isArray(project.accessible_at) &&
-                          project.accessible_at.length > 0 &&
-                          getAccessibleAtIcons(project.accessible_at)}
-                        <Button
-                          asChild
-                          variant='outline'
-                          className='group/btn relative h-10 items-center gap-2 overflow-hidden rounded-lg border-2 border-slate-700/60 bg-slate-800/40 px-4 py-2 text-sm font-semibold text-slate-200 shadow-md backdrop-blur-sm transition-all duration-300 hover:border-blue-500/60 hover:bg-slate-800/60 hover:text-white hover:shadow-lg hover:shadow-blue-500/20 hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:ring-offset-2 focus:ring-offset-slate-950'
-                        >
-                          <a
-                            href={project.link}
-                            target='_blank'
-                            rel='noopener noreferrer'
-                            className='flex items-center gap-2'
-                          >
-                            {(() => {
-                              const entry = project.entry_point;
-                              const icons: Record<
-                                string,
-                                { icon: React.ReactNode; label: string }
-                              > = {
-                                github: {
-                                  icon: <Code className='h-4 w-4 transition-transform duration-300 group-hover/btn:scale-110' />,
-                                  label: 'Code',
-                                },
-                                kaggle: {
-                                  icon: <ExternalLink className='h-4 w-4 transition-transform duration-300 group-hover/btn:scale-110' />,
-                                  label: 'Kaggle',
-                                },
-                                vscode: {
-                                  icon: <ExternalLink className='h-4 w-4 transition-transform duration-300 group-hover/btn:scale-110' />,
-                                  label: 'Extension',
-                                },
-                                live: {
-                                  icon: <ExternalLink className='h-4 w-4 transition-transform duration-300 group-hover/btn:scale-110' />,
-                                  label: 'Live',
-                                },
-                              };
-                              const { icon, label } = icons[entry] || {
-                                icon: <ExternalLink className='h-4 w-4 transition-transform duration-300 group-hover/btn:scale-110' />,
-                                label: 'View',
-                              };
-                              return (
-                                <>
-                                  {icon}
-                                  <span className='font-semibold tracking-wide'>{label}</span>
-                                </>
-                              );
-                            })()}
-                          </a>
-                        </Button>
+                      <div className='flex -space-x-2'>
+                        {getAccessPoints(project).map((accessPoint, i) => (
+                          <AccessPointBadge
+                            key={i}
+                            index={i}
+                            type={accessPoint.type}
+                            url={accessPoint.url}
+                            label={accessPoint.label}
+                          />
+                        ))}
                       </div>
                     </div>
                   </CardContent>
@@ -373,9 +405,25 @@ export function ProjectsSection() {
                     {/* Left Section - Title, Date, Technologies */}
                     <div className='flex-1 min-w-0'>
                       <CardHeader className='pb-2'>
-                        <CardTitle className='whitespace-normal break-words text-lg font-bold text-white leading-tight pr-8 mb-2'>
-                          {project.title}
-                        </CardTitle>
+                        <div className='flex items-center gap-2 mb-2'>
+                          <CardTitle className='whitespace-normal break-words text-lg font-bold text-white leading-tight'>
+                            {project.title}
+                          </CardTitle>
+                          {getWebLink(project) && (
+                            <a
+                              href={getWebLink(project)!.url}
+                              target='_blank'
+                              rel='noopener noreferrer'
+                              className='flex-shrink-0 inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-slate-800/50 border border-slate-700/50 hover:bg-blue-950/30 hover:border-blue-500/50 transition-all duration-200 group/link max-w-[160px]'
+                              title={getWebLink(project)!.url}
+                            >
+                              <ExternalLink className='h-3 w-3 flex-shrink-0 text-blue-400 group-hover/link:text-blue-300' />
+                              <span className='text-xs font-bold text-blue-400 group-hover/link:text-blue-300 truncate overflow-hidden'>
+                                {getWebLink(project)!.url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')}
+                              </span>
+                            </a>
+                          )}
+                        </div>
                         <div className='flex items-center gap-2 flex-wrap'>
                           <div className='flex items-center gap-1'>
                             <Calendar className='h-3 w-3 text-slate-400' />
@@ -402,57 +450,18 @@ export function ProjectsSection() {
                     </div>
 
                     {/* Right Section - Actions */}
-                    <div className='flex items-center gap-3 px-4 py-3 sm:py-0 sm:pr-6'>
-                      {Array.isArray(project.accessible_at) &&
-                        project.accessible_at.length > 0 &&
-                        getAccessibleAtIcons(project.accessible_at)}
-                      <Button
-                        asChild
-                        variant='outline'
-                        className='group/btn relative h-10 items-center gap-2.5 overflow-hidden rounded-lg border-2 border-slate-700/60 bg-slate-800/40 px-5 py-2.5 text-sm font-semibold text-slate-200 shadow-md backdrop-blur-sm transition-all duration-300 hover:border-blue-500/60 hover:bg-slate-800/60 hover:text-white hover:shadow-lg hover:shadow-blue-500/20 hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:ring-offset-2 focus:ring-offset-slate-950'
-                      >
-                        <a
-                          href={project.link}
-                          target='_blank'
-                          rel='noopener noreferrer'
-                          className='flex items-center gap-2.5'
-                        >
-                          {(() => {
-                            const entry = project.entry_point;
-                            const icons: Record<
-                              string,
-                              { icon: React.ReactNode; label: string }
-                            > = {
-                              github: {
-                                icon: <Code className='h-4 w-4 transition-transform duration-300 group-hover/btn:scale-110' />,
-                                label: 'View Code',
-                              },
-                              kaggle: {
-                                icon: <ExternalLink className='h-4 w-4 transition-transform duration-300 group-hover/btn:scale-110' />,
-                                label: 'View on Kaggle',
-                              },
-                              vscode: {
-                                icon: <ExternalLink className='h-4 w-4 transition-transform duration-300 group-hover/btn:scale-110' />,
-                                label: 'Get Extension',
-                              },
-                              live: {
-                                icon: <ExternalLink className='h-4 w-4 transition-transform duration-300 group-hover/btn:scale-110' />,
-                                label: 'View Live',
-                              },
-                            };
-                            const { icon, label } = icons[entry] || {
-                              icon: <ExternalLink className='h-4 w-4 transition-transform duration-300 group-hover/btn:scale-110' />,
-                              label: 'View Project',
-                            };
-                            return (
-                              <>
-                                {icon}
-                                <span className='font-semibold tracking-wide'>{label}</span>
-                              </>
-                            );
-                          })()}
-                        </a>
-                      </Button>
+                    <div className='flex items-center px-4 py-3 sm:py-0 sm:pr-6'>
+                      <div className='flex -space-x-2'>
+                        {getAccessPoints(project).map((accessPoint, i) => (
+                          <AccessPointBadge
+                            key={i}
+                            index={i}
+                            type={accessPoint.type}
+                            url={accessPoint.url}
+                            label={accessPoint.label}
+                          />
+                        ))}
+                      </div>
                     </div>
                   </Card>
                 </motion.div>

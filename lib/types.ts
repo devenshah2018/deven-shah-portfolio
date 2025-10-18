@@ -1,3 +1,9 @@
+export type AccessPoint = {
+  type: 'github' | 'vscode' | 'kaggle' | 'hosted' | 'web';
+  url: string;
+  label?: string; // Optional custom label, defaults to 'Code', 'Extension', 'Kaggle', 'Live', etc.
+};
+
 export type Project = {
   id: string;
   title: string;
@@ -8,8 +14,8 @@ export type Project = {
   fullDescription?: string;
   technologies: string[];
   allTechnologies?: string[];
-  entry_point: string;
-  link: string;
+  entry_point: string; // Deprecated: kept for backward compatibility
+  link: string; // Deprecated: kept for backward compatibility
   status: string;
   gradient?: string;
   highlights?: string[];
@@ -17,6 +23,7 @@ export type Project = {
   readMe?: boolean;
   categories?: string[];
   accessible_at: ('github' | 'vscode' | 'kaggle' | 'hosted')[];
+  access_points?: AccessPoint[]; // New: multiple access points with individual URLs
 };
 
 export type ResearchPaper = {

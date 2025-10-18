@@ -1140,6 +1140,10 @@ export const PROJECTS: Project[] = [
     readMe: true,
     categories: ['web', 'featured'],
     accessible_at: ['hosted', 'github'],
+    access_points: [
+      { type: 'hosted', url: 'https://deven-shah-portfolio.vercel.app/', label: 'Live Site' },
+      { type: 'github', url: 'https://github.com/devenshah2018/deven-shah-portfolio', label: 'Code' }
+    ]
   },
   {
     id: 'qode-project',
@@ -1156,6 +1160,9 @@ export const PROJECTS: Project[] = [
     readMe: true,
     categories: ['theory'],
     accessible_at: ['github'],
+    access_points: [
+      { type: 'github', url: 'https://github.com/devenshah2018/qode', label: 'Code' },
+    ],
   },
   {
     id: 'ares-project',
@@ -1171,6 +1178,9 @@ export const PROJECTS: Project[] = [
     status: 'Live',
     categories: ['ai', 'featured', 'tools', 'theory'],
     accessible_at: ['vscode'],
+    access_points: [
+      { type: 'vscode', url: 'http://marketplace.visualstudio.com/items?itemName=strive-ai.strive', label: 'VSCode Marketplace' },
+    ]
   },
   {
     id: 'crypto-forecasting-project',
@@ -1186,6 +1196,9 @@ export const PROJECTS: Project[] = [
     status: 'Completed',
     categories: ['ai'],
     accessible_at: ['github'],
+    access_points: [
+      { type: 'github', url: 'https://github.com/b-devera/crypto-forecasting-model', label: 'Code' },
+    ]
   },
   {
     id: 'model-distribution-server',
@@ -1201,6 +1214,9 @@ export const PROJECTS: Project[] = [
     status: 'In Progress',
     categories: ['ai', 'tools'],
     accessible_at: ['github'],
+    access_points: [
+      { type: 'github', url: 'https://github.com/devenshah2018/model-distribution-server', label: 'Code' },
+    ]
   },
   {
     id: 'molecule-mutation-prediction',
@@ -1217,6 +1233,9 @@ export const PROJECTS: Project[] = [
     readMe: true,
     categories: ['ai'],
     accessible_at: ['github'],
+    access_points: [
+      { type: 'github', url: 'https://github.com/devenshah2018/small-molecule-mutation-prediction', label: 'Code' },
+    ]
   },
   {
     id: 'drone-build-project',
@@ -1233,6 +1252,10 @@ export const PROJECTS: Project[] = [
     readMe: false,
     categories: ['ai', 'featured', 'web'],
     accessible_at: ['github', 'hosted'],
+    access_points: [
+      { type: 'hosted', url: 'https://drone-path-planner.vercel.app/', label: 'Live Demo' },
+      { type: 'github', url: 'https://github.com/devenshah2018/drone-trajectory-planner', label: 'Notebook' },
+    ]
   },
   {
     id: 'crypto-correlations-project',
@@ -1249,6 +1272,10 @@ export const PROJECTS: Project[] = [
     readMe: false,
     categories: ['ai'],
     accessible_at: ['kaggle', 'github'],
+    access_points: [
+      { type: 'kaggle', url: 'https://www.kaggle.com/code/devenashah/cryptocurrency-price-correlations', label: 'Kaggle Notebook' },
+      { type: 'github', url: 'https://github.com/devenshah2018/kaggle-notebooks/blob/main/cryptocurrency-price-correlations.ipynb', label: 'Source' },
+    ]
   },
   {
     id: 'bull-bear-stocks-project',
@@ -1265,6 +1292,10 @@ export const PROJECTS: Project[] = [
     readMe: false,
     categories: ['ai', 'theory'],
     accessible_at: ['kaggle', 'github'],
+    access_points: [
+      { type: 'kaggle', url: 'https://www.kaggle.com/code/devenashah/tracking-bear-bull-runs-using-adx', label: 'Kaggle Notebook' },
+      { type: 'github', url: 'https://github.com/devenshah2018/kaggle-notebooks/blob/main/tracking-bear-bull-runs-using-adx.ipynb', label: 'Source' },
+    ]
   },
   {
     id: 'quantum-protein-binding',
@@ -1281,6 +1312,10 @@ export const PROJECTS: Project[] = [
     readMe: false,
     categories: ['ai', 'theory'],
     accessible_at: ['kaggle', 'github'],
+    access_points: [
+      { type: 'kaggle', url: 'https://www.kaggle.com/code/devenashah/optimal-protein-binding-using-quantum-computing', label: 'Kaggle Notebook' },
+      { type: 'github', url: 'https://github.com/devenshah2018/kaggle-notebooks/blob/main/optimal-protein-binding-using-quantum-computing.ipynb', label: 'Source' },
+    ]
   },
   {
     id: 'gumball-project',
@@ -1295,7 +1330,11 @@ export const PROJECTS: Project[] = [
     link: 'https://marketplace.visualstudio.com/items?itemName=Gumball.gumball&ssr=false#overview',
     status: 'Live',
     categories: ['featured', 'tools'],
-    accessible_at: ['vscode'],
+    accessible_at: ['vscode', 'github'],
+    access_points: [
+      { type: 'vscode', url: 'https://marketplace.visualstudio.com/items?itemName=Gumball.gumball&ssr=false#overview', label: 'VSCode Marketplace' },
+      { type: 'github', url: 'https://github.com/devenshah2018/gumball', label: 'Code' },
+    ]
   }
 ];
 
