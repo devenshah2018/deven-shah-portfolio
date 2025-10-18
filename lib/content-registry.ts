@@ -1159,7 +1159,7 @@ export const PROJECTS: Project[] = [
     period: '09/2025 – Present',
     sortDate: '2025-09',
     description:
-      'Capturing high-quality image datasets for applications such as mapping, surveys, digital 3D models, and AI. Supported by The Build Fellowship.',
+      'A comprehensive drone flight planning system that generates optimal flight paths for efficient aerial data capture.',
     technologies: getProjectSkillsFromMapping('drone-build-project'),
     entry_point: 'live',
     link: 'https://drone-path-planner.vercel.app/',
