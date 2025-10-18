@@ -29,7 +29,7 @@ export const SKILLS = {
     'Rust',
     'C++'
   ],
-  platforms: ['AWS', 'Salesforce', 'Azure', 'LangGraph', 'GCP'],
+  platforms: ['AWS', 'Salesforce', 'Azure', 'LangGraph', 'GCP', 'Jupyter'],
   frameworks: ['React', '.NET', 'Flask', 'TailwindCSS', 'Angular', 'ASP.NET Core', 'Next.js'],
   frontend: ['TypeScript', 'JavaScript', 'HTML', 'CSS', 'React', 'TailwindCSS'],
   backend: [
@@ -95,7 +95,7 @@ export const SKILL_MAPPINGS = [
         icon: Zap,
       },
       {
-        title: 'Automated Drone Path Planning',
+        title: 'Drone Path Planning',
         subtitle: 'High-Quality Image Capture System to Support Drone Path Planning',
         id: 'drone-build-project',
         icon: Zap,
@@ -107,13 +107,13 @@ export const SKILL_MAPPINGS = [
         icon: Zap,
       },
       {
-        title: 'Tracking Bear/Bull Runs',
+        title: 'Tracking Bear & Bull Runs',
         subtitle: 'Tracking Bull and Bear Markets in Stocks using ADX',
         id: 'bull-bear-stocks-project',
         icon: Zap,
       },
       {
-        title: 'Optimal Protein Binding Using Quantum Computing',
+        title: 'Quantum Protein Binding',
         subtitle: 'Using Grover`s algorithm to find optimal protein binding',
         id: 'quantum-protein-binding',
         icon: Zap,
@@ -145,6 +145,12 @@ export const SKILL_MAPPINGS = [
       },
     ],
     projects: [
+            {
+        title: 'Drone Path Planning',
+        subtitle: 'High-Quality Image Capture System to Support Drone Path Planning',
+        id: 'drone-build-project',
+        icon: Zap,
+      },
       {
         title: 'Portfolio Website',
         subtitle: 'Personal Portfolio',
@@ -189,6 +195,12 @@ export const SKILL_MAPPINGS = [
       },
     ],
     projects: [
+            {
+        title: 'Drone Path Planning',
+        subtitle: 'High-Quality Image Capture System to Support Drone Path Planning',
+        id: 'drone-build-project',
+        icon: Zap,
+      },
       {
         title: 'Portfolio Website',
         subtitle: 'Personal Portfolio',
@@ -694,6 +706,17 @@ export const SKILL_MAPPINGS = [
       },
     ],
   },
+    {
+    skill: 'Jupyter',
+    projects: [
+      {
+        title: 'Drone Path Planning',
+        subtitle: 'High-Quality Image Capture System to Support Drone Path Planning',
+        id: 'drone-build-project',
+        icon: Zap,
+      },
+    ],
+  },
   {
     skill: 'C++',
     education: [
@@ -728,6 +751,12 @@ export const SKILL_MAPPINGS = [
       },
     ],
     projects: [
+            {
+        title: 'Drone Path Planning',
+        subtitle: 'High-Quality Image Capture System to Support Drone Path Planning',
+        id: 'drone-build-project',
+        icon: Zap,
+      },
       {
         title: 'Model Distribution Server',
         subtitle: 'Local ML Inference TCP Server',
@@ -771,13 +800,13 @@ export const SKILL_MAPPINGS = [
         icon: Zap,
       },
       {
-        title: 'Tracking Bear/Bull Runs',
+        title: 'Tracking Bear & Bull Runs',
         subtitle: 'Tracking Bull and Bear Markets in Stocks using ADX',
         id: 'bull-bear-stocks-project',
         icon: Zap,
       },
       {
-        title: 'Optimal Protein Binding Using Quantum Computing',
+        title: 'Quantum Protein Binding',
         subtitle: 'Using Grover`s algorithm to find optimal protein binding',
         id: 'quantum-protein-binding',
         icon: Zap,
@@ -815,6 +844,12 @@ export const SKILL_MAPPINGS = [
       },
     ],
     projects: [
+            {
+        title: 'Drone Path Planning',
+        subtitle: 'High-Quality Image Capture System to Support Drone Path Planning',
+        id: 'drone-build-project',
+        icon: Zap,
+      },
       {
         title: 'Model Distribution Server',
         subtitle: 'Local ML Inference TCP Server',
@@ -858,13 +893,13 @@ export const SKILL_MAPPINGS = [
         icon: Zap,
       },
       {
-        title: 'Tracking Bear/Bull Runs',
+        title: 'Tracking Bear & Bull Runs',
         subtitle: 'Tracking Bull and Bear Markets in Stocks using ADX',
         id: 'bull-bear-stocks-project',
         icon: Zap,
       },
       {
-        title: 'Optimal Protein Binding Using Quantum Computing',
+        title: 'Quantum Protein Binding',
         subtitle: 'Using Grover`s algorithm to find optimal protein binding',
         id: 'quantum-protein-binding',
         icon: Zap,
@@ -959,6 +994,14 @@ export const SKILL_MAPPINGS = [
   },
       {
     skill: 'Next.js',
+    projects: [
+            {
+        title: 'Drone Path Planning',
+        subtitle: 'High-Quality Image Capture System to Support Drone Path Planning',
+        id: 'drone-build-project',
+        icon: Zap,
+      }
+    ],
     experiences: [
       {
         title: 'Co-Founder/CTO',
@@ -1053,9 +1096,8 @@ export const PROJECT_CATEGORIES = [
   { key: 'featured', label: 'Featured', special: true },
   { key: 'web', label: 'Web Apps' },
   { key: 'ai', label: 'Data Science & AI/ML' },
-  { key: 'security', label: 'Security & Compliance' },
-  { key: 'devops', label: 'Cloud & DevOps' },
-  { key: 'research', label: 'Experimental' },
+  { key: 'tools', label: 'Developer Tools' },
+  { key: 'theory', label: 'Theory & Algorithms' },
 ];
 
 export const PROJECTS: Project[] = [
@@ -1088,7 +1130,7 @@ export const PROJECTS: Project[] = [
     link: 'https://github.com/devenshah2018/qode',
     status: 'Paused',
     readMe: true,
-    categories: ['research'],
+    categories: ['theory'],
     accessible_at: ['github'],
   },
   {
@@ -1103,7 +1145,7 @@ export const PROJECTS: Project[] = [
     entry_point: 'vscode',
     link: 'http://marketplace.visualstudio.com/items?itemName=strive-ai.strive',
     status: 'Live',
-    categories: ['security', 'ai', 'featured'],
+    categories: ['ai', 'featured', 'tools', 'theory'],
     accessible_at: ['vscode'],
   },
   {
@@ -1118,7 +1160,7 @@ export const PROJECTS: Project[] = [
     entry_point: 'github',
     link: 'https://github.com/b-devera/crypto-forecasting-model',
     status: 'Completed',
-    categories: ['ai', 'research'],
+    categories: ['ai'],
     accessible_at: ['github'],
   },
   {
@@ -1133,7 +1175,7 @@ export const PROJECTS: Project[] = [
     entry_point: 'github',
     link: 'https://github.com/devenshah2018/model-distribution-server',
     status: 'In Progress',
-    categories: ['ai', 'devops'],
+    categories: ['ai', 'tools'],
     accessible_at: ['github'],
   },
   {
@@ -1149,7 +1191,7 @@ export const PROJECTS: Project[] = [
     link: 'https://github.com/devenshah2018/small-molecule-mutation-prediction',
     status: 'Completed',
     readMe: true,
-    categories: ['ai', 'research'],
+    categories: ['ai'],
     accessible_at: ['github'],
   },
   {
@@ -1165,7 +1207,7 @@ export const PROJECTS: Project[] = [
     link: 'https://drone-path-planner.vercel.app/',
     status: 'In Progress',
     readMe: false,
-    categories: ['ai', 'research', 'featured'],
+    categories: ['ai', 'featured', 'web'],
     accessible_at: ['github', 'hosted'],
   },
   {
@@ -1186,7 +1228,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'bull-bear-stocks-project',
-    title: 'Tracking Bear/Bull Runs',
+    title: 'Tracking Bear & Bull Runs',
     subtitle: 'Tracking Bull and Bear Markets in Stocks using ADX',
     period: '05/2022',
     sortDate: '2022-05',
@@ -1197,12 +1239,12 @@ export const PROJECTS: Project[] = [
     link: 'https://www.kaggle.com/code/devenashah/tracking-bear-bull-runs-using-adx',
     status: 'Completed',
     readMe: false,
-    categories: ['ai'],
+    categories: ['ai', 'theory'],
     accessible_at: ['kaggle', 'github'],
   },
   {
     id: 'quantum-protein-binding',
-    title: 'Optimal Protein Binding Using Quantum Computing',
+    title: 'Quantum Protein Binding',
     subtitle: 'Using Grover`s algorithm to find optimal protein binding',
     period: '09/2024',
     sortDate: '2024-09',
@@ -1213,7 +1255,7 @@ export const PROJECTS: Project[] = [
     link: 'https://www.kaggle.com/code/devenashah/optimal-protein-binding-using-quantum-computing',
     status: 'Completed',
     readMe: false,
-    categories: ['ai'],
+    categories: ['ai', 'theory'],
     accessible_at: ['kaggle', 'github'],
   },
 ];
