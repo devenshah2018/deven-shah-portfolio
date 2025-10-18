@@ -163,6 +163,12 @@ export const SKILL_MAPPINGS = [
         id: 'ares-project',
         icon: Zap,
       },
+      {
+        title: 'Gumball',
+        subtitle: 'Automated Developer Productivity Tool',
+        id: 'gumball-project',
+        icon: Zap,
+      },
     ],
   },
   {
@@ -230,6 +236,12 @@ export const SKILL_MAPPINGS = [
         title: 'Ares',
         subtitle: 'Security Compliance Platform',
         id: 'ares-project',
+        icon: Zap,
+      },
+            {
+        title: 'Gumball',
+        subtitle: 'Automated Developer Productivity Tool',
+        id: 'gumball-project',
         icon: Zap,
       },
     ],
@@ -781,6 +793,12 @@ export const SKILL_MAPPINGS = [
         id: 'ares-project',
         icon: Zap,
       },
+            {
+        title: 'Gumball',
+        subtitle: 'Automated Developer Productivity Tool',
+        id: 'gumball-project',
+        icon: Zap,
+      },
       {
         title: 'Molecule Mutation Prediction',
         subtitle: 'BRAF V600E Mutation Inhibitor Classifier',
@@ -872,6 +890,12 @@ export const SKILL_MAPPINGS = [
         title: 'Ares',
         subtitle: 'Security Compliance Platform',
         id: 'ares-project',
+        icon: Zap,
+      },
+            {
+        title: 'Gumball',
+        subtitle: 'Automated Developer Productivity Tool',
+        id: 'gumball-project',
         icon: Zap,
       },
       {
@@ -1258,6 +1282,21 @@ export const PROJECTS: Project[] = [
     categories: ['ai', 'theory'],
     accessible_at: ['kaggle', 'github'],
   },
+  {
+    id: 'gumball-project',
+    title: 'Gumball',
+    subtitle: 'Automated Developer Productivity Tool',
+    period: '04/2024 - Present',
+    sortDate: '2024-04',
+    description:
+      'A productivity tool that automates repetitive development tasks, enhancing efficiency and workflow for developers.',
+    technologies: getProjectSkillsFromMapping('gumball-project'),
+    entry_point: 'vscode',
+    link: 'https://marketplace.visualstudio.com/items?itemName=Gumball.gumball&ssr=false#overview',
+    status: 'Live',
+    categories: ['featured', 'tools'],
+    accessible_at: ['vscode'],
+  }
 ];
 
 export const EDUCATION = [
