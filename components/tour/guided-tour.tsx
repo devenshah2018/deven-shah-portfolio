@@ -22,7 +22,7 @@ const tourSteps = [
     id: 'intro',
     title: 'Welcome',
     content:
-      "Hi! I'm Deven Shah. Let me walk you through how I evolved from an intern into a co-founder leading AI innovation. Each section reflects a chapter in that growth. Let's begin!",
+      "Resumes are too constrained. LinkedIn is too curated. GitHub is too technical. That's why I built this portfolio—to share my complete story without limitations.",
     target: null,
     position: 'center',
     showProgress: true,
@@ -80,9 +80,9 @@ const tourSteps = [
   },
   {
     id: 'education-section',
-    title: 'Education & Certifications',
+    title: 'Education & Research',
     content:
-      'My academic path gave me the fundamentals to build on, from SJSU to Boston University, each step shaped how I approach technical challenges and leadership.',
+      'My academic path gave me the fundamentals to build on, from SJSU to Boston University, each step shaped how I approach technical challenges and leadership through research and contribution.',
     target: '#education',
     position: 'bottom',
     showProgress: true,

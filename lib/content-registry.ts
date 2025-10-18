@@ -1,5 +1,5 @@
 import { GraduationCap, Briefcase, Zap, Award } from 'lucide-react';
-import { Project } from './types';
+import { Project, ResearchPaper } from './types';
 
 export const LINKS = {
   linkedin: 'https://www.linkedin.com/in/deven-a-shah/',
@@ -1358,6 +1358,53 @@ export const CERTIFICATIONS = [
     logo: '/aws-logo.jpg',
     verificationUrl: 'https://aws.amazon.com/verification',
   },
+];
+
+export const RESEARCH_PAPERS: ResearchPaper[] = [
+  {
+    id: 'cryptocurrency-forecasting-model-paper',
+    title: 'SJSU Fall 2022 Undergraduate Capstone',
+    institution: 'San Jose State University',
+    date: 'December 2022',
+    sortDate: '2022-12',
+    pdfUrl: 'https://app.getfiledrop.com/share/5bbc7493-f98d-4f61-a9c6-49237ec33ee9',
+    keywords: ['Machine Learning', 'Cryptocurrency', 'Neural Networks', 'NLP'],
+    abstract: `The cryptocurrency exchange domain is a relatively volatile space. The most widely traded cryptocurrency coin Bitcoin has experienced a high of $44,533.00 and a low of $36,259.01 in the week of 1/31/22 - 2/7/22. The volatility of the cryptocurrency market stems from three accepted analyses. A technical analysis solely relies on metrics ranging from historical trends to net unrealized profit/loss to derive the effects of price movements. A fundamental analysis relies on factors that affect price movements, such as government policies. A sentimental analysis relies on the sentiment of a coin at a particular time, which can be identified using social media trends. Given the abundance of variables that affect price movements, forecasting even near-future prices prove difficult for many traders. Each of the three analyses stated (technical, fundamental, and sentimental) have sub-analyses that would take an abundance of time even for the experienced trader. As the digital asset market increased exponentially over the past 2 years, many traders are not accustomed to these analyses, much less able to derive conclusions from them. The cryptocurrency forecasting model aimed to traverse, analyze, and interpret data from the three types of analyses with a greater focus on technical and sentimental analysis. Using the data interpreted, the model has the ability to forecast price movements to the time scale of the customer's preference. This project reduced the time spent significantly analyzing technical data, assisted traders to make confident trading decisions, and detailed the price movement patterns that are difficult to infer with purely human capabilities.`,
+    relatedProjectId: 'crypto-forecasting-project',
+  },
+  {
+    id: 'molecule-mutation-prediction-paper',
+    title: 'Small Molecule Drug Development for the BRAF V600 Mutation',
+    institution: 'San Jose State University',
+    date: 'December 2022',
+    sortDate: '2022-12',
+    pdfUrl: 'https://app.getfiledrop.com/share/d593e81c-9205-47e6-b013-ec66c8caa2ea',
+    keywords: ['BRAF-V600E', 'Machine Learning', 'SVM', 'Random Forest Classifier', 'QuaSAR'],
+    abstract: `This report presents the findings behind the use of computational or in-silico
+methods to find therapeutic targets allows for the effective integration of the massive
+amounts of data currently available and the accurate prediction of the effectiveness of a
+given target molecule that could potentially inhibit the expression of the most common
+B-Raf Proto-Oncogene, Serine/Threonine Kinase (BRAF) mutation. In order to find
+small chemical molecules that may prevent the expression of the most prevalent BRAF
+oncogenic mutation, machine-learning algorithms, such as the SVM (Support Vector
+Machine). An SVM model utilizes support vectors to adjust the threshold of the
+hyperplane to categorize data points and is widely used for classification models.
+Complemented with a Random Forest Classifier, the linear SVM model was able to use
+a dataset with 243 different compounds to achieve an average of 0.976 precision, 0.975
+recall, 0.966 accuracies, and a 0.962 area under the receiving operating characteristic
+curve across 50 independent iterations. 10 common features were present in all 50
+iterations, which provides computational evidence that these features directly affect the
+identification of the model. The model is not limited to strictly identifying compounds, as
+it affords the ability to determine if certain features truly affect the identification. This
+model may be used to conclude whether a QuaSAR descriptor truly correlates with the
+potential of a compound to inhibit the expression of the BRAF mutation. The model
+consistently achieved optimal performance with each iteration.
+Future work will implement an improved feature selection process to achieve
+perfect performance, a deeper analysis of feature importances, and use alternative
+classification models.`,
+    relatedProjectId: 'molecule-mutation-prediction',
+
+  }
 ];
 
 function getProjectSkillsFromMapping(projectId: string) {

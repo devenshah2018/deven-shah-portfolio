@@ -18,3 +18,22 @@ export type Project = {
   categories?: string[];
   accessible_at: ('github' | 'vscode' | 'kaggle' | 'hosted')[];
 };
+
+export type ResearchPaper = {
+  id: string;
+  title: string;
+  authors?: string[];
+  institution?: string;
+  conference?: string;
+  journal?: string;
+  date: string;
+  sortDate: string;
+  description?: string;
+  pdfUrl: string;
+  keywords: string[];
+  abstract?: string;
+  doi?: string;
+  citations?: number;
+  status?: 'Published' | 'Under Review' | 'Preprint' | 'In Progress';
+  relatedProjectId?: string; // Optional one-to-one connection to a project
+};

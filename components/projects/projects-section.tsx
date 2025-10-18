@@ -84,6 +84,16 @@ export function ProjectsSection() {
   const [activeCategory, setActiveCategory] = useState<string>('featured');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
+  // Listen for custom event to reset filter to 'all'
+  React.useEffect(() => {
+    const handleResetFilter = () => {
+      setActiveCategory('all');
+    };
+
+    window.addEventListener('resetProjectFilter', handleResetFilter);
+    return () => window.removeEventListener('resetProjectFilter', handleResetFilter);
+  }, []);
+
   const filteredProjects = useMemo(() => {
     return PROJECTS.filter((project: Project) => {
       const matchesCategory =
@@ -230,6 +240,7 @@ export function ProjectsSection() {
               {filteredProjects.map((project: Project, idx: number) => (
               <motion.div
                 key={project.id}
+                id={`project-${project.id}`}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: idx * 0.08 }}
@@ -272,7 +283,7 @@ export function ProjectsSection() {
                           </Badge>
                         ))}
                       </div>
-                      <p className='mb-2 text-sm text-slate-300'>{project.description}</p>
+                      { project.description && (<p className='mb-2 text-sm text-slate-300'>{project.description}</p>)}
                     </div>
                     <div className='mt-2 flex items-center justify-between'>
                       {getStatusBadge(project.status, 'md')}
@@ -341,6 +352,7 @@ export function ProjectsSection() {
               {filteredProjects.map((project: Project, idx: number) => (
                 <motion.div
                   key={project.id}
+                  id={`project-${project.id}`}
                   initial={{ opacity: 0, x: -30 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.4, delay: idx * 0.05 }}
