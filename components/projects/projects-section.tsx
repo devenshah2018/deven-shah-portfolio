@@ -166,24 +166,25 @@ export function ProjectsSection() {
                 viewport={{ once: true }}
                 className='group'
               >
-                <Card className='flex h-full flex-col overflow-hidden rounded-xl border-none bg-transparent transition-all duration-300'>
-                  <CardHeader className='flex flex-row items-start justify-between gap-3 pb-3'>
-                    <div className='flex min-w-0 flex-1 items-center gap-3'>
-                      <CardTitle className='whitespace-normal break-words text-lg font-bold text-white'>
+                <Card className={`relative flex h-full flex-col overflow-hidden rounded-xl border-none bg-transparent transition-all duration-300 gap-2 ${
+                  isProjectFeatured(project) 
+                    ? 'ring-2 ring-amber-500/20 hover:ring-amber-400/30' 
+                    : ''
+                }`}>
+                  {isProjectFeatured(project) && (
+                    <div className='absolute top-3 right-3 z-10'>
+                      <Star className='h-5 w-5 text-amber-400 fill-amber-400/50' />
+                    </div>
+                  )}
+                  <CardHeader className='flex flex-col gap-2 pb-3'>
+                    <div className='flex min-w-0 flex-1 items-start gap-3'>
+                      <CardTitle className='whitespace-normal break-words text-lg font-bold text-white leading-tight'>
                         {project.title}
                       </CardTitle>
-                      {isProjectFeatured(project) && (
-                        <Badge className='border-0 bg-gradient-to-r from-yellow-500 to-orange-500 px-2 py-0.5 text-xs text-white'>
-                          <Star className='h-3 w-3' />
-                        </Badge>
-                      )}
                     </div>
-                    <div className='flex min-w-[0] flex-shrink-0 flex-col items-end'>
-                      <span
-                        className='flex max-w-[140px] items-center gap-1 overflow-hidden text-ellipsis whitespace-nowrap rounded px-2 py-0.5 text-xs font-medium text-slate-400'
-                        title={project.period}
-                      >
-                        <Calendar className='mr-1 h-3 w-3 text-slate-400' />
+                    <div className='flex items-center gap-1'>
+                      <Calendar className='h-3 w-3 text-slate-400' />
+                      <span className='text-xs font-medium text-slate-400'>
                         {project.period}
                       </span>
                     </div>
