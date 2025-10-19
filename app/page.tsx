@@ -1,19 +1,30 @@
+'use client';
+
 import { HeroSection } from '@/components/hero/hero-section';
 import { AboutSection } from '@/components/about/about-section';
 import { ExperienceSection } from '@/components/experience/experience-section';
 import { ProjectsSection } from '@/components/projects/projects-section';
 import { EducationSection } from '@/components/education/education-section';
 import { ContactSection } from '@/components/contact/contact-section';
+import { JobMatchPortfolio } from '@/components/job-match/job-match-portfolio';
+import { useJobMatch } from '@/components/job-match/job-match-context';
 
 export default function HomePage() {
+  const { isMatchView } = useJobMatch();
+
   return (
-    <main className='min-h-screen'>
-      <HeroSection />
-      <AboutSection />
-      <ExperienceSection />
-      <ProjectsSection />
-      <EducationSection />
-      <ContactSection />
-    </main>
+    <>
+      <JobMatchPortfolio />
+      {!isMatchView && (
+        <main className='min-h-screen'>
+          <HeroSection />
+          <AboutSection />
+          <ExperienceSection />
+          <ProjectsSection />
+          <EducationSection />
+          <ContactSection />
+        </main>
+      )}
+    </>
   );
 }

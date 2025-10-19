@@ -48,7 +48,7 @@ export const SKILLS = {
   ],
   database: ['SQL', 'SOQL', 'Oracle', 'PostgreSQL', 'MySQL', 'MongoDB'],
   aimal: ['Python', 'LLMs', 'Sklearn', 'Tensorflow', 'Pytorch', 'LangGraph'],
-  devops: ['Docker', 'Github', 'Git', 'GCP', 'AWS', 'Azure'],
+  devops: ['Docker', 'Github/Git', 'GCP', 'AWS', 'Azure'],
   apis: ['C#', 'Python', 'Apex', 'Azure', 'REST API', 'GraphQL', 'TypeScript'],
 };
 
@@ -741,106 +741,7 @@ export const SKILL_MAPPINGS = [
     ],
   },
   {
-    skill: 'Github',
-    experiences: [
-      {
-        title: 'Co-Founder/CTO',
-        company: 'Suno Analytics',
-        id: 'suno-analytics',
-        icon: Briefcase,
-      },
-      {
-        title: 'Application Developer',
-        company: 'Patelco',
-        id: 'patelco',
-        icon: Briefcase,
-      },
-      {
-        title: 'Solutions Architect Intern',
-        company: 'NetApp',
-        id: 'netapp',
-        icon: Briefcase,
-      },
-    ],
-    projects: [
-            {
-        title: 'Drone Path Planning',
-        subtitle: 'High-Quality Image Capture System to Support Drone Path Planning',
-        id: 'drone-build-project',
-        icon: Zap,
-      },
-      {
-        title: 'Model Distribution Server',
-        subtitle: 'Local ML Inference TCP Server',
-        id: 'model-distribution-server',
-        icon: Zap,
-      },
-      {
-        title: 'Portfolio Website',
-        subtitle: 'Personal Portfolio',
-        id: 'portfolio-project',
-        icon: Zap,
-      },
-      {
-        title: 'Qode',
-        subtitle: 'Quantum Programming Language',
-        id: 'qode-project',
-        icon: Zap,
-      },
-      {
-        title: 'Ares',
-        subtitle: 'Security Compliance Platform',
-        id: 'ares-project',
-        icon: Zap,
-      },
-            {
-        title: 'Gumball',
-        subtitle: 'Automated Developer Productivity Tool',
-        id: 'gumball-project',
-        icon: Zap,
-      },
-      {
-        title: 'Molecule Mutation Prediction',
-        subtitle: 'BRAF V600E Mutation Inhibitor Classifier',
-        id: 'molecule-mutation-prediction',
-        icon: Zap,
-      },
-      {
-        title: 'Cryptocurrency Forecasting',
-        subtitle: 'ML Prediction Model',
-        id: 'crypto-forecasting-project',
-        icon: Zap,
-      },
-      {
-        title: 'Cryptocurrency Price Correlations',
-        subtitle: 'Notebook Analyzing Crypto Asset Relationships',
-        id: 'crypto-correlations-project',
-        icon: Zap,
-      },
-      {
-        title: 'Tracking Bear & Bull Runs',
-        subtitle: 'Tracking Bull and Bear Markets in Stocks using ADX',
-        id: 'bull-bear-stocks-project',
-        icon: Zap,
-      },
-      {
-        title: 'Quantum Protein Binding',
-        subtitle: 'Using Grover`s algorithm to find optimal protein binding',
-        id: 'quantum-protein-binding',
-        icon: Zap,
-      },
-    ],
-    education: [
-      {
-        title: 'B.S. Software Engineering',
-        institution: 'San Jose State University',
-        id: 'sjsu-bachelors',
-        icon: GraduationCap,
-      },
-    ],
-  },
-  {
-    skill: 'Git',
+    skill: 'Github/Git',
     experiences: [
       {
         title: 'Co-Founder/CTO',

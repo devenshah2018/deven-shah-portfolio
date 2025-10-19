@@ -9,6 +9,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { LINKS } from '@/lib/content-registry';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faKaggle } from '@fortawesome/free-brands-svg-icons';
+import { JobMatchSearch } from '@/components/job-match/job-match-search';
 
 interface NavigationProps {
   onStartTour?: () => void;
@@ -244,6 +245,13 @@ export function Navigation({ onStartTour }: NavigationProps) {
             </div>
           </motion.div>
           <div className='hidden items-center space-x-2 md:flex'>
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.5 }}
+            >
+              <JobMatchSearch />
+            </motion.div>
             <motion.div
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}

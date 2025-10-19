@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { Analytics } from '@vercel/analytics/next';
 import { TourProvider } from '@/components/tour/tour-context';
+import { JobMatchProvider } from '@/components/job-match/job-match-context';
 import { LayoutWrapper } from '@/components/layout-wrapper';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -35,10 +36,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang='en' className='dark' suppressHydrationWarning>
       <body className={inter.className}>
-        <TourProvider>
-          <LayoutWrapper>{children}</LayoutWrapper>
-          <Analytics />
-        </TourProvider>
+        <JobMatchProvider>
+          <TourProvider>
+            <LayoutWrapper>{children}</LayoutWrapper>
+            <Analytics />
+          </TourProvider>
+        </JobMatchProvider>
       </body>
     </html>
   );
