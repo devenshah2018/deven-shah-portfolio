@@ -1318,7 +1318,7 @@ export const RESEARCH_PAPERS: ResearchPaper[] = [
     institution: 'San Jose State University',
     date: 'December 2022',
     sortDate: '2022-12',
-    pdfUrl: 'https://app.getfiledrop.com/share/d593e81c-9205-47e6-b013-ec66c8caa2ea',
+    pdfUrl: 'https://app.getfiledrop.com/share/bcc2f316-b111-4e20-a107-8a4d500c77f1',
     keywords: ['BRAF-V600E', 'Machine Learning', 'SVM', 'Random Forest Classifier', 'QuaSAR'],
     abstract: `This report presents the findings behind the use of computational or in-silico
 methods to find therapeutic targets allows for the effective integration of the massive
