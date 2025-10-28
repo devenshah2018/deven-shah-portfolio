@@ -165,34 +165,35 @@ export function AboutSection() {
                 .slice()
                 .sort((a, b) => a.localeCompare(b))
                 .map((skill: string) => (
-                  <button
+                    <button
                     key={skill}
                     type='button'
-                    className={`inline-flex items-center rounded-lg border border-slate-700 bg-slate-800/70 px-3 py-1.5 text-sm font-medium text-slate-200 shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400/70 focus:ring-offset-2 focus:ring-offset-slate-900 ${
+                    className={`inline-flex items-center rounded-md border-none border-slate-600 bg-slate-900/80 px-3 py-1.5 text-sm font-medium text-slate-100 transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-blue-400/60 focus:ring-offset-2 focus:ring-offset-slate-900 ${
                       hasMapping(skill)
-                        ? 'hover:border-blue-400 hover:bg-blue-900/30 hover:text-blue-200 focus:border-blue-400 focus:bg-blue-900/30 focus:text-blue-200'
-                        : 'cursor-default opacity-80'
+                      ? 'hover:bg-gradient-to-r hover:from-blue-900/80 hover:to-blue-700/60 hover:text-white hover:shadow-lg focus:bg-gradient-to-r focus:from-blue-900/90 focus:to-blue-700/70 focus:text-white focus:shadow-lg'
+                      : 'cursor-default opacity-80'
                     }`}
                     style={{
                       minWidth: 0,
                       minHeight: 0,
-                      fontSize: '0.98rem',
-                      letterSpacing: '0.01em',
-                      lineHeight: 1.2,
+                      fontSize: '1rem',
+                      letterSpacing: '0.02em',
+                      lineHeight: 1.25,
+                      fontWeight: 500,
                     }}
                     aria-label={
                       skill + (hasMapping(skill) ? `, ${getMappingCount(skill)} related items` : '')
                     }
                     onClick={() => hasMapping(skill) && handleSkillClick(skill)}
                     tabIndex={0}
-                  >
-                    <span className='max-w-[90px] truncate'>{skill}</span>
+                    >
+                    <span className='max-w-[110px] truncate'>{skill}</span>
                     {hasMapping(skill) && (
-                      <span className='ml-2 rounded border border-blue-400/30 bg-blue-800 px-1.5 py-0.5 text-[0.7em] font-semibold text-blue-200'>
-                        {getMappingCount(skill)}
-                      </span>
+                        <span className="ml-2 flex items-center justify-center h-5 w-5 rounded-full bg-blue-900 border border-blue-300/40 text-[0.70em] font-semibold text-blue-100 leading-none">
+                          <span className="flex items-center justify-center w-full h-full">{getMappingCount(skill)}</span>
+                        </span>
                     )}
-                  </button>
+                    </button>
                 ))}
             </div>
           </div>
