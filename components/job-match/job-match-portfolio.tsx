@@ -19,13 +19,11 @@ export function JobMatchPortfolio() {
 
     useEffect(() => {
       const scrollContainer = scrollContainerRef.current;
-      console.log('scrollContainer ref:', scrollContainer);
       if (!scrollContainer) return;
 
       const handleScroll = () => {
         // Show name only when at the very top, show clock when scrolled at all
         const shouldShowName = scrollContainer.scrollTop === 0;
-        console.log('Scroll position:', scrollContainer.scrollTop, 'Show name:', shouldShowName);
         setShowName(shouldShowName);
       };
   
@@ -57,7 +55,6 @@ export function JobMatchPortfolio() {
       setCurrentTime(time);
       setTimeZoneAbbr(abbr);
       setTimeZoneFull(tz);
-      console.log('Clock updated:', time, abbr);
     };
     updateClock();
     const interval = setInterval(updateClock, 1000);
@@ -66,7 +63,6 @@ export function JobMatchPortfolio() {
 
   if (!isMatchView || !matchResult) return null;
 
-  console.log('Rendering JobMatchPortfolio - showName:', showName, 'currentTime:', currentTime);
 
   return (
     <AnimatePresence>
