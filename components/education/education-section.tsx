@@ -334,11 +334,11 @@ export function EducationSection() {
                       <CardContent className='p-3'>
                         <div className='mb-2 flex items-start gap-2'>
                           <div className='flex-shrink-0'>
-                            <div className='relative h-10 w-10 rounded-lg bg-white/10 p-1.5 shadow-md backdrop-blur-sm'>
+                            <div className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-lg bg-white/10 p-0 shadow-md backdrop-blur-sm">
                               <img
                                 src={edu.logo}
                                 alt={`${edu.institution} logo`}
-                                className='h-full w-full object-contain brightness-110 contrast-110 filter'
+                                className="h-full w-full object-contain object-center"
                               />
                             </div>
                           </div>
@@ -444,11 +444,11 @@ export function EducationSection() {
                       <CardContent className='p-3'>
                         <div className='mb-2 flex items-start gap-2'>
                           <div className='flex-shrink-0'>
-                            <div className='relative h-10 w-10 rounded-lg bg-white/10 p-1.5 shadow-md backdrop-blur-sm'>
+                            <div className='relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-lg bg-white/10 p-0 shadow-md backdrop-blur-sm'>
                               <img
                                 src={cert.logo}
                                 alt={`${cert.issuer} logo`}
-                                className='h-full w-full object-contain brightness-110 contrast-110 filter'
+                                className='h-full w-full object-contain object-center'
                               />
                             </div>
                           </div>
