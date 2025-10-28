@@ -1080,7 +1080,7 @@ export const PROJECTS: Project[] = [
     categories: ['ai', 'featured', 'tools', 'theory'],
     accessible_at: ['vscode'],
     access_points: [
-      { type: 'vscode', url: 'http://marketplace.visualstudio.com/items?itemName=strive-ai.strive', label: 'VSCode Marketplace' },
+      { type: 'vscode', url: 'http://marketplace.visualstudio.com/items?itemName=strive-ai.strive', label: 'VSCode' },
     ]
   },
   {
@@ -1155,7 +1155,7 @@ export const PROJECTS: Project[] = [
     accessible_at: ['github', 'hosted'],
     access_points: [
       { type: 'hosted', url: 'https://drone-path-planner.vercel.app/', label: 'Live Demo' },
-      { type: 'github', url: 'https://github.com/devenshah2018/drone-trajectory-planner', label: 'Notebook' },
+      { type: 'github', url: 'https://github.com/devenshah2018/drone-trajectory-planner', label: 'Github' },
     ]
   },
   {
@@ -1174,7 +1174,7 @@ export const PROJECTS: Project[] = [
     categories: ['ai'],
     accessible_at: ['kaggle', 'github'],
     access_points: [
-      { type: 'kaggle', url: 'https://www.kaggle.com/code/devenashah/cryptocurrency-price-correlations', label: 'Kaggle Notebook' },
+      { type: 'kaggle', url: 'https://www.kaggle.com/code/devenashah/cryptocurrency-price-correlations', label: 'Kaggle' },
       { type: 'github', url: 'https://github.com/devenshah2018/kaggle-notebooks/blob/main/cryptocurrency-price-correlations.ipynb', label: 'Source' },
     ]
   },
@@ -1194,7 +1194,7 @@ export const PROJECTS: Project[] = [
     categories: ['ai', 'theory'],
     accessible_at: ['kaggle', 'github'],
     access_points: [
-      { type: 'kaggle', url: 'https://www.kaggle.com/code/devenashah/tracking-bear-bull-runs-using-adx', label: 'Kaggle Notebook' },
+      { type: 'kaggle', url: 'https://www.kaggle.com/code/devenashah/tracking-bear-bull-runs-using-adx', label: 'Kaggle' },
       { type: 'github', url: 'https://github.com/devenshah2018/kaggle-notebooks/blob/main/tracking-bear-bull-runs-using-adx.ipynb', label: 'Source' },
     ]
   },
@@ -1214,7 +1214,7 @@ export const PROJECTS: Project[] = [
     categories: ['ai', 'theory'],
     accessible_at: ['kaggle', 'github'],
     access_points: [
-      { type: 'kaggle', url: 'https://www.kaggle.com/code/devenashah/optimal-protein-binding-using-quantum-computing', label: 'Kaggle Notebook' },
+      { type: 'kaggle', url: 'https://www.kaggle.com/code/devenashah/optimal-protein-binding-using-quantum-computing', label: 'Kaggle' },
       { type: 'github', url: 'https://github.com/devenshah2018/kaggle-notebooks/blob/main/optimal-protein-binding-using-quantum-computing.ipynb', label: 'Source' },
     ]
   },
@@ -1233,7 +1233,7 @@ export const PROJECTS: Project[] = [
     categories: ['featured', 'tools'],
     accessible_at: ['vscode', 'github'],
     access_points: [
-      { type: 'vscode', url: 'https://marketplace.visualstudio.com/items?itemName=Gumball.gumball&ssr=false#overview', label: 'VSCode Marketplace' },
+      { type: 'vscode', url: 'https://marketplace.visualstudio.com/items?itemName=Gumball.gumball&ssr=false#overview', label: 'VSCode' },
       { type: 'github', url: 'https://github.com/devenshah2018/gumball', label: 'Code' },
     ]
   }

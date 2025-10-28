@@ -64,65 +64,49 @@ function AccessPointBadge({
   label?: string | undefined;
   index: number;
 }) {
-  const [isHovered, setIsHovered] = React.useState(false);
-
+  if (type === 'hosted' || type === 'web') return null;
   const iconMap: Record<string, { src: string; alt: string; defaultLabel: string }> = {
-    github: { src: '/github-icon.svg', alt: 'GitHub', defaultLabel: 'Code' },
+    github: { src: '/github-icon.svg', alt: 'GitHub', defaultLabel: 'Github' },
     kaggle: { src: '/kaggle-icon.png', alt: 'Kaggle', defaultLabel: 'Kaggle' },
-    vscode: { src: '/vscode-icon.png', alt: 'VSCode', defaultLabel: 'Extension' },
+    vscode: { src: '/vscode-icon.png', alt: 'VSCode', defaultLabel: 'VSCode' },
     hosted: { src: '/globe.svg', alt: 'Web', defaultLabel: 'Live' },
     web: { src: '/globe.svg', alt: 'Web', defaultLabel: 'Live' },
   };
 
   const config = iconMap[type];
   if (!config) return null;
-
-  const displayLabel = label || config.defaultLabel;
-
   return (
     <a
       href={url}
       target='_blank'
       rel='noopener noreferrer'
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      className='inline-flex items-center overflow-hidden rounded-full border-2 border-slate-400 bg-slate-100 shadow-md hover:border-blue-400 hover:shadow-lg hover:shadow-blue-500/20 hover:z-20 relative'
+      tabIndex={0}
+      aria-label={label || config.defaultLabel}
+      className="inline-flex items-center justify-center h-8 w-8 rounded-full border border-slate-700 bg-slate-800/70 shadow-sm focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none transition-colors duration-200 hover:border-blue-400 hover:bg-blue-900/80 active:bg-blue-950"
       style={{
-        width: isHovered ? 'auto' : '28px',
-        height: '28px',
-        paddingRight: isHovered ? '12px' : '0px',
-        zIndex: isHovered ? 20 : 10 - index,
-        transition: 'width 300ms cubic-bezier(0.4, 0, 0.2, 1), padding-right 300ms cubic-bezier(0.4, 0, 0.2, 1), border-color 200ms ease, box-shadow 200ms ease',
+        zIndex: 10 - index,
+        outline: 'none',
+        marginLeft: index !== 0 ? '0.5rem' : 0,
+        boxShadow: '0 1px 4px 0 rgba(30,41,59,0.06)',
       }}
     >
-      <div className='flex pr-1 h-7 w-7 items-center justify-center flex-shrink-0'>
+      <span className="flex items-center justify-center h-8 w-8">
         <img
           src={config.src}
           alt={config.alt}
-          className='h-3.5 w-3.5 object-contain'
+          className={`h-4 w-4 object-contain opacity-90 group-hover:opacity-100 transition-opacity duration-200${type === 'github' ? ' invert' : ''}`}
+          draggable={false}
         />
-      </div>
-      <span 
-        className='whitespace-nowrap text-sm font-semibold text-slate-900'
-        style={{
-          opacity: isHovered ? 1 : 0,
-          width: isHovered ? 'auto' : 0,
-          transition: 'opacity 250ms cubic-bezier(0.4, 0, 0.2, 1)',
-        }}
-      >
-        {displayLabel}
       </span>
     </a>
   );
 }
 
 function getAccessPoints(project: Project) {
-  // Use new access_points if available, otherwise fall back to old structure
   if (project.access_points && project.access_points.length > 0) {
     return project.access_points;
   }
   
-  // Fallback to old structure
   return project.accessible_at.map(type => ({
     type,
     url: project.link,
@@ -131,12 +115,10 @@ function getAccessPoints(project: Project) {
 }
 
 function getWebLink(project: Project) {
-  // Get web/hosted link from access points
   if (project.access_points && project.access_points.length > 0) {
     return project.access_points.find(ap => ap.type === 'hosted' || ap.type === 'web');
   }
   
-  // Fallback: check if accessible_at includes hosted
   if (project.accessible_at.includes('hosted')) {
     return { type: 'hosted' as const, url: project.link, label: undefined };
   }
@@ -148,7 +130,6 @@ export function ProjectsSection() {
   const [activeCategory, setActiveCategory] = useState<string>('featured');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
-  // Listen for custom event to reset filter to 'all'
   React.useEffect(() => {
     const handleResetFilter = () => {
       setActiveCategory('all');
@@ -164,7 +145,6 @@ export function ProjectsSection() {
         activeCategory === 'all' || getProjectCategories(project).includes(activeCategory);
       return matchesCategory;
     }).sort((a, b) => {
-      // Sort by descending start date (sortDate field, format: YYYY-MM)
       if (a.sortDate && b.sortDate) {
         return b.sortDate.localeCompare(a.sortDate);
       }
@@ -206,10 +186,8 @@ export function ProjectsSection() {
             </motion.p>
           </div>
 
-          {/* Category Filter Bar with View Toggle */}
           <div className='mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4'>
             <div className='flex flex-wrap gap-2'>
-              {/* All category first */}
               {PROJECT_CATEGORIES.filter(cat => cat.key === 'all').map(cat => (
               <Button
                 key={cat.key}
@@ -225,7 +203,6 @@ export function ProjectsSection() {
               </Button>
             ))}
             
-            {/* Featured category second with special styling */}
             {PROJECT_CATEGORIES.filter(cat => cat.key === 'featured').map(cat => (
               <Button
                 key={cat.key}
@@ -242,7 +219,6 @@ export function ProjectsSection() {
               </Button>
             ))}
             
-            {/* Rest of the categories sorted alphabetically */}
             {PROJECT_CATEGORIES
               .filter(cat => cat.key !== 'all' && cat.key !== 'featured')
               .sort((a, b) => a.label.localeCompare(b.label))
@@ -262,7 +238,6 @@ export function ProjectsSection() {
               ))}
             </div>
 
-            {/* View Mode Toggle */}
             <div className='flex gap-2'>
               <Button
                 variant={viewMode === 'grid' ? 'default' : 'outline'}
@@ -293,13 +268,11 @@ export function ProjectsSection() {
             </div>
           </div>
 
-          {/* Projects Display - Grid or List */}
           {filteredProjects.length === 0 ? (
             <div className='py-12 text-center text-slate-500'>
               No projects found.
             </div>
           ) : viewMode === 'grid' ? (
-            /* Grid View */
             <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3'>
               {filteredProjects.map((project: Project, idx: number) => (
               <motion.div
@@ -379,7 +352,6 @@ export function ProjectsSection() {
               ))}
             </div>
           ) : (
-            /* List View */
             <div className='flex flex-col gap-4'>
               {filteredProjects.map((project: Project, idx: number) => (
                 <motion.div
@@ -402,7 +374,6 @@ export function ProjectsSection() {
                       </div>
                     )}
                     
-                    {/* Left Section - Title, Date, Technologies */}
                     <div className='flex-1 min-w-0'>
                       <CardHeader className='pb-2'>
                         <div className='flex items-center gap-2 mb-2'>
@@ -432,7 +403,6 @@ export function ProjectsSection() {
                             </span>
                           </div>
                           {getStatusBadge(project.status, 'sm')}
-                          {/* Skill badges inline */}
                           {project.technologies?.slice(0, 4).map((tech: string, i: number) => (
                             <Badge
                               key={i}
@@ -449,7 +419,6 @@ export function ProjectsSection() {
                       </CardContent>
                     </div>
 
-                    {/* Right Section - Actions */}
                     <div className='flex items-center px-4 py-3 sm:py-0 sm:pr-6'>
                       <div className='flex -space-x-2'>
                         {getAccessPoints(project).map((accessPoint, i) => (
