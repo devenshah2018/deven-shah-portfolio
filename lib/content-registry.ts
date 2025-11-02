@@ -772,11 +772,30 @@ export const SKILL_MAPPINGS = [
   },
     {
     skill: 'Jupyter',
+    
     projects: [
+            {
+        title: 'Tracking Bear & Bull Runs',
+        subtitle: 'Tracking Bull and Bear Markets in Stocks using ADX',
+        id: 'bull-bear-stocks-project',
+        icon: Zap,
+      },
       {
+        title: 'Quantum Protein Binding',
+        subtitle: 'Using Grover`s algorithm to find optimal protein binding',
+        id: 'quantum-protein-binding',
+        icon: Zap,
+      },
+            {
         title: 'Drone Path Planning',
         subtitle: 'High-Quality Image Capture System to Support Drone Path Planning',
         id: 'drone-build-project',
+        icon: Zap,
+      },
+            {
+        title: 'Cryptocurrency Price Correlations',
+        subtitle: 'Notebook Analyzing Crypto Asset Relationships',
+        id: 'crypto-correlations-project',
         icon: Zap,
       },
     ],
