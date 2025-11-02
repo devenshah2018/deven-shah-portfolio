@@ -61,7 +61,6 @@ export function AboutSection() {
     return experienceCount + projectCount + educationCount;
   };
 
-  // Listen for post type changes from RotatingTweets
   const handlePostTypeChange = (type: 'tweet' | 'linkedin') => setCurrentPostType(type);
 
   return (

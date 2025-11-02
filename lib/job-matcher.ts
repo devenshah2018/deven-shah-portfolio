@@ -1,4 +1,3 @@
-// Job description matching utility using direct skill mappings
 import { SKILLS, SKILL_MAPPINGS, EXPERIENCES, PROJECTS, EDUCATION } from './content-registry';
 
 export interface MatchResult {
@@ -11,8 +10,6 @@ export interface MatchResult {
   matchedSkillMappings: typeof SKILL_MAPPINGS;
 }
 
-// Keyword dictionary mapping related terms to skills
-// Only includes skills that exist in SKILLS registry from content-registry.ts
 const KEYWORD_TO_SKILLS: Record<string, string[]> = {
   'microsoft': ['Azure', 'C#', '.NET'],
   'aws': ['AWS'],
@@ -69,25 +66,20 @@ const KEYWORD_TO_SKILLS: Record<string, string[]> = {
   'notebook': ['Jupyter', 'Python'],
 };
 
-// Extract skills from job description by matching against our actual skills
 export function extractMatchedSkills(text: string): string[] {
   const normalized = text.toLowerCase();
   const matchedSkills = new Set<string>();
 
-  // Keywords to exclude (ubiquitous tools that don't meaningfully differentiate)
   const excludedKeywords = ['github', 'git', 'gitlab', 'bitbucket'];
 
-  // First, check keyword dictionary for related skills
   Object.entries(KEYWORD_TO_SKILLS).forEach(([keyword, relatedSkills]) => {
     if (normalized.includes(keyword.toLowerCase())) {
       relatedSkills.forEach(skill => {
-        // Only add if the skill exists in our SKILLS registry
         const skillExists = Object.values(SKILLS)
           .flat()
           .some(s => (s as string).toLowerCase() === skill.toLowerCase());
         
         if (skillExists) {
-          // Find the actual skill with correct casing
           const actualSkill = Object.values(SKILLS)
             .flat()
             .find(s => (s as string).toLowerCase() === skill.toLowerCase()) as string;
@@ -100,21 +92,17 @@ export function extractMatchedSkills(text: string): string[] {
     }
   });
 
-  // Check all skills from SKILLS registry
   Object.values(SKILLS)
     .flat()
     .forEach(skill => {
       const skillStr = skill as string;
       const skillLower = skillStr.toLowerCase();
       
-      // Skip excluded keywords
       if (excludedKeywords.includes(skillLower)) {
         return;
       }
       
-      // Special handling for "C" - only match if it has spaces around it
       if (skillLower === 'c') {
-        // Match " C " or "C " at start or " C" at end or just "C" if entire text
         const cPattern = /(?:^|\s)c(?:\s|$)/i;
         if (cPattern.test(text)) {
           matchedSkills.add(skillStr);
@@ -122,12 +110,10 @@ export function extractMatchedSkills(text: string): string[] {
         return;
       }
       
-      // Check for exact or partial matches
       if (normalized.includes(skillLower)) {
         matchedSkills.add(skillStr);
       }
       
-      // Check for common variations
       const variations = [skillStr];
       if (variations.some(v => normalized.includes(v.toLowerCase()))) {
         matchedSkills.add(skillStr);
@@ -137,19 +123,15 @@ export function extractMatchedSkills(text: string): string[] {
   return Array.from(matchedSkills);
 }
 
-// Main matching function using SKILL_MAPPINGS
 export function matchJobDescription(jobDescription: string): MatchResult {
-  // Extract matched skills from the job description
   const matchedSkills = extractMatchedSkills(jobDescription);
   
-  // Get skill mappings for matched skills
   const matchedSkillMappings = SKILL_MAPPINGS.filter(mapping =>
     matchedSkills.some(skill => 
       skill.toLowerCase() === mapping.skill.toLowerCase()
     )
   );
 
-  // Collect unique experience IDs from skill mappings
   const experienceIds = new Set<string>();
   matchedSkillMappings.forEach(mapping => {
     mapping.experienceIds?.forEach(id => {
@@ -157,11 +139,9 @@ export function matchJobDescription(jobDescription: string): MatchResult {
     });
   });
 
-  // Get full experience objects and sort by relevance
   const matchedExperiences = EXPERIENCES.filter(exp =>
     experienceIds.has(exp.id)
   ).sort((a, b) => {
-    // Count how many matched skills each experience has
     const aSkillCount = matchedSkillMappings.filter(m =>
       m.experienceIds?.includes(a.id)
     ).length;
@@ -171,7 +151,6 @@ export function matchJobDescription(jobDescription: string): MatchResult {
     return bSkillCount - aSkillCount;
   });
 
-  // Collect unique project IDs from skill mappings
   const projectIds = new Set<string>();
   matchedSkillMappings.forEach(mapping => {
     mapping.projectIds?.forEach(id => {
@@ -179,11 +158,9 @@ export function matchJobDescription(jobDescription: string): MatchResult {
     });
   });
 
-  // Get full project objects and sort by relevance
   const matchedProjects = PROJECTS.filter(proj =>
     projectIds.has(proj.id)
   ).sort((a, b) => {
-    // Count how many matched skills each project has
     const aSkillCount = matchedSkillMappings.filter(m =>
       m.projectIds?.includes(a.id)
     ).length;
@@ -193,7 +170,6 @@ export function matchJobDescription(jobDescription: string): MatchResult {
     return bSkillCount - aSkillCount;
   });
 
-  // Collect unique education IDs from skill mappings
   const educationIds = new Set<string>();
   matchedSkillMappings.forEach(mapping => {
     mapping.educationIds?.forEach(id => {
@@ -201,12 +177,10 @@ export function matchJobDescription(jobDescription: string): MatchResult {
     });
   });
 
-  // Get full education objects, or default to all if none matched
   const matchedEducation = educationIds.size > 0
     ? EDUCATION.filter(edu => educationIds.has(edu.id))
     : EDUCATION;
 
-  // Calculate match score based on matches
   const totalPossibleItems = EXPERIENCES.length + PROJECTS.length + matchedSkills.length;
   const totalMatched = matchedExperiences.length + matchedProjects.length + matchedSkills.length;
   const matchScore = Math.min(100, Math.round((totalMatched / totalPossibleItems) * 100));
@@ -217,7 +191,7 @@ export function matchJobDescription(jobDescription: string): MatchResult {
     projects: matchedProjects,
     education: matchedEducation,
     matchScore,
-    extractedKeywords: matchedSkills, // Using skills as keywords
+    extractedKeywords: matchedSkills,
     matchedSkillMappings,
   };
 }

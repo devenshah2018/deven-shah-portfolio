@@ -1,9 +1,9 @@
 interface DemoEntry {
   project?: string;
   title: string;
-  timestamp: string; // ISO 8601 format
-  path: string; // Path to the demo video file
-  public_url?: string; // Public URL to the demo (e.g., tweet link)
+  timestamp: string;
+  path: string;
+  public_url?: string;
 }
 
 export const DEMO_REGISTRY: DemoEntry[] = [

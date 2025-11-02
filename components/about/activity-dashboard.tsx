@@ -118,12 +118,6 @@ export function ActivityDashboard({
     };
   }, []);
 
-  // --- Redesigned Activity Dashboard: Hevy Integration ---
-  // Show Strava summary on left, Hevy summary and carousel on right
-
-  // --- Hevy Exercise Summary (no set cycling) ---
-  // Remove set cycling logic and instead show summary for each exercise
-
   // Helper to compute total reps and total volume for an exercise
   function getExerciseStats(exercise: any) {
     if (!exercise?.sets?.length) return { totalSets: 0, totalReps: 0, totalVolume: 0 };

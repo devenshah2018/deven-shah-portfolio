@@ -17,7 +17,6 @@ export function ExperienceSection() {
   const [flippedIndexes, setFlippedIndexes] = useState<Set<number>>(new Set());
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Listen for clicks outside the experience section to unflip all cards
   useEffect(() => {
     function handleDocumentClick(e: MouseEvent) {
       if (containerRef.current && !containerRef.current.contains(e.target as Node)) {

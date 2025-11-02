@@ -116,7 +116,6 @@ export function GuidedTour() {
 
   const currentStepData = tourSteps[currentStep];
 
-  // Typing effect hook (removed, now just set text immediately)
   useEffect(() => {
     if (!currentStepData?.content) return;
     setDisplayedText(currentStepData.content);
@@ -199,11 +198,10 @@ export function GuidedTour() {
 
   const updateTooltipPosition = useCallback(() => {
     const viewportWidth = window.innerWidth;
-    const margin = 12; // Reduced margin for better mobile usage
+    const margin = 12;
 
     if (viewportWidth < 768) {
-      // Mobile: much smaller width and optimized positioning
-      const mobileWidth = Math.min(280, viewportWidth - 24); // Smaller modal on mobile
+      const mobileWidth = Math.min(280, viewportWidth - 24);
       setTooltipPosition({
         top: `${margin}px`,
         left: '50%',
@@ -211,7 +209,6 @@ export function GuidedTour() {
         transform: 'translateX(-50%)',
       });
     } else if (viewportWidth < 1024) {
-      // Tablet: medium sizing
       const tabletWidth = Math.min(340, viewportWidth - 40);
       setTooltipPosition({
         top: `${margin * 1.2}px`,
@@ -219,7 +216,6 @@ export function GuidedTour() {
         width: `${tabletWidth}px`,
       });
     } else {
-      // Desktop: keep current positioning
       const tooltipWidth = 400;
       setTooltipPosition({
         top: `${margin * 1.5}px`,

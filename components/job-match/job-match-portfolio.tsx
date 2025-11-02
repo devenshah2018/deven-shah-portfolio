@@ -11,7 +11,7 @@ import { useEffect, useState, useRef } from 'react';
 
 export function JobMatchPortfolio() {
   const { matchResult, isMatchView, clearMatch } = useJobMatch();
-    const [showName, setShowName] = useState(true); // Start with name showing at top
+    const [showName, setShowName] = useState(true); 
     const [currentTime, setCurrentTime] = useState('');
     const [timeZoneAbbr, setTimeZoneAbbr] = useState('');
     const [timeZoneFull, setTimeZoneFull] = useState('');
@@ -22,13 +22,11 @@ export function JobMatchPortfolio() {
       if (!scrollContainer) return;
 
       const handleScroll = () => {
-        // Show name only when at the very top, show clock when scrolled at all
         const shouldShowName = scrollContainer.scrollTop === 0;
         setShowName(shouldShowName);
       };
   
       scrollContainer.addEventListener('scroll', handleScroll, { passive: true });
-      // Set initial state based on current scroll position
       handleScroll();
       
       return () => scrollContainer.removeEventListener('scroll', handleScroll);

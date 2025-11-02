@@ -50,30 +50,23 @@ export function EducationSection() {
   };
 
   const scrollToProject = (projectId: string) => {
-    // Reset project filter to 'all' to ensure the project is visible
     window.dispatchEvent(new Event('resetProjectFilter'));
     
-    // Small delay to allow state update
     setTimeout(() => {
-      // First scroll to projects section
       const projectsSection = document.getElementById('projects');
       if (projectsSection) {
         projectsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         
-        // Wait for scroll animation, then find and highlight the specific project
         setTimeout(() => {
           const projectCard = document.getElementById(`project-${projectId}`);
           if (projectCard) {
-            // Scroll to the specific project card with center alignment
             projectCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
             
-            // Add subtle glow highlight effect that follows the card's rounded border
             const originalTransition = projectCard.style.transition;
             projectCard.style.transition = 'all 0.3s ease-in-out';
             projectCard.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.5), 0 0 30px rgba(59, 130, 246, 0.3)';
             projectCard.style.transform = 'scale(1.02)';
             
-            // Remove highlight after 3 seconds with smooth fade out
             setTimeout(() => {
               projectCard.style.boxShadow = '';
               projectCard.style.transform = '';
@@ -82,9 +75,9 @@ export function EducationSection() {
               }, 300);
             }, 3000);
           }
-        }, 800); // Wait for initial scroll to complete
+        }, 800); 
       }
-    }, 100); // Wait for filter reset
+    }, 100);
   };
 
   const getProjectById = (projectId: string) => {

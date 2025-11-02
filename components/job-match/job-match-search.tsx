@@ -30,14 +30,12 @@ export function JobMatchSearch() {
     }, 800);
   };
 
-  // Focus input when popover opens
   useEffect(() => {
     if (isOpen && inputRef.current) {
       inputRef.current.focus();
     }
   }, [isOpen]);
 
-  // Click outside to close
   useEffect(() => {
     if (!isOpen) return;
     function handle(e: MouseEvent) {
@@ -54,7 +52,6 @@ export function JobMatchSearch() {
     return () => document.removeEventListener('mousedown', handle);
   }, [isOpen]);
 
-  // Keyboard: Escape closes, Enter submits
   function handleInputKey(e: React.KeyboardEvent) {
     if (e.key === 'Escape') {
       setIsOpen(false);
