@@ -11,6 +11,64 @@ export interface MatchResult {
   matchedSkillMappings: typeof SKILL_MAPPINGS;
 }
 
+// Keyword dictionary mapping related terms to skills
+// Only includes skills that exist in SKILLS registry from content-registry.ts
+const KEYWORD_TO_SKILLS: Record<string, string[]> = {
+  'microsoft': ['Azure', 'C#', '.NET'],
+  'aws': ['AWS'],
+  'amazon': ['AWS'],
+  'google cloud': ['GCP'],
+  'gcp': ['GCP'],
+  'machine learning': ['Tensorflow', 'Pytorch', 'Sklearn', 'Python'],
+  'ml': ['Tensorflow', 'Pytorch', 'Sklearn', 'Python'],
+  'ai': ['Tensorflow', 'Pytorch', 'LLMs', 'Python', 'LangGraph'],
+  'artificial intelligence': ['Tensorflow', 'Pytorch', 'LLMs', 'Python', 'LangGraph'],
+  'deep learning': ['Tensorflow', 'Pytorch', 'Python'],
+  'data science': ['Python', 'Sklearn', 'Jupyter'],
+  'frontend': ['React', 'TypeScript', 'JavaScript', 'HTML', 'CSS', 'TailwindCSS'],
+  'front-end': ['React', 'TypeScript', 'JavaScript', 'HTML', 'CSS', 'TailwindCSS'],
+  'backend': ['Python', 'C#', 'Java', 'TypeScript', 'Flask', 'Bash'],
+  'back-end': ['Python', 'C#', 'Java', 'TypeScript', 'Flask', 'Bash'],
+  'fullstack': ['React', 'TypeScript', 'PostgreSQL', 'Next.js'],
+  'full-stack': ['React', 'TypeScript', 'PostgreSQL', 'Next.js'],
+  'database': ['PostgreSQL', 'MongoDB', 'SQL', 'Oracle', 'MySQL'],
+  'devops': ['Docker', 'Github/Git', 'GCP', 'AWS', 'Azure'],
+  'containerization': ['Docker'],
+  'cloud': ['AWS', 'Azure', 'GCP'],
+  'web development': ['React', 'TypeScript', 'HTML', 'CSS', 'JavaScript'],
+  'rest': ['REST API'],
+  'api': ['REST API', 'GraphQL', 'Apex'],
+  'version control': ['Github/Git'],
+  'react': ['React', 'Next.js', 'TypeScript', 'JavaScript'],
+  'javascript': ['JavaScript', 'TypeScript', 'React'],
+  'python': ['Python', 'Flask'],
+  'typescript': ['TypeScript', 'React', 'Next.js'],
+  'sql': ['SQL', 'PostgreSQL', 'MySQL', 'Oracle'],
+  'nosql': ['MongoDB'],
+  'data engineering': ['Python', 'SQL', 'Bash'],
+  'analytics': ['Python', 'SQL'],
+  'microservices': ['Docker', 'REST API', 'GraphQL'],
+  'salesforce': ['Salesforce', 'Apex', 'SOQL'],
+  'sfdc': ['Salesforce', 'Apex', 'SOQL'],
+  'crm': ['Salesforce'],
+  'dotnet': ['.NET', 'C#', 'ASP.NET Core'],
+  '.net': ['.NET', 'C#', 'ASP.NET Core'],
+  'asp.net': ['ASP.NET Core', '.NET', 'C#'],
+  'angular': ['Angular', 'TypeScript'],
+  'llm': ['LLMs', 'Python', 'LangGraph'],
+  'large language model': ['LLMs', 'Python', 'LangGraph'],
+  'langgraph': ['LangGraph', 'Python'],
+  'scikit-learn': ['Sklearn', 'Python'],
+  'sklearn': ['Sklearn', 'Python'],
+  'tensorflow': ['Tensorflow', 'Python'],
+  'pytorch': ['Pytorch', 'Python'],
+  'rust': ['Rust'],
+  'c++': ['C++'],
+  'cpp': ['C++'],
+  'jupyter': ['Jupyter', 'Python'],
+  'notebook': ['Jupyter', 'Python'],
+};
+
 // Extract skills from job description by matching against our actual skills
 export function extractMatchedSkills(text: string): string[] {
   const normalized = text.toLowerCase();
@@ -18,6 +76,29 @@ export function extractMatchedSkills(text: string): string[] {
 
   // Keywords to exclude (ubiquitous tools that don't meaningfully differentiate)
   const excludedKeywords = ['github', 'git', 'gitlab', 'bitbucket'];
+
+  // First, check keyword dictionary for related skills
+  Object.entries(KEYWORD_TO_SKILLS).forEach(([keyword, relatedSkills]) => {
+    if (normalized.includes(keyword.toLowerCase())) {
+      relatedSkills.forEach(skill => {
+        // Only add if the skill exists in our SKILLS registry
+        const skillExists = Object.values(SKILLS)
+          .flat()
+          .some(s => (s as string).toLowerCase() === skill.toLowerCase());
+        
+        if (skillExists) {
+          // Find the actual skill with correct casing
+          const actualSkill = Object.values(SKILLS)
+            .flat()
+            .find(s => (s as string).toLowerCase() === skill.toLowerCase()) as string;
+          
+          if (actualSkill && !excludedKeywords.includes(actualSkill.toLowerCase())) {
+            matchedSkills.add(actualSkill);
+          }
+        }
+      });
+    }
+  });
 
   // Check all skills from SKILLS registry
   Object.values(SKILLS)
