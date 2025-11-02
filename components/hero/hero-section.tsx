@@ -37,7 +37,7 @@ export function HeroSection() {
               Deven Shah
             </h1>
             <h2 className='mt-2 text-2xl font-semibold text-gray-300 sm:text-3xl lg:text-4xl'>
-              Co-Founder/CTO & Graduate MSCS Student
+              Co-Founder & CTO | M.S. Computer Science Candidate
             </h2>
           </motion.div>
 
