@@ -49,7 +49,7 @@ export function HeroSection() {
           >
             <p className='mx-auto max-w-3xl text-lg leading-relaxed text-gray-400 sm:text-xl'>
               Shaping the next generation of AI-driven analytics, intelligent systems, and scalable
-              solutions—turning innovation into impact.
+              solutions.
             </p>
           </motion.div>
 
