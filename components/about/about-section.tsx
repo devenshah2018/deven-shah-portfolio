@@ -163,7 +163,14 @@ export function AboutSection() {
             <div className='flex flex-wrap gap-2'>
               {(CATEGORIZED_SKILLS[activeCategory as keyof typeof CATEGORIZED_SKILLS] as string[])
                 .slice()
-                .sort((a, b) => a.localeCompare(b))
+                .sort((a, b) => {
+                  const countA = getMappingCount(a);
+                  const countB = getMappingCount(b);
+                  if (countB !== countA) {
+                    return countB - countA;
+                  }
+                  return a.localeCompare(b);
+                })
                 .map((skill: string) => (
                     <button
                     key={skill}
