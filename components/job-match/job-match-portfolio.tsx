@@ -225,13 +225,14 @@ export function JobMatchPortfolio() {
               onClick={clearMatch}
               variant="ghost"
               size="sm"
-              className="group relative overflow-hidden rounded-lg border border-slate-700/50 bg-gradient-to-r from-slate-800/80 to-slate-900/80 px-4 py-2 font-medium text-slate-200 shadow-lg backdrop-blur-sm transition-all duration-300 hover:border-blue-500/50 hover:from-slate-800 hover:to-slate-900 hover:text-white hover:shadow-blue-500/20"
+              aria-label="Exit Match View"
+              className="group relative overflow-hidden rounded-lg border border-slate-700/70 bg-gradient-to-r from-slate-900/90 to-slate-950/90 px-4 py-2 font-semibold text-slate-200 backdrop-blur-md transition-all duration-200 hover:border-blue-500/60 hover:from-blue-950/80 hover:to-slate-900/90 hover:text-white focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2"
             >
               <span className="relative z-10 flex items-center gap-2">
-                <X className="h-4 w-4 transition-transform duration-300 group-hover:rotate-90" />
-                <span className="text-sm">Exit Match View</span>
+              <X className="h-4 w-4 transition-transform duration-200 group-hover:scale-110" />
+              <span className="text-sm font-semibold tracking-wide">Exit Match View</span>
               </span>
-              <div className="absolute inset-0 -z-0 bg-gradient-to-r from-blue-500/0 via-blue-500/10 to-purple-500/0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+              <div className="pointer-events-none absolute inset-0 -z-0 bg-gradient-to-r from-blue-600/10 via-blue-500/20 to-purple-600/10 opacity-0 transition-opacity duration-200 group-hover:opacity-100" />
             </Button>
           </div>
         </div>
