@@ -36,9 +36,15 @@ export function HeroSection() {
             <h1 className='bg-gradient-to-r from-white via-blue-200 to-purple-200 bg-clip-text text-5xl font-bold leading-tight text-transparent sm:text-6xl lg:text-7xl'>
               Deven Shah
             </h1>
-            <h2 className='mt-2 text-2xl font-semibold text-gray-300 sm:text-3xl lg:text-4xl'>
-              Co-Founder & CTO | M.S. Computer Science Candidate
-            </h2>
+            <div className='mt-5 flex flex-wrap items-center justify-center gap-2'>
+              <h2 className='inline-flex items-center rounded-full border border-slate-700/50 bg-slate-800/60 px-4 py-1.5 text-sm font-medium text-slate-200 shadow-sm sm:text-base'>
+                Co-Founder & CTO
+              </h2>
+              <span className='text-slate-600'>•</span>
+              <h2 className='inline-flex items-center rounded-full border border-slate-700/50 bg-slate-800/60 px-4 py-1.5 text-sm font-medium text-slate-200 shadow-sm sm:text-base'>
+                M.S. Computer Science Candidate
+              </h2>
+            </div>
           </motion.div>
 
           <motion.div
