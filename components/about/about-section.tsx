@@ -38,7 +38,7 @@ export function AboutSection() {
     const skillMapping = SKILL_MAPPINGS.find(mapping => mapping.skill === skill);
     if (
       skillMapping &&
-      (skillMapping.experiences || skillMapping.projects || skillMapping.education)
+      (skillMapping.experienceIds || skillMapping.projectIds || skillMapping.educationIds)
     ) {
       setSelectedSkill(skill);
       setModalOpen(true);
@@ -48,16 +48,16 @@ export function AboutSection() {
   const hasMapping = (skill: string) => {
     const skillMapping = SKILL_MAPPINGS.find(mapping => mapping.skill === skill);
     return (
-      skillMapping && (skillMapping.experiences || skillMapping.projects || skillMapping.education)
+      skillMapping && (skillMapping.experienceIds || skillMapping.projectIds || skillMapping.educationIds)
     );
   };
 
   const getMappingCount = (skill: string) => {
     const skillMapping = SKILL_MAPPINGS.find(mapping => mapping.skill === skill);
     if (!skillMapping) return 0;
-    const experienceCount = skillMapping.experiences?.length || 0;
-    const projectCount = skillMapping.projects?.length || 0;
-    const educationCount = skillMapping.education?.length || 0;
+    const experienceCount = skillMapping.experienceIds?.length || 0;
+    const projectCount = skillMapping.projectIds?.length || 0;
+    const educationCount = skillMapping.educationIds?.length || 0;
     return experienceCount + projectCount + educationCount;
   };
 

@@ -149,11 +149,11 @@ export function matchJobDescription(jobDescription: string): MatchResult {
     )
   );
 
-  // Collect unique experiences from skill mappings
+  // Collect unique experience IDs from skill mappings
   const experienceIds = new Set<string>();
   matchedSkillMappings.forEach(mapping => {
-    mapping.experiences?.forEach(exp => {
-      experienceIds.add(exp.id);
+    mapping.experienceIds?.forEach(id => {
+      experienceIds.add(id);
     });
   });
 
@@ -163,19 +163,19 @@ export function matchJobDescription(jobDescription: string): MatchResult {
   ).sort((a, b) => {
     // Count how many matched skills each experience has
     const aSkillCount = matchedSkillMappings.filter(m =>
-      m.experiences?.some(e => e.id === a.id)
+      m.experienceIds?.includes(a.id)
     ).length;
     const bSkillCount = matchedSkillMappings.filter(m =>
-      m.experiences?.some(e => e.id === b.id)
+      m.experienceIds?.includes(b.id)
     ).length;
     return bSkillCount - aSkillCount;
   });
 
-  // Collect unique projects from skill mappings
+  // Collect unique project IDs from skill mappings
   const projectIds = new Set<string>();
   matchedSkillMappings.forEach(mapping => {
-    mapping.projects?.forEach(proj => {
-      projectIds.add(proj.id);
+    mapping.projectIds?.forEach(id => {
+      projectIds.add(id);
     });
   });
 
@@ -185,19 +185,19 @@ export function matchJobDescription(jobDescription: string): MatchResult {
   ).sort((a, b) => {
     // Count how many matched skills each project has
     const aSkillCount = matchedSkillMappings.filter(m =>
-      m.projects?.some(p => p.id === a.id)
+      m.projectIds?.includes(a.id)
     ).length;
     const bSkillCount = matchedSkillMappings.filter(m =>
-      m.projects?.some(p => p.id === b.id)
+      m.projectIds?.includes(b.id)
     ).length;
     return bSkillCount - aSkillCount;
   });
 
-  // Collect unique education from skill mappings
+  // Collect unique education IDs from skill mappings
   const educationIds = new Set<string>();
   matchedSkillMappings.forEach(mapping => {
-    mapping.education?.forEach(edu => {
-      educationIds.add(edu.id);
+    mapping.educationIds?.forEach(id => {
+      educationIds.add(id);
     });
   });
 

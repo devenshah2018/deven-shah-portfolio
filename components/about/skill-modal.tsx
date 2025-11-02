@@ -2,39 +2,19 @@ import type React from 'react';
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { ExternalLink, Calendar, Award, Code } from 'lucide-react';
-
-interface SkillMapping {
-  skill: string;
-  experiences?: Array<{
-    title: string;
-    company: string;
-    id: string;
-    icon: React.ComponentType<any>;
-  }>;
-  projects?: Array<{
-    title: string;
-    subtitle: string;
-    id: string;
-    icon: React.ComponentType<any>;
-  }>;
-  education?: Array<{
-    title: string;
-    institution: string;
-    id: string;
-    icon: React.ComponentType<any>;
-  }>;
-}
+import { ExternalLink, Calendar, Award, Code, Briefcase, Zap } from 'lucide-react';
+import { expandSkillMapping, type SKILL_MAPPINGS } from '@/lib/content-registry';
 
 interface SkillModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   skillName: string | null;
-  skillMappings: SkillMapping[];
+  skillMappings: typeof SKILL_MAPPINGS;
 }
 
 export function SkillModal({ open, onOpenChange, skillName, skillMappings }: SkillModalProps) {
-  const skillData = skillMappings.find(mapping => mapping.skill === skillName);
+  const skillMapping = skillMappings.find(mapping => mapping.skill === skillName);
+  const skillData = skillMapping ? expandSkillMapping(skillMapping) : null;
 
   const scrollToSection = (sectionId: string, itemId?: string) => {
     onOpenChange(false);
@@ -83,7 +63,7 @@ export function SkillModal({ open, onOpenChange, skillName, skillMappings }: Ski
                 Experience
               </h3>
               <div className='space-y-3'>
-                {skillData.experiences.map((exp, index) => (
+                {skillData.experiences.filter(Boolean).map((exp, index) => exp && (
                   <Button
                     key={index}
                     variant='outline'
@@ -92,7 +72,7 @@ export function SkillModal({ open, onOpenChange, skillName, skillMappings }: Ski
                     aria-label={`Go to experience: ${exp.title} at ${exp.company}`}
                   >
                     <div className='flex w-full items-center gap-3'>
-                      <exp.icon className='h-4 w-4 flex-shrink-0 text-blue-400' />
+                      <Briefcase className='h-4 w-4 flex-shrink-0 text-blue-400' />
                       <div className='flex-1'>
                         <div className='text-[1rem] font-semibold leading-tight text-white'>
                           {exp.title}
@@ -114,7 +94,7 @@ export function SkillModal({ open, onOpenChange, skillName, skillMappings }: Ski
                 Projects
               </h3>
               <div className='space-y-3'>
-                {skillData.projects.map((project, index) => (
+                {skillData.projects.filter(Boolean).map((project, index) => project && (
                   <Button
                     key={index}
                     variant='outline'
@@ -123,7 +103,7 @@ export function SkillModal({ open, onOpenChange, skillName, skillMappings }: Ski
                     aria-label={`Go to project: ${project.title}`}
                   >
                     <div className='flex w-full items-center gap-3'>
-                      <project.icon className='h-4 w-4 flex-shrink-0 text-emerald-400' />
+                      <Zap className='h-4 w-4 flex-shrink-0 text-emerald-400' />
                       <div className='flex-1'>
                         <div className='text-[1rem] font-semibold leading-tight text-white'>
                           {project.title}
@@ -145,19 +125,19 @@ export function SkillModal({ open, onOpenChange, skillName, skillMappings }: Ski
                 Education
               </h3>
               <div className='space-y-3'>
-                {skillData.education.map((edu, index) => (
+                {skillData.education.filter(Boolean).map((edu, index) => edu && (
                   <Button
                     key={index}
                     variant='outline'
                     className='group h-auto w-full justify-start rounded-lg border-slate-700 bg-slate-800/60 px-3 py-2 text-left transition-all duration-200 hover:border-blue-500 hover:bg-blue-800/40 focus-visible:border-blue-500 focus-visible:bg-blue-800/50 focus-visible:ring-2 focus-visible:ring-blue-400/70'
                     onClick={() => scrollToSection('education', edu.id)}
-                    aria-label={`Go to education: ${edu.title} at ${edu.institution}`}
+                    aria-label={`Go to education: ${edu.degree} at ${edu.institution}`}
                   >
                     <div className='flex w-full items-center gap-3'>
                       <edu.icon className='h-4 w-4 flex-shrink-0 text-indigo-400' />
                       <div className='flex-1'>
                         <div className='text-[1rem] font-semibold leading-tight text-white'>
-                          {edu.title}
+                          {edu.degree}
                         </div>
                         <div className='text-xs text-slate-400'>{edu.institution}</div>
                       </div>
