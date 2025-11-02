@@ -50,9 +50,61 @@ export const SKILLS = {
   aimal: ['Python', 'LLMs', 'Sklearn', 'Tensorflow', 'Pytorch', 'LangGraph'],
   devops: ['Docker', 'Github/Git', 'GCP', 'AWS', 'Azure'],
   apis: ['C#', 'Python', 'Apex', 'Azure', 'REST API', 'GraphQL', 'TypeScript'],
+  collaboration: ['Jira', 'Confluence', 'Agile', 'Scrum'],
 };
 
 export const SKILL_MAPPINGS = [
+    {
+    skill: 'Scrum',
+    experiences: [
+      {
+        title: 'Co-Founder/CTO',
+        company: 'Suno Analytics',
+        id: 'suno-analytics',
+        icon: Briefcase,
+      },
+      {
+        title: 'Application Developer',
+        company: 'Patelco',
+        id: 'patelco',
+        icon: Briefcase,
+      },
+    ],
+  },
+  {
+    skill: 'Agile',
+    experiences: [
+      {
+        title: 'Co-Founder/CTO',
+        company: 'Suno Analytics',
+        id: 'suno-analytics',
+        icon: Briefcase,
+      },
+      {
+        title: 'Application Developer',
+        company: 'Patelco',
+        id: 'patelco',
+        icon: Briefcase,
+      },
+    ],
+  },
+    {
+    skill: 'Confluence',
+    experiences: [
+      {
+        title: 'Co-Founder/CTO',
+        company: 'Suno Analytics',
+        id: 'suno-analytics',
+        icon: Briefcase,
+      },
+      {
+        title: 'Application Developer',
+        company: 'Patelco',
+        id: 'patelco',
+        icon: Briefcase,
+      },
+    ],
+  },
   {
     skill: 'Python',
     experiences: [
@@ -949,6 +1001,7 @@ export const SKILL_CATEGORIES = [
   { key: 'frameworks', label: 'Frameworks' },
   { key: 'languages', label: 'Languages' },
   { key: 'platforms', label: 'Platforms' },
+  { key: 'collaboration', label: 'Collaboration' },
 ];
 
 export const CATEGORIZED_SKILLS = Object.fromEntries(
