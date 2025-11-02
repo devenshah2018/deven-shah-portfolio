@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -14,7 +14,6 @@ import {
   MessageSquare,
   Loader2,
   ThumbsUp,
-  ExternalLink,
 } from 'lucide-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faKaggle, faXTwitter } from '@fortawesome/free-brands-svg-icons';
@@ -121,7 +120,7 @@ export function ContactSection() {
               viewport={{ once: true }}
               className='mb-6'
             >
-              <h2 className='mb-4 bg-gradient-to-r from-white to-slate-300 bg-clip-text text-5xl font-bold tracking-tight text-transparent sm:text-6xl'>
+              <h2 className='mb-2 py-1 bg-gradient-to-r from-white to-slate-300 bg-clip-text text-4xl font-bold tracking-tight text-transparent sm:text-5xl'>
                 Let's Connect
               </h2>
               <div className='mx-auto h-1 w-20 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500' />
@@ -146,66 +145,52 @@ export function ContactSection() {
           >
             <Card
               id='book-a-call-container'
-              className='group relative overflow-hidden rounded-xl border border-slate-700/40 bg-slate-800/20 backdrop-blur-sm transition-all duration-500 sm:rounded-2xl'
+              className='relative flex flex-col overflow-hidden rounded-xl border-none bg-transparent transition-all duration-300 gap-2'
             >
-              <div className='absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500/10 via-purple-500/5 to-cyan-500/10 opacity-0 transition-opacity duration-500 sm:rounded-2xl' />
-
-              <div className='absolute inset-0 rounded-xl bg-gradient-to-b from-white/[0.02] to-transparent sm:rounded-2xl' />
-
-              <div className='absolute left-4 right-4 top-0 h-px bg-gradient-to-r from-transparent via-slate-500/30 to-transparent sm:left-8 sm:right-8' />
-
-              <CardContent className='relative z-10 p-4 sm:p-6 md:p-8'>
-                <div className='flex flex-col items-center gap-6 md:flex-row md:items-center md:justify-between md:gap-8'>
-                  <div className='flex-1 text-center md:text-left'>
-                    <h3 className='mb-3 flex items-center justify-center gap-2 text-xl font-extrabold tracking-tight text-white sm:mb-2 sm:gap-3 sm:text-2xl md:justify-start'>
-                      <CalendarCheck2 className='h-6 w-6 text-blue-400 sm:h-7 sm:w-7' />
-                      <span className='truncate'>Book a Call</span>
+              <div className='flex flex-col gap-2 pb-3'>
+                <div className='flex min-w-0 flex-1 items-center justify-between gap-4'>
+                  <div className='flex-1'>
+                    <h3 className='whitespace-normal break-words text-xl font-bold text-white leading-tight flex items-center gap-2 mb-2'>
+                      <CalendarCheck2 className='h-6 w-6 text-blue-400 flex-shrink-0' />
+                      Book a Call
                     </h3>
-                    <p className='mx-auto max-w-xl text-sm font-light leading-relaxed text-slate-400 sm:text-base md:mx-0 md:text-sm'>
-                      Have a project, an opportunity, or just want to chat about tech? I'd love to
-                      hear from you.
-                    </p>
-                    <p className='mt-2 text-xs text-slate-400 sm:mt-3'>
-                      Powered by{' '}
-                      <a
-                        href='https://cal.com/'
-                        target='_blank'
-                        rel='noopener noreferrer'
-                        className='text-blue-400 underline decoration-dotted transition-colors hover:text-blue-300'
-                      >
-                        Cal.com
-                      </a>
-                    </p>
+                    <div className='flex items-center gap-1'>
+                      <span className='text-sm font-medium text-slate-400'>Fast, easy scheduling</span>
+                    </div>
                   </div>
-
-                  <div className='flex w-full flex-shrink-0 flex-col gap-3 sm:flex-row sm:gap-2 md:w-auto md:items-end'>
-                    <Button
-                      data-cal-namespace='quick-chat'
-                      data-cal-link='deven-shah-l0qkjk/quick-chat'
-                      data-cal-config='{"layout":"month_view"}'
-                      size='lg'
-                      className='flex h-12 w-full items-center justify-center gap-2 rounded-full border-0 bg-blue-600 px-4 text-base font-semibold text-white outline-none ring-0 transition-all duration-200 hover:bg-blue-700 focus-visible:ring-4 focus-visible:ring-blue-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 sm:h-14 sm:min-w-[160px] sm:gap-3 sm:px-6 sm:text-lg sm:font-bold md:w-auto'
-                      aria-controls='cal-embed-container'
-                      aria-label='Show calendar to select a time with Deven Shah'
-                      tabIndex={0}
-                    >
-                      <CalendarCheck2 className='h-4 w-4 sm:h-5 sm:w-5' aria-hidden='true' />
-                      <span className='truncate'>Select a Time</span>
-                    </Button>
-                    <Button
-                      onClick={() => {
-                        window.open(LINKS.cal, '_blank');
-                      }}
-                      size='lg'
-                      className='hidden h-12 w-16 items-center justify-center rounded-full border-0 bg-zinc-600 text-base font-semibold text-white outline-none ring-0 transition-all duration-200 hover:bg-zinc-700 focus-visible:ring-4 focus-visible:ring-blue-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 sm:flex sm:h-14 sm:w-16 sm:text-lg sm:font-bold'
-                      aria-label='Open calendar in new tab'
-                      tabIndex={0}
-                    >
-                      <ExternalLink className='h-4 w-4 sm:h-5 sm:w-5' aria-hidden='true' />
-                    </Button>
-                  </div>
+                  <Button
+                    data-cal-namespace='quick-chat'
+                    data-cal-link='deven-shah-l0qkjk/quick-chat'
+                    data-cal-config='{"layout":"month_view"}'
+                    size='lg'
+                    className='flex h-11 items-center justify-center gap-2 rounded-full border-0 bg-blue-600 px-5 text-base font-semibold text-white outline-none ring-0 transition-all duration-200 hover:bg-blue-700 focus-visible:ring-2 focus-visible:ring-blue-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900'
+                    aria-controls='cal-embed-container'
+                    aria-label='Show calendar to select a time with Deven Shah'
+                    tabIndex={0}
+                  >
+                    <CalendarCheck2 className='h-4 w-4' aria-hidden='true' />
+                    <span className='truncate'>Select a Time</span>
+                  </Button>
                 </div>
-              </CardContent>
+              </div>
+              <div className='flex flex-1 flex-col justify-between pt-0'>
+                <div>
+                  <p className='mb-2 text-base text-slate-300'>
+                    Have a project, an opportunity, or just want to chat about tech? I'd love to hear from you.
+                  </p>
+                  <p className='text-sm text-slate-400'>
+                    Powered by{' '}
+                    <a
+                      href='https://cal.com/'
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className='text-blue-400 underline decoration-dotted transition-colors hover:text-blue-300'
+                    >
+                      Cal.com
+                    </a>
+                  </p>
+                </div>
+              </div>
             </Card>
           </motion.div>
 
