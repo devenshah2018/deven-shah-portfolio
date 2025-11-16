@@ -248,6 +248,7 @@ export const PROJECTS: Project[] = [
   {
     id: 'crypto-forecasting-project',
     title: 'Cryptocurrency Forecasting',
+    related_experiences: ['sjsu-bachelors'],
     subtitle: 'ML Prediction Model',
     period: '01/2022 – 12/2022',
     sortDate: '2022-12',
@@ -287,6 +288,7 @@ export const PROJECTS: Project[] = [
     subtitle: 'BRAF V600E Mutation Inhibitor Classifier',
     period: '08/2022 – 12/2022',
     sortDate: '2023-06',
+    related_experiences: ['sjsu-bachelors'],
     description:
       'Support vector machine to identify compounds that inhibit BRAF V600E mutation using PubChem chemical data.',
     technologies: getProjectSkillsFromMapping('molecule-mutation-prediction'),

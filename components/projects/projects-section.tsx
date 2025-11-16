@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Calendar, Star, Grid3x3, List, CheckCircle2, Clock, Pause, ExternalLink, Link } from 'lucide-react';
 import { motion } from 'framer-motion';
 import React, { useState, useMemo } from 'react';
-import { PROJECTS, PROJECT_CATEGORIES } from '@/lib/content-registry';
+import { PROJECTS, PROJECT_CATEGORIES, getExperienceById, getEducationById } from '@/lib/content-registry';
 import { Project } from '@/lib/types';
 
 function getProjectCategories(project: Project): string[] {
@@ -124,6 +124,80 @@ function getWebLink(project: Project) {
   }
   
   return null;
+}
+
+function getRelatedLogos(project: Project) {
+  if (!project.related_experiences || project.related_experiences.length === 0) {
+    return [];
+  }
+
+  return project.related_experiences
+    .map(id => {
+      const experience = getExperienceById(id);
+      if (experience && experience.companyLogo) {
+        return {
+          logo: experience.companyLogo,
+          alt: `${experience.company} logo`,
+          name: experience.company,
+          type: 'experience' as const,
+          id: id,
+        };
+      }
+      
+      const education = getEducationById(id);
+      if (education && education.logo) {
+        return {
+          logo: education.logo,
+          alt: `${education.institution} logo`,
+          name: education.institution,
+          type: 'education' as const,
+          id: id,
+        };
+      }
+      
+      return null;
+    })
+    .filter(Boolean) as Array<{ logo: string; alt: string; name: string; type: 'experience' | 'education'; id: string }>;
+}
+
+function RelatedLogos({ project }: { project: Project }) {
+  const logos = getRelatedLogos(project);
+  
+  if (logos.length === 0) {
+    return null;
+  }
+
+  const scrollToSection = (type: 'experience' | 'education') => {
+    const sectionId = type === 'experience' ? 'experience' : 'education';
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  return (
+    <>
+      {logos.map((logoData, index) => (
+        <button
+          key={index}
+          onClick={() => scrollToSection(logoData.type)}
+          className='flex items-center justify-center h-8 w-8 rounded-xl border border-slate-700/50 bg-slate-800/50 object-contain shadow-sm overflow-hidden transition-all duration-200 hover:border-slate-600/50 hover:bg-slate-700/50 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900'
+          style={{
+            marginLeft: index !== 0 ? '0.5rem' : 0,
+          }}
+          title={`${logoData.name} - Click to view ${logoData.type === 'experience' ? 'experience' : 'education'}`}
+          aria-label={`Scroll to ${logoData.name} ${logoData.type === 'experience' ? 'experience' : 'education'}`}
+        >
+          <img
+            src={logoData.logo}
+            alt={logoData.alt}
+            className='h-full w-full object-contain object-center'
+            draggable={false}
+          />
+        </button>
+      ))}
+    </>
+  );
 }
 
 export function ProjectsSection() {
@@ -310,11 +384,16 @@ export function ProjectsSection() {
                         </a>
                       )}
                     </div>
-                    <div className='flex items-center gap-1'>
-                      <Calendar className='h-3 w-3 text-slate-400' />
-                      <span className='text-xs font-medium text-slate-400'>
-                        {project.period}
-                      </span>
+                    <div className='flex items-center justify-between w-full'>
+                      <div className='flex items-center gap-1'>
+                        <Calendar className='h-3 w-3 text-slate-400' />
+                        <span className='text-xs font-medium text-slate-400'>
+                          {project.period}
+                        </span>
+                      </div>
+                      <div className='flex items-center -space-x-2'>
+                        <RelatedLogos project={project} />
+                      </div>
                     </div>
                   </CardHeader>
                   <CardContent className='flex flex-1 flex-col justify-between pt-0'>
@@ -395,23 +474,28 @@ export function ProjectsSection() {
                             </a>
                           )}
                         </div>
-                        <div className='flex items-center gap-2 flex-wrap'>
-                          <div className='flex items-center gap-1'>
-                            <Calendar className='h-3 w-3 text-slate-400' />
-                            <span className='text-xs font-medium text-slate-400'>
-                              {project.period}
-                            </span>
+                        <div className='flex items-center justify-between gap-4 flex-wrap'>
+                          <div className='flex items-center gap-2 flex-wrap'>
+                            <div className='flex items-center gap-1'>
+                              <Calendar className='h-3 w-3 text-slate-400' />
+                              <span className='text-xs font-medium text-slate-400'>
+                                {project.period}
+                              </span>
+                            </div>
+                            {getStatusBadge(project.status, 'sm')}
+                            {project.technologies?.slice(0, 4).map((tech: string, i: number) => (
+                              <Badge
+                                key={i}
+                                variant='outline'
+                                className='border-slate-700 bg-slate-800/50 text-xs text-slate-300'
+                              >
+                                {tech}
+                              </Badge>
+                            ))}
                           </div>
-                          {getStatusBadge(project.status, 'sm')}
-                          {project.technologies?.slice(0, 4).map((tech: string, i: number) => (
-                            <Badge
-                              key={i}
-                              variant='outline'
-                              className='border-slate-700 bg-slate-800/50 text-xs text-slate-300'
-                            >
-                              {tech}
-                            </Badge>
-                          ))}
+                          <div className='flex items-center -space-x-2 ml-auto'>
+                            <RelatedLogos project={project} />
+                          </div>
                         </div>
                       </CardHeader>
                       <CardContent className='pt-0 pb-3'>

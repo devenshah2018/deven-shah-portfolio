@@ -24,6 +24,7 @@ export type Project = {
   categories?: string[];
   accessible_at: ('github' | 'vscode' | 'kaggle' | 'hosted')[];
   access_points?: AccessPoint[];
+  related_experiences?: string[];
 };
 
 export type ResearchPaper = {
