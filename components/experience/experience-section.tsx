@@ -1,30 +1,53 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useMemo } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import {
   Calendar,
   MapPin,
   Star,
-  TrendingUp,
   ExternalLink,
+  ChevronDown,
+  ChevronUp,
 } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { EXPERIENCES } from '@/lib/content-registry';
 
 export function ExperienceSection() {
-  const [flippedIndexes, setFlippedIndexes] = useState<Set<number>>(new Set());
-  const containerRef = useRef<HTMLDivElement>(null);
+  const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
 
-  useEffect(() => {
-    function handleDocumentClick(e: MouseEvent) {
-      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
-        setFlippedIndexes(new Set());
+  const toggleExpanded = (id: string) => {
+    setExpandedIds(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(id)) {
+        newSet.delete(id);
+      } else {
+        newSet.add(id);
       }
-    }
-    document.addEventListener('mousedown', handleDocumentClick);
-    return () => document.removeEventListener('mousedown', handleDocumentClick);
+      return newSet;
+    });
+  };
+
+  // Sort: featured first, then chronological (newest first)
+  const sortedExperiences = useMemo(() => {
+    return [...EXPERIENCES].sort((a, b) => {
+      // Featured experiences first
+      if (a.featured && !b.featured) return -1;
+      if (!a.featured && b.featured) return 1;
+      
+      // Then sort by period (extract year and month for comparison)
+      const getSortDate = (period: string) => {
+        // Extract date from period string like "12/2024 – Present" or "04/2023 – 04/2024"
+        const match = period.match(/(\d{2})\/(\d{4})/);
+        if (match && match[1] && match[2]) {
+          return parseInt(match[2] + match[1]); // YYYYMM format
+        }
+        return 0;
+      };
+      
+      return getSortDate(b.period) - getSortDate(a.period);
+    });
   }, []);
 
   return (
@@ -32,15 +55,16 @@ export function ExperienceSection() {
       id='experience'
       className='bg-gradient-to-b from-slate-900 to-slate-950 py-20'
     >
-      <div className='container mx-auto px-3 sm:px-6 lg:px-8'>
+      <div className='container mx-auto px-4 lg:px-8'>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className='mx-auto max-w-7xl'
+          className='mx-auto max-w-5xl'
         >
-          <div className='mb-10 text-center sm:mb-14'>
+          {/* Section Header */}
+          <div className='mb-10 text-center'>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -64,107 +88,143 @@ export function ExperienceSection() {
               technology across fintech, AI, and enterprise platforms.
             </motion.p>
           </div>
-          {/* Centered grid for experience cards */}
-          <div className='flex justify-center'>
-            <div ref={containerRef} className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 w-full max-w-6xl'>
-              {EXPERIENCES.map((exp, index) => (
+
+          {/* Compact Experience Cards */}
+          <div className='space-y-4'>
+            {sortedExperiences.map((exp, index) => {
+              const isExpanded = expandedIds.has(exp.id);
+              const isFeatured = exp.featured;
+
+              return (
                 <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 24 }}
+                  key={exp.id}
+                  initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.07 }}
+                  transition={{ duration: 0.4, delay: index * 0.05 }}
                   viewport={{ once: true }}
-                  className='relative w-full max-w-xs group perspective'
-                  onClick={e => e.stopPropagation()}
                 >
-                  <div
-                    className={`relative h-[320px] w-full transition-transform duration-700 [transform-style:preserve-3d] ${flippedIndexes.has(index) ? '[transform:rotateY(180deg)]' : ''}`}
-                    onClick={() => {
-                      setFlippedIndexes(prev => {
-                        const newSet = new Set(prev);
-                        if (newSet.has(index)) {
-                          newSet.delete(index);
-                        } else {
-                          newSet.add(index);
-                        }
-                        return newSet;
-                      });
-                    }}
-                    tabIndex={0}
-                    aria-pressed={flippedIndexes.has(index)}
-                    role='button'
-                  >
-                    <Card className='absolute inset-0 z-10 flex h-full w-full flex-col overflow-hidden rounded-xl bg-transparent shadow-lg transition-all duration-300 border-transparent border-2 group-hover:border-blue-500 [backface-visibility:hidden] group-hover:scale-[1.015] group-hover:shadow-xl'>
-                      <CardContent className='flex h-full flex-col p-5'>
-                        <div className='mb-3 flex items-center gap-3'>
-                          {exp.companyLogo && (
-                            <img
-                              src={exp.companyLogo}
-                              alt={exp.company + ' logo'}
-                              className='h-9 w-9 rounded-lg border border-slate-200/20 bg-white/80 object-contain shadow-sm'
-                            />
-                          )}
-                          <div className='min-w-0 flex-1'>
-                            <h3 className='mb-0.5 break-words text-base font-semibold tracking-tight text-white sm:text-lg'>
+                  <Card className='border border-slate-800/50 bg-gradient-to-br from-slate-900/50 to-slate-800/30 backdrop-blur-sm shadow-lg overflow-hidden group'>
+                    {/* Featured Badge */}
+                    {isFeatured && (
+                      <div className='absolute top-3 right-3 z-10'>
+                        <Badge className='border-0 bg-gradient-to-r from-amber-500 to-orange-500 px-2 py-0.5 text-xs font-semibold text-white shadow-md'>
+                          <Star className='h-3 w-3 mr-1 fill-white' />
+                          Featured
+                        </Badge>
+                      </div>
+                    )}
+
+                    <CardContent className='p-4'>
+                      {/* Compact Header */}
+                      <div className='flex items-start gap-3 mb-3'>
+                        {/* Company Logo */}
+                        {exp.companyLogo && (
+                          <div className='flex-shrink-0 mt-0.5'>
+                            <div className='flex items-center justify-center h-10 w-10 rounded-lg bg-transparent object-contain shadow-sm overflow-hidden transition-all duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900'>
+                              <img
+                                src={exp.companyLogo}
+                                alt={exp.company + ' logo'}
+                                className='h-full w-full object-contain object-center'
+                              />
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Title and Company */}
+                        <div className='flex-1 min-w-0'>
+                          <div className='flex items-start justify-between gap-2 mb-1'>
+                            <h3 className='text-lg font-bold text-white leading-tight'>
                               {exp.title}
                             </h3>
-                            <a
-                              href={exp.link}
-                              target='_blank'
-                              rel='noopener noreferrer'
-                              className='group/link inline-flex items-center gap-1.5 bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-sm font-medium text-transparent transition-all duration-300 hover:from-blue-300 hover:to-indigo-300'
-                            >
-                              {exp.company}
-                              <ExternalLink className='h-4 w-4 text-slate-400 transition-colors group-hover/link:text-blue-400' />
-                            </a>
                           </div>
-                          {exp.featured && (
-                            <Badge className='border-0 bg-gradient-to-r from-yellow-500 to-orange-500 px-2 py-0.5 text-xs text-white'>
-                              <Star className='h-3 w-3' />
-                            </Badge>
-                          )}
-                        </div>
-                        <div className='mb-8 flex flex-wrap gap-2'>
-                          <Badge
-                            variant='outline'
-                            className='border-slate-700 bg-slate-800/60 px-2 py-1 text-xs text-slate-300'
+                          <a
+                            href={exp.link}
+                            target='_blank'
+                            rel='noopener noreferrer'
+                            className='group/link inline-flex items-center gap-1 text-sm font-semibold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent transition-all duration-300 hover:from-blue-300 hover:to-indigo-300'
                           >
-                            <Calendar className='mr-1 h-3 w-3' />
-                            {exp.period}
-                          </Badge>
-                          <Badge
-                            variant='outline'
-                            className='border-slate-700 bg-slate-800/60 px-2 py-1 text-xs text-slate-300'
+                            {exp.company}
+                            <ExternalLink className='h-3 w-3 text-slate-500 transition-colors group-hover/link:text-blue-400' />
+                          </a>
+                        </div>
+                      </div>
+
+                      {/* Compact Metadata */}
+                      <div className='flex flex-wrap items-center gap-2 mb-3'>
+                        <Badge
+                          variant='outline'
+                          className='border-slate-700/50 bg-slate-800/40 px-2 py-0.5 text-xs font-medium text-slate-300'
+                        >
+                          <Calendar className='mr-1 h-3 w-3' />
+                          {exp.period}
+                        </Badge>
+                        <Badge
+                          variant='outline'
+                          className='border-slate-700/50 bg-slate-800/40 px-2 py-0.5 text-xs font-medium text-slate-300'
+                        >
+                          <MapPin className='mr-1 h-3 w-3' />
+                          {exp.location}
+                        </Badge>
+                      </div>
+
+                      {/* Description */}
+                      <p className='text-sm leading-relaxed text-slate-300 mb-3'>
+                        {exp.description}
+                      </p>
+
+                      {/* Compact Achievements Section */}
+                      {exp.achievements && exp.achievements.length > 0 && (
+                        <div className='border-t border-slate-800/50 pt-3'>
+                          <button
+                            onClick={() => toggleExpanded(exp.id)}
+                            className='flex items-center justify-between w-full text-left group/button'
+                            aria-expanded={isExpanded}
                           >
-                            <MapPin className='mr-1 h-3 w-3' />
-                            {exp.location}
-                          </Badge>
+                            <h4 className='text-xs font-semibold text-slate-200 flex items-center gap-1.5'>
+                              <span className={`h-1 w-1 rounded-full bg-gradient-to-r ${exp.gradient}`} />
+                              Key Achievements
+                              <span className='text-xs font-normal text-slate-500'>
+                                ({exp.achievements.length})
+                              </span>
+                            </h4>
+                            {isExpanded ? (
+                              <ChevronUp className='h-3.5 w-3.5 text-slate-400 transition-transform group-hover/button:text-blue-400' />
+                            ) : (
+                              <ChevronDown className='h-3.5 w-3.5 text-slate-400 transition-transform group-hover/button:text-blue-400' />
+                            )}
+                          </button>
+
+                          <AnimatePresence>
+                            {isExpanded && (
+                              <motion.ul
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: 'auto', opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.2 }}
+                                className='mt-2 space-y-2 overflow-hidden'
+                              >
+                                {exp.achievements.map((achievement, i) => (
+                                  <motion.li
+                                    key={i}
+                                    initial={{ opacity: 0, x: -5 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: i * 0.03 }}
+                                    className='flex items-start gap-2 text-xs leading-relaxed text-slate-300'
+                                  >
+                                    <div className={`mt-1.5 h-1 w-1 rounded-full bg-gradient-to-r ${exp.gradient} flex-shrink-0`} />
+                                    <span>{achievement}</span>
+                                  </motion.li>
+                                ))}
+                              </motion.ul>
+                            )}
+                          </AnimatePresence>
                         </div>
-                        <p className='mb-8 text-sm font-normal leading-relaxed text-slate-200 overflow-hidden text-ellipsis line-clamp-4'>
-                          {exp.description}
-                        </p>
-                      </CardContent>
-                    </Card>
-                    <Card className='absolute inset-0 z-20 flex h-full w-full flex-col overflow-hidden rounded-xl border border-slate-700/40 bg-gradient-to-br from-blue-900/95 to-indigo-900/90 shadow-xl transition-all duration-300 [backface-visibility:hidden] [transform:rotateY(180deg)]'>
-                      <CardContent className='flex h-full flex-col p-5'>
-                        <div className='mb-3 flex items-center gap-2'>
-                          <TrendingUp className='h-5 w-5 text-emerald-400' />
-                          <h4 className='text-base font-semibold text-white tracking-tight'>Key Achievements</h4>
-                        </div>
-                        <ul className='mb-5 space-y-2 overflow-y-auto pr-1'>
-                          {exp.achievements.map((achievement, i) => (
-                            <li key={exp.id + '-' + i} className='flex items-start gap-2'>
-                              <div className={`h-2 w-2 bg-gradient-to-r ${exp.gradient} mt-2 flex-shrink-0 rounded-full`} />
-                              <span className='text-xs font-normal leading-relaxed text-slate-100 break-words'>{achievement}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </CardContent>
-                    </Card>
-                  </div>
+                      )}
+                    </CardContent>
+                  </Card>
                 </motion.div>
-              ))}
-            </div>
+              );
+            })}
           </div>
         </motion.div>
       </div>
