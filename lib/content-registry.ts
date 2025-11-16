@@ -98,6 +98,7 @@ export const SKILL_MAPPINGS = [
   { skill: 'Angular', experienceIds: ['patelco'] },
   { skill: 'ASP.NET Core', experienceIds: ['patelco'] },
   { skill: 'Next.js', projectIds: ['drone-build-project'], experienceIds: ['suno-analytics'] },
+  { skill: 'Jira', experienceIds: ['patelco', 'suno-analytics'] },
 ];
 
 export const SKILL_CATEGORIES = [
