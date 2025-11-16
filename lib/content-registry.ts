@@ -58,8 +58,8 @@ export const SKILL_MAPPINGS = [
   { skill: 'Scrum', experienceIds: ['suno-analytics', 'patelco'] },
   { skill: 'Agile', experienceIds: ['suno-analytics', 'patelco'] },
   { skill: 'Confluence', experienceIds: ['suno-analytics', 'patelco'] },
-  { skill: 'Python', experienceIds: ['suno-analytics', 'netapp'], projectIds: ['model-distribution-server', 'ares-project', 'molecule-mutation-prediction', 'crypto-forecasting-project', 'drone-build-project', 'crypto-correlations-project', 'bull-bear-stocks-project', 'quantum-protein-binding'], educationIds: ['sjsu-bachelors'] },
-  { skill: 'TypeScript', experienceIds: ['suno-analytics', 'patelco'], projectIds: ['drone-build-project', 'portfolio-project', 'ares-project', 'gumball-project'] },
+  { skill: 'Python', experienceIds: ['suno-analytics', 'netapp', 'build-fellowship'], projectIds: ['model-distribution-server', 'ares-project', 'molecule-mutation-prediction', 'crypto-forecasting-project', 'drone-build-project', 'crypto-correlations-project', 'bull-bear-stocks-project', 'quantum-protein-binding'], educationIds: ['sjsu-bachelors'] },
+  { skill: 'TypeScript', experienceIds: ['suno-analytics', 'patelco', 'build-fellowship'], projectIds: ['drone-build-project', 'portfolio-project', 'ares-project', 'gumball-project'] },
   { skill: 'C#', experienceIds: ['patelco'], educationIds: ['sjsu-bachelors'] },
   { skill: 'React', experienceIds: ['suno-analytics'], projectIds: ['drone-build-project', 'portfolio-project'] },
   { skill: 'Azure', experienceIds: ['suno-analytics', 'patelco'], projectIds: ['ares-project', 'gumball-project'] },
@@ -88,9 +88,9 @@ export const SKILL_MAPPINGS = [
   { skill: 'Tensorflow', experienceIds: ['suno-analytics'], projectIds: ['crypto-forecasting-project'] },
   { skill: 'Pytorch', projectIds: ['crypto-forecasting-project'] },
   { skill: 'Docker', experienceIds: ['netapp', 'suno-analytics'] },
-  { skill: 'Jupyter', projectIds: ['bull-bear-stocks-project', 'quantum-protein-binding', 'drone-build-project', 'crypto-correlations-project'] },
+  { skill: 'Jupyter', projectIds: ['bull-bear-stocks-project', 'quantum-protein-binding', 'drone-build-project', 'crypto-correlations-project'], experienceIds: ['build-fellowship'] },
   { skill: 'C++', educationIds: ['bu-masters'] },
-  { skill: 'Github/Git', experienceIds: ['suno-analytics', 'patelco', 'netapp'], projectIds: ['drone-build-project', 'model-distribution-server', 'portfolio-project', 'qode-project', 'ares-project', 'gumball-project', 'molecule-mutation-prediction', 'crypto-forecasting-project', 'crypto-correlations-project', 'bull-bear-stocks-project', 'quantum-protein-binding'], educationIds: ['sjsu-bachelors'] },
+  { skill: 'Github/Git', experienceIds: ['suno-analytics', 'patelco', 'netapp', 'build-fellowship'], projectIds: ['drone-build-project', 'model-distribution-server', 'portfolio-project', 'qode-project', 'ares-project', 'gumball-project', 'molecule-mutation-prediction', 'crypto-forecasting-project', 'crypto-correlations-project', 'bull-bear-stocks-project', 'quantum-protein-binding'], educationIds: ['sjsu-bachelors'] },
   { skill: 'REST API', experienceIds: ['suno-analytics', 'patelco', 'netapp'] },
   { skill: 'GraphQL', experienceIds: ['suno-analytics'] },
   { skill: 'MySQL', experienceIds: ['patelco'] },
@@ -156,7 +156,7 @@ export const EXPERIENCES = [
       'Created a virtual appointment scheduling system, reducing branch visits for members (Q2 Hackathon winner)',
       'Developed a HELOAN/HELOC rate update automation web app to achieve a 1000% increase in efficiency',
     ],
-    gradient: 'from-indigo-500 to-purple-500',
+    gradient: 'from-blue-500 to-cyan-500',
     link: 'https://www.patelco.org',
   },
   {
@@ -174,9 +174,26 @@ export const EXPERIENCES = [
       'Created alert system for storage health, reducing monitoring time by 90% with Python and Bash',
       'Migrated legacy system API to REST, improving integration with modern applications',
     ],
-    gradient: 'from-emerald-500 to-teal-500',
+    gradient: 'from-blue-500 to-cyan-500',
     link: 'https://www.netapp.com',
   },
+  {
+    id: 'build-fellowship',
+    title: 'Build Student Consultant',
+    company: 'Build Fellowship by Open Avenues',
+    companyLogo: '/build-logo.png',
+    location: 'Remote',
+    period: '09/2025 – 11/2025',
+    description:
+      'Developed data-driven image sensing and visualization tools for drone flight path planning.',
+    achievements: [
+      'Developed Python data models and APIs to calculate drone positions, speeds, and efficient flight paths.',
+      'Applied camera models and photogrammetry to compute image footprints, sampling distances, and motion-blur limits.',
+      'Built visualization tools in Jupyter to analyze trajectories and optimize drone-based path planning.',
+    ],
+    gradient: 'from-blue-500 to-cyan-500',
+    link: 'https://www.buildfellowship.com/'
+  }
 ];
 
 export const PROJECT_CATEGORIES = [
@@ -321,7 +338,8 @@ export const PROJECTS: Project[] = [
     access_points: [
       { type: 'hosted', url: 'https://drone-path-planner.vercel.app/', label: 'Live Demo' },
       { type: 'github', url: 'https://github.com/devenshah2018/drone-trajectory-planner', label: 'Github' },
-    ]
+    ],
+    related_experiences: ['build-fellowship'],
   },
   {
     id: 'crypto-correlations-project',
