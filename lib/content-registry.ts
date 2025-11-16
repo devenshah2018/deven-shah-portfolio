@@ -29,7 +29,7 @@ export const SKILLS = {
     'Rust',
     'C++'
   ],
-  platforms: ['AWS', 'Salesforce', 'Azure', 'LangGraph', 'GCP', 'Jupyter'],
+  platforms: ['Linux', 'AWS', 'Salesforce', 'Azure', 'LangGraph', 'GCP', 'Jupyter'],
   frameworks: ['React', '.NET', 'Flask', 'TailwindCSS', 'Angular', 'ASP.NET Core', 'Next.js'],
   frontend: ['TypeScript', 'JavaScript', 'HTML', 'CSS', 'React', 'TailwindCSS'],
   backend: [
@@ -81,7 +81,8 @@ export const SKILL_MAPPINGS = [
   { skill: 'PostgreSQL', experienceIds: ['suno-analytics'] },
   { skill: 'GCP', experienceIds: ['suno-analytics'] },
   { skill: 'TailwindCSS', experienceIds: ['suno-analytics'], projectIds: ['portfolio-project'] },
-  { skill: 'Rust', projectIds: ['ares-project'] },
+  { skill: 'Rust', projectIds: ['ares-project', 'task-scheduling-project'] },
+  { skill: 'Linux', educationIds: ['bu-masters'], projectIds: ['task-scheduling-project'] },
   { skill: 'LLMs', experienceIds: ['suno-analytics'], projectIds: ['ares-project'] },
   { skill: 'Sklearn', experienceIds: ['suno-analytics'], projectIds: ['model-distribution-server', 'molecule-mutation-prediction', 'crypto-forecasting-project'] },
   { skill: 'Tensorflow', experienceIds: ['suno-analytics'], projectIds: ['crypto-forecasting-project'] },
@@ -400,6 +401,25 @@ export const PROJECTS: Project[] = [
       { type: 'vscode', url: 'https://marketplace.visualstudio.com/items?itemName=Gumball.gumball&ssr=false#overview', label: 'VSCode' },
       { type: 'github', url: 'https://github.com/devenshah2018/gumball', label: 'Code' },
     ]
+  },
+  {
+    id: 'task-scheduling-project',
+    title: 'Task Scheduling',
+    subtitle: 'Task Scheduling System',
+    period: '11/2025 – Present',
+    sortDate: '2025-11',
+    description:
+      'Research on CPU and GPU scheduling algorithms, with a focus on AI workloads and hybrid CPU-GPU scheduling strategies.',
+    technologies: getProjectSkillsFromMapping('task-scheduling-project'),
+    entry_point: 'github',
+    link: 'https://github.com/devenshah2018/task-scheduling',
+    status: 'In Progress',
+    categories: ['theory'],
+    accessible_at: ['github'],
+    access_points: [
+      { type: 'github', url: 'https://github.com/devenshah2018/task-scheduling', label: 'Code' },
+    ],
+    related_experiences: ['bu-masters'],
   }
 ];
 
