@@ -39,36 +39,6 @@ const tourSteps = [
     type: 'experience',
   },
   {
-    id: 'experience-netapp',
-    title: 'Starting as an Intern at NetApp',
-    content:
-      'Every journey starts somewhere. Mine began at NetApp. It taught me how scalable systems work and sparked my curiosity with automation and optimization.',
-    target: '[data-item-id="netapp"]',
-    position: 'right',
-    showProgress: true,
-    type: 'experience',
-  },
-  {
-    id: 'experience-patelco',
-    title: 'Full-Stack Development at Patelco',
-    content:
-      'This role sharpened my ability to deliver real-world impact, from winning a hackathon to automating fraud detection. It was my proving ground in high-stakes environments.',
-    target: '[data-item-id="patelco"]',
-    position: 'left',
-    showProgress: true,
-    type: 'experience',
-  },
-  {
-    id: 'experience-current',
-    title: 'Co-Founder/CTO at Suno Analytics',
-    content:
-      "This is the culmination of everything I've learned from leading global teams, building AI agents with LangGraph, to connecting with $50M+ brands. It's where I bring vision to life.",
-    target: '[data-item-id="suno-analytics"]',
-    position: 'right',
-    showProgress: true,
-    type: 'experience',
-  },
-  {
     id: 'projects-section',
     title: 'Featured Projects',
     content:
@@ -107,12 +77,13 @@ export function GuidedTour() {
   const [displayedText, setDisplayedText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [tooltipPosition, setTooltipPosition] = useState<{
-    top: string;
+    top?: string;
+    bottom?: string;
     left?: string;
     right?: string;
     width?: string;
     transform?: string;
-  }>({ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' });
+  }>({});
 
   const currentStepData = tourSteps[currentStep];
 
@@ -134,7 +105,7 @@ export function GuidedTour() {
       if (elementHeight > viewportHeight * 0.6) {
         scrollTop = elementTop - 24;
       } else if (window.innerWidth < 768) {
-        scrollTop = elementTop - viewportHeight * 0.18;
+        scrollTop = elementTop - viewportHeight * 0.15;
       } else {
         const tooltipPadding = 350;
         const safePadding = 50;
@@ -194,33 +165,34 @@ export function GuidedTour() {
     });
 
     closeTour();
-  }, [closeTour, currentStep]);
+  }, [closeTour]);
 
   const updateTooltipPosition = useCallback(() => {
     const viewportWidth = window.innerWidth;
-    const margin = 12;
+    const isMobile = viewportWidth < 768;
+    const isTablet = viewportWidth >= 768 && viewportWidth < 1024;
 
-    if (viewportWidth < 768) {
-      const mobileWidth = Math.min(280, viewportWidth - 24);
+    if (isMobile) {
+      // Mobile: Fixed bottom, full width with padding
       setTooltipPosition({
-        top: `${margin}px`,
-        left: '50%',
-        width: `${mobileWidth}px`,
-        transform: 'translateX(-50%)',
+        bottom: '16px',
+        left: '16px',
+        right: '16px',
+        width: 'auto',
       });
-    } else if (viewportWidth < 1024) {
-      const tabletWidth = Math.min(340, viewportWidth - 40);
+    } else if (isTablet) {
+      // Tablet: Top right with max width
       setTooltipPosition({
-        top: `${margin * 1.2}px`,
-        right: `${margin * 1.2}px`,
-        width: `${tabletWidth}px`,
+        top: '24px',
+        right: '24px',
+        width: '380px',
       });
     } else {
-      const tooltipWidth = 400;
+      // Desktop: Top right with fixed width
       setTooltipPosition({
-        top: `${margin * 1.5}px`,
-        right: `${margin * 1.5}px`,
-        width: `${tooltipWidth}px`,
+        top: '32px',
+        right: '32px',
+        width: '420px',
       });
     }
   }, []);
@@ -421,7 +393,7 @@ export function GuidedTour() {
   }, [isTourOpen, currentStep, nextStep, prevStep, handleCloseTour]);
 
   const getStepIcon = () => {
-    const iconClass = 'h-4 w-4 text-blue-400 md:h-5 md:w-5';
+    const iconClass = 'h-4 w-4 text-blue-400';
     switch (currentStepData && currentStepData.type) {
       case 'intro':
         return <Rocket className={iconClass} />;
@@ -444,135 +416,135 @@ export function GuidedTour() {
 
   return (
     <>
+      {/* Backdrop */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.96, y: 16 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className='fixed inset-0 z-[100] bg-slate-950/40'
+      />
+
+      {/* Tour Tooltip */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95, y: 10 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.96, y: -8 }}
+        exit={{ opacity: 0, scale: 0.95, y: -10 }}
         transition={{
-          duration: 0.4,
+          duration: 0.3,
           ease: [0.16, 1, 0.3, 1],
         }}
-        className='tour-tooltip-container fixed right-8 top-8 z-[101]'
+        className='tour-tooltip-container fixed z-[101]'
         style={{
           ...tooltipPosition,
           pointerEvents: 'auto',
-          position: 'fixed',
-          top: tooltipPosition.top || '32px',
-          right: tooltipPosition.right || '32px',
-          left: undefined,
-          transform: undefined,
         }}
       >
-        <motion.div
-          initial={{ boxShadow: '0 0 0 rgba(59, 130, 246, 0)' }}
-          animate={{
-            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(59, 130, 246, 0.1)',
-          }}
-          transition={{ duration: 0.3, delay: 0.1 }}
-        >
-          <Card className='relative flex h-[240px] w-full max-w-[400px] flex-col overflow-hidden rounded-xl border border-slate-800/80 bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 p-0 backdrop-blur-xl md:h-[300px]'>
-            <div className='pointer-events-none absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-purple-500/5' />
+        <Card className='relative overflow-hidden border border-slate-800/60 bg-gradient-to-br from-slate-900/95 to-slate-950/95 backdrop-blur-xl shadow-2xl sm:rounded-xl'>
+          {/* Subtle gradient overlay */}
+          <div className='absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-purple-500/5 pointer-events-none' />
 
-            <CardContent className='relative flex h-full flex-col p-4 md:p-7'>
-              <div className='mb-3 flex h-1 w-full overflow-hidden rounded-full bg-slate-800 md:mb-5'>
+          <CardContent className='relative p-4 sm:p-6'>
+            {/* Progress Bar */}
+            <div className='mb-4 flex items-center justify-between'>
+              <div className='flex-1 overflow-hidden rounded-full bg-slate-800/60 h-1.5 mr-3'>
                 <motion.div
-                  className='h-full bg-gradient-to-r from-blue-500 to-blue-400'
+                  className='h-full bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full'
                   initial={false}
                   animate={{ width: `${((currentStep + 1) / tourSteps.length) * 100}%` }}
-                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                 />
               </div>
+              <span className='text-xs font-medium text-slate-400 tabular-nums'>
+                {currentStep + 1}/{tourSteps.length}
+              </span>
+            </div>
 
-              <div className='flex flex-1 flex-col'>
-                <AnimatePresence mode='wait'>
-                  <motion.div
-                    key={currentStep}
-                    initial={{ opacity: 0, y: 4, filter: 'blur(1px)' }}
-                    animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                    exit={{ opacity: 0, y: -2, filter: 'blur(1px)' }}
-                    transition={{
-                      duration: 0.15,
-                      ease: [0.16, 1, 0.3, 1],
-                      filter: { duration: 0.1 },
-                    }}
-                    className='flex flex-1 flex-col'
-                  >
-                    {/* Header */}
-                    <div className='mb-3 flex items-start justify-between md:mb-5'>
-                      <div className='flex min-w-0 items-center gap-2 md:gap-3'>
-                        <motion.div
-                          initial={{ scale: 0.9, opacity: 0 }}
-                          animate={{ scale: 1, opacity: 1 }}
-                          transition={{ duration: 0.15, delay: 0.05 }}
-                          className='flex h-7 w-7 items-center justify-center rounded-lg bg-blue-500/10 ring-1 ring-blue-500/20 md:h-9 md:w-9'
-                        >
-                          {getStepIcon()}
-                        </motion.div>
-                        <div className='flex min-w-0 flex-col'>
-                          <h3 className='truncate text-base font-semibold tracking-tight text-white md:text-lg'>
-                            {currentStepData ? currentStepData.title : ''}
-                          </h3>
-                          <span className='text-xs font-medium text-slate-400'>
-                            Step {currentStep + 1} of {tourSteps.length}
-                          </span>
-                        </div>
-                      </div>
-                      <Button
-                        variant='ghost'
-                        size='icon'
-                        onClick={handleCloseTour}
-                        className='h-7 w-7 rounded-lg p-0 text-slate-400 transition-colors hover:bg-slate-800/60 hover:text-white md:h-8 md:w-8'
-                      >
-                        <X className='h-3 w-3 md:h-4 md:w-4' />
-                      </Button>
-                    </div>
-
-                    <div className='mb-4 flex flex-1 flex-col justify-start overflow-hidden md:mb-7'>
-                      <div className='scrollbar-thin scrollbar-track-slate-800 scrollbar-thumb-slate-600 overflow-y-auto'>
-                        <p className='pr-2 text-xs leading-relaxed text-slate-300 md:text-sm'>
-                          {displayedText}
-                        </p>
-                      </div>
-                    </div>
-                  </motion.div>
-                </AnimatePresence>
-
-                <div className='mt-auto flex items-center justify-between gap-2 md:gap-3'>
-                  <Button
-                    variant='outline'
-                    onClick={prevStep}
-                    disabled={currentStep === 0 || isTransitioning || isTyping}
-                    className='h-8 rounded-lg border-slate-700/60 bg-transparent px-3 text-xs text-slate-300 transition-all hover:border-slate-600 hover:bg-slate-800/40 hover:text-white disabled:cursor-not-allowed disabled:opacity-40 md:h-9 md:px-4 md:text-sm'
-                  >
-                    <ChevronLeft className='mr-1 h-3 w-3 md:mr-1.5 md:h-3.5 md:w-3.5' />
-                    Previous
-                  </Button>
-
-                  <div className='flex gap-2'>
-                    {currentStep === tourSteps.length - 1 ? (
-                      <Button
-                        onClick={handleCloseTour}
-                        disabled={isTyping}
-                        className='h-8 rounded-lg bg-gradient-to-r from-blue-600 to-blue-500 px-4 text-xs font-medium text-white shadow-lg shadow-blue-500/25 transition-all hover:from-blue-500 hover:to-blue-400 hover:shadow-blue-500/40 disabled:opacity-60 md:h-9 md:px-5 md:text-sm'
-                      >
-                        Complete Tour
-                      </Button>
-                    ) : (
-                      <Button
-                        onClick={nextStep}
-                        disabled={isTransitioning || isTyping}
-                        className='h-8 rounded-lg bg-blue-500 px-4 text-xs font-medium text-white transition-all hover:from-blue-500 hover:to-blue-400 disabled:opacity-60 md:h-9 md:px-5 md:text-sm'
-                      >
-                        Continue
-                        <ChevronRight className='ml-1 h-3 w-3 md:ml-1.5 md:h-3.5 md:w-3.5' />
-                      </Button>
-                    )}
-                  </div>
+            {/* Header */}
+            <div className='mb-4 flex items-start justify-between gap-3'>
+              <div className='flex items-start gap-3 flex-1 min-w-0'>
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.2, delay: 0.1 }}
+                  className='flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-500/10 ring-1 ring-blue-500/20'
+                >
+                  {getStepIcon()}
+                </motion.div>
+                <div className='flex-1 min-w-0'>
+                  <AnimatePresence mode='wait'>
+                    <motion.h3
+                      key={currentStep}
+                      initial={{ opacity: 0, y: 4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -4 }}
+                      transition={{ duration: 0.2 }}
+                      className='text-base font-semibold text-white leading-tight mb-0.5'
+                    >
+                      {currentStepData ? currentStepData.title : ''}
+                    </motion.h3>
+                  </AnimatePresence>
                 </div>
               </div>
-            </CardContent>
-          </Card>
-        </motion.div>
+              <Button
+                variant='ghost'
+                size='icon'
+                onClick={handleCloseTour}
+                className='h-7 w-7 shrink-0 rounded-lg text-slate-400 hover:bg-slate-800/60 hover:text-white transition-colors'
+                aria-label='Close tour'
+              >
+                <X className='h-4 w-4' />
+              </Button>
+            </div>
+
+            {/* Content */}
+            <AnimatePresence mode='wait'>
+              <motion.div
+                key={currentStep}
+                initial={{ opacity: 0, y: 4 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -4 }}
+                transition={{ duration: 0.2 }}
+                className='mb-5'
+              >
+                <p className='text-sm leading-relaxed text-slate-300'>
+                  {displayedText}
+                </p>
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Actions */}
+            <div className='flex items-center justify-between gap-2 pt-4 border-t border-slate-800/60'>
+              <Button
+                variant='outline'
+                onClick={prevStep}
+                disabled={currentStep === 0 || isTransitioning || isTyping}
+                className='h-9 rounded-lg border-slate-700/60 bg-transparent px-3 text-sm text-slate-300 hover:border-slate-600 hover:bg-slate-800/40 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed transition-all'
+              >
+                <ChevronLeft className='mr-1.5 h-4 w-4' />
+                Previous
+              </Button>
+
+              {currentStep === tourSteps.length - 1 ? (
+                <Button
+                  onClick={handleCloseTour}
+                  disabled={isTyping}
+                  className='h-9 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 px-5 text-sm font-medium text-white shadow-lg shadow-blue-500/25 hover:from-blue-500 hover:to-indigo-500 hover:shadow-blue-500/40 disabled:opacity-60 transition-all'
+                >
+                  Complete
+                </Button>
+              ) : (
+                <Button
+                  onClick={nextStep}
+                  disabled={isTransitioning || isTyping}
+                  className='h-9 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 px-5 text-sm font-medium text-white shadow-lg shadow-blue-500/25 hover:from-blue-500 hover:to-indigo-500 hover:shadow-blue-500/40 disabled:opacity-60 transition-all'
+                >
+                  Next
+                  <ChevronRight className='ml-1.5 h-4 w-4' />
+                </Button>
+              )}
+            </div>
+          </CardContent>
+        </Card>
       </motion.div>
     </>
   );
