@@ -216,30 +216,46 @@ export function EducationSection() {
                           {/* Collapsible Abstract */}
                           {paper.abstract && (
                             <div className='mb-4'>
-                              <div className='rounded-lg border border-slate-700/50 bg-slate-800/20 overflow-hidden'>
+                              <div className='rounded-lg border border-slate-700/50 bg-gradient-to-br from-slate-800/30 to-slate-900/30 backdrop-blur-sm overflow-hidden transition-all duration-200 hover:border-slate-600/50'>
                                 <div className='p-4'>
-                                  <div className='mb-2 flex items-center justify-between'>
-                                    <h5 className='text-sm font-semibold text-slate-200'>Abstract</h5>
-                                    <button
-                                      onClick={() => toggleAbstract(paper.id)}
-                                      className='flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium text-slate-400 transition-all duration-200 hover:bg-slate-700/30 hover:text-slate-300'
-                                    >
-                                      {expandedAbstracts.has(paper.id) ? (
-                                        <>
-                                          <ChevronUp className='h-3.5 w-3.5' />
-                                        </>
-                                      ) : (
-                                        <>
-                                          <ChevronDown className='h-3.5 w-3.5' />
-                                        </>
-                                      )}
-                                    </button>
-                                  </div>
-                                  <p className={`text-sm leading-relaxed text-slate-300 transition-all duration-300 ${
-                                    expandedAbstracts.has(paper.id) ? '' : 'line-clamp-2'
-                                  }`}>
-                                    {paper.abstract}
-                                  </p>
+                                  <button
+                                    onClick={() => toggleAbstract(paper.id)}
+                                    className='w-full flex items-center justify-between group/abstract mb-3'
+                                    aria-expanded={expandedAbstracts.has(paper.id)}
+                                  >
+                                    <div className='flex items-center gap-2'>
+                                      <div className='h-1 w-1 rounded-full bg-blue-400' />
+                                      <h5 className='text-sm font-semibold text-slate-200 group-hover/abstract:text-blue-300 transition-colors'>
+                                        Abstract
+                                      </h5>
+                                    </div>
+                                    <div className='flex items-center gap-2'>
+                                      <span className='text-xs font-medium text-slate-500'>
+                                        {expandedAbstracts.has(paper.id) ? 'Collapse' : 'Expand'}
+                                      </span>
+                                      <div className='flex items-center justify-center h-6 w-6 rounded-md bg-slate-700/30 group-hover/abstract:bg-slate-700/50 transition-colors'>
+                                        {expandedAbstracts.has(paper.id) ? (
+                                          <ChevronUp className='h-3.5 w-3.5 text-slate-300' />
+                                        ) : (
+                                          <ChevronDown className='h-3.5 w-3.5 text-slate-300' />
+                                        )}
+                                      </div>
+                                    </div>
+                                  </button>
+                                  <motion.div
+                                    initial={false}
+                                    animate={{
+                                      height: expandedAbstracts.has(paper.id) ? 'auto' : '3rem',
+                                    }}
+                                    transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                                    className='overflow-hidden'
+                                  >
+                                    <p className={`text-sm leading-relaxed text-slate-300 ${
+                                      expandedAbstracts.has(paper.id) ? '' : 'line-clamp-2'
+                                    }`}>
+                                      {paper.abstract}
+                                    </p>
+                                  </motion.div>
                                 </div>
                               </div>
                             </div>
