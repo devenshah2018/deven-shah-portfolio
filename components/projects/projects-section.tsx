@@ -181,9 +181,9 @@ function RelatedLogos({ project }: { project: Project }) {
         <button
           key={index}
           onClick={() => scrollToSection(logoData.type)}
-          className='flex items-center justify-center h-8 w-8 rounded-xl border border-slate-700/50 bg-slate-800/50 object-contain shadow-sm overflow-hidden transition-all duration-200 hover:border-slate-600/50 hover:bg-slate-700/50 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900'
+          className='flex items-center justify-center h-8 w-8 rounded-lg bg-transparent object-contain shadow-sm overflow-hidden transition-all duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900'
           style={{
-            marginLeft: index !== 0 ? '0.5rem' : 0,
+            marginLeft: index !== 0 ? '0.3rem' : 0,
           }}
           title={`${logoData.name} - Click to view ${logoData.type === 'experience' ? 'experience' : 'education'}`}
           aria-label={`Scroll to ${logoData.name} ${logoData.type === 'experience' ? 'experience' : 'education'}`}
@@ -191,7 +191,7 @@ function RelatedLogos({ project }: { project: Project }) {
           <img
             src={logoData.logo}
             alt={logoData.alt}
-            className='h-full w-full object-contain object-center'
+            className='h-[85%] w-[85%] object-contain object-center'
             draggable={false}
           />
         </button>
