@@ -116,7 +116,10 @@ export function Navigation({ onStartTour }: NavigationProps) {
                     transition={{ duration: 0.2, ease: 'easeInOut' }}
                     className='group relative'
                   >
-                    <span className='block cursor-pointer bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-2xl font-bold text-transparent'>
+                    <span
+                      className='block cursor-pointer bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-2xl font-bold text-transparent'
+                      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                    >
                       Deven Shah
                     </span>
 
