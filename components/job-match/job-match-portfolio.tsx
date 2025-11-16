@@ -226,13 +226,12 @@ export function JobMatchPortfolio() {
               variant="ghost"
               size="sm"
               aria-label="Exit Match View"
-              className="group relative overflow-hidden rounded-lg border border-slate-700/70 bg-gradient-to-r from-slate-900/90 to-slate-950/90 px-4 py-2 font-semibold text-slate-200 backdrop-blur-md transition-all duration-200 hover:border-blue-500/60 hover:from-blue-950/80 hover:to-slate-900/90 hover:text-white focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2"
+              className="group relative overflow-hidden rounded-lg border border-slate-700/60 bg-slate-900/80 px-4 py-2 font-medium text-slate-300 backdrop-blur-sm transition-all duration-200 hover:border-slate-600/80 hover:bg-slate-800/90 hover:text-white focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
             >
               <span className="relative z-10 flex items-center gap-2">
-              <X className="h-4 w-4 transition-transform duration-200 group-hover:scale-110" />
-              <span className="text-sm font-semibold tracking-wide">Exit Match View</span>
+                <X className="h-4 w-4 transition-transform duration-200 group-hover:rotate-90" />
+                <span className="text-sm font-medium">Exit</span>
               </span>
-              <div className="pointer-events-none absolute inset-0 -z-0 bg-gradient-to-r from-blue-600/10 via-blue-500/20 to-purple-600/10 opacity-0 transition-opacity duration-200 group-hover:opacity-100" />
             </Button>
           </div>
         </div>
