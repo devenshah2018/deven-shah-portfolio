@@ -130,8 +130,8 @@ export function JobMatchSearch() {
                     <Zap className="h-5 w-5 text-purple-400" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-base font-semibold text-white">Job Match Analysis</h3>
-                    <p className="text-xs text-slate-400 mt-0.5">Paste a job description to find relevant experience</p>
+                    <h3 className="text-base font-semibold text-white">Match Analysis</h3>
+                    <p className="text-xs text-slate-400 mt-0.5">Paste a description to find relevant experience</p>
                   </div>
                 </div>
               </div>
@@ -146,7 +146,7 @@ export function JobMatchSearch() {
               >
                 <div className="space-y-2">
                   <label htmlFor="job-match-input" className="block text-sm font-medium text-slate-300">
-                    Job Description
+                    Description or Project Requirements
                   </label>
                   <textarea
                     ref={inputRef as any}
@@ -154,7 +154,7 @@ export function JobMatchSearch() {
                     value={input}
                     onChange={e => setInput(e.target.value)}
                     onKeyDown={handleInputKey}
-                    placeholder="Paste the job description or key requirements here...&#10;&#10;Example:&#10;• 5+ years of experience with React and TypeScript&#10;• Strong knowledge of Python and machine learning&#10;• Experience with cloud platforms (AWS, Azure, GCP)"
+                    placeholder="Paste the description or project requirements here..."
                     rows={6}
                     className="w-full rounded-lg border border-slate-700/80 bg-slate-950/50 px-4 py-3 text-sm text-white placeholder-slate-500 outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all resize-none font-mono leading-relaxed"
                     disabled={isProcessing}
@@ -202,7 +202,7 @@ export function JobMatchSearch() {
                     ) : (
                       <>
                         <Zap className="mr-2 h-4 w-4" />
-                        Analyze Match
+                        Analyze
                       </>
                     )}
                   </Button>
