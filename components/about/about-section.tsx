@@ -8,7 +8,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXTwitter, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { CATEGORIZED_SKILLS, SKILL_CATEGORIES, SKILL_MAPPINGS } from '@/lib/content-registry';
 import { ActivityDashboard } from './activity-dashboard';
-import Timeline from './timeline';
 
 export function AboutSection() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -99,9 +98,6 @@ export function AboutSection() {
               life, driving my discipline and resilience.
             </motion.p>
           </div>
-
-          {/* Timeline */}
-          <Timeline />
 
           {/* Twitter and Strava Section */}
           <div className='mb-20 grid grid-cols-1 gap-12 lg:grid-cols-5'>
