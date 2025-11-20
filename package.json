@@ -19,7 +19,7 @@
     "bundle:check": "node scripts/bundle-check.js",
     "quality:check": "node scripts/quality-check-simple.js",
     "quality:fix": "npm run lint:fix && npm run format",
-    "prepare": "husky"
+    "prepare": "node -e \"if (process.env.CI || process.env.VERCEL || !require('fs').existsSync('.git')) process.exit(0); try { require('husky').install() } catch (e) { if (e.code !== 'MODULE_NOT_FOUND') throw e }\""
   },
   "dependencies": {
     "@calcom/atoms": "^1.1.1",
