@@ -14,10 +14,6 @@ const BASE_URL = 'https://deven-shah.com';
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-  },
   title: {
     default: 'Deven Shah | Co-Founder & CTO at Suno Analytics',
     template: '%s | Deven Shah',
