@@ -223,7 +223,7 @@ export const PROJECTS: Project[] = [
     categories: ['web', 'featured'],
     accessible_at: ['hosted', 'github'],
     access_points: [
-      { type: 'hosted', url: 'https://deven-shah-portfolio.vercel.app/', label: 'Live Site' },
+      { type: 'hosted', url: 'https://deven-shah.com/', label: 'Live Site' },
       { type: 'github', url: 'https://github.com/devenshah2018/deven-shah-portfolio', label: 'Code' }
     ]
   },

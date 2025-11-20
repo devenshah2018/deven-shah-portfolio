@@ -6,7 +6,7 @@ A cutting-edge personal portfolio built with **Next.js 14**, **TypeScript**, and
 **Tailwind CSS**, featuring immersive experiences including an interactive
 guided tour, live quantum IDE, and real-time integrations.
 
-[![Live Site](https://img.shields.io/badge/Live-Portfolio-blue?style=for-the-badge&logo=vercel)](https://deven-shah-portfolio.vercel.app/)
+[![Live Site](https://img.shields.io/badge/Live-Portfolio-blue?style=for-the-badge&logo=vercel)](https://www.deven-shah.com/)
 [![GitHub](https://img.shields.io/badge/GitHub-Repository-black?style=for-the-badge&logo=github)](https://github.com/devenshah2018/deven-shah-portfolio)
 
 ---

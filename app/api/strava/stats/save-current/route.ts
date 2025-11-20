@@ -19,10 +19,10 @@ interface StravaStats {
 
 export async function GET() {
   const accessToken = await axios.post(
-    `https://deven-shah-portfolio.vercel.app/api/strava/authenticate`
+    `https://deven-shah.com/api/strava/authenticate`
   );
   const statsResponse = await axios.post(
-    `https://deven-shah-portfolio.vercel.app/api/strava/stats`,
+    `https://deven-shah.com/api/strava/stats`,
     {
       access_token: accessToken.data.access_token,
     }

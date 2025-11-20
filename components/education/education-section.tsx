@@ -5,6 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { GraduationCap, Award, Calendar, ExternalLink, FileText, Users, Building2, Link ,ChevronDown, ChevronUp } from 'lucide-react';
 import { CERTIFICATIONS, EDUCATION, RESEARCH_PAPERS, PROJECTS } from '@/lib/content-registry';
+import { generateArticleSchema } from '@/lib/jsonld';
 import { useState } from 'react';
 
 export function EducationSection() {
@@ -137,6 +138,8 @@ export function EducationSection() {
                   {RESEARCH_PAPERS.sort((a, b) => b.sortDate.localeCompare(a.sortDate)).map((paper, index) => {
                     const relatedProject = paper.relatedProjectId ? getProjectById(paper.relatedProjectId) : null;
                     
+                    const articleSchema = generateArticleSchema(paper);
+                    
                     return (<motion.div
                       key={paper.id}
                       initial={{ opacity: 0, y: 20 }}
@@ -144,6 +147,10 @@ export function EducationSection() {
                       transition={{ duration: 0.5, delay: index * 0.1 }}
                       viewport={{ once: true }}
                     >
+                      <script
+                        type='application/ld+json'
+                        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+                      />
                       <Card className='group relative overflow-hidden rounded-xl border-2 border-slate-800/50 bg-slate-900/40 backdrop-blur-sm transition-all duration-300'>
                         <CardContent className='p-6'>
                           {/* Header with Title and View Paper Button */}

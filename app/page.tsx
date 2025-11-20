@@ -8,12 +8,18 @@ import { EducationSection } from '@/components/education/education-section';
 import { ContactSection } from '@/components/contact/contact-section';
 import { JobMatchPortfolio } from '@/components/job-match/job-match-portfolio';
 import { useJobMatch } from '@/components/job-match/job-match-context';
+import { generatePersonSchema } from '@/lib/jsonld';
 
 export default function HomePage() {
   const { isMatchView } = useJobMatch();
+  const personSchema = generatePersonSchema();
 
   return (
     <>
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+      />
       <JobMatchPortfolio />
       {!isMatchView && (
         <main className='min-h-screen'>
