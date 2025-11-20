@@ -20,6 +20,11 @@ const nextConfig = {
       test: /\.cs$/,
       use: 'ignore-loader', // Ignore C# files
     });
+    // Exclude jest.setup.ts from the build
+    config.module.rules.push({
+      test: /jest\.setup\.ts$/,
+      use: 'ignore-loader',
+    });
     config.resolve.alias = {
       ...(config.resolve.alias || {}),
       '@': path.resolve(__dirname),
