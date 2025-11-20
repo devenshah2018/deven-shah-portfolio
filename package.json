@@ -38,6 +38,7 @@
     "@supabase/supabase-js": "^2.57.4",
     "@t3-oss/env-nextjs": "^0.13.6",
     "@vercel/analytics": "^1.5.0",
+    "autoprefixer": "^10.4.22",
     "axios": "^1.13.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
@@ -47,6 +48,7 @@
     "next": "14.0.0",
     "next-compose-plugins": "^2.2.1",
     "next-themes": "^0.2.1",
+    "postcss": "^8.5.6",
     "react": "^18",
     "react-dom": "^18",
     "react-markdown": "^10.1.0",
@@ -55,11 +57,9 @@
     "remark-gfm": "^4.0.1",
     "supabase": "^2.40.7",
     "tailwind-merge": "^2.0.0",
+    "tailwindcss": "^3.4.17",
     "tailwindcss-animate": "^1.0.7",
-    "zod": "^3.25.51",
-    "autoprefixer": "^10.4.22",
-    "postcss": "^8.5.6",
-    "tailwindcss": "^3.4.17"
+    "zod": "^3.25.51"
   },
   "devDependencies": {
     "@testing-library/dom": "^10.4.1",
@@ -68,7 +68,7 @@
     "@testing-library/user-event": "^14.6.1",
     "@types/jest": "^30.0.0",
     "@types/node": "^20",
-    "@types/react": "^18",
+    "@types/react": "^18.3.27",
     "@types/react-dom": "^18",
     "@typescript-eslint/eslint-plugin": "^8.39.1",
     "@typescript-eslint/parser": "^8.39.1",
@@ -90,7 +90,7 @@
     "lint-staged": "^16.1.5",
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.6.14",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.3"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
