@@ -61,7 +61,7 @@ export const SKILL_MAPPINGS = [
   { skill: 'Python', experienceIds: ['suno-analytics', 'netapp', 'build-fellowship'], projectIds: ['model-distribution-server', 'ares-project', 'molecule-mutation-prediction', 'crypto-forecasting-project', 'drone-build-project'], educationIds: ['sjsu-bachelors'] },
   { skill: 'TypeScript', experienceIds: ['suno-analytics', 'patelco', 'build-fellowship'], projectIds: ['drone-build-project', 'portfolio-project', 'ares-project', 'gumball-project'] },
   { skill: 'C#', experienceIds: ['patelco'], educationIds: ['sjsu-bachelors'] },
-  { skill: 'React', experienceIds: ['suno-analytics'], projectIds: ['drone-build-project', 'portfolio-project'] },
+  { skill: 'React', experienceIds: ['suno-analytics'], projectIds: ['drone-build-project', 'portfolio-project', 'breaking-dijkstra-project'] },
   { skill: 'Azure', experienceIds: ['suno-analytics', 'patelco'], projectIds: ['ares-project', 'gumball-project'] },
   { skill: 'LangGraph', experienceIds: ['suno-analytics'] },
   { skill: '.NET', experienceIds: ['patelco'] },
@@ -377,6 +377,26 @@ export const PROJECTS: Project[] = [
     accessible_at: ['github'],
     access_points: [
       { type: 'github', url: 'https://github.com/devenshah2018/task-scheduling', label: 'Code' },
+    ],
+    related_experiences: ['bu-masters'],
+  },
+  {
+    id: 'breaking-dijkstra-project',
+    title: 'Breaking Dijkstra',
+    subtitle: 'Breaking Dijkstra\'s Algorithm',
+    period: '09/2025 – 12/2025',
+    sortDate: '2025-12',
+    description:
+      `A project that breaks Dijkstra's algorithm, a shortest path algorithm for graphs. Based on the paper 'Breaking the Sorting Barrier for Directed Single-Source Shortest Paths'.`,
+    technologies: getProjectSkillsFromMapping('breaking-dijkstra-project'),
+    entry_point: 'github',
+    link: 'https://github.com/devenshah2018/breaking-dijkstra',
+    status: 'Completed',
+    categories: ['theory'],
+    accessible_at: ['github'],
+    access_points: [
+      { type: 'github', url: 'https://github.com/devenshah2018/breaking-dijkstra', label: 'Code' },
+      { type: 'hosted', url: 'https://breaking-dijkstra.vercel.app/', label: 'Live Demo' },
     ],
     related_experiences: ['bu-masters'],
   }
