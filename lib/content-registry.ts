@@ -258,7 +258,7 @@ export const PROJECTS: Project[] = [
     entry_point: 'vscode',
     link: 'http://marketplace.visualstudio.com/items?itemName=strive-ai.strive',
     status: 'Live',
-    categories: ['ai', 'featured', 'tools', 'theory'],
+    categories: ['ai', 'featured', 'tools'],
     accessible_at: ['vscode'],
     access_points: [
       { type: 'vscode', url: 'http://marketplace.visualstudio.com/items?itemName=strive-ai.strive', label: 'VSCode' },
@@ -365,14 +365,14 @@ export const PROJECTS: Project[] = [
     id: 'task-scheduling-project',
     title: 'Task Scheduling',
     subtitle: 'Task Scheduling System',
-    period: '11/2025 – Present',
-    sortDate: '2025-11',
+    period: '09/2025 – 12/2025',
+    sortDate: '2025-12',
     description:
       'Research on CPU and GPU scheduling algorithms, with a focus on AI workloads and hybrid CPU-GPU scheduling strategies.',
     technologies: getProjectSkillsFromMapping('task-scheduling-project'),
     entry_point: 'github',
     link: 'https://github.com/devenshah2018/task-scheduling',
-    status: 'In Progress',
+    status: 'Completed',
     categories: ['theory'],
     accessible_at: ['github'],
     access_points: [
@@ -446,7 +446,7 @@ export const CERTIFICATIONS = [
 export const RESEARCH_PAPERS: ResearchPaper[] = [
   {
     id: 'cryptocurrency-forecasting-model-paper',
-    title: 'SJSU Fall 2022 Undergraduate Capstone',
+    title: 'Cryptocurrency Forecasting Model',
     institution: 'San Jose State University',
     date: 'December 2022',
     sortDate: '2022-12',
@@ -486,7 +486,27 @@ Future work will implement an improved feature selection process to achieve
 perfect performance, a deeper analysis of feature importances, and use alternative
 classification models.`,
     relatedProjectId: 'molecule-mutation-prediction',
-
+  },
+  {
+    id: 'task-scheduling-paper',
+    title: 'Task Scheduling for AI Workloads',
+    institution: 'Boston University',
+    date: 'December 2025',
+    sortDate: '2025-12',
+    pdfUrl: '',
+    keywords: ['Task Scheduling', 'Parallel Computing', 'Thread Management', 'Resource Allocation'],
+    abstract: `TThe rapid growth of AI workloads has exposed limitations in traditional CPU and GPU scheduling. CPUs
+provide fairness and responsiveness but struggle with parallelism and memory-intensive operations, while
+GPUs deliver high-throughput execution yet rely on CPU coordination for tasks such as data
+preprocessing and kernel management. Hybrid CPU–GPU scheduling addresses these challenges by
+dynamically distributing tasks to leverage both CPU flexibility and GPU parallelism. This study evaluates
+CPU-only, GPU-only, and hybrid approaches across benchmarks for workload scaling, composition,
+resource constraints, and real-world AI scenario test suites. Results from experts and experimentation
+show that hybrid scheduling dramatically improves throughput for compute-bound, parallel workloads
+while maintaining high GPU utilization, though latency-sensitive inference tasks may incur slight
+overhead. These findings underscore the importance of adaptive, workload-aware scheduling strategies
+for hybrid AI architectures.`,
+    relatedProjectId: 'task-scheduling-project',
   }
 ];
 

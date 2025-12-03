@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { GraduationCap, Award, Calendar, ExternalLink, FileText, Users, Building2, Link ,ChevronDown, ChevronUp } from 'lucide-react';
+import { GraduationCap, Award, Calendar, ExternalLink, FileText, Building2, Link, ChevronDown, ChevronUp } from 'lucide-react';
 import { CERTIFICATIONS, EDUCATION, RESEARCH_PAPERS, PROJECTS } from '@/lib/content-registry';
 import { generateArticleSchema } from '@/lib/jsonld';
 import { useState } from 'react';
@@ -130,185 +130,149 @@ export function EducationSection() {
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
               >
-                <h3 className='mb-6 flex items-center gap-2 text-2xl font-bold text-white'>
-                  <FileText className='h-6 w-6 text-blue-400' />
-                  Research Papers
-                </h3>
-                <div className='space-y-6'>
+                <div className='mb-6 flex items-center justify-between'>
+                  <h3 className='flex items-center gap-2 text-2xl font-bold text-white'>
+                    <FileText className='h-6 w-6 text-blue-400' />
+                    Research Papers
+                  </h3>
+                  <span className='text-sm text-slate-400'>{RESEARCH_PAPERS.length} {RESEARCH_PAPERS.length === 1 ? 'Paper' : 'Papers'}</span>
+                </div>
+                <div className='space-y-3'>
                   {RESEARCH_PAPERS.sort((a, b) => b.sortDate.localeCompare(a.sortDate)).map((paper, index) => {
                     const relatedProject = paper.relatedProjectId ? getProjectById(paper.relatedProjectId) : null;
-                    
                     const articleSchema = generateArticleSchema(paper);
+                    const isExpanded = expandedAbstracts.has(paper.id);
                     
-                    return (<motion.div
-                      key={paper.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: index * 0.1 }}
-                      viewport={{ once: true }}
-                    >
-                      <script
-                        type='application/ld+json'
-                        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
-                      />
-                      <Card className='group relative overflow-hidden rounded-xl border-2 border-slate-800/50 bg-slate-900/40 backdrop-blur-sm transition-all duration-300'>
-                        <CardContent className='p-6'>
-                          {/* Header with Title and View Paper Button */}
-                          <div className='mb-4 flex items-start justify-between gap-4'>
-                            <div className='min-w-0 flex-1'>
-                              <h4 className='mb-3 text-xl font-bold leading-tight text-white group-hover:text-blue-300 transition-colors'>
-                                {paper.title}
-                              </h4>
-                              
-                              {/* Authors */}
-                              {paper.authors && (
-                                <div className='mb-2 flex items-center gap-1.5 text-sm text-slate-400'>
-                                  <Users className='h-4 w-4 flex-shrink-0' />
-                                  <span>{paper.authors.join(', ')}</span>
-                                </div>
-                              )}
-                              
-                              {/* Institution and Date on same line */}
-                              <div className='mb-2 flex flex-wrap items-center gap-2 text-sm text-slate-400'>
-                                {paper.institution && (
-                                  <>
-                                    <div className='flex items-center gap-1.5'>
-                                      <Building2 className='h-4 w-4 flex-shrink-0' />
-                                      <span>{paper.institution}</span>
-                                    </div>
-                                    <span className='text-slate-600'>•</span>
-                                  </>
-                                )}
-                                <div className='flex items-center gap-1.5'>
-                                  <Calendar className='h-4 w-4 flex-shrink-0' />
-                                  <span>{paper.date}</span>
+                    return (
+                      <motion.div
+                        key={paper.id}
+                        initial={{ opacity: 0, y: 10 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, delay: index * 0.05 }}
+                        viewport={{ once: true }}
+                      >
+                        <script
+                          type='application/ld+json'
+                          dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+                        />
+                        <Card className='group relative overflow-hidden rounded-lg border border-slate-800/60 bg-slate-900/50 transition-all duration-200 hover:border-slate-700/60 hover:bg-slate-900/70'>
+                          <CardContent className='p-4'>
+                            {/* Compact Header Row */}
+                            <div className='mb-3 flex items-start justify-between gap-3'>
+                              <div className='min-w-0 flex-1 space-y-1'>
+                                <h4 className='text-lg font-semibold leading-snug text-white group-hover:text-blue-200 transition-colors'>
+                                  {paper.title}
+                                </h4>
+                                <div className='flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-slate-400'>
+                                  {paper.institution && (
+                                    <span className='flex items-center gap-1'>
+                                      <Building2 className='h-3 w-3' />
+                                      {paper.institution}
+                                    </span>
+                                  )}
+                                  <span className='flex items-center gap-1'>
+                                    <Calendar className='h-3 w-3' />
+                                    {paper.date}
+                                  </span>
+                                  {paper.status && (
+                                    <Badge className={`h-5 px-1.5 py-0 text-xs font-medium ${getStatusBadgeStyle(paper.status)}`}>
+                                      {paper.status}
+                                    </Badge>
+                                  )}
                                 </div>
                               </div>
-                              
-                              {/* Conference or Journal */}
-                              {(paper.conference || paper.journal) && (
-                                <p className='mb-3 text-sm font-medium text-blue-400/80'>
-                                  {paper.conference || paper.journal}
-                                </p>
-                              )}
+                              <a
+                                href={paper.pdfUrl}
+                                target='_blank'
+                                rel='noopener noreferrer'
+                                className='flex-shrink-0 inline-flex items-center gap-1.5 rounded-md border border-slate-700/50 bg-slate-800/40 px-3 py-1.5 text-xs font-medium text-slate-300 transition-all duration-200 hover:border-blue-500/50 hover:bg-blue-950/30 hover:text-blue-300'
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                <FileText className='h-3.5 w-3.5' />
+                                <span>PDF</span>
+                                <ExternalLink className='h-3 w-3 opacity-60' />
+                              </a>
                             </div>
-                            
-                            {/* View Paper Button - Top Right */}
-                            <a
-                              href={paper.pdfUrl}
-                              target='_blank'
-                              rel='noopener noreferrer'
-                              className='group/btn flex-shrink-0 inline-flex items-center gap-2 rounded-lg border border-slate-700/40 bg-slate-800/30 px-4 py-2 text-sm font-medium text-slate-300 backdrop-blur-sm transition-all duration-300 hover:border-blue-500/40 hover:bg-blue-950/30 hover:text-blue-300 hover:shadow-md hover:shadow-blue-500/10'
-                            >
-                              <FileText className='h-4 w-4 transition-transform duration-300 group-hover/btn:scale-110' />
-                              <span>Read</span>
-                              <ExternalLink className='h-3.5 w-3.5 opacity-60 transition-all duration-300 group-hover/btn:opacity-100 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5' />
-                            </a>
-                          </div>
 
-                          {/* Status and Citations Badges */}
-                          <div className='mb-4 flex flex-wrap items-center gap-2'>
-                            {paper.status && (
-                              <Badge className={`px-3 py-1 text-xs font-semibold ${getStatusBadgeStyle(paper.status)}`}>
-                                {paper.status}
-                              </Badge>
-                            )}
-                            {paper.citations !== undefined && (
-                              <Badge className='border-blue-500/50 bg-blue-500/20 px-3 py-1 text-xs font-semibold text-blue-300'>
-                                {paper.citations} Citations
-                              </Badge>
-                            )}
-                          </div>
-
-                          {/* Collapsible Abstract */}
-                          {paper.abstract && (
-                            <div className='mb-4'>
-                              <div className='rounded-lg border border-slate-700/50 bg-gradient-to-br from-slate-800/30 to-slate-900/30 backdrop-blur-sm overflow-hidden transition-all duration-200 hover:border-slate-600/50'>
-                                <div className='p-4'>
-                                  <button
-                                    onClick={() => toggleAbstract(paper.id)}
-                                    className='w-full flex items-center justify-between group/abstract mb-3'
-                                    aria-expanded={expandedAbstracts.has(paper.id)}
+                            {/* Compact Keywords Row */}
+                            {paper.keywords && paper.keywords.length > 0 && (
+                              <div className='mb-3 flex flex-wrap gap-1.5'>
+                                {paper.keywords.slice(0, 5).map((keyword, i) => (
+                                  <Badge
+                                    key={`${paper.id}-keyword-${i}`}
+                                    variant='outline'
+                                    className='h-5 border-slate-700/50 bg-slate-800/30 px-2 py-0 text-[10px] font-normal text-slate-400'
                                   >
-                                    <div className='flex items-center gap-2'>
-                                      <div className='h-1 w-1 rounded-full bg-blue-400' />
-                                      <h5 className='text-sm font-semibold text-slate-200 group-hover/abstract:text-blue-300 transition-colors'>
-                                        Abstract
-                                      </h5>
-                                    </div>
-                                    <div className='flex items-center gap-2'>
-                                      <span className='text-xs font-medium text-slate-500'>
-                                        {expandedAbstracts.has(paper.id) ? 'Collapse' : 'Expand'}
-                                      </span>
-                                      <div className='flex items-center justify-center h-6 w-6 rounded-md bg-slate-700/30 group-hover/abstract:bg-slate-700/50 transition-colors'>
-                                        {expandedAbstracts.has(paper.id) ? (
-                                          <ChevronUp className='h-3.5 w-3.5 text-slate-300' />
-                                        ) : (
-                                          <ChevronDown className='h-3.5 w-3.5 text-slate-300' />
-                                        )}
-                                      </div>
-                                    </div>
-                                  </button>
+                                    {keyword}
+                                  </Badge>
+                                ))}
+                                {paper.keywords.length > 5 && (
+                                  <Badge
+                                    variant='outline'
+                                    className='h-5 border-slate-700/50 bg-slate-800/30 px-2 py-0 text-[10px] font-normal text-slate-400'
+                                  >
+                                    +{paper.keywords.length - 5}
+                                  </Badge>
+                                )}
+                              </div>
+                            )}
+
+                            {/* Collapsible Abstract - Compact */}
+                            {paper.abstract && (
+                              <div className='mb-2'>
+                                <button
+                                  onClick={() => toggleAbstract(paper.id)}
+                                  className='w-full flex items-center justify-between rounded-md px-2 py-1.5 text-left transition-colors hover:bg-slate-800/30'
+                                  aria-expanded={isExpanded}
+                                >
+                                  <span className='text-xs font-medium text-slate-300'>
+                                    {isExpanded ? 'Hide Abstract' : 'Show Abstract'}
+                                  </span>
+                                  {isExpanded ? (
+                                    <ChevronUp className='h-3.5 w-3.5 text-slate-400' />
+                                  ) : (
+                                    <ChevronDown className='h-3.5 w-3.5 text-slate-400' />
+                                  )}
+                                </button>
+                                {isExpanded && (
                                   <motion.div
-                                    initial={false}
-                                    animate={{
-                                      height: expandedAbstracts.has(paper.id) ? 'auto' : '3rem',
-                                    }}
-                                    transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                                    initial={{ opacity: 0, height: 0 }}
+                                    animate={{ opacity: 1, height: 'auto' }}
+                                    exit={{ opacity: 0, height: 0 }}
+                                    transition={{ duration: 0.2 }}
                                     className='overflow-hidden'
                                   >
-                                    <p className={`text-sm leading-relaxed text-slate-300 ${
-                                      expandedAbstracts.has(paper.id) ? '' : 'line-clamp-2'
-                                    }`}>
+                                    <p className='mt-2 rounded-md bg-slate-800/20 px-2.5 py-2 text-xs leading-relaxed text-slate-300'>
                                       {paper.abstract}
                                     </p>
                                   </motion.div>
-                                </div>
+                                )}
                               </div>
-                            </div>
-                          )}
+                            )}
 
-                          {/* Keywords */}
-                          <div className='mb-4 flex flex-wrap gap-2'>
-                            {paper.keywords.map((keyword, i) => (
-                              <Badge
-                                key={i}
-                                variant='outline'
-                                className='border-slate-700 bg-slate-800/50 text-xs text-slate-300'
+                            {/* Related Project Link - Compact */}
+                            {relatedProject && (
+                              <button
+                                onClick={() => scrollToProject(relatedProject.id)}
+                                className='mt-2 inline-flex items-center gap-1.5 text-xs font-medium text-blue-400/80 transition-colors hover:text-blue-300'
+                                title={`View related project: ${relatedProject.title}`}
                               >
-                                {keyword}
-                              </Badge>
-                            ))}
-                          </div>
-
-                          {/* Related Project - Subtle Paperclip */}
-                          {relatedProject && (
-                            <button
-                              onClick={() => scrollToProject(relatedProject.id)}
-                              className='group/clip inline-flex items-center gap-2 rounded-md px-2 py-1 text-md font-bold text-yellow-500/80 transition-all duration-200 hover:bg-yellow-950/20 hover:text-amber-300'
-                              title={`Connected to project: ${relatedProject.title}`}
-                            >
-                              <Link className='h-3.5 w-3.5 transition-transform duration-200 group-hover/clip:rotate-12' />
-                              <span>
-                                {relatedProject.title}
-                              </span>
-                            </button>
-                          )}
-                        </CardContent>
-                      </Card>
-                    </motion.div>
+                                <Link className='h-3 w-3' />
+                                <span>Related: {relatedProject.title}</span>
+                              </button>
+                            )}
+                          </CardContent>
+                        </Card>
+                      </motion.div>
                     );
                   })}
 
                   {RESEARCH_PAPERS.length === 0 && (
-                    <Card className='rounded-xl border-2 border-slate-800/50 bg-slate-900/40 backdrop-blur-sm'>
-                      <CardContent className='p-12 text-center'>
-                        <FileText className='mx-auto mb-4 h-12 w-12 text-slate-600' />
-                        <p className='text-lg font-medium text-slate-400'>
+                    <Card className='rounded-lg border border-slate-800/60 bg-slate-900/50'>
+                      <CardContent className='p-8 text-center'>
+                        <FileText className='mx-auto mb-3 h-10 w-10 text-slate-600' />
+                        <p className='text-sm font-medium text-slate-400'>
                           No research papers published yet.
-                        </p>
-                        <p className='mt-2 text-sm text-slate-500'>
-                          Check back soon for updates on research contributions.
                         </p>
                       </CardContent>
                     </Card>
