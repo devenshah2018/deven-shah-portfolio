@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXTwitter, faKaggle } from '@fortawesome/free-brands-svg-icons';
+import { faXTwitter } from '@fortawesome/free-brands-svg-icons';
 import { Download, Mail, Github, Linkedin, Activity } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
@@ -124,11 +124,6 @@ export function HeroSection() {
             <Link href={LINKS.x} target='_blank' rel='noopener noreferrer'>
               <Button variant='ghost' size='lg' className='p-3 hover:bg-gray-800'>
                 <FontAwesomeIcon icon={faXTwitter} className='h-6 w-6 text-white' />
-              </Button>
-            </Link>
-            <Link href={LINKS.kaggle} target='_blank' rel='noopener noreferrer'>
-              <Button variant='ghost' size='lg' className='p-3 hover:bg-gray-800'>
-                <FontAwesomeIcon icon={faKaggle} className='h-6 w-6 text-white' />
               </Button>
             </Link>
           </motion.div>
