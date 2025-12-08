@@ -6,14 +6,11 @@ import { ExperienceSection } from '@/components/experience/experience-section';
 import { ProjectsSection } from '@/components/projects/projects-section';
 import { EducationSection } from '@/components/education/education-section';
 import { ContactSection } from '@/components/contact/contact-section';
-import { JobMatchPortfolio } from '@/components/job-match/job-match-portfolio';
-import { useJobMatch } from '@/components/job-match/job-match-context';
 import { generatePersonSchema } from '@/lib/jsonld';
 import { scrollToProject } from '@/lib/url-utils';
 import { useEffect } from 'react';
 
 export default function HomePage() {
-  const { isMatchView } = useJobMatch();
   const personSchema = generatePersonSchema();
 
   // Handle hash-based navigation from research subdomain
@@ -60,17 +57,14 @@ export default function HomePage() {
         type='application/ld+json'
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
       />
-      <JobMatchPortfolio />
-      {!isMatchView && (
-        <main className='min-h-screen'>
-          <HeroSection />
-          <AboutSection />
-          <ExperienceSection />
-          <ProjectsSection />
-          <EducationSection />
-          <ContactSection />
-        </main>
-      )}
+      <main className='min-h-screen'>
+        <HeroSection />
+        <AboutSection />
+        <ExperienceSection />
+        <ProjectsSection />
+        <EducationSection />
+        <ContactSection />
+      </main>
     </>
   );
 }

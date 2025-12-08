@@ -5,7 +5,6 @@ import './globals.css';
 import { Analytics } from '@vercel/analytics/next';
 import { GoogleTagManager } from '@next/third-parties/google';
 import { TourProvider } from '@/components/tour/tour-context';
-import { JobMatchProvider } from '@/components/job-match/job-match-context';
 import { LayoutWrapper } from '@/components/layout-wrapper';
 import { headers } from 'next/headers';
 
@@ -130,9 +129,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           {process.env.NODE_ENV === 'production' && (
             <GoogleTagManager gtmId='GTM-MQBDDCBQ' />
           )}
-          <JobMatchProvider>
-            {children}
-          </JobMatchProvider>
+          {children}
           <Analytics />
         </body>
       </html>
@@ -146,12 +143,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         {process.env.NODE_ENV === 'production' && (
           <GoogleTagManager gtmId='GTM-MQBDDCBQ' />
         )}
-        <JobMatchProvider>
-          <TourProvider>
-            <LayoutWrapper>{children}</LayoutWrapper>
-            <Analytics />
-          </TourProvider>
-        </JobMatchProvider>
+        <TourProvider>
+          <LayoutWrapper>{children}</LayoutWrapper>
+          <Analytics />
+        </TourProvider>
       </body>
     </html>
   );

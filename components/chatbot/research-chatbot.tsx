@@ -168,22 +168,27 @@ export function ResearchChatbot() {
   };
 
   return (
-    <div className='flex h-[calc(100vh-200px)] flex-col border border-gray-800/50 bg-black shadow-2xl'>
+    <div className='flex h-[calc(100vh-200px)] flex-col border border-gray-800/50 bg-black shadow-2xl rounded-lg overflow-hidden'>
       {/* Chat Header */}
-      <div className='border-b border-gray-800/50 bg-gradient-to-r from-gray-950 to-black px-6 py-4 backdrop-blur-sm'>
-        <div className='flex items-center gap-3'>
-          <div className='relative flex h-9 w-9 items-center justify-center rounded-lg overflow-hidden border border-cyan-500/30 shadow-lg shadow-cyan-500/10'>
+      <div className='border-b border-gray-800/50 bg-gradient-to-br from-gray-950 via-gray-950 to-black px-6 py-5 backdrop-blur-sm shadow-lg'>
+        <div className='flex items-center gap-4'>
+          <div className='relative flex h-11 w-11 items-center justify-center rounded-xl overflow-hidden border border-cyan-500/30'>
             <Image
               src='/x-profile.png'
-              alt='Deven AI Assistant'
-              width={40}
-              height={40}
+              alt='Assistant'
+              width={44}
+              height={44}
               className='object-cover w-full h-full'
             />
+            <div className='absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent pointer-events-none' />
           </div>
-          <div>
-            <h3 className='text-sm font-bold text-white tracking-tight'>Deven AI (Assistant)</h3>
-            <p className='text-[10px] font-mono text-cyan-400/60 tracking-wider'>SYSTEM: ONLINE</p>
+          <div className='flex flex-col gap-0.5'>
+            <h2 className='text-base font-semibold text-white tracking-tight leading-tight'>
+              Assistant
+            </h2>
+            <p className='text-xs font-medium text-gray-400 tracking-wider'>
+              DevenAI
+            </p>
           </div>
         </div>
       </div>
@@ -204,14 +209,15 @@ export function ResearchChatbot() {
               className={`flex items-start gap-3 ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
             >
               {message.type === 'bot' && (
-                <div className='relative flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg overflow-hidden border border-cyan-500/20 shadow-sm mt-0.5'>
+                <div className='relative flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg overflow-hidden border border-cyan-500/20 shadow-md shadow-cyan-500/10 ring-1 ring-cyan-500/5 mt-0.5'>
                   <Image
                     src='/x-profile.png'
-                    alt='Deven AI Assistant'
+                    alt='Assistant'
                     width={36}
                     height={36}
                     className='object-cover w-full h-full'
                   />
+                  <div className='absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent pointer-events-none' />
                 </div>
               )}
               <div
@@ -323,14 +329,15 @@ export function ResearchChatbot() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             className='flex gap-3 justify-start'
           >
-            <div className='relative flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg overflow-hidden border border-cyan-500/20 shadow-sm'>
+            <div className='relative flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg overflow-hidden border border-cyan-500/20 shadow-md shadow-cyan-500/10 ring-1 ring-cyan-500/5'>
               <Image
                 src='/x-profile.png'
-                alt='Deven AI Assistant'
+                alt='Assistant'
                 width={36}
                 height={36}
                 className='object-cover w-full h-full'
               />
+              <div className='absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent pointer-events-none' />
             </div>
             <div className='rounded-xl border border-gray-800/50 bg-gray-950/80 px-4 py-2.5 shadow-lg backdrop-blur-sm'>
               <div className='flex items-center gap-2.5'>
