@@ -4,11 +4,12 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { Route } from 'lucide-react';
+import { Route, FlaskConical } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LINKS } from '@/lib/content-registry';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faKaggle } from '@fortawesome/free-brands-svg-icons';
+import { getResearchSiteUrl } from '@/lib/url-utils';
 
 interface NavigationProps {
   onStartTour?: () => void;
@@ -247,6 +248,21 @@ export function Navigation({ onStartTour }: NavigationProps) {
             </div>
           </motion.div>
           <div className='hidden items-center space-x-2 md:flex'>
+            {/* Research Portal Entry - Icon Only */}
+            <motion.a
+              href={getResearchSiteUrl()}
+              target='_blank'
+              rel='noopener noreferrer'
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.4 }}
+              className='mr-4 group relative rounded-full border border-cyan-400/50 bg-gradient-to-r from-cyan-500/20 to-cyan-600/20 p-2.5 text-cyan-300 shadow-lg transition-all duration-300 hover:border-cyan-300 hover:bg-gradient-to-r hover:from-cyan-500/30 hover:to-cyan-600/30 hover:text-cyan-200 hover:shadow-cyan-500/30'
+              title='Research Portal'
+              aria-label='Open Research Portal'
+            >
+              <FlaskConical className='h-4 w-4 transition-transform duration-300 group-hover:rotate-12' />
+            </motion.a>
+
             <motion.div
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -415,6 +431,23 @@ export function Navigation({ onStartTour }: NavigationProps) {
                 }}
               >
                 <div className='px-6 py-4'>
+                  {/* Mobile Research Portal Entry */}
+                  <motion.a
+                    href={getResearchSiteUrl()}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.4 }}
+                    onClick={() => setMobileNavOpen(false)}
+                    className='group flex items-center justify-center rounded-full border border-cyan-400/50 bg-gradient-to-r from-cyan-500/20 to-cyan-600/20 p-3 mb-4 text-cyan-300 shadow-lg transition-all duration-300 hover:border-cyan-300 hover:bg-gradient-to-r hover:from-cyan-500/30 hover:to-cyan-600/30 hover:text-cyan-200 hover:shadow-cyan-500/30'
+                    title='Research Portal'
+                    aria-label='Open Research Portal'
+                  >
+                    <FlaskConical className='h-5 w-5 transition-transform duration-300 group-hover:rotate-12' />
+                  </motion.a>
+
                   <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
