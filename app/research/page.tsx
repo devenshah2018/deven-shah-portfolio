@@ -4,6 +4,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import { FileText, Calendar, Building2 } from 'lucide-react';
 import { getMainSiteUrl } from '@/lib/url-utils';
+import { ResearchChatbot } from '@/components/chatbot/research-chatbot';
 
 export const metadata: Metadata = {
   title: 'Research Papers',
@@ -28,21 +29,18 @@ export default async function ResearchIndexPage() {
   return (
     <div className='min-h-screen bg-black text-white'>
       {/* Refined Header */}
-      <div className='border-b border-gray-800'>
-        <div className='container mx-auto px-6 py-8 max-w-7xl'>
+      <div className='border-b border-gray-800/50 bg-gradient-to-b from-gray-950/50 to-transparent'>
+        <div className='container mx-auto px-6 py-3 max-w-7xl'>
           <div className='flex items-center justify-between'>
-            <div>
-              <div className='flex items-baseline gap-3 mb-3'>
-                <h1 className='text-4xl font-bold tracking-tight'>Research</h1>
-                <span className='text-lg font-mono text-cyan-400/80'>[PORTAL]</span>
-              </div>
-              <div className='flex items-center gap-4 text-xs font-mono text-gray-500'>
-                <span>{RESEARCH_PAPERS.length} DOCUMENTS</span>
+            <div className='flex items-center gap-4'>
+              <div className='flex items-baseline gap-2.5'>
+                <h1 className='text-2xl font-bold tracking-tight text-white'>Research</h1>
+                <span className='text-xs font-mono text-cyan-400/70 tracking-wider'>PORTAL</span>
               </div>
             </div>
             <a
               href={getMainSiteUrl()}
-              className='px-4 py-2 border border-gray-700 bg-black text-gray-300 font-medium text-xs hover:bg-gray-900 hover:text-white hover:border-gray-600 transition-all duration-200'
+              className='px-3 py-1.5 border border-gray-800/60 bg-gray-950/40 text-gray-400 font-medium text-[11px] hover:bg-gray-900/60 hover:text-white hover:border-gray-700/60 transition-all duration-200 rounded-sm'
             >
               ← Portfolio
             </a>
@@ -52,6 +50,15 @@ export default async function ResearchIndexPage() {
 
       {/* Main Content Grid */}
       <div className='container mx-auto px-6 py-12 max-w-7xl'>
+        {/* Chatbot Section */}
+        <div className='mb-12'>
+          <ResearchChatbot />
+        </div>
+
+        {/* Papers Grid */}
+        <div className='mb-6'>
+          <h2 className='text-xl font-bold mb-4 text-gray-300'>All Papers</h2>
+        </div>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
           {RESEARCH_PAPERS.sort((a, b) => b.sortDate.localeCompare(a.sortDate)).map((paper, index) => (
             <Link

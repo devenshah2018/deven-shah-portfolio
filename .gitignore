@@ -40,3 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 TODO
+scripts/generate-embeddings.ts
+supabase-functions.sql
+scripts/generate-pinecone-embeddings.ts

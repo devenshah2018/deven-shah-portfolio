@@ -25,10 +25,27 @@ const nextConfig = {
       test: /jest\.setup\.ts$/,
       use: 'ignore-loader',
     });
+    // Exclude native binaries from @xenova/transformers (server-side only)
+    config.module.rules.push({
+      test: /\.node$/,
+      use: 'ignore-loader',
+    });
+    // Externalize @xenova/transformers for server-side only
+    if (!config.resolve) {
+      config.resolve = {};
+    }
     config.resolve.alias = {
       ...(config.resolve.alias || {}),
       '@': path.resolve(__dirname),
     };
+    // Externalize packages that shouldn't be bundled
+    config.externals = config.externals || [];
+    if (Array.isArray(config.externals)) {
+      config.externals.push({
+        '@xenova/transformers': 'commonjs @xenova/transformers',
+        'onnxruntime-node': 'commonjs onnxruntime-node',
+      });
+    }
     return config;
   },
   async headers() {

@@ -54,12 +54,12 @@ export default async function ResearchPaperPage({ params }: Props) {
   return (
     <div className='min-h-screen bg-black text-white'>
       {/* Refined Header Bar */}
-      <div className='border-b border-gray-800'>
-        <div className='container mx-auto px-6 py-4 max-w-7xl'>
+      <div className='border-b border-gray-800/50 bg-gradient-to-b from-gray-950/50 to-transparent'>
+        <div className='container mx-auto px-6 py-3 max-w-7xl'>
           <div className='flex items-center justify-between'>
             <Link
               href='/'
-              className='flex items-center gap-2 px-3 py-1.5 border border-gray-800 bg-black text-gray-400 font-medium text-xs hover:bg-gray-900 hover:text-white hover:border-gray-700 transition-all duration-200'
+              className='flex items-center gap-2 px-3 py-1.5 border border-gray-800/60 bg-gray-950/40 text-gray-400 font-medium text-[11px] hover:bg-gray-900/60 hover:text-white hover:border-gray-700/60 transition-all duration-200 rounded-sm'
             >
               <ArrowLeft className='h-3 w-3' />
               Back
