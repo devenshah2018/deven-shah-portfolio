@@ -179,6 +179,7 @@ export function ResearchChatbot() {
               width={44}
               height={44}
               className='object-cover w-full h-full'
+              unoptimized
             />
             <div className='absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent pointer-events-none' />
           </div>
@@ -216,6 +217,7 @@ export function ResearchChatbot() {
                     width={36}
                     height={36}
                     className='object-cover w-full h-full'
+                    unoptimized
                   />
                   <div className='absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent pointer-events-none' />
                 </div>
@@ -336,6 +338,7 @@ export function ResearchChatbot() {
                 width={36}
                 height={36}
                 className='object-cover w-full h-full'
+                unoptimized
               />
               <div className='absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent pointer-events-none' />
             </div>
