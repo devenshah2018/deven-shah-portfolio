@@ -466,22 +466,24 @@ export const CERTIFICATIONS = [
 export const RESEARCH_PAPERS: ResearchPaper[] = [
   {
     id: 'cryptocurrency-forecasting-model-paper',
+    slug: 'crypto-forecasting',
     title: 'Cryptocurrency Forecasting Model',
     institution: 'San Jose State University',
     date: 'December 2022',
     sortDate: '2022-12',
-    pdfUrl: 'https://app.getfiledrop.com/share/5bbc7493-f98d-4f61-a9c6-49237ec33ee9',
+    pdfUrl: '/papers/cryptocurrency-forecasting-model.pdf',
     keywords: ['Machine Learning', 'Cryptocurrency', 'Neural Networks', 'NLP'],
     abstract: `The cryptocurrency exchange domain is a relatively volatile space. The most widely traded cryptocurrency coin Bitcoin has experienced a high of $44,533.00 and a low of $36,259.01 in the week of 1/31/22 - 2/7/22. The volatility of the cryptocurrency market stems from three accepted analyses. A technical analysis solely relies on metrics ranging from historical trends to net unrealized profit/loss to derive the effects of price movements. A fundamental analysis relies on factors that affect price movements, such as government policies. A sentimental analysis relies on the sentiment of a coin at a particular time, which can be identified using social media trends. Given the abundance of variables that affect price movements, forecasting even near-future prices prove difficult for many traders. Each of the three analyses stated (technical, fundamental, and sentimental) have sub-analyses that would take an abundance of time even for the experienced trader. As the digital asset market increased exponentially over the past 2 years, many traders are not accustomed to these analyses, much less able to derive conclusions from them. The cryptocurrency forecasting model aimed to traverse, analyze, and interpret data from the three types of analyses with a greater focus on technical and sentimental analysis. Using the data interpreted, the model has the ability to forecast price movements to the time scale of the customer's preference. This project reduced the time spent significantly analyzing technical data, assisted traders to make confident trading decisions, and detailed the price movement patterns that are difficult to infer with purely human capabilities.`,
     relatedProjectId: 'crypto-forecasting-project',
   },
   {
     id: 'molecule-mutation-prediction-paper',
+    slug: 'braf-mutation-prediction',
     title: 'Small Molecule Drug Development for the BRAF V600 Mutation',
     institution: 'San Jose State University',
     date: 'December 2022',
     sortDate: '2022-12',
-    pdfUrl: 'https://app.getfiledrop.com/share/bcc2f316-b111-4e20-a107-8a4d500c77f1',
+    pdfUrl: '/papers/small-molecule-prediction.pdf',
     keywords: ['BRAF-V600E', 'Machine Learning', 'SVM', 'Random Forest Classifier', 'QuaSAR'],
     abstract: `This report presents the findings behind the use of computational or in-silico
 methods to find therapeutic targets allows for the effective integration of the massive
@@ -509,13 +511,14 @@ classification models.`,
   },
   {
     id: 'task-scheduling-paper',
+    slug: 'ai-task-scheduling',
     title: 'Task Scheduling for AI Workloads',
     institution: 'Boston University',
     date: 'December 2025',
     sortDate: '2025-12',
-    pdfUrl: '',
+    pdfUrl: '/papers/task-scheduling.pdf',
     keywords: ['Task Scheduling', 'Parallel Computing', 'Thread Management', 'Resource Allocation'],
-    abstract: `TThe rapid growth of AI workloads has exposed limitations in traditional CPU and GPU scheduling. CPUs
+    abstract: `The rapid growth of AI workloads has exposed limitations in traditional CPU and GPU scheduling. CPUs
 provide fairness and responsiveness but struggle with parallelism and memory-intensive operations, while
 GPUs deliver high-throughput execution yet rely on CPU coordination for tasks such as data
 preprocessing and kernel management. Hybrid CPU–GPU scheduling addresses these challenges by
@@ -541,6 +544,10 @@ export function getProjectById(id: string) {
 
 export function getEducationById(id: string) {
   return EDUCATION.find(edu => edu.id === id);
+}
+
+export function getResearchPaperBySlug(slug: string) {
+  return RESEARCH_PAPERS.find(paper => paper.slug === slug || paper.id === slug);
 }
 
 // Helper function to expand skill mapping from IDs to full objects (for backwards compatibility)

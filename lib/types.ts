@@ -29,6 +29,7 @@ export type Project = {
 
 export type ResearchPaper = {
   id: string;
+  slug?: string; // Custom URL slug (e.g., 'crypto-forecasting'). Falls back to id if not provided
   title: string;
   authors?: string[];
   institution?: string;

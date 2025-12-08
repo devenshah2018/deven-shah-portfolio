@@ -7,6 +7,7 @@ import { GoogleTagManager } from '@next/third-parties/google';
 import { TourProvider } from '@/components/tour/tour-context';
 import { JobMatchProvider } from '@/components/job-match/job-match-context';
 import { LayoutWrapper } from '@/components/layout-wrapper';
+import { headers } from 'next/headers';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -117,7 +118,28 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const headersList = await headers();
+  const subdomain = headersList.get('x-subdomain');
+
+  // If on research subdomain, use minimal layout with brutalist styling
+  if (subdomain === 'research') {
+    return (
+      <html lang='en' className='dark' suppressHydrationWarning>
+        <body className={`${inter.className} bg-black text-white antialiased`}>
+          {process.env.NODE_ENV === 'production' && (
+            <GoogleTagManager gtmId='GTM-MQBDDCBQ' />
+          )}
+          <JobMatchProvider>
+            {children}
+          </JobMatchProvider>
+          <Analytics />
+        </body>
+      </html>
+    );
+  }
+
+  // Otherwise, use full portfolio layout
   return (
     <html lang='en' className='dark' suppressHydrationWarning>
       <body className={inter.className}>

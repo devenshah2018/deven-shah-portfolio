@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { GraduationCap, Award, Calendar, ExternalLink, FileText, Building2, Link, ChevronDown, ChevronUp } from 'lucide-react';
 import { CERTIFICATIONS, EDUCATION, RESEARCH_PAPERS, PROJECTS } from '@/lib/content-registry';
 import { generateArticleSchema } from '@/lib/jsonld';
+import { getResearchSiteUrl } from '@/lib/url-utils';
 import { useState } from 'react';
 
 export function EducationSection() {
@@ -182,14 +183,12 @@ export function EducationSection() {
                                 </div>
                               </div>
                               <a
-                                href={paper.pdfUrl}
-                                target='_blank'
-                                rel='noopener noreferrer'
+                                href={`${getResearchSiteUrl()}/${paper.slug || paper.id}`}
                                 className='flex-shrink-0 inline-flex items-center gap-1.5 rounded-md border border-slate-700/50 bg-slate-800/40 px-3 py-1.5 text-xs font-medium text-slate-300 transition-all duration-200 hover:border-blue-500/50 hover:bg-blue-950/30 hover:text-blue-300'
                                 onClick={(e) => e.stopPropagation()}
                               >
                                 <FileText className='h-3.5 w-3.5' />
-                                <span>PDF</span>
+                                <span>Read</span>
                                 <ExternalLink className='h-3 w-3 opacity-60' />
                               </a>
                             </div>

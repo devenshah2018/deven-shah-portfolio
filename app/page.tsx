@@ -9,10 +9,50 @@ import { ContactSection } from '@/components/contact/contact-section';
 import { JobMatchPortfolio } from '@/components/job-match/job-match-portfolio';
 import { useJobMatch } from '@/components/job-match/job-match-context';
 import { generatePersonSchema } from '@/lib/jsonld';
+import { scrollToProject } from '@/lib/url-utils';
+import { useEffect } from 'react';
 
 export default function HomePage() {
   const { isMatchView } = useJobMatch();
   const personSchema = generatePersonSchema();
+
+  // Handle hash-based navigation from research subdomain
+  useEffect(() => {
+    const handleHashNavigation = () => {
+      const hash = window.location.hash;
+      if (hash && hash.startsWith('#project-')) {
+        const projectId = hash.replace('#project-', '');
+        if (projectId) {
+          scrollToProject(projectId);
+        }
+      }
+    };
+
+    // Handle initial load with hash (including cross-domain navigation)
+    const handleInitialLoad = () => {
+      if (window.location.hash) {
+        // Wait for page to fully load and components to render
+        // Use multiple timeouts to ensure DOM is ready
+        setTimeout(() => {
+          if (document.readyState === 'complete') {
+            handleHashNavigation();
+          } else {
+            window.addEventListener('load', handleHashNavigation, { once: true });
+          }
+        }, 100);
+      }
+    };
+
+    handleInitialLoad();
+
+    // Handle hash changes (e.g., when clicking link from research subdomain)
+    window.addEventListener('hashchange', handleHashNavigation);
+
+    return () => {
+      window.removeEventListener('hashchange', handleHashNavigation);
+      window.removeEventListener('load', handleHashNavigation);
+    };
+  }, []);
 
   return (
     <>
