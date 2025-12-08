@@ -1,11 +1,12 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Send, Loader2, FileText, Code, ExternalLink, User, Briefcase } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { getMainSiteUrl } from '@/lib/url-utils';
 
 interface SearchResult {
   content_type: 'paper' | 'project' | 'experience';
@@ -46,6 +47,9 @@ export function ResearchChatbot() {
   const inputRef = useRef<HTMLInputElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const prevMessageCountRef = useRef<number>(1);
+  
+  // Use absolute URL for the profile image to work on subdomains
+  const profileImageUrl = useMemo(() => `${getMainSiteUrl()}/x-profile.png`, []);
 
   const scrollToBottom = () => {
     if (!messagesContainerRef.current) return;
@@ -174,7 +178,7 @@ export function ResearchChatbot() {
         <div className='flex items-center gap-4'>
           <div className='relative flex h-11 w-11 items-center justify-center rounded-xl overflow-hidden border border-cyan-500/30'>
             <Image
-              src='/x-profile.png'
+              src={profileImageUrl}
               alt='Assistant'
               width={44}
               height={44}
@@ -212,7 +216,7 @@ export function ResearchChatbot() {
               {message.type === 'bot' && (
                 <div className='relative flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg overflow-hidden border border-cyan-500/20 shadow-md shadow-cyan-500/10 ring-1 ring-cyan-500/5 mt-0.5'>
                   <Image
-                    src='/x-profile.png'
+                    src={profileImageUrl}
                     alt='Assistant'
                     width={36}
                     height={36}
@@ -333,7 +337,7 @@ export function ResearchChatbot() {
           >
             <div className='relative flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg overflow-hidden border border-cyan-500/20 shadow-md shadow-cyan-500/10 ring-1 ring-cyan-500/5'>
               <Image
-                src='/x-profile.png'
+                src={profileImageUrl}
                 alt='Assistant'
                 width={36}
                 height={36}
