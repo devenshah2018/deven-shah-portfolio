@@ -10,20 +10,7 @@ import { getResearchSiteUrl } from '@/lib/url-utils';
 import { useState } from 'react';
 
 export function EducationSection() {
-  const [expandedAbstracts, setExpandedAbstracts] = useState<Set<string>>(new Set());
   const [expandedCoursework, setExpandedCoursework] = useState<Set<string>>(new Set());
-
-  const toggleAbstract = (paperId: string) => {
-    setExpandedAbstracts(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(paperId)) {
-        newSet.delete(paperId);
-      } else {
-        newSet.add(paperId);
-      }
-      return newSet;
-    });
-  };
 
   const toggleCoursework = (eduId: string) => {
     setExpandedCoursework(prev => {
@@ -142,7 +129,6 @@ export function EducationSection() {
                   {RESEARCH_PAPERS.sort((a, b) => b.sortDate.localeCompare(a.sortDate)).map((paper, index) => {
                     const relatedProject = paper.relatedProjectId ? getProjectById(paper.relatedProjectId) : null;
                     const articleSchema = generateArticleSchema(paper);
-                    const isExpanded = expandedAbstracts.has(paper.id);
                     
                     return (
                       <motion.div
@@ -156,7 +142,7 @@ export function EducationSection() {
                           type='application/ld+json'
                           dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
                         />
-                        <Card className='group relative overflow-hidden rounded-lg border border-slate-800/60 bg-slate-900/50 transition-all duration-200 hover:border-slate-700/60 hover:bg-slate-900/70'>
+                        <Card className='group relative overflow-hidden bg-transparent border-none rounded-none shadow-none'>
                           <CardContent className='p-4'>
                             {/* Compact Header Row */}
                             <div className='mb-3 flex items-start justify-between gap-3'>
@@ -184,7 +170,7 @@ export function EducationSection() {
                               </div>
                               <a
                                 href={`${getResearchSiteUrl()}/${paper.slug || paper.id}`}
-                                className='flex-shrink-0 inline-flex items-center gap-1.5 rounded-md border border-slate-700/50 bg-slate-800/40 px-3 py-1.5 text-xs font-medium text-slate-300 transition-all duration-200 hover:border-blue-500/50 hover:bg-blue-950/30 hover:text-blue-300'
+                                className='flex-shrink-0 inline-flex items-center gap-1.5 border border-slate-700/50 bg-slate-800/40 px-3 py-1.5 text-xs font-medium text-slate-300 transition-all duration-200 hover:border-blue-500/50 hover:bg-blue-950/30 hover:text-blue-300'
                                 onClick={(e) => e.stopPropagation()}
                               >
                                 <FileText className='h-3.5 w-3.5' />
@@ -216,39 +202,6 @@ export function EducationSection() {
                               </div>
                             )}
 
-                            {/* Collapsible Abstract - Compact */}
-                            {paper.abstract && (
-                              <div className='mb-2'>
-                                <button
-                                  onClick={() => toggleAbstract(paper.id)}
-                                  className='w-full flex items-center justify-between rounded-md px-2 py-1.5 text-left transition-colors hover:bg-slate-800/30'
-                                  aria-expanded={isExpanded}
-                                >
-                                  <span className='text-xs font-medium text-slate-300'>
-                                    {isExpanded ? 'Hide Abstract' : 'Show Abstract'}
-                                  </span>
-                                  {isExpanded ? (
-                                    <ChevronUp className='h-3.5 w-3.5 text-slate-400' />
-                                  ) : (
-                                    <ChevronDown className='h-3.5 w-3.5 text-slate-400' />
-                                  )}
-                                </button>
-                                {isExpanded && (
-                                  <motion.div
-                                    initial={{ opacity: 0, height: 0 }}
-                                    animate={{ opacity: 1, height: 'auto' }}
-                                    exit={{ opacity: 0, height: 0 }}
-                                    transition={{ duration: 0.2 }}
-                                    className='overflow-hidden'
-                                  >
-                                    <p className='mt-2 rounded-md bg-slate-800/20 px-2.5 py-2 text-xs leading-relaxed text-slate-300'>
-                                      {paper.abstract}
-                                    </p>
-                                  </motion.div>
-                                )}
-                              </div>
-                            )}
-
                             {/* Related Project Link - Compact */}
                             {relatedProject && (
                               <button
@@ -257,7 +210,7 @@ export function EducationSection() {
                                 title={`View related project: ${relatedProject.title}`}
                               >
                                 <Link className='h-3 w-3' />
-                                <span>Related: {relatedProject.title}</span>
+                                <span>{relatedProject.title}</span>
                               </button>
                             )}
                           </CardContent>
@@ -267,7 +220,7 @@ export function EducationSection() {
                   })}
 
                   {RESEARCH_PAPERS.length === 0 && (
-                    <Card className='rounded-lg border border-slate-800/60 bg-slate-900/50'>
+                    <Card className='border border-slate-800/60 bg-slate-900/50 rounded-none shadow-none'>
                       <CardContent className='p-8 text-center'>
                         <FileText className='mx-auto mb-3 h-10 w-10 text-slate-600' />
                         <p className='text-sm font-medium text-slate-400'>
