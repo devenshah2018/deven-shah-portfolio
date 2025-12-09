@@ -103,6 +103,7 @@ export function ExperienceSection() {
 
                 return (
                   <motion.div
+                    id={`experience-${exp.id}`}
                     key={exp.id}
                     initial={{ opacity: 0, scale: 0.9 }}
                     whileInView={{ opacity: 1, scale: 1 }}
@@ -121,7 +122,7 @@ export function ExperienceSection() {
                     )}
 
                     {/* Flip Card Container */}
-                    <div className='relative h-64 perspective-1000' style={{ zIndex: 10 }}>
+                    <div className='relative h-64 perspective-1000' style={{ zIndex: 10 }} data-card>
                       <motion.div
                         className='relative w-full h-full preserve-3d'
                         animate={{ rotateY: isFlipped ? 180 : 0 }}

@@ -178,11 +178,37 @@ function RelatedLogos({ project }: { project: Project }) {
     return null;
   }
 
-  const scrollToSection = (type: 'experience' | 'education') => {
+  const scrollToSection = (type: 'experience' | 'education', id?: string) => {
     const sectionId = type === 'experience' ? 'experience' : 'education';
     const section = document.getElementById(sectionId);
     if (section) {
       section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      
+      // If an ID is provided, scroll to and highlight the specific item
+      if (id) {
+        setTimeout(() => {
+          const itemId = type === 'experience' ? `experience-${id}` : `education-${id}`;
+          const item = document.getElementById(itemId);
+          if (item) {
+            item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // Highlight the experience/education card
+            const card = item.querySelector('[data-card]') || item;
+            const originalTransition = (card as HTMLElement).style.transition;
+            (card as HTMLElement).style.transition = 'all 0.3s ease-in-out';
+            (card as HTMLElement).style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.5), 0 0 30px rgba(59, 130, 246, 0.3)';
+            (card as HTMLElement).style.transform = 'scale(1.02)';
+            
+            setTimeout(() => {
+              (card as HTMLElement).style.boxShadow = '';
+              (card as HTMLElement).style.transform = '';
+              setTimeout(() => {
+                (card as HTMLElement).style.transition = originalTransition;
+              }, 300);
+            }, 3000);
+          }
+        }, 800);
+      }
     }
   };
 
@@ -191,7 +217,7 @@ function RelatedLogos({ project }: { project: Project }) {
       {logos.map((logoData, index) => (
         <button
           key={index}
-          onClick={() => scrollToSection(logoData.type)}
+          onClick={() => scrollToSection(logoData.type, logoData.id)}
           className='flex items-center justify-center h-8 w-8 rounded-lg bg-transparent object-contain shadow-sm overflow-hidden transition-all duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900'
           style={{
             marginLeft: index !== 0 ? '0.3rem' : 0,

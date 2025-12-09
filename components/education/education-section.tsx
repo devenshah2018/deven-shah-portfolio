@@ -249,8 +249,10 @@ export function EducationSection() {
                 <div className='space-y-4'>
                   {EDUCATION.map((edu) => (
                     <Card
+                      id={`education-${edu.id}`}
                       key={edu.id}
                       className='group relative overflow-hidden rounded-xl border-2 border-slate-800/50 bg-slate-900/40 backdrop-blur-sm transition-all duration-300 hover:border-blue-500/30 hover:bg-slate-800/60'
+                      data-card
                     >
                       {edu.isActive && (
                         <div className='absolute right-3 top-3 flex items-center gap-1.5'>
