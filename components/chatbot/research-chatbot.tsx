@@ -244,16 +244,58 @@ export function ResearchChatbot() {
                 {/* Results */}
                 {message.results && message.results.length > 0 && (
                   <div className='space-y-1 mt-2'>
-                    {message.results.map((result, index) => (
+                    {message.results.map((result, index) => {
+                      // Handle clicks for experience and project results - redirect to main site
+                      const handleResultClick = (e: React.MouseEvent) => {
+                        if (result.content_type === 'experience' || result.content_type === 'project') {
+                          e.preventDefault();
+                          // Determine main site URL based on current hostname
+                          let mainSiteUrl: string;
+                          const hostname = window.location.hostname;
+                          if (hostname === 'localhost' || hostname === '127.0.0.1' || hostname.startsWith('192.168.')) {
+                            // Local development - use localhost
+                            mainSiteUrl = 'http://localhost:3000';
+                          } else if (hostname.includes('research.')) {
+                            // Production research subdomain - use production main site
+                            mainSiteUrl = 'https://deven-shah.com';
+                          } else {
+                            // Fallback to getMainSiteUrl
+                            mainSiteUrl = getMainSiteUrl();
+                          }
+                          const hash = result.content_type === 'experience' 
+                            ? `#experience-${result.content_id}`
+                            : `#project-${result.content_id}`;
+                          window.location.href = `${mainSiteUrl}${hash}`;
+                        }
+                        // For papers, use the default link behavior
+                      };
+
+                      return (
                       <motion.a
                         key={`${result.content_type}-${result.content_id}`}
-                        href={result.url}
-                        target={result.url.startsWith('http') ? '_blank' : undefined}
-                        rel={result.url.startsWith('http') ? 'noopener noreferrer' : undefined}
+                        href={(() => {
+                          if (result.content_type === 'experience' || result.content_type === 'project') {
+                            // Determine main site URL based on current hostname
+                            const hostname = window.location.hostname;
+                            let mainSiteUrl: string;
+                            if (hostname === 'localhost' || hostname === '127.0.0.1' || hostname.startsWith('192.168.')) {
+                              mainSiteUrl = 'http://localhost:3000';
+                            } else if (hostname.includes('research.')) {
+                              mainSiteUrl = 'https://deven-shah.com';
+                            } else {
+                              mainSiteUrl = getMainSiteUrl();
+                            }
+                            return `${mainSiteUrl}#${result.content_type === 'experience' ? 'experience' : 'project'}-${result.content_id}`;
+                          }
+                          return result.url;
+                        })()}
+                        onClick={handleResultClick}
+                        target={result.content_type === 'paper' && result.url.startsWith('http') ? '_blank' : undefined}
+                        rel={result.content_type === 'paper' && result.url.startsWith('http') ? 'noopener noreferrer' : undefined}
                         initial={{ opacity: 0, x: -8, scale: 0.98 }}
                         animate={{ opacity: 1, x: 0, scale: 1 }}
                         transition={{ delay: index * 0.03, duration: 0.2 }}
-                        className='group flex items-center gap-2.5 border-l-2 border-gray-800/60 bg-gray-950/60 backdrop-blur-sm pl-2.5 pr-2.5 py-1.5 rounded-r-md hover:border-cyan-500/70 hover:bg-gray-900/60 hover:shadow-md hover:shadow-cyan-500/10 transition-all duration-200'
+                        className='group flex items-center gap-2.5 border-l-2 border-gray-800/60 bg-gray-950/60 backdrop-blur-sm pl-2.5 pr-2.5 py-1.5 rounded-r-md hover:border-cyan-500/70 hover:bg-gray-900/60 hover:shadow-md hover:shadow-cyan-500/10 transition-all duration-200 cursor-pointer'
                       >
                         {/* Icon and Type */}
                         <div className='flex items-center gap-1.5 flex-shrink-0'>
@@ -315,7 +357,8 @@ export function ResearchChatbot() {
                           <ExternalLink className='h-3 w-3 text-gray-500 group-hover:text-cyan-400/80 transition-colors' />
                         </div>
                       </motion.a>
-                    ))}
+                      );
+                    })}
                   </div>
                 )}
               </div>

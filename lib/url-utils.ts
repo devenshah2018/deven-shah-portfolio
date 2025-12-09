@@ -78,3 +78,38 @@ export function scrollToProject(projectId: string) {
   }, 100);
 }
 
+/**
+ * Scroll to an experience and highlight it
+ * This function is used when navigating from research subdomain
+ */
+export function scrollToExperience(experienceId: string) {
+  setTimeout(() => {
+    const experienceSection = document.getElementById('experience');
+    if (experienceSection) {
+      experienceSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      
+      setTimeout(() => {
+        const experienceCard = document.getElementById(`experience-${experienceId}`);
+        if (experienceCard) {
+          experienceCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          
+          // Find the card element to highlight
+          const card = experienceCard.querySelector('[data-card]') || experienceCard;
+          const originalTransition = (card as HTMLElement).style.transition;
+          (card as HTMLElement).style.transition = 'all 0.3s ease-in-out';
+          (card as HTMLElement).style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.5), 0 0 30px rgba(59, 130, 246, 0.3)';
+          (card as HTMLElement).style.transform = 'scale(1.02)';
+          
+          setTimeout(() => {
+            (card as HTMLElement).style.boxShadow = '';
+            (card as HTMLElement).style.transform = '';
+            setTimeout(() => {
+              (card as HTMLElement).style.transition = originalTransition;
+            }, 300);
+          }, 3000);
+        }
+      }, 800);
+    }
+  }, 100);
+}
+

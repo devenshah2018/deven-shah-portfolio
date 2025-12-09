@@ -7,7 +7,7 @@ import { ProjectsSection } from '@/components/projects/projects-section';
 import { EducationSection } from '@/components/education/education-section';
 import { ContactSection } from '@/components/contact/contact-section';
 import { generatePersonSchema } from '@/lib/jsonld';
-import { scrollToProject } from '@/lib/url-utils';
+import { scrollToProject, scrollToExperience } from '@/lib/url-utils';
 import { useEffect } from 'react';
 
 export default function HomePage() {
@@ -21,6 +21,11 @@ export default function HomePage() {
         const projectId = hash.replace('#project-', '');
         if (projectId) {
           scrollToProject(projectId);
+        }
+      } else if (hash && hash.startsWith('#experience-')) {
+        const experienceId = hash.replace('#experience-', '');
+        if (experienceId) {
+          scrollToExperience(experienceId);
         }
       }
     };
