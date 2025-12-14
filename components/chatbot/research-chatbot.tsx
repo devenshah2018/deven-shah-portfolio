@@ -167,10 +167,6 @@ export function ResearchChatbot() {
     }
   };
 
-  const formatSimilarity = (similarity: number) => {
-    return `${Math.round(similarity * 100)}%`;
-  };
-
   return (
     <div className='flex h-[calc(100vh-200px)] flex-col border border-gray-800/60 bg-black shadow-2xl rounded-none overflow-hidden'>
       {/* Chat Header */}
@@ -330,12 +326,6 @@ export function ResearchChatbot() {
                             <h4 className='text-[13px] font-semibold text-white leading-snug group-hover:text-cyan-300 transition-colors line-clamp-2'>
                               {result.title}
                             </h4>
-                            {/* Similarity Score - Top Right */}
-                            <div className='flex items-center gap-1.5 flex-shrink-0'>
-                              <span className='text-[10px] font-mono font-bold text-cyan-400 bg-cyan-500/15 px-2 py-1 rounded border border-cyan-500/30 whitespace-nowrap'>
-                                {formatSimilarity(result.similarity)}
-                              </span>
-                            </div>
                           </div>
                           
                           {/* Metadata */}
