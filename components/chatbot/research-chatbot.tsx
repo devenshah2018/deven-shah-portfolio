@@ -37,7 +37,7 @@ export function ResearchChatbot() {
     {
       id: '1',
       type: 'bot',
-      content: 'Hello! I can help you find relevant research papers, projects, and experiences. What would you like to search for?',
+      content: 'I am HERMES, your knowledge index agent. What can I help you with?',
       timestamp: new Date(),
     },
   ]);
@@ -95,7 +95,7 @@ export function ResearchChatbot() {
       timestamp: new Date(),
     };
 
-    setMessages((prev) => [...prev, userMessage]);
+    ((prev: any) => [...prev, userMessage]);
     setInput('');
     setIsSearching(true);
 
@@ -131,7 +131,7 @@ export function ResearchChatbot() {
 
       let botContent = '';
       if (results.length > 0) {
-        botContent = `I found ${results.length} relevant ${results.length === 1 ? 'result' : 'results'} for your query:`;
+        botContent = `${results.length} ${results.length === 1 ? 'result' : 'results'} found`;
       } else {
         // More helpful error message
         botContent = `I couldn't find any relevant papers or projects matching your query.\n\nPossible issues:\n\n1. **Embeddings not generated**: Run \`npm run generate-embeddings\`\n2. **Supabase function missing**: Create the \`match_content\` function (see CHATBOT_SETUP.md)\n3. **Query too specific**: Try broader terms like "machine learning" or "quantum computing"\n\nCheck the server logs for more details.`;
@@ -172,28 +172,35 @@ export function ResearchChatbot() {
   };
 
   return (
-    <div className='flex h-[calc(100vh-200px)] flex-col border border-gray-800/50 bg-black shadow-2xl rounded-lg overflow-hidden'>
+    <div className='flex h-[calc(100vh-200px)] flex-col border border-gray-800/60 bg-black shadow-2xl rounded-none overflow-hidden'>
       {/* Chat Header */}
-      <div className='border-b border-gray-800/50 bg-gradient-to-br from-gray-950 via-gray-950 to-black px-6 py-5 backdrop-blur-sm shadow-lg'>
-        <div className='flex items-center gap-4'>
-          <div className='relative flex h-11 w-11 items-center justify-center rounded-xl overflow-hidden border border-cyan-500/30'>
-            <Image
-              src={profileImageUrl}
-              alt='Assistant'
-              width={44}
-              height={44}
-              className='object-cover w-full h-full'
-              unoptimized
-            />
-            <div className='absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent pointer-events-none' />
-          </div>
-          <div className='flex flex-col gap-0.5'>
-            <h2 className='text-base font-semibold text-white tracking-tight leading-tight'>
-              Assistant
-            </h2>
-            <p className='text-xs font-medium text-gray-400 tracking-wider'>
-              DevenAI
-            </p>
+      <div className='border-b border-gray-800/60 bg-gradient-to-br from-gray-950 via-gray-950 to-black px-6 py-4 backdrop-blur-sm'>
+        <div className='flex items-center justify-between'>
+          <div className='flex items-center gap-3.5'>
+            <div className='relative flex h-10 w-10 items-center justify-center rounded-lg overflow-hidden border border-cyan-500/40 shadow-lg shadow-cyan-500/10'>
+              <Image
+                src={profileImageUrl}
+                alt='Assistant'
+                width={40}
+                height={40}
+                className='object-cover w-full h-full'
+                unoptimized
+              />
+              <div className='absolute inset-0 bg-gradient-to-br from-cyan-500/15 to-transparent pointer-events-none' />
+            </div>
+            <div className='flex flex-col gap-1'>
+              <div className='flex items-center gap-2.5'>
+                <h2 className='text-lg font-bold text-white tracking-tight leading-tight bg-gradient-to-r from-white to-cyan-200 bg-clip-text text-transparent'>
+                  Hermes
+                </h2>
+                <span className='px-2 py-0.5 bg-cyan-500/20 border border-cyan-500/40 rounded-full text-[10px] font-bold text-cyan-300 uppercase tracking-wider'>
+                  DEVENAI
+                </span>
+              </div>
+              <p className='text-[11px] font-medium text-gray-400 tracking-widest uppercase'>
+                Knowledge Index Agent
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -201,7 +208,7 @@ export function ResearchChatbot() {
       {/* Messages Container */}
       <div 
         ref={messagesContainerRef}
-        className='flex-1 overflow-y-auto px-5 py-6 space-y-4 scrollbar-thin scrollbar-thumb-gray-800 scrollbar-track-transparent'
+        className='flex-1 overflow-y-auto px-6 py-5 space-y-5 scrollbar-thin scrollbar-thumb-gray-800/50 scrollbar-track-transparent'
       >
         <AnimatePresence>
           {messages.map((message) => (
@@ -214,36 +221,36 @@ export function ResearchChatbot() {
               className={`flex items-start gap-3 ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
             >
               {message.type === 'bot' && (
-                <div className='relative flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg overflow-hidden border border-cyan-500/20 shadow-md shadow-cyan-500/10 ring-1 ring-cyan-500/5 mt-0.5'>
+                <div className='relative flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg overflow-hidden border border-cyan-500/30 shadow-md shadow-cyan-500/10 mt-0.5'>
                   <Image
                     src={profileImageUrl}
                     alt='Assistant'
-                    width={36}
-                    height={36}
+                    width={32}
+                    height={32}
                     className='object-cover w-full h-full'
                     unoptimized
                   />
-                  <div className='absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent pointer-events-none' />
+                  <div className='absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent pointer-events-none' />
                 </div>
               )}
               <div
-                className={`max-w-[78%] space-y-2 ${
+                className={`max-w-[80%] space-y-3 ${
                   message.type === 'user' ? 'items-end' : 'items-start'
                 }`}
               >
                 <div
-                  className={`rounded-xl px-4 py-2.5 shadow-lg backdrop-blur-sm ${
+                  className={`rounded-lg px-4 py-3 shadow-lg backdrop-blur-sm ${
                     message.type === 'user'
-                      ? 'bg-cyan-600/90 text-white border border-cyan-500/30'
-                      : 'bg-gray-950/80 text-gray-200 border border-gray-800/50'
+                      ? 'bg-gradient-to-br from-cyan-600/95 to-cyan-700/90 text-white border border-cyan-500/40'
+                      : 'bg-gray-950/90 text-gray-100 border border-gray-800/60'
                   }`}
                 >
-                  <p className='text-sm leading-relaxed font-medium'>{message.content}</p>
+                  <p className='text-[13px] leading-relaxed font-medium tracking-tight'>{message.content}</p>
                 </div>
 
                 {/* Results */}
                 {message.results && message.results.length > 0 && (
-                  <div className='space-y-1 mt-2'>
+                  <div className='space-y-2 w-full'>
                     {message.results.map((result, index) => {
                       // Handle clicks for experience and project results - redirect to main site
                       const handleResultClick = (e: React.MouseEvent) => {
@@ -292,69 +299,76 @@ export function ResearchChatbot() {
                         onClick={handleResultClick}
                         target={result.content_type === 'paper' && result.url.startsWith('http') ? '_blank' : undefined}
                         rel={result.content_type === 'paper' && result.url.startsWith('http') ? 'noopener noreferrer' : undefined}
-                        initial={{ opacity: 0, x: -8, scale: 0.98 }}
-                        animate={{ opacity: 1, x: 0, scale: 1 }}
-                        transition={{ delay: index * 0.03, duration: 0.2 }}
-                        className='group flex items-center gap-2.5 border-l-2 border-gray-800/60 bg-gray-950/60 backdrop-blur-sm pl-2.5 pr-2.5 py-1.5 rounded-r-md hover:border-cyan-500/70 hover:bg-gray-900/60 hover:shadow-md hover:shadow-cyan-500/10 transition-all duration-200 cursor-pointer'
+                        initial={{ opacity: 0, y: 4, scale: 0.98 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        transition={{ delay: index * 0.04, duration: 0.25, ease: 'easeOut' }}
+                        className='group relative flex items-start gap-3 border border-gray-800/60 bg-gray-950/80 backdrop-blur-sm p-3.5 rounded-lg hover:border-cyan-500/50 hover:bg-gray-900/80 hover:shadow-lg hover:shadow-cyan-500/10 transition-all duration-300 cursor-pointer'
                       >
-                        {/* Icon and Type */}
-                        <div className='flex items-center gap-1.5 flex-shrink-0'>
+                        {/* Icon and Type Badge */}
+                        <div className='flex flex-col items-center gap-2 flex-shrink-0 pt-0.5'>
                           {result.content_type === 'paper' ? (
-                            <div className='p-1 rounded bg-cyan-500/10 border border-cyan-500/20'>
-                              <FileText className='h-2.5 w-2.5 text-cyan-400/80' />
+                            <div className='p-1.5 rounded-md bg-cyan-500/15 border border-cyan-500/30 shadow-sm'>
+                              <FileText className='h-3.5 w-3.5 text-cyan-400' />
                             </div>
                           ) : result.content_type === 'experience' ? (
-                            <div className='p-1 rounded bg-orange-500/10 border border-orange-500/20'>
-                              <Briefcase className='h-2.5 w-2.5 text-orange-400/80' />
+                            <div className='p-1.5 rounded-md bg-orange-500/15 border border-orange-500/30 shadow-sm'>
+                              <Briefcase className='h-3.5 w-3.5 text-orange-400' />
                             </div>
                           ) : (
-                            <div className='p-1 rounded bg-purple-500/10 border border-purple-500/20'>
-                              <Code className='h-2.5 w-2.5 text-purple-400/80' />
+                            <div className='p-1.5 rounded-md bg-purple-500/15 border border-purple-500/30 shadow-sm'>
+                              <Code className='h-3.5 w-3.5 text-purple-400' />
                             </div>
                           )}
-                          <span className='text-[9px] font-mono uppercase tracking-wider text-gray-500 font-semibold'>
+                          <span className='text-[9px] font-mono uppercase tracking-widest text-gray-500 font-bold leading-none'>
                             {result.content_type === 'paper' ? 'P' : result.content_type === 'experience' ? 'E' : 'PR'}
                           </span>
                         </div>
                         
-                        {/* Title - Main Content */}
-                        <div className='flex-1 min-w-0'>
-                          <h4 className='text-xs font-semibold text-white leading-tight group-hover:text-cyan-400/90 transition-colors truncate'>
-                            {result.title}
-                          </h4>
+                        {/* Main Content */}
+                        <div className='flex-1 min-w-0 space-y-1.5'>
+                          <div className='flex items-start justify-between gap-3'>
+                            <h4 className='text-[13px] font-semibold text-white leading-snug group-hover:text-cyan-300 transition-colors line-clamp-2'>
+                              {result.title}
+                            </h4>
+                            {/* Similarity Score - Top Right */}
+                            <div className='flex items-center gap-1.5 flex-shrink-0'>
+                              <span className='text-[10px] font-mono font-bold text-cyan-400 bg-cyan-500/15 px-2 py-1 rounded border border-cyan-500/30 whitespace-nowrap'>
+                                {formatSimilarity(result.similarity)}
+                              </span>
+                            </div>
+                          </div>
+                          
+                          {/* Metadata */}
                           {result.metadata && (result.metadata.date || result.metadata.institution || result.metadata.period || result.metadata.company) && (
-                            <div className='flex items-center gap-1.5 text-[10px] text-gray-500 mt-0.5'>
-                              {result.metadata.date && (
-                                <span className='font-mono text-gray-600'>{result.metadata.date}</span>
-                              )}
-                              {result.metadata.institution && (
-                                <>
-                                  {result.metadata.date && <span className='text-gray-700'>•</span>}
-                                  <span className='truncate max-w-[120px] text-gray-500'>{result.metadata.institution}</span>
-                                </>
+                            <div className='flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[11px] text-gray-400'>
+                              {result.metadata.period && (
+                                <span className='font-mono text-gray-500'>{result.metadata.period}</span>
                               )}
                               {result.metadata.company && (
                                 <>
-                                  {(result.metadata.date || result.metadata.institution) && <span className='text-gray-700'>•</span>}
-                                  <span className='truncate max-w-[120px] text-gray-500'>{result.metadata.company}</span>
+                                  {result.metadata.period && <span className='text-gray-600'>•</span>}
+                                  <span className='text-gray-400 truncate max-w-[140px]'>{result.metadata.company}</span>
                                 </>
                               )}
-                              {result.metadata.period && (
+                              {result.metadata.institution && (
                                 <>
-                                  {(result.metadata.date || result.metadata.institution || result.metadata.company) && <span className='text-gray-700'>•</span>}
-                                  <span className='truncate text-gray-500'>{result.metadata.period}</span>
+                                  {(result.metadata.period || result.metadata.company) && <span className='text-gray-600'>•</span>}
+                                  <span className='text-gray-400 truncate max-w-[140px]'>{result.metadata.institution}</span>
+                                </>
+                              )}
+                              {result.metadata.date && (
+                                <>
+                                  {(result.metadata.period || result.metadata.company || result.metadata.institution) && <span className='text-gray-600'>•</span>}
+                                  <span className='font-mono text-gray-500'>{result.metadata.date}</span>
                                 </>
                               )}
                             </div>
                           )}
                         </div>
                         
-                        {/* Similarity Score */}
-                        <div className='flex items-center gap-1.5 flex-shrink-0'>
-                          <span className='text-[10px] font-mono font-bold text-cyan-400/80 bg-cyan-500/10 px-1.5 py-0.5 rounded border border-cyan-500/20'>
-                            {formatSimilarity(result.similarity)}
-                          </span>
-                          <ExternalLink className='h-3 w-3 text-gray-500 group-hover:text-cyan-400/80 transition-colors' />
+                        {/* External Link Icon */}
+                        <div className='flex-shrink-0 pt-0.5'>
+                          <ExternalLink className='h-3.5 w-3.5 text-gray-600 group-hover:text-cyan-400 transition-colors' />
                         </div>
                       </motion.a>
                       );
@@ -363,7 +377,7 @@ export function ResearchChatbot() {
                 )}
               </div>
               {message.type === 'user' && (
-                <div className='flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-gray-800/50 to-gray-900/50 border border-gray-700/50 shadow-sm mt-0.5'>
+                <div className='flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-gray-800/60 to-gray-900/60 border border-gray-700/60 shadow-sm mt-0.5'>
                   <User className='h-4 w-4 text-gray-300' />
                 </div>
               )}
@@ -374,25 +388,25 @@ export function ResearchChatbot() {
         {/* Loading Indicator */}
         {isSearching && (
           <motion.div
-            initial={{ opacity: 0, y: 8, scale: 0.96 }}
+            initial={{ opacity: 0, y: 4, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             className='flex gap-3 justify-start'
           >
-            <div className='relative flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg overflow-hidden border border-cyan-500/20 shadow-md shadow-cyan-500/10 ring-1 ring-cyan-500/5'>
+            <div className='relative flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg overflow-hidden border border-cyan-500/30 shadow-md shadow-cyan-500/10'>
               <Image
                 src={profileImageUrl}
                 alt='Assistant'
-                width={36}
-                height={36}
+                width={32}
+                height={32}
                 className='object-cover w-full h-full'
                 unoptimized
               />
-              <div className='absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent pointer-events-none' />
+              <div className='absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent pointer-events-none' />
             </div>
-            <div className='rounded-xl border border-gray-800/50 bg-gray-950/80 px-4 py-2.5 shadow-lg backdrop-blur-sm'>
+            <div className='rounded-lg border border-gray-800/60 bg-gray-950/90 px-4 py-3 shadow-lg backdrop-blur-sm'>
               <div className='flex items-center gap-2.5'>
-                <Loader2 className='h-4 w-4 animate-spin text-cyan-400' />
-                <span className='text-sm text-gray-300 font-medium'>Searching...</span>
+                <Loader2 className='h-3.5 w-3.5 animate-spin text-cyan-400' />
+                <span className='text-[13px] text-gray-300 font-medium tracking-tight'>Searching...</span>
               </div>
             </div>
           </motion.div>
@@ -402,8 +416,8 @@ export function ResearchChatbot() {
       </div>
 
       {/* Input Area */}
-      <div className='border-t border-gray-800/50 bg-gradient-to-r from-gray-950 to-black p-4 backdrop-blur-sm'>
-        <form onSubmit={handleSend} className='flex gap-2.5'>
+      <div className='border-t border-gray-800/60 bg-gradient-to-r from-gray-950 to-black p-5 backdrop-blur-sm'>
+        <form onSubmit={handleSend} className='flex gap-3'>
           <Input
             ref={inputRef}
             type='text'
@@ -412,12 +426,12 @@ export function ResearchChatbot() {
             onKeyDown={handleKeyDown}
             placeholder='Ask about papers, projects, or experiences...'
             disabled={isSearching}
-            className='flex-1 border-2 border-gray-700/60 bg-gray-900/80 text-white placeholder:text-gray-400 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/30 focus:bg-gray-900 transition-all rounded-lg px-4 py-3 text-sm font-medium shadow-lg shadow-black/20'
+            className='flex-1 border border-gray-800/60 bg-gray-900/90 text-white placeholder:text-gray-500 focus:border-gray-700/60 focus:ring-1 focus:ring-gray-700/20 focus:bg-gray-900 transition-all rounded-lg px-4 py-3 text-[13px] font-medium tracking-tight shadow-lg shadow-black/30'
           />
           <Button
             type='submit'
             disabled={isSearching || !input.trim()}
-            className='rounded-lg border-2 border-cyan-500/40 bg-gradient-to-br from-cyan-600/90 to-cyan-700/80 px-5 py-3 text-white shadow-lg shadow-cyan-500/30 hover:from-cyan-500 hover:to-cyan-600 hover:shadow-cyan-500/40 hover:border-cyan-400 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:from-cyan-600/90 disabled:hover:to-cyan-700/80 transition-all font-medium'
+            className='rounded-lg border-2 border-cyan-500/50 bg-gradient-to-br from-cyan-600/95 to-cyan-700/90 px-5 py-3 text-white shadow-lg shadow-cyan-500/30 hover:from-cyan-500 hover:to-cyan-600 hover:shadow-cyan-500/40 hover:border-cyan-400 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:from-cyan-600/95 disabled:hover:to-cyan-700/90 transition-all font-medium'
           >
             {isSearching ? (
               <Loader2 className='h-4 w-4 animate-spin' />

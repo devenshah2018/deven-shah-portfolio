@@ -197,8 +197,7 @@ export async function POST(request: NextRequest) {
       if (filteredResults.length === 0) {
         return NextResponse.json({
           results: [],
-          error: 'No relevant results found. Try rephrasing your query.',
-          hint: 'Make sure embeddings are generated: npm run generate-pinecone-embeddings',
+          error: 'No relevant results found. Try rephrasing your query.'
         });
       }
 
