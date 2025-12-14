@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getPineconeIndexHost } from '@/lib/pinecone-client';
-import { applyBoosting } from '@/lib/boosting';
+import { applyBoosting, extractQueryKeywords } from '@/lib/boosting';
+import { contentMatchesKeywords } from '@/lib/keyword-index';
 
 export const dynamic = 'force-dynamic';
 
@@ -16,7 +17,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    console.log('Searching Pinecone for query:', query.trim());
+    // Preprocess query: handle possessive forms, extract key terms
+    let processedQuery = query.trim();
+    
+    // Handle possessive forms (e.g., "deven's" -> "deven")
+    processedQuery = processedQuery.replace(/'s\b/g, '');
+    
+    // Extract query keywords for filtering
+    const queryKeywords = extractQueryKeywords(processedQuery);
+    
+    console.log('Searching Pinecone for query:', processedQuery);
+    console.log('Extracted keywords:', queryKeywords);
 
     try {
       // Use REST API directly for text search with integrated embeddings
@@ -37,7 +48,7 @@ export async function POST(request: NextRequest) {
         body: JSON.stringify({
           query: {
             inputs: {
-              text: query.trim(),
+              text: processedQuery,
             },
             top_k: 10,
           },
@@ -128,7 +139,7 @@ export async function POST(request: NextRequest) {
       });
 
       // Apply query-time boosting based on query content
-      applyBoosting(query, results);
+      applyBoosting(processedQuery, results);
 
       console.log('Boosted results:', results.map((r: any) => ({
         title: r.title,
@@ -136,10 +147,44 @@ export async function POST(request: NextRequest) {
         content_type: r.content_type,
       })));
 
-      // Filter results with minimum similarity threshold
+      // Filter results with minimum similarity threshold and keyword matching
       // Pinecone scores are typically 0-1, with higher being more similar
       const filteredResults = results
-        .filter((r: any) => r.similarity >= 0.1) // Minimum similarity threshold
+        .filter((r: any) => {
+          // If query has specific keywords, require keyword matches for results
+          if (queryKeywords.length > 0) {
+            const contentType = r.content_type as 'project' | 'experience' | 'paper';
+            
+            // Check content registry keyword match
+            const hasRegistryMatch = contentMatchesKeywords(
+              r.content_id,
+              contentType,
+              queryKeywords
+            );
+            
+            // Check if title or metadata contains keywords
+            const titleLower = r.title.toLowerCase();
+            const metadataText = `${r.metadata?.['keywords'] || ''} ${r.metadata?.['technologies'] || ''} ${r.metadata?.['company'] || ''}`.toLowerCase();
+            const hasTextMatch = queryKeywords.some(kw => 
+              titleLower.includes(kw) || metadataText.includes(kw)
+            );
+            
+            const hasKeywordMatch = hasRegistryMatch || hasTextMatch;
+            
+            // If no keyword match, require much higher similarity threshold
+            if (!hasKeywordMatch) {
+              // Results without keyword matches need significantly higher similarity
+              // This filters out irrelevant results even if they have decent embedding similarity
+              return r.similarity >= 0.25; // Higher threshold for non-matching results
+            }
+            
+            // Results with keyword matches can have lower similarity (they're relevant)
+            return r.similarity >= 0.1;
+          }
+          
+          // If no keywords extracted, use standard threshold
+          return r.similarity >= 0.15;
+        })
         .slice(0, 5); // Top 5 results
 
       console.log('Filtered results:', filteredResults.length, 'out of', results.length);

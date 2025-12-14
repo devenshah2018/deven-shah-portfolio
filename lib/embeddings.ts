@@ -46,6 +46,7 @@ export async function generateEmbedding(text: string): Promise<number[]> {
 
 /**
  * Combine paper fields into searchable text
+ * Weight important fields (title, keywords) by repeating them 2-3x
  */
 export function combinePaperText(paper: {
   title: string;
@@ -53,7 +54,12 @@ export function combinePaperText(paper: {
   keywords: string[];
   description?: string;
 }): string {
-  const parts: string[] = [paper.title];
+  const parts: string[] = [];
+  
+  // Title - repeat 3x for high weight
+  parts.push(`Title: ${paper.title}`);
+  parts.push(paper.title);
+  parts.push(paper.title);
 
   if (paper.description) {
     parts.push(paper.description);
@@ -63,8 +69,12 @@ export function combinePaperText(paper: {
     parts.push(paper.abstract);
   }
 
+  // Keywords - repeat 3x for very high weight
   if (paper.keywords && paper.keywords.length > 0) {
-    parts.push(paper.keywords.join(' '));
+    const keywordsText = paper.keywords.join(' ');
+    parts.push(keywordsText);
+    parts.push(keywordsText);
+    parts.push(keywordsText);
   }
 
   return parts.join(' ');
@@ -72,6 +82,7 @@ export function combinePaperText(paper: {
 
 /**
  * Combine project fields into searchable text
+ * Weight important fields (title, subtitle, technologies) by repeating them 2-3x
  */
 export function combineProjectText(project: {
   title: string;
@@ -81,14 +92,30 @@ export function combineProjectText(project: {
   technologies: string[];
   highlights?: string[];
 }): string {
-  const parts: string[] = [project.title, project.subtitle, project.description];
+  const parts: string[] = [];
+  
+  // Title - repeat 3x for high weight
+  parts.push(`Title: ${project.title}`);
+  parts.push(project.title);
+  parts.push(project.title);
+
+  // Subtitle - repeat 2x for medium-high weight
+  parts.push(`Subtitle: ${project.subtitle}`);
+  parts.push(project.subtitle);
+  parts.push(project.subtitle);
+
+  // Description
+  parts.push(project.description);
 
   if (project.fullDescription) {
     parts.push(project.fullDescription);
   }
 
+  // Technologies - repeat 2x for high weight
   if (project.technologies && project.technologies.length > 0) {
-    parts.push(project.technologies.join(' '));
+    const techText = project.technologies.join(' ');
+    parts.push(techText);
+    parts.push(techText);
   }
 
   if (project.highlights && project.highlights.length > 0) {
@@ -100,21 +127,48 @@ export function combineProjectText(project: {
 
 /**
  * Combine experience fields into searchable text
+ * Weight important fields (title, company, achievements) by repeating them 2-3x
+ * Include location, period, and related project context
  */
 export function combineExperienceText(experience: {
   title: string;
   company: string;
   description: string;
   achievements?: string[];
+  location?: string;
+  period?: string;
 }): string {
-  const parts: string[] = [
-    experience.title,
-    experience.company,
-    experience.description,
-  ];
+  const parts: string[] = [];
+  
+  // Title - repeat 3x for high weight
+  parts.push(`Title: ${experience.title}`);
+  parts.push(experience.title);
+  parts.push(experience.title);
 
+  // Company - repeat 3x for high weight
+  parts.push(`Company: ${experience.company}`);
+  parts.push(experience.company);
+  parts.push(experience.company);
+
+  // Description
+  parts.push(experience.description);
+
+  // Location - add for context
+  if (experience.location) {
+    parts.push(`Location: ${experience.location}`);
+    parts.push(experience.location);
+  }
+
+  // Period - add for context
+  if (experience.period) {
+    parts.push(`Period: ${experience.period}`);
+  }
+
+  // Achievements - repeat 2x since they contain specific work details
   if (experience.achievements && experience.achievements.length > 0) {
-    parts.push(experience.achievements.join(' '));
+    const achievementsText = experience.achievements.join(' ');
+    parts.push(achievementsText);
+    parts.push(achievementsText);
   }
 
   return parts.join(' ');
