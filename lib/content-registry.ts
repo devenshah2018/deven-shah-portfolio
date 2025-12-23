@@ -18,7 +18,6 @@ export const SKILLS = {
     'TypeScript',
     'C#',
     'Java',
-    'C',
     'Apex',
     'JavaScript',
     'SQL',
@@ -70,8 +69,7 @@ export const SKILL_MAPPINGS = [
   { skill: 'HTML', experienceIds: ['suno-analytics', 'patelco', 'netapp'], projectIds: ['portfolio-project', 'ares-project', 'crypto-forecasting-project'], educationIds: ['sjsu-bachelors'] },
   { skill: 'CSS', experienceIds: ['suno-analytics', 'patelco', 'netapp'], projectIds: ['portfolio-project', 'ares-project', 'crypto-forecasting-project'], educationIds: ['sjsu-bachelors'] },
   { skill: 'Java', educationIds: ['sjsu-bachelors'] },
-  { skill: 'C', projectIds: ['qode-project'] },
-  { skill: 'JavaScript', experienceIds: ['suno-analytics', 'patelco'], projectIds: ['portfolio-project', 'qode-project'] },
+  { skill: 'JavaScript', experienceIds: ['suno-analytics', 'patelco'], projectIds: ['portfolio-project'] },
   { skill: 'Apex', experienceIds: ['patelco'] },
   { skill: 'Salesforce', experienceIds: ['patelco'] },
   { skill: 'AWS', experienceIds: ['suno-analytics'], educationIds: ['aws-cloud-practitioner'] },
@@ -90,7 +88,7 @@ export const SKILL_MAPPINGS = [
   { skill: 'Docker', experienceIds: ['netapp', 'suno-analytics'] },
   { skill: 'Jupyter', projectIds: ['drone-build-project'], experienceIds: ['build-fellowship'] },
   { skill: 'C++', educationIds: ['bu-masters'] },
-  { skill: 'Github/Git', experienceIds: ['suno-analytics', 'patelco', 'netapp', 'build-fellowship'], projectIds: ['drone-build-project', 'model-distribution-server', 'portfolio-project', 'qode-project', 'ares-project', 'gumball-project', 'molecule-mutation-prediction', 'crypto-forecasting-project'], educationIds: ['sjsu-bachelors'] },
+  { skill: 'Github/Git', experienceIds: ['suno-analytics', 'patelco', 'netapp', 'build-fellowship'], projectIds: ['drone-build-project', 'model-distribution-server', 'portfolio-project', 'ares-project', 'gumball-project', 'molecule-mutation-prediction', 'crypto-forecasting-project'], educationIds: ['sjsu-bachelors'] },
   { skill: 'REST API', experienceIds: ['suno-analytics', 'patelco', 'netapp'] },
   { skill: 'GraphQL', experienceIds: ['suno-analytics'] },
   { skill: 'MySQL', experienceIds: ['patelco'] },
@@ -226,25 +224,6 @@ export const PROJECTS: Project[] = [
       { type: 'hosted', url: 'https://deven-shah.com/', label: 'Live Site' },
       { type: 'github', url: 'https://github.com/devenshah2018/deven-shah-portfolio', label: 'Code' }
     ]
-  },
-  {
-    id: 'qode-project',
-    title: 'Qode',
-    subtitle: 'Quantum Programming Language',
-    period: '10/2024 – Present',
-    sortDate: '2024-10',
-    description:
-      'Lightweight quantum programming language in C with intuitive syntax for quantum operations and circuits.',
-    technologies: getProjectSkillsFromMapping('qode-project'),
-    entry_point: 'github',
-    link: 'https://github.com/devenshah2018/qode',
-    status: 'Paused',
-    readMe: true,
-    categories: ['theory'],
-    accessible_at: ['github'],
-    access_points: [
-      { type: 'github', url: 'https://github.com/devenshah2018/qode', label: 'Code' },
-    ],
   },
   {
     id: 'ares-project',
