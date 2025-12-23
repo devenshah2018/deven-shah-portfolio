@@ -57,7 +57,7 @@ export const SKILL_MAPPINGS = [
   { skill: 'Scrum', experienceIds: ['suno-analytics', 'patelco'] },
   { skill: 'Agile', experienceIds: ['suno-analytics', 'patelco'] },
   { skill: 'Confluence', experienceIds: ['suno-analytics', 'patelco'] },
-  { skill: 'Python', experienceIds: ['suno-analytics', 'netapp', 'build-fellowship'], projectIds: ['model-distribution-server', 'ares-project', 'molecule-mutation-prediction', 'crypto-forecasting-project', 'drone-build-project'], educationIds: ['sjsu-bachelors'] },
+  { skill: 'Python', experienceIds: ['suno-analytics', 'netapp', 'build-fellowship'], projectIds: ['ares-project', 'molecule-mutation-prediction', 'crypto-forecasting-project', 'drone-build-project'], educationIds: ['sjsu-bachelors'] },
   { skill: 'TypeScript', experienceIds: ['suno-analytics', 'patelco', 'build-fellowship'], projectIds: ['drone-build-project', 'portfolio-project', 'ares-project', 'gumball-project'] },
   { skill: 'C#', experienceIds: ['patelco'], educationIds: ['sjsu-bachelors'] },
   { skill: 'React', experienceIds: ['suno-analytics'], projectIds: ['drone-build-project', 'portfolio-project', 'breaking-dijkstra-project'] },
@@ -74,7 +74,7 @@ export const SKILL_MAPPINGS = [
   { skill: 'Salesforce', experienceIds: ['patelco'] },
   { skill: 'AWS', experienceIds: ['suno-analytics'], educationIds: ['aws-cloud-practitioner'] },
   { skill: 'Flask', experienceIds: ['netapp'], projectIds: ['crypto-forecasting-project'] },
-  { skill: 'Bash', experienceIds: ['netapp'], projectIds: ['model-distribution-server', 'molecule-mutation-prediction'] },
+  { skill: 'Bash', experienceIds: ['netapp'], projectIds: [ 'molecule-mutation-prediction'] },
   { skill: 'Oracle', experienceIds: ['netapp'] },
   { skill: 'PostgreSQL', experienceIds: ['suno-analytics'] },
   { skill: 'GCP', experienceIds: ['suno-analytics'] },
@@ -82,13 +82,13 @@ export const SKILL_MAPPINGS = [
   { skill: 'Rust', projectIds: ['ares-project', 'task-scheduling-project'] },
   { skill: 'Linux', educationIds: ['bu-masters'], projectIds: ['task-scheduling-project'] },
   { skill: 'LLMs', experienceIds: ['suno-analytics'], projectIds: ['ares-project'] },
-  { skill: 'Sklearn', experienceIds: ['suno-analytics'], projectIds: ['model-distribution-server', 'molecule-mutation-prediction', 'crypto-forecasting-project'] },
+  { skill: 'Sklearn', experienceIds: ['suno-analytics'], projectIds: ['molecule-mutation-prediction', 'crypto-forecasting-project'] },
   { skill: 'Tensorflow', experienceIds: ['suno-analytics'], projectIds: ['crypto-forecasting-project'] },
   { skill: 'Pytorch', projectIds: ['crypto-forecasting-project'] },
   { skill: 'Docker', experienceIds: ['netapp', 'suno-analytics'] },
   { skill: 'Jupyter', projectIds: ['drone-build-project'], experienceIds: ['build-fellowship'] },
   { skill: 'C++', educationIds: ['bu-masters'] },
-  { skill: 'Github/Git', experienceIds: ['suno-analytics', 'patelco', 'netapp', 'build-fellowship'], projectIds: ['drone-build-project', 'model-distribution-server', 'portfolio-project', 'ares-project', 'gumball-project', 'molecule-mutation-prediction', 'crypto-forecasting-project'], educationIds: ['sjsu-bachelors'] },
+  { skill: 'Github/Git', experienceIds: ['suno-analytics', 'patelco', 'netapp', 'build-fellowship'], projectIds: ['drone-build-project', 'portfolio-project', 'ares-project', 'gumball-project', 'molecule-mutation-prediction', 'crypto-forecasting-project'], educationIds: ['sjsu-bachelors'] },
   { skill: 'REST API', experienceIds: ['suno-analytics', 'patelco', 'netapp'] },
   { skill: 'GraphQL', experienceIds: ['suno-analytics'] },
   { skill: 'MySQL', experienceIds: ['patelco'] },
@@ -260,24 +260,6 @@ export const PROJECTS: Project[] = [
     accessible_at: ['github'],
     access_points: [
       { type: 'github', url: 'https://github.com/b-devera/crypto-forecasting-model', label: 'Code' },
-    ]
-  },
-  {
-    id: 'model-distribution-server',
-    title: 'Model Distribution Server',
-    subtitle: 'MLOps Dev Platform unifying MLflow & MinIO',
-    period: '08/2025 – Present',
-    sortDate: '2025-08',
-    description:
-      'A comprehensive MLOps platform for training, managing, and serving ML models with MLflow and MinIO S3 storage.',
-    technologies: getProjectSkillsFromMapping('model-distribution-server'),
-    entry_point: 'github',
-    link: 'https://github.com/devenshah2018/model-distribution-server',
-    status: 'In Progress',
-    categories: ['ai', 'tools'],
-    accessible_at: ['github'],
-    access_points: [
-      { type: 'github', url: 'https://github.com/devenshah2018/model-distribution-server', label: 'Code' },
     ]
   },
   {
