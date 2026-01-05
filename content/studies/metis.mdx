@@ -8,11 +8,9 @@ tags:
 readingTime: 15
 ---
 
-# Metis: Quantum-Enhanced AutoML for Efficient Model Discovery
-
 ## Abstract
 
-Automated machine learning (AutoML) systems face exponential search space growth when optimizing model configurations, hyperparameters, and feature selections. Traditional methods like random search and grid search explore only a fraction of possible combinations, often missing optimal solutions. This study presents Metis, a hybrid classical-quantum AutoML system that leverages the Quantum Approximate Optimization Algorithm (QAOA) to generate diverse candidate configurations more efficiently than classical approaches. We encode the feature selection problem as a Quadratic Unconstrained Binary Optimization (QUBO) problem and use QAOA to explore the solution space in superposition. Experimental results demonstrate that quantum sampling explores 20,480 combinations compared to 20 for random search with the same number of samples, achieving 100% search space coverage versus 1.95% for random methods. These findings suggest that quantum algorithms can significantly enhance AutoML pipelines by providing more comprehensive search space exploration, particularly valuable for high-dimensional optimization problems.
+Automated machine learning (AutoML) systems face exponential search space growth when optimizing model configurations, hyperparameters, and feature selections. Traditional methods like random search and grid search explore only a fraction of possible combinations, often missing optimal solutions. This study presents METIS, a hybrid classical-quantum AutoML system that leverages the Quantum Approximate Optimization Algorithm (QAOA) to generate diverse candidate configurations more efficiently than classical approaches. We encode the feature selection problem as a Quadratic Unconstrained Binary Optimization (QUBO) problem and use QAOA to explore the solution space in superposition. Experimental results demonstrate that quantum sampling explores 20,480 combinations compared to 20 for random search with the same number of samples, achieving 100% search space coverage versus 1.95% for random methods. These findings suggest that quantum algorithms can significantly enhance AutoML pipelines by providing more comprehensive search space exploration, particularly valuable for high-dimensional optimization problems.
 
 ## Introduction
 
@@ -94,9 +92,6 @@ The AutoML core leverages scikit-learn for classical machine learning models, Op
 | **Quantum Simulator** | default.qubit | Exact quantum circuit simulation |
 | **Classical ML** | scikit-learn | Traditional machine learning models |
 | **Hyperparameter Optimization** | Optuna | Bayesian optimization for hyperparameter tuning |
-| **Gradient Boosting** | XGBoost | Advanced ensemble learning |
-| **Containerization** | Docker | Consistent deployment across environments |
-| **Numerical Computing** | NumPy | Matrix operations and numerical computations |
 
 The web application provides a user interface for dataset upload, configuration specification, and results visualization. The system is containerized using Docker for consistent deployment across environments. Python was chosen for the quantum implementation due to the extensive quantum computing libraries available, including PennyLane for circuit construction and NumPy for numerical operations.
 
@@ -266,9 +261,35 @@ def generate_candidates(self, search_space: Dict[str, Any], num_candidates: int 
 
 The QAOA circuit initializes qubits in superposition using Hadamard gates, then applies alternating cost and mixer layers. The cost layer applies phase rotations based on the QUBO matrix, encoding the optimization problem. The mixer layer applies X rotations to explore the solution space. Measurement yields expectation values that are thresholded to produce binary feature selections. The circuit's ability to explore multiple configurations simultaneously through quantum superposition provides the algorithmic advantage over classical methods.
 
+### Procedure
+
+The experimental procedure follows a structured pipeline that combines quantum and classical components to generate and evaluate candidate model configurations.
+
+**Phase 1: Data Preparation and Search Space Definition**
+
+The process begins with dataset preparation, where raw data is uploaded and preprocessed. This includes handling missing values, encoding categorical variables, and normalizing features. The dataset is then split into training, validation, and test sets using standard cross-validation techniques. Simultaneously, the search space is constructed by defining the feature selection space as binary decisions for each feature, along with the hyperparameter spaces for different model types.
+
+**Phase 2: Quantum Candidate Generation**
+
+The feature selection problem is encoded as a QUBO matrix using the encoding function, transforming the combinatorial optimization challenge into a format suitable for quantum processing. The QAOA circuit is then executed to generate candidate configurations. This involves initializing qubits in superposition, applying alternating cost and mixer layers, and sampling qubit states. The sampled states are decoded to produce feature masks representing different feature combinations.
+
+**Phase 3: Classical Baseline Generation**
+
+For comparison, classical candidate configurations are generated using uniform random sampling. This provides a baseline against which quantum performance can be measured, ensuring fair evaluation of the quantum approach's advantages.
+
+**Phase 4: Model Training and Evaluation**
+
+All candidate configurations, both quantum and classical, undergo model training using the selected features and hyperparameters. Each configuration is trained on the training set and evaluated using cross-validation with specified metrics such as accuracy, F1-score, or mean squared error depending on the task type.
+
+**Phase 5: Comparative Analysis**
+
+The final phase involves comprehensive comparison of exploration efficiency, search space coverage, and execution time between quantum and random methods. This analysis quantifies the quantum approach's advantages in terms of exploration breadth and solution quality.
+
+The timeline for a typical experiment ranges from minutes to hours depending on dataset size and search budget. Quantum simulation adds computational overhead but provides superior exploration. A detailed implementation is demonstrated in the [quantum sampler notebook](https://github.com/devenshah2018/METIS/blob/main/quantum-sampler/quantum_sampler_demo.ipynb).
+
 #### System Architecture
 
-The Metis system implements a microservices architecture with four main components. The frontend, built with React and Vite, provides the user interface for dataset upload and results visualization. The API Gateway, implemented in Go using the Gin framework, coordinates communication between services and manages job queues. The AutoML Core, a Python FastAPI service, handles dataset preprocessing, search space construction, model training, and evaluation. The Quantum Sampler, also a Python FastAPI service, implements the QAOA-based candidate generation.
+The METIS system implements a microservices architecture with four main components. The frontend, built with React and Vite, provides the user interface for dataset upload and results visualization. The API Gateway, implemented in Go using the Gin framework, coordinates communication between services and manages job queues. The AutoML Core, a Python FastAPI service, handles dataset preprocessing, search space construction, model training, and evaluation. The Quantum Sampler, also a Python FastAPI service, implements the QAOA-based candidate generation.
 
 | Component | Technology | Primary Responsibility |
 |-----------|------------|----------------------|
@@ -279,51 +300,7 @@ The Metis system implements a microservices architecture with four main componen
 
 This architecture enables independent development and scaling of components. The quantum sampler can be replaced with alternative implementations or real quantum hardware without affecting other components. The system communicates via HTTP/JSON REST APIs, making it language-agnostic and facilitating future extensions. The web application makes the quantum-enhanced AutoML process accessible to users without requiring quantum computing expertise.
 
-<div data-video="/demos/metis-demo.mp4"></div>
-
-### Procedure
-
-The experimental procedure follows these steps:
-
-
-1. Dataset Preparation: Upload and preprocess the dataset, splitting into training, validation, and test sets.
-
-2. Search Space Construction: Define the feature selection space (binary decisions for each feature) and model hyperparameter spaces.
-
-3. QUBO Encoding: Convert the feature selection problem to QUBO format using the encoding function.
-
-4. Quantum Candidate Generation: Execute QAOA circuit to generate candidate configurations, sampling qubit states and decoding to feature masks.
-
-5. Classical Candidate Generation: Generate random candidate configurations for comparison using uniform random sampling.
-
-6. Model Training: Train models for all candidate configurations using the selected features and hyperparameters.
-
-7. Evaluation: Evaluate all candidates using cross-validation and specified metrics.
-
-8. Comparison: Compare exploration efficiency, search space coverage, and execution time between quantum and random methods.
-
-The timeline for a typical experiment ranges from minutes to hours depending on dataset size and search budget. Quantum simulation adds computational overhead but provides superior exploration. A detailed implementation is demonstrated in the [quantum sampler notebook](https://github.com/devenshah2018/metis/blob/main/quantum-sampler/quantum_sampler_demo.ipynb).
-
-### Data Analysis
-
-The analysis focuses on four key metrics:
-
-| Metric | Description | Calculation |
-|--------|-------------|-------------|
-| **Exploration** | Number of unique combinations explored | Count of distinct feature mask configurations |
-| **Execution Time** | Computational cost per method | Wall-clock time for candidate generation |
-| **Exploration Efficiency** | Normalized exploration rate | Combinations explored ÷ execution time |
-| **Search Space Coverage** | Percentage of total space explored | (Unique combinations ÷ total possible) × 100 |
-
-Exploration metrics measure the number of unique combinations explored. The quantum method explores combinations in superposition, allowing evaluation of exponentially more configurations than the number of samples.
-
-Execution time measures the computational cost of each method. Quantum simulation introduces overhead due to circuit execution and state sampling.
-
-Exploration efficiency calculates combinations explored per second, providing a normalized comparison accounting for execution time differences.
-
-Search space coverage measures the percentage of the total search space explored, indicating how comprehensively each method samples the solution space.
-
-Statistical analysis compares these metrics between quantum and random methods, using the experimental results to validate the hypothesis that quantum methods provide superior exploration.
+<div data-video="/demos/METIS-demo.mp4"></div>
 
 ## Results
 
@@ -394,4 +371,4 @@ These findings contribute to the growing body of research on quantum machine lea
 
 Recommendations for future research include exploring adaptive budget allocation between classical and quantum methods, investigating alternative quantum algorithms like VQE for different problem structures, and evaluating performance on real quantum hardware as devices become more accessible. Extending the approach to full hyperparameter optimization and exploring quantum feature maps for data encoding represent promising directions.
 
-The practical implementation demonstrates that quantum advantages are accessible today through simulators, providing immediate value while preparing for future quantum hardware. As quantum computing matures, systems like Metis will become increasingly valuable for solving complex optimization problems in machine learning and beyond.
+The practical implementation demonstrates that quantum advantages are accessible today through simulators, providing immediate value while preparing for future quantum hardware. As quantum computing matures, systems like METIS will become increasingly valuable for solving complex optimization problems in machine learning and beyond.

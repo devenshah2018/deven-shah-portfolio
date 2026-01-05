@@ -25,26 +25,42 @@ export function StudyContent({ content }: StudyContentProps) {
         rehypePlugins={[rehypeRaw, rehypeKatex]}
         components={{
           // Headings
-          h1: ({ children }) => (
-            <h1 className='mb-6 mt-12 text-4xl font-bold leading-tight text-white first:mt-0'>
-              {children}
-            </h1>
-          ),
-          h2: ({ children }) => (
-            <h2 className='mb-4 mt-10 text-3xl font-bold leading-tight text-white'>
-              {children}
-            </h2>
-          ),
-          h3: ({ children }) => (
-            <h3 className='mb-3 mt-8 text-2xl font-semibold leading-snug text-white'>
-              {children}
-            </h3>
-          ),
-          h4: ({ children }) => (
-            <h4 className='mb-2 mt-6 text-xl font-semibold text-slate-200'>
-              {children}
-            </h4>
-          ),
+          h1: ({ children }) => {
+            const text = String(children);
+            const id = text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').trim();
+            return (
+              <h1 id={id} className='mb-6 mt-12 text-4xl font-bold leading-tight text-white first:mt-0 scroll-mt-24'>
+                {children}
+              </h1>
+            );
+          },
+          h2: ({ children }) => {
+            const text = String(children);
+            const id = text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').trim();
+            return (
+              <h2 id={id} className='mb-4 mt-10 text-3xl font-bold leading-tight text-white scroll-mt-24'>
+                {children}
+              </h2>
+            );
+          },
+          h3: ({ children }) => {
+            const text = String(children);
+            const id = text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').trim();
+            return (
+              <h3 id={id} className='mb-3 mt-8 text-2xl font-semibold leading-snug text-white scroll-mt-24'>
+                {children}
+              </h3>
+            );
+          },
+          h4: ({ children }) => {
+            const text = String(children);
+            const id = text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').trim();
+            return (
+              <h4 id={id} className='mb-2 mt-6 text-xl font-semibold text-slate-200 scroll-mt-24'>
+                {children}
+              </h4>
+            );
+          },
 
           // Paragraphs
           p: ({ children }) => (
