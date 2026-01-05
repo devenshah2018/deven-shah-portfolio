@@ -4,16 +4,14 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { Route, FlaskConical } from 'lucide-react';
+import { FlaskConical } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LINKS } from '@/lib/content-registry';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faKaggle } from '@fortawesome/free-brands-svg-icons';
 import { getResearchSiteUrl } from '@/lib/url-utils';
 
-interface NavigationProps {
-  onStartTour?: () => void;
-}
+interface NavigationProps {}
 
 const navItems = [
   { name: 'About', href: '#about' },
@@ -23,7 +21,7 @@ const navItems = [
   { name: 'Connect', href: '#contact' },
 ];
 
-export function Navigation({ onStartTour }: NavigationProps) {
+export function Navigation({}: NavigationProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [showName, setShowName] = useState(false);
   const [currentTime, setCurrentTime] = useState('');
@@ -263,21 +261,6 @@ export function Navigation({ onStartTour }: NavigationProps) {
               <FlaskConical className='h-4 w-4 transition-transform duration-300 group-hover:rotate-12' />
             </motion.a>
 
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.5 }}
-            >
-              <Button
-                onClick={onStartTour}
-                variant='outline'
-                className='rounded-full border-blue-400/50 bg-gradient-to-r from-blue-500/20 to-indigo-500/20 px-4 py-2 font-mono text-sm font-semibold tracking-wide text-blue-300 shadow-lg transition-all duration-300 hover:border-blue-300 hover:bg-gradient-to-r hover:from-blue-500/30 hover:to-indigo-500/30 hover:text-white'
-              >
-                <Route className='mr-2 h-4 w-4' />
-                Take Tour
-              </Button>
-            </motion.div>
-
             {navItems.map((item, index) => (
               <motion.div
                 key={item.name}
@@ -447,26 +430,6 @@ export function Navigation({ onStartTour }: NavigationProps) {
                   >
                     <FlaskConical className='h-5 w-5 transition-transform duration-300 group-hover:rotate-12' />
                   </motion.a>
-
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.4 }}
-                    className='mb-4 border-b border-slate-700/50 py-2'
-                  >
-                    <Button
-                      onClick={() => {
-                        setMobileNavOpen(false);
-                        onStartTour?.();
-                      }}
-                      variant='outline'
-                      className='w-full border-blue-400/50 bg-gradient-to-r from-blue-500/20 to-indigo-500/20 font-mono text-lg font-semibold text-blue-300 shadow-lg transition-all duration-300 hover:border-blue-300 hover:bg-gradient-to-r hover:from-blue-500/30 hover:to-indigo-500/30 hover:text-white hover:shadow-blue-500/25'
-                    >
-                      <Route className='mr-2 h-5 w-5' />
-                      Take Tour
-                    </Button>
-                  </motion.div>
 
                   {navItems.map((item, index) => (
                     <motion.div

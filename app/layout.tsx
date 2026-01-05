@@ -4,7 +4,6 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { Analytics } from '@vercel/analytics/next';
 import { GoogleTagManager } from '@next/third-parties/google';
-import { TourProvider } from '@/components/tour/tour-context';
 import { LayoutWrapper } from '@/components/layout-wrapper';
 import { headers } from 'next/headers';
 
@@ -143,10 +142,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         {process.env.NODE_ENV === 'production' && (
           <GoogleTagManager gtmId='GTM-MQBDDCBQ' />
         )}
-        <TourProvider>
-          <LayoutWrapper>{children}</LayoutWrapper>
-          <Analytics />
-        </TourProvider>
+        <LayoutWrapper>{children}</LayoutWrapper>
+        <Analytics />
       </body>
     </html>
   );
