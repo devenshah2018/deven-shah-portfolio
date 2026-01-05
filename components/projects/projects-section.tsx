@@ -17,17 +17,6 @@ function isProjectFeatured(project: Project): boolean {
   return getProjectCategories(project).includes('featured');
 }
 
-function getStatusBadgeClasses(status: string): string {
-  if (status === 'Live' || status === 'Completed') {
-    return 'bg-emerald-500/20 text-emerald-300 border-emerald-500/50';
-  } else if (status === 'In Progress') {
-    return 'bg-blue-500/20 text-blue-300 border-blue-500/50';
-  } else if (status === 'Paused') {
-    return 'bg-amber-500/20 text-amber-300 border-amber-500/50';
-  }
-  return 'bg-slate-500/20 text-slate-300 border-slate-500/50';
-}
-
 function getStatusBadge(status: string, size: 'sm' | 'md' = 'sm') {
   const baseClasses = size === 'sm' 
     ? 'inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium shadow-sm'
@@ -239,32 +228,11 @@ function RelatedLogos({ project }: { project: Project }) {
 
 export function ProjectsSection() {
   const [activeCategory, setActiveCategory] = useState<string>('featured');
-  const [activeStatus, setActiveStatus] = useState<string>('all');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-
-  // Get unique statuses from projects, combining Completed and Live
-  const projectStatuses = useMemo(() => {
-    const statuses = new Set(PROJECTS.map((p: Project) => p.status));
-    const statusArray = Array.from(statuses);
-    
-    // Combine Completed and Live into "Completed/Live"
-    const hasCompleted = statusArray.includes('Completed');
-    const hasLive = statusArray.includes('Live');
-    const otherStatuses = statusArray.filter(s => s !== 'Completed' && s !== 'Live');
-    
-    const combinedStatuses: string[] = [];
-    if (hasCompleted || hasLive) {
-      combinedStatuses.push('Completed/Live');
-    }
-    combinedStatuses.push(...otherStatuses.sort());
-    
-    return combinedStatuses;
-  }, []);
 
   React.useEffect(() => {
     const handleResetFilter = () => {
       setActiveCategory('all');
-      setActiveStatus('all');
     };
 
     window.addEventListener('resetProjectFilter', handleResetFilter);
@@ -276,23 +244,14 @@ export function ProjectsSection() {
       const matchesCategory =
         activeCategory === 'all' || getProjectCategories(project).includes(activeCategory);
       
-      let matchesStatus = false;
-      if (activeStatus === 'all') {
-        matchesStatus = true;
-      } else if (activeStatus === 'Completed/Live') {
-        matchesStatus = project.status === 'Completed' || project.status === 'Live';
-      } else {
-        matchesStatus = project.status === activeStatus;
-      }
-      
-      return matchesCategory && matchesStatus;
+      return matchesCategory;
     }).sort((a, b) => {
       if (a.sortDate && b.sortDate) {
         return b.sortDate.localeCompare(a.sortDate);
       }
       return 0;
     });
-  }, [activeCategory, activeStatus]);
+  }, [activeCategory]);
 
   return (
     <section id='projects' className='bg-gradient-to-b from-slate-950 to-slate-900 py-20'>
@@ -328,9 +287,9 @@ export function ProjectsSection() {
             </motion.p>
           </div>
 
-          <div className='mb-8 flex flex-col gap-4'>
-            {/* Category Filters */}
-            <div className='flex flex-wrap gap-2'>
+          <div className='mb-8'>
+            {/* Category Filters and View Mode */}
+            <div className='flex flex-wrap items-center gap-2'>
               {PROJECT_CATEGORIES.filter(cat => cat.key === 'all').map(cat => (
               <Button
                 key={cat.key}
@@ -379,60 +338,9 @@ export function ProjectsSection() {
                 {cat.label}
               </Button>
               ))}
-            </div>
-
-            {/* Status Filters and View Mode */}
-            <div className='flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4'>
-              <div className='flex flex-wrap items-center gap-2'>
-                <span className='text-xs font-medium text-slate-400 mr-1'>Status:</span>
-                <Button
-                  variant={activeStatus === 'all' ? 'default' : 'outline'}
-                  size='sm'
-                  onClick={() => setActiveStatus('all')}
-                  className={`rounded-full px-4 py-1.5 text-xs font-medium transition-all ${
-                    activeStatus === 'all'
-                      ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white'
-                      : 'border-slate-700 bg-slate-900/50 text-slate-300 hover:border-blue-500 hover:text-blue-400'
-                  }`}
-                >
-                  All
-                </Button>
-                {projectStatuses.map(status => {
-                  const IconComponent = status === 'Completed/Live' 
-                    ? CheckCircle2 
-                    : status === 'In Progress' 
-                    ? Clock 
-                    : status === 'Paused' 
-                    ? Pause 
-                    : null;
-                  
-                  const getStatusClasses = (s: string) => {
-                    if (s === 'Completed/Live') {
-                      return 'bg-emerald-500/20 text-emerald-300 border-emerald-500/50';
-                    }
-                    return getStatusBadgeClasses(s);
-                  };
-                  
-                  return (
-                    <Button
-                      key={status}
-                      variant={activeStatus === status ? 'default' : 'outline'}
-                      size='sm'
-                      onClick={() => setActiveStatus(status)}
-                      className={`rounded-full px-4 py-1.5 text-xs font-medium transition-all border inline-flex items-center gap-1.5 ${
-                        activeStatus === status
-                          ? getStatusClasses(status)
-                          : 'border-slate-700 bg-slate-900/50 text-slate-300 hover:border-blue-500 hover:text-blue-400'
-                      }`}
-                    >
-                      {IconComponent && <IconComponent className='h-3 w-3' />}
-                      {status}
-                    </Button>
-                  );
-                })}
-              </div>
-
-              <div className='flex gap-2'>
+              
+              {/* View Mode Toggle - Inline with filters */}
+              <div className='ml-auto flex gap-2'>
                 <Button
                   variant={viewMode === 'grid' ? 'default' : 'outline'}
                   size='sm'
