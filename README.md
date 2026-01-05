@@ -192,6 +192,51 @@ The quantum IDE represents a significant technical achievement:
 
 ---
 
+## 🚀 **Local Development**
+
+### **Getting Started**
+
+```bash
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+```
+
+### **Accessing the Research Portal**
+
+The research portal uses subdomain-based routing. In development, you can access it in several ways:
+
+#### **Option 1: Subdomain (Chrome/Firefox)**
+- Main site: `http://localhost:3000`
+- Research portal: `http://research.localhost:3000`
+
+#### **Option 2: Path-based (Safari/All Browsers)**
+Safari doesn't support `localhost` subdomains by default. Use these alternatives:
+
+- **Direct path**: `http://localhost:3000/research`
+- **Query parameter**: `http://localhost:3000/research?subdomain=research`
+
+#### **Option 3: Configure /etc/hosts (Safari)**
+For Safari to work with subdomains, add this to `/etc/hosts`:
+
+```bash
+# Edit hosts file (requires sudo)
+sudo nano /etc/hosts
+
+# Add this line:
+127.0.0.1 research.localhost
+```
+
+Then access: `http://research.localhost:3000`
+
+**Note**: After editing `/etc/hosts`, you may need to:
+- Clear Safari's DNS cache: `dscacheutil -flushcache`
+- Restart Safari
+
+---
+
 ## 🔧 **Development Tools**
 
 ### **Code Quality**

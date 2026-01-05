@@ -66,6 +66,9 @@ export async function POST(request: NextRequest) {
             'status',
             'relatedProjectId',
             'location',
+            'excerpt',
+            'tags',
+            'readingTime',
           ],
         }),
       });
@@ -134,6 +137,9 @@ export async function POST(request: NextRequest) {
             status: fields.status,
             relatedProjectId: fields.relatedProjectId,
             location: fields.location,
+            excerpt: fields.excerpt,
+            tags: fields.tags,
+            readingTime: fields.readingTime,
           },
         };
       });
@@ -153,18 +159,20 @@ export async function POST(request: NextRequest) {
         .filter((r: any) => {
           // If query has specific keywords, require keyword matches for results
           if (queryKeywords.length > 0) {
-            const contentType = r.content_type as 'project' | 'experience' | 'paper';
+            const contentType = r.content_type as 'project' | 'experience' | 'paper' | 'study';
             
-            // Check content registry keyword match
-            const hasRegistryMatch = contentMatchesKeywords(
-              r.content_id,
-              contentType,
-              queryKeywords
-            );
+            // Check content registry keyword match (only for registered content types)
+            const hasRegistryMatch = ['project', 'experience', 'paper'].includes(contentType)
+              ? contentMatchesKeywords(
+                  r.content_id,
+                  contentType as 'project' | 'experience' | 'paper',
+                  queryKeywords
+                )
+              : false;
             
             // Check if title or metadata contains keywords
             const titleLower = r.title.toLowerCase();
-            const metadataText = `${r.metadata?.['keywords'] || ''} ${r.metadata?.['technologies'] || ''} ${r.metadata?.['company'] || ''}`.toLowerCase();
+            const metadataText = `${r.metadata?.['keywords'] || ''} ${r.metadata?.['technologies'] || ''} ${r.metadata?.['company'] || ''} ${r.metadata?.['tags'] || ''} ${r.metadata?.['excerpt'] || ''}`.toLowerCase();
             const hasTextMatch = queryKeywords.some(kw => 
               titleLower.includes(kw) || metadataText.includes(kw)
             );

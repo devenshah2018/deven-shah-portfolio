@@ -174,3 +174,50 @@ export function combineExperienceText(experience: {
   return parts.join(' ');
 }
 
+/**
+ * Combine study fields into searchable text
+ * Weight important fields (title, tags, excerpt) by repeating them 2-3x
+ * Include full content for comprehensive search
+ */
+export function combineStudyText(study: {
+  title: string;
+  excerpt: string;
+  content: string;
+  tags: string[];
+}): string {
+  const parts: string[] = [];
+  
+  // Title - repeat 3x for high weight
+  parts.push(`Title: ${study.title}`);
+  parts.push(study.title);
+  parts.push(study.title);
+
+  // Excerpt - repeat 2x for medium-high weight
+  parts.push(`Excerpt: ${study.excerpt}`);
+  parts.push(study.excerpt);
+  parts.push(study.excerpt);
+
+  // Tags - repeat 3x for very high weight
+  if (study.tags && study.tags.length > 0) {
+    const tagsText = study.tags.join(' ');
+    parts.push(tagsText);
+    parts.push(tagsText);
+    parts.push(tagsText);
+  }
+
+  // Content - full text for comprehensive search
+  // Remove markdown syntax for cleaner embedding
+  const cleanContent = study.content
+    .replace(/^#+\s+/gm, '') // Remove markdown headers
+    .replace(/\*\*(.*?)\*\*/g, '$1') // Remove bold
+    .replace(/\*(.*?)\*/g, '$1') // Remove italic
+    .replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1') // Remove links, keep text
+    .replace(/`([^`]+)`/g, '$1') // Remove inline code
+    .replace(/```[\s\S]*?```/g, '') // Remove code blocks
+    .trim();
+  
+  parts.push(cleanContent);
+
+  return parts.join(' ');
+}
+

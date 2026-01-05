@@ -46,3 +46,15 @@ export type ResearchPaper = {
   status?: 'Published' | 'Under Review' | 'Preprint' | 'In Progress';
   relatedProjectId?: string;
 };
+
+export type Study = {
+  id: string;
+  slug?: string; // Custom URL slug. Falls back to id if not provided
+  title: string;
+  excerpt: string;
+  date: string;
+  sortDate: string;
+  tags: string[];
+  readingTime: number; // in minutes
+  content: string; // MDX content
+};
