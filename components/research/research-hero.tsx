@@ -1,22 +1,23 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { FlaskConical, GraduationCap, Mail, Linkedin, Github, CalendarCheck2, ArrowLeft } from 'lucide-react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXTwitter } from '@fortawesome/free-brands-svg-icons';
+import { FlaskConical, CalendarCheck2, ArrowLeft } from 'lucide-react';
 import { getMainSiteUrl } from '@/lib/url-utils';
-import { EDUCATION, LINKS } from '@/lib/content-registry';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { useEffect } from 'react';
 import '@calcom/atoms/globals.min.css';
 import { getCalApi } from '@calcom/embed-react';
+import { ResearchCarousel } from './research-carousel';
+import type { ResearchPaper, Study } from '@/lib/types';
 
 interface ResearchHeroProps {
   children?: React.ReactNode;
+  papers?: ResearchPaper[];
+  studies?: Study[];
 }
 
-export function ResearchHero({ children }: ResearchHeroProps) {
+export function ResearchHero({ children, papers = [], studies = [] }: ResearchHeroProps) {
   useEffect(() => {
     (async function () {
       const cal = await getCalApi({ namespace: 'quick-chat' });
@@ -72,85 +73,19 @@ export function ResearchHero({ children }: ResearchHeroProps) {
               </p>
             </div>
 
-            {/* Education */}
-            <div className='space-y-4'>
-              <div className='flex items-center gap-2.5 mb-4'>
-                <div className='p-2 rounded-lg bg-slate-900/50 border border-slate-800/50'>
-                  <GraduationCap className='h-4 w-4 text-slate-400' />
-                </div>
-                <h3 className='text-sm font-semibold uppercase tracking-wider text-slate-400'>Education</h3>
-              </div>
-              <div className='space-y-3'>
-                {EDUCATION.map((edu) => (
-                  <div key={edu.id} className='border border-slate-800/50 bg-slate-900/30 rounded-xl p-4 hover:border-slate-700/50 hover:bg-slate-900/50 transition-all duration-200'>
-                    <div className='text-sm font-semibold text-white mb-1'>{edu.degree}</div>
-                    <div className='text-xs text-slate-400 mb-1'>{edu.institution}</div>
-                    <div className='text-xs text-slate-500 font-mono'>{edu.period}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
+            {/* Research Carousel */}
+            <ResearchCarousel papers={papers} studies={studies} />
 
-            {/* Contact Links */}
-            <div className='flex flex-col border border-slate-800/50 bg-slate-900/30 rounded-xl overflow-hidden'>
-              <div className='flex items-center gap-2.5 p-4 border-b border-slate-800/50 bg-slate-900/50'>
-                <div className='p-2 rounded-lg bg-slate-900/50 border border-slate-800/50'>
-                  <Mail className='h-4 w-4 text-slate-400' />
-                </div>
-                <h3 className='text-sm font-semibold uppercase tracking-wider text-slate-400'>Connect</h3>
-              </div>
-              
-              <div className='flex flex-col p-5 space-y-3'>
-                {/* Calendly Button - Prominent */}
-                <Button
-                  data-cal-namespace='quick-chat'
-                  data-cal-link='deven-shah-l0qkjk/quick-chat'
-                  data-cal-config='{"layout":"month_view"}'
-                  className='w-full justify-center border border-cyan-500/40 bg-gradient-to-r from-cyan-600/80 to-cyan-700/70 px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-cyan-500/20 hover:from-cyan-500 hover:to-cyan-600 hover:border-cyan-400/60 hover:shadow-cyan-500/30 transition-all duration-200 rounded-lg'
-                >
-                  <CalendarCheck2 className='mr-2 h-4 w-4' />
-                  Book a Call
-                </Button>
-
-                {/* Social Links */}
-                <div className='grid grid-cols-2 gap-2.5'>
-                  <a
-                    href={`mailto:${LINKS.email}`}
-                    className='flex items-center gap-2 border border-slate-800/50 bg-slate-900/30 px-3 py-2.5 text-sm text-slate-300 hover:bg-slate-900/50 hover:text-white hover:border-slate-700/50 transition-all duration-200 rounded-lg'
-                  >
-                    <Mail className='h-3.5 w-3.5' />
-                    <span>Email</span>
-                  </a>
-                  <a
-                    href={LINKS.linkedin}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    className='flex items-center gap-2 border border-slate-800/50 bg-slate-900/30 px-3 py-2.5 text-sm text-slate-300 hover:bg-slate-900/50 hover:text-white hover:border-slate-700/50 transition-all duration-200 rounded-lg'
-                  >
-                    <Linkedin className='h-3.5 w-3.5' />
-                    <span>LinkedIn</span>
-                  </a>
-                  <a
-                    href={LINKS.github}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    className='flex items-center gap-2 border border-slate-800/50 bg-slate-900/30 px-3 py-2.5 text-sm text-slate-300 hover:bg-slate-900/50 hover:text-white hover:border-slate-700/50 transition-all duration-200 rounded-lg'
-                  >
-                    <Github className='h-3.5 w-3.5' />
-                    <span>GitHub</span>
-                  </a>
-                  <a
-                    href={LINKS.x}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    className='flex items-center gap-2 border border-slate-800/50 bg-slate-900/30 px-3 py-2.5 text-sm text-slate-300 hover:bg-slate-900/50 hover:text-white hover:border-slate-700/50 transition-all duration-200 rounded-lg'
-                  >
-                    <FontAwesomeIcon icon={faXTwitter} className='h-3.5 w-3.5' />
-                    <span>X</span>
-                  </a>
-                </div>
-              </div>
-            </div>
+            {/* Book a Call Button */}
+            <Button
+              data-cal-namespace='quick-chat'
+              data-cal-link='deven-shah-l0qkjk/quick-chat'
+              data-cal-config='{"layout":"month_view"}'
+              className='w-full justify-center border border-cyan-500/40 bg-gradient-to-r from-cyan-600/80 to-cyan-700/70 px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-cyan-500/20 hover:from-cyan-500 hover:to-cyan-600 hover:border-cyan-400/60 hover:shadow-cyan-500/30 transition-all duration-200 rounded-lg'
+            >
+              <CalendarCheck2 className='mr-2 h-4 w-4' />
+              Book a Call
+            </Button>
           </motion.div>
 
           {/* Right: Chatbot */}

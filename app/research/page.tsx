@@ -36,7 +36,7 @@ export default async function ResearchIndexPage() {
   return (
     <div className='min-h-screen bg-slate-950 text-slate-50'>
       {/* Hero Section with Split Layout */}
-      <ResearchHero>
+      <ResearchHero papers={sortedPapers} studies={studies}>
         <ResearchChatbot />
       </ResearchHero>
 
