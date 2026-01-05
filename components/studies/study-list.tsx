@@ -15,7 +15,7 @@ export function StudyList({ studies, featuredStudy }: StudyListProps) {
     : studies;
 
   return (
-    <div className='space-y-16'>
+    <div className='space-y-8'>
       {/* Featured Study */}
       {featuredStudy && (
         <div>
@@ -25,13 +25,15 @@ export function StudyList({ studies, featuredStudy }: StudyListProps) {
 
       {/* Regular Studies Grid */}
       {regularStudies.length > 0 && (
-        <div className='space-y-8'>
-          <div className='flex items-center gap-4'>
-            <div className='h-px flex-1 bg-gradient-to-r from-transparent via-slate-800 to-transparent' />
-            <h2 className='text-lg font-semibold text-slate-400'>More Studies</h2>
-            <div className='h-px flex-1 bg-gradient-to-r from-transparent via-slate-800 to-transparent' />
-          </div>
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+        <div className='space-y-6'>
+          {featuredStudy && (
+            <div className='flex items-center gap-3'>
+              <div className='h-px flex-1 bg-slate-800/50' />
+              <h2 className='text-sm font-semibold uppercase tracking-wider text-slate-500'>More Studies</h2>
+              <div className='h-px flex-1 bg-slate-800/50' />
+            </div>
+          )}
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
             {regularStudies.map((study, index) => (
               <StudyCard key={study.id} study={study} index={index} />
             ))}

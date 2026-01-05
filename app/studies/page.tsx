@@ -23,15 +23,20 @@ export default async function StudiesPage() {
     <div className='min-h-screen bg-slate-950 text-slate-50'>
       {/* Header */}
       <div className='border-b border-slate-800/50 bg-slate-950'>
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8 py-6 max-w-7xl'>
+        <div className='container mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-7xl'>
           <div className='flex items-center justify-between'>
-            <div className='flex items-center gap-3'>
+            <div className='flex items-center gap-4'>
               <div className='p-2.5 rounded-xl bg-cyan-500/10 border border-cyan-500/20'>
                 <BookOpen className='h-5 w-5 text-cyan-400' />
               </div>
-              <h1 className='text-2xl font-bold tracking-tight text-white'>
-                Studies
-              </h1>
+              <div>
+                <h1 className='text-2xl font-bold tracking-tight text-white'>
+                  Studies
+                </h1>
+                <p className='text-xs font-mono text-slate-500 mt-1'>
+                  RESEARCH ARCHIVE
+                </p>
+              </div>
             </div>
             <Link
               href={subdomain === 'research' ? '/research' : getMainSiteUrl()}
@@ -48,14 +53,24 @@ export default async function StudiesPage() {
 
       {/* Main Content */}
       <section className='border-b border-slate-800/50 bg-slate-950'>
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 max-w-7xl'>
-          <div className='mb-16 space-y-3'>
-            <h2 className='text-4xl lg:text-5xl font-bold tracking-tight text-white'>
-              Research Studies
-            </h2>
-            <p className='text-lg text-slate-400 max-w-2xl'>
-              Deep dives, insights, and analysis on AI, machine learning, and computational systems.
-            </p>
+        <div className='container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16 max-w-7xl'>
+          <div className='mb-10 space-y-4'>
+            <div className='flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4'>
+              <div className='space-y-2'>
+                <h2 className='text-2xl lg:text-3xl font-bold tracking-tight text-white'>
+                  All Studies
+                </h2>
+                <p className='text-sm text-slate-400 max-w-2xl'>
+                  In-depth research and analysis on AI, machine learning, and computational systems.
+                </p>
+              </div>
+              <div className='flex items-center gap-3'>
+                <div className='flex items-center gap-2 px-3 py-1.5 border border-slate-800/50 bg-slate-900/30 rounded-lg'>
+                  <span className='text-xs font-mono text-slate-400'>{studies.length}</span>
+                  <span className='text-xs text-slate-500'>total</span>
+                </div>
+              </div>
+            </div>
           </div>
 
           <StudyList studies={studies} featuredStudy={featuredStudy} />

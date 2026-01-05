@@ -42,10 +42,10 @@ export default async function ResearchIndexPage() {
 
       {/* Main Content: Studies (Primary) and Papers (Sidebar) */}
       <section className='border-t border-slate-800/50 bg-slate-950'>
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 max-w-7xl'>
+        <div className='container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16 max-w-7xl'>
           <div className='grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16'>
             {/* Main Content: Studies */}
-            <div className='lg:col-span-8 space-y-12'>
+            <div className='lg:col-span-8 space-y-8'>
               {/* Section Header */}
               <div className='flex items-center justify-between'>
                 <div className='space-y-2'>
@@ -53,11 +53,11 @@ export default async function ResearchIndexPage() {
                     <div className='p-2.5 rounded-xl bg-cyan-500/10 border border-cyan-500/20'>
                       <BookOpen className='h-5 w-5 text-cyan-400' />
                     </div>
-                    <h2 className='text-3xl lg:text-4xl font-bold tracking-tight text-white'>
+                    <h2 className='text-2xl lg:text-3xl font-bold tracking-tight text-white'>
                       Studies
                     </h2>
                   </div>
-                  <p className='text-base text-slate-400 ml-14'>
+                  <p className='text-sm text-slate-400 ml-14'>
                     In-depth research and analysis
                   </p>
                 </div>
@@ -76,10 +76,10 @@ export default async function ResearchIndexPage() {
               {studies.length > 0 ? (
                 <StudyList studies={studies.slice(0, 6)} featuredStudy={featuredStudy} />
               ) : (
-                <div className='text-center py-24 border border-slate-800/50 bg-slate-900/30 rounded-2xl p-12'>
-                  <BookOpen className='mx-auto h-12 w-12 mb-4 text-slate-600' />
-                  <p className='text-xl font-semibold mb-2 text-white'>No Studies Found</p>
-                  <p className='text-sm font-mono text-slate-500'>SYSTEM: STANDBY</p>
+                <div className='text-center py-16 border border-slate-800/50 bg-slate-900/30 rounded-xl p-8'>
+                  <BookOpen className='mx-auto h-10 w-10 mb-3 text-slate-600' />
+                  <p className='text-lg font-semibold mb-1 text-white'>No Studies Found</p>
+                  <p className='text-xs font-mono text-slate-500'>SYSTEM: STANDBY</p>
                 </div>
               )}
             </div>
