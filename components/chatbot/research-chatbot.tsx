@@ -4,12 +4,12 @@ import { useState, useRef, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Send, Loader2, FileText, Code, ExternalLink, User, Briefcase } from 'lucide-react';
+import { Send, Loader2, FileText, Code, ExternalLink, User, Briefcase, BookOpen } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getMainSiteUrl } from '@/lib/url-utils';
 
 interface SearchResult {
-  content_type: 'paper' | 'project' | 'experience';
+  content_type: 'paper' | 'project' | 'experience' | 'study';
   content_id: string;
   title: string;
   url: string;
@@ -21,6 +21,8 @@ interface SearchResult {
     period?: string;
     company?: string;
     location?: string;
+    tags?: string;
+    excerpt?: string;
   };
 }
 
@@ -95,7 +97,7 @@ export function ResearchChatbot() {
       timestamp: new Date(),
     };
 
-    ((prev: any) => [...prev, userMessage]);
+    setMessages((prev: any) => [...prev, userMessage]);
     setInput('');
     setIsSearching(true);
 
@@ -134,7 +136,7 @@ export function ResearchChatbot() {
         botContent = `${results.length} ${results.length === 1 ? 'result' : 'results'} found`;
       } else {
         // More helpful error message
-        botContent = `I couldn't find any relevant papers or projects matching your query.\n\nPossible issues:\n\n1. **Embeddings not generated**: Run \`npm run generate-embeddings\`\n2. **Supabase function missing**: Create the \`match_content\` function (see CHATBOT_SETUP.md)\n3. **Query too specific**: Try broader terms like "machine learning" or "quantum computing"\n\nCheck the server logs for more details.`;
+        botContent = `I couldn't find any relevant papers, projects, or studies matching your query.\n\nPossible issues:\n\n1. **Embeddings not generated**: Run \`npm run generate-pinecone-embeddings\`\n2. **Supabase function missing**: Create the \`match_content\` function (see CHATBOT_SETUP.md)\n3. **Query too specific**: Try broader terms like "machine learning" or "quantum computing"\n\nCheck the server logs for more details.`;
       }
 
       const botMessage: Message = {
@@ -248,7 +250,7 @@ export function ResearchChatbot() {
                 {message.results && message.results.length > 0 && (
                   <div className='space-y-2 w-full'>
                     {message.results.map((result, index) => {
-                      // Handle clicks for experience and project results - redirect to main site
+                      // Handle clicks for experience, project, and study results
                       const handleResultClick = (e: React.MouseEvent) => {
                         if (result.content_type === 'experience' || result.content_type === 'project') {
                           e.preventDefault();
@@ -269,6 +271,27 @@ export function ResearchChatbot() {
                             ? `#experience-${result.content_id}`
                             : `#project-${result.content_id}`;
                           window.location.href = `${mainSiteUrl}${hash}`;
+                        } else if (result.content_type === 'study') {
+                          e.preventDefault();
+                          // For studies, navigate to the study page on the research subdomain
+                          // Extract study slug from URL (format: /studies/{slug})
+                          const studySlug = result.url.split('/studies/')[1] || result.content_id;
+                          const hostname = window.location.hostname;
+                          let baseUrl: string;
+                          // Check for localhost first (including research.localhost)
+                          if (hostname === 'localhost' || hostname === '127.0.0.1' || hostname.startsWith('192.168.') || hostname === 'research.localhost' || hostname.includes('localhost')) {
+                            // Local development - use research.localhost with http and port
+                            baseUrl = 'http://research.localhost:3000';
+                          } else if (hostname.includes('research.')) {
+                            // Already on research subdomain - use current protocol and hostname with port
+                            const protocol = window.location.protocol;
+                            const port = window.location.port ? `:${window.location.port}` : '';
+                            baseUrl = `${protocol}//${hostname}${port}`;
+                          } else {
+                            // On main site - redirect to research subdomain
+                            baseUrl = 'https://research.deven-shah.com';
+                          }
+                          window.location.href = `${baseUrl}/studies/${studySlug}`;
                         }
                         // For papers, use the default link behavior
                       };
@@ -289,11 +312,24 @@ export function ResearchChatbot() {
                               mainSiteUrl = getMainSiteUrl();
                             }
                             return `${mainSiteUrl}#${result.content_type === 'experience' ? 'experience' : 'project'}-${result.content_id}`;
+                          } else if (result.content_type === 'study') {
+                            // For studies, use research subdomain URL
+                            const studySlug = result.url.split('/studies/')[1] || result.content_id;
+                            const hostname = window.location.hostname;
+                            if (hostname === 'localhost' || hostname === '127.0.0.1' || hostname.startsWith('192.168.') || hostname === 'research.localhost') {
+                              return `http://research.localhost:3000/studies/${studySlug}`;
+                            } else if (hostname.includes('research.')) {
+                              // Use relative URL if already on research subdomain
+                              return `/studies/${studySlug}`;
+                            } else {
+                              return `https://research.deven-shah.com/studies/${studySlug}`;
+                            }
                           }
+                          // For papers, use the URL directly
                           return result.url;
                         })()}
                         onClick={handleResultClick}
-                        target={result.content_type === 'paper' && result.url.startsWith('http') ? '_blank' : undefined}
+                        target={result.content_type === 'paper' && result.url.startsWith('http') ? '_blank' : '_self'}
                         rel={result.content_type === 'paper' && result.url.startsWith('http') ? 'noopener noreferrer' : undefined}
                         initial={{ opacity: 0, y: 4, scale: 0.98 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -310,13 +346,17 @@ export function ResearchChatbot() {
                             <div className='p-1.5 rounded-md bg-orange-500/15 border border-orange-500/30 shadow-sm'>
                               <Briefcase className='h-3.5 w-3.5 text-orange-400' />
                             </div>
+                          ) : result.content_type === 'study' ? (
+                            <div className='p-1.5 rounded-md bg-indigo-500/15 border border-indigo-500/30 shadow-sm'>
+                              <BookOpen className='h-3.5 w-3.5 text-indigo-400' />
+                            </div>
                           ) : (
                             <div className='p-1.5 rounded-md bg-purple-500/15 border border-purple-500/30 shadow-sm'>
                               <Code className='h-3.5 w-3.5 text-purple-400' />
                             </div>
                           )}
                           <span className='text-[9px] font-mono uppercase tracking-widest text-gray-500 font-bold leading-none'>
-                            {result.content_type === 'paper' ? 'P' : result.content_type === 'experience' ? 'E' : 'PR'}
+                            {result.content_type === 'paper' ? 'P' : result.content_type === 'experience' ? 'E' : result.content_type === 'study' ? 'S' : 'PR'}
                           </span>
                         </div>
                         
@@ -329,7 +369,7 @@ export function ResearchChatbot() {
                           </div>
                           
                           {/* Metadata */}
-                          {result.metadata && (result.metadata.date || result.metadata.institution || result.metadata.period || result.metadata.company) && (
+                          {result.metadata && (result.metadata.date || result.metadata.institution || result.metadata.period || result.metadata.company || result.metadata.tags) && (
                             <div className='flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[11px] text-gray-400'>
                               {result.metadata.period && (
                                 <span className='font-mono text-gray-500'>{result.metadata.period}</span>
@@ -350,6 +390,12 @@ export function ResearchChatbot() {
                                 <>
                                   {(result.metadata.period || result.metadata.company || result.metadata.institution) && <span className='text-gray-600'>•</span>}
                                   <span className='font-mono text-gray-500'>{result.metadata.date}</span>
+                                </>
+                              )}
+                              {result.metadata.tags && (
+                                <>
+                                  {(result.metadata.period || result.metadata.company || result.metadata.institution || result.metadata.date) && <span className='text-gray-600'>•</span>}
+                                  <span className='text-indigo-400 truncate max-w-[140px]'>{result.metadata.tags.split(', ').slice(0, 2).join(', ')}</span>
                                 </>
                               )}
                             </div>
@@ -414,7 +460,7 @@ export function ResearchChatbot() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder='Ask about papers, projects, or experiences...'
+            placeholder='Ask about papers, projects, studies, or experiences...'
             disabled={isSearching}
             className='flex-1 border border-gray-800/60 bg-gray-900/90 text-white placeholder:text-gray-500 focus:border-gray-700/60 focus:ring-1 focus:ring-gray-700/20 focus:bg-gray-900 transition-all rounded-lg px-4 py-3 text-[13px] font-medium tracking-tight shadow-lg shadow-black/30'
           />
