@@ -5,12 +5,6 @@ date: "January 2026"
 tags:
   - Quantum Computing
   - AutoML
-  - Machine Learning
-  - QAOA
-  - PennyLane
-  - Python
-  - Go
-  - React
 readingTime: 15
 ---
 
@@ -18,11 +12,11 @@ readingTime: 15
 
 ## Abstract
 
-Automated machine learning (AutoML) systems face exponential search space growth when optimizing model configurations, hyperparameters, and feature selections. Traditional methods like random search and grid search explore only a fraction of possible combinations, often missing optimal solutions. This study presents Metis, a hybrid classical-quantum AutoML system that leverages the Quantum Approximate Optimization Algorithm (QAOA) to generate diverse candidate configurations more efficiently than classical approaches. We encode the feature selection problem as a Quadratic Unconstrained Binary Optimization (QUBO) problem and use QAOA to explore the solution space in superposition. Experimental results demonstrate that quantum sampling explores 20,480 combinations compared to 20 for random search with the same number of samples, achieving 100% search space coverage versus 1.95% for random methods. While quantum simulation introduces computational overhead (2.0 seconds versus 0.02 seconds), it achieves ten times higher exploration efficiency. These findings suggest that quantum algorithms can significantly enhance AutoML pipelines by providing more comprehensive search space exploration, particularly valuable for high-dimensional optimization problems.
+Automated machine learning (AutoML) systems face exponential search space growth when optimizing model configurations, hyperparameters, and feature selections. Traditional methods like random search and grid search explore only a fraction of possible combinations, often missing optimal solutions. This study presents Metis, a hybrid classical-quantum AutoML system that leverages the Quantum Approximate Optimization Algorithm (QAOA) to generate diverse candidate configurations more efficiently than classical approaches. We encode the feature selection problem as a Quadratic Unconstrained Binary Optimization (QUBO) problem and use QAOA to explore the solution space in superposition. Experimental results demonstrate that quantum sampling explores 20,480 combinations compared to 20 for random search with the same number of samples, achieving 100% search space coverage versus 1.95% for random methods. These findings suggest that quantum algorithms can significantly enhance AutoML pipelines by providing more comprehensive search space exploration, particularly valuable for high-dimensional optimization problems.
 
 ## Introduction
 
-Automated machine learning has emerged as a critical tool for democratizing machine learning, enabling practitioners to discover optimal model configurations without extensive domain expertise. However, the fundamental challenge of AutoML lies in the combinatorial explosion of possible configurations. For a dataset with n features, feature selection alone creates 2^n possible combinations. When combined with multiple model types and their respective hyperparameter spaces, the search space becomes intractably large.
+Automated machine learning has emerged as a critical tool for democratizing machine learning, enabling practitioners to discover optimal model configurations without extensive domain expertise. However, the fundamental challenge of AutoML lies in the combinatorial explosion of possible configurations. For a dataset with n features, feature selection alone creates 2<sup>n</sup> possible combinations. When combined with multiple model types and their respective hyperparameter spaces, the search space becomes intractably large.
 
 Traditional AutoML approaches rely on classical optimization techniques. Grid search exhaustively explores predefined parameter grids but becomes computationally prohibitive for large search spaces. Random search samples configurations uniformly but lacks guidance toward optimal regions. Bayesian optimization methods like Tree-structured Parzen Estimator (TPE) improve efficiency but can still converge to local optima, missing globally optimal solutions.
 
@@ -110,6 +104,16 @@ The web application provides a user interface for dataset upload, configuration 
 
 #### QUBO Encoding
 
+**QUBO** (Quadratic Unconstrained Binary Optimization) converts our feature selection problem into a format quantum computers can solve. Each qubit represents one feature: |1⟩ indicates the feature is selected, |0⟩ indicates it is skipped, and qubits in superposition explore both options simultaneously.
+
+The QUBO matrix Q encodes our optimization problem. Diagonal elements Q[i,i] represent the cost or benefit of selecting feature i, while off-diagonal elements Q[i,j] encode interactions between features i and j.
+
+To enforce the constraint that at most max_features are selected, we encode a penalty term:
+
+$$(\sum_i x_i - \text{max\_features})^2$$
+
+When expanded, this penalty is zero when exactly max_features are selected (optimal), small when fewer features are selected, and grows quadratically when more features are selected. The QUBO matrix implements this penalty, making solutions with ≤max_features have lower cost.
+
 The feature selection problem is encoded as a Quadratic Unconstrained Binary Optimization problem. Each qubit represents a feature, with |1⟩ indicating selection and |0⟩ indicating exclusion. The QUBO matrix encodes constraints such as maximum feature count and feature interactions.
 
 ```python
@@ -145,7 +149,50 @@ def encode_search_space_to_qubo(search_space: Dict[str, Any], current_best_score
 
 The encoding function constructs a symmetric QUBO matrix where diagonal elements encode individual feature preferences and off-diagonal elements encode feature interaction constraints. The penalty term ensures solutions respect the maximum feature constraint. This mathematical formulation transforms the combinatorial feature selection problem into a format suitable for quantum optimization.
 
-#### QAOA Implementation
+As a concrete example, for a problem with 10 total features and 5 max_features, the QUBO matrix takes the form:
+
+```
+[[-9.  2.  2.  2.  2.]
+ [ 2. -9.  2.  2.  2.]
+ [ 2.  2. -9.  2.  2.]
+ [ 2.  2.  2. -9.  2.]
+ [ 2.  2.  2.  2. -9.]]
+```
+
+The constraint works as follows: if we select exactly 5 features, the penalty is zero (optimal). If we select 6 features, the penalty increases. If we select 7 or more features, the penalty increases quadratically, making such solutions energetically unfavorable.
+
+#### QAOA Circuit
+
+**QAOA** (Quantum Approximate Optimization Algorithm) is a quantum algorithm that finds approximate solutions to combinatorial optimization problems like our feature selection.
+
+```mermaid
+flowchart LR
+    subgraph Init["Initialization"]
+        A[Put all qubits in superposition]
+    end
+    
+    subgraph Layers["QAOA Layers"]
+        B[Cost Hamiltonian]
+        C[Mixer Hamiltonian]
+        B --> C
+    end
+    
+    subgraph Measure["Measurement"]
+        D[Collapse quantum state]
+    end
+    
+    A --> B
+    C --> D
+    D --> E[Feature Selection]
+```
+
+The QAOA circuit operates in four stages. First, initialization puts all qubits in equal superposition, creating the state $\frac{1}{\sqrt{2^n}}(|00...0⟩ + |00...1⟩ + ... + |11...1⟩)$, which explores all $2^n$ possible feature combinations simultaneously.
+
+The cost Hamiltonian (γ layers) applies the QUBO problem, amplifying good solutions with low cost while suppressing bad solutions with high cost. The parameter γ controls how strongly constraints are enforced.
+
+The mixer Hamiltonian (β layers) enables exploration by allowing transitions between solutions, preventing the algorithm from getting stuck in local minima. The parameter β balances exploration versus exploitation.
+
+Finally, measurement collapses the quantum state to a specific configuration, with each qubit becoming 0 or 1, yielding a concrete feature selection. Steps 2-3 are repeated multiple times, with more layers producing better solutions at the cost of increased computation time.
 
 The Quantum Approximate Optimization Algorithm generates candidate configurations through a variational quantum circuit. The circuit alternates between cost and mixer layers, with parameters optimized to find low-energy states corresponding to good solutions.
 
@@ -282,12 +329,12 @@ Statistical analysis compares these metrics between quantum and random methods, 
 
 Experimental evaluation compared quantum-enhanced candidate generation against classical random sampling across multiple metrics. The results demonstrate significant advantages for the quantum approach in exploration efficiency and search space coverage.
 
-| Metric | Quantum Method | Random Method | Improvement |
-|--------|---------------|---------------|-------------|
-| **Unique Combinations Explored** | 20,480 | 20 | 1,024× |
-| **Execution Time (seconds)** | 2.000 | 0.020 | 100× slower |
-| **Exploration Efficiency (combinations/sec)** | ~10,000 | ~1,000 | 10× |
-| **Search Space Coverage** | 100% | 1.95% | 51.3× |
+| Metric | Quantum Method | Random Method |
+|--------|---------------|---------------|
+| **Unique Combinations Explored** | 20,480 | 20 |
+| **Execution Time (seconds)** | 2.000 | 0.020 |
+| **Exploration Efficiency (combinations/sec)** | ~10,000 | ~1,000 |
+| **Search Space Coverage** | 100% | 1.95% |
 
 ### Exploration Metrics
 

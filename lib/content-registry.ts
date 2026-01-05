@@ -35,7 +35,6 @@ export const SKILLS = {
     'Python',
     'C#',
     'Java',
-    'C',
     'TypeScript',
     '.NET',
     'Flask',

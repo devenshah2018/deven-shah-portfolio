@@ -2,7 +2,10 @@
 
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math';
 import rehypeRaw from 'rehype-raw';
+import rehypeKatex from 'rehype-katex';
+import 'katex/dist/katex.min.css';
 import { VideoPlayer } from './video-player';
 import { MermaidDiagram } from './mermaid-diagram';
 
@@ -18,8 +21,8 @@ export function StudyContent({ content }: StudyContentProps) {
   return (
     <div className='study-content prose prose-invert prose-lg max-w-none'>
       <ReactMarkdown
-        remarkPlugins={[remarkGfm]}
-        rehypePlugins={[rehypeRaw]}
+        remarkPlugins={[remarkGfm, remarkMath]}
+        rehypePlugins={[rehypeRaw, rehypeKatex]}
         components={{
           // Headings
           h1: ({ children }) => (
@@ -116,7 +119,8 @@ export function StudyContent({ content }: StudyContentProps) {
               </pre>
             ) : (
               <code
-                className='rounded-md bg-slate-900/50 px-2 py-1 text-sm text-cyan-300 font-mono before:content-none after:content-none'
+                className='rounded bg-slate-800/40 px-1.5 py-0.5 text-sm text-cyan-300 font-mono align-baseline before:content-none after:content-none'
+                style={{ display: 'inline', whiteSpace: 'nowrap' }}
                 {...props}
               >
                 {children}

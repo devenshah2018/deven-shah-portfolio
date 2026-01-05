@@ -38,55 +38,110 @@ export function MermaidDiagram({ chart }: MermaidDiagramProps) {
         // Initialize mermaid with dark theme (only once, use a global flag)
         const initKey = '__mermaid_initialized__';
         if (!(window as any)[initKey]) {
-          // Add minimal CSS for basic styling
+          // Add CSS for consistent dark theme styling
           const style = document.createElement('style');
+          style.id = 'mermaid-dark-theme-styles';
           style.textContent = `
             .mermaid svg {
               max-width: 100%;
               height: auto;
+              background-color: #0a0e27 !important;
             }
             .mermaid .node rect {
               min-width: 200px;
               min-height: 60px;
+              fill: #151b2e !important;
+              stroke: #2d3748 !important;
+              stroke-width: 1.5px !important;
             }
             .mermaid .node foreignObject div {
               padding: 10px;
               text-align: center;
+              color: #e2e8f0 !important;
+              background-color: transparent !important;
+            }
+            .mermaid .cluster rect {
+              fill: #1e2538 !important;
+              stroke: #3b4a6b !important;
+              stroke-width: 2px !important;
+            }
+            .mermaid .cluster text {
+              fill: #f8fafc !important;
+              font-weight: 600 !important;
+            }
+            .mermaid .edgePath .path {
+              stroke: #4a5568 !important;
+              stroke-width: 2px !important;
+            }
+            .mermaid .edgeLabel {
+              background-color: #1e2538 !important;
+              color: #e2e8f0 !important;
+            }
+            .mermaid .edgeLabel text {
+              fill: #e2e8f0 !important;
+            }
+            .mermaid .label {
+              color: #e2e8f0 !important;
+            }
+            .mermaid .nodeLabel {
+              color: #e2e8f0 !important;
+            }
+            .mermaid .arrowheadPath {
+              fill: #60a5fa !important;
+              stroke: #60a5fa !important;
+            }
+            .mermaid .flowchart-link {
+              stroke: #4a5568 !important;
             }
           `;
+          // Remove existing style if present
+          const existingStyle = document.getElementById('mermaid-dark-theme-styles');
+          if (existingStyle) {
+            existingStyle.remove();
+          }
           document.head.appendChild(style);
           
           mermaid.initialize({
             startOnLoad: false,
             theme: 'dark',
+            securityLevel: 'loose',
             flowchart: {
               useMaxWidth: true,
               htmlLabels: true,
               padding: 20,
               nodeSpacing: 50,
               rankSpacing: 80,
+              curve: 'basis',
             },
             themeVariables: {
-              // Background colors (slate-950, slate-900)
-              background: '#020617',
-              mainBkg: '#0f172a',
-              secondBkg: '#1e293b',
-              // Text colors (white, slate-200)
-              primaryTextColor: '#ffffff',
+              // Background colors - deep navy with subtle warmth
+              background: '#0a0e27',
+              mainBkg: '#151b2e',
+              secondBkg: '#1e2538',
+              // Text colors - crisp white with subtle blue tint
+              primaryTextColor: '#f8fafc',
               textColor: '#e2e8f0',
-              // Border colors (slate-800)
-              primaryBorderColor: '#1e293b',
-              secondaryColor: '#1e293b',
-              tertiaryColor: '#0f172a',
-              // Accent colors (cyan-400, cyan-500)
-              primaryColor: '#22d3ee',
-              defaultLinkColor: '#06b6d4',
-              // Cluster/subgraph colors
-              clusterBkg: '#1e293b',
-              clusterBorder: '#334155',
-              // Edge colors
-              lineColor: '#475569',
-              edgeLabelBackground: '#1e293b',
+              secondaryTextColor: '#cbd5e1',
+              // Border colors - elegant slate with blue undertone
+              primaryBorderColor: '#2d3748',
+              secondaryBorderColor: '#3d4758',
+              secondaryColor: '#1e2538',
+              tertiaryColor: '#151b2e',
+              // Accent colors - sophisticated blue-teal gradient
+              primaryColor: '#3b82f6',
+              defaultLinkColor: '#60a5fa',
+              // Cluster/subgraph colors - rich indigo tones
+              clusterBkg: '#1e2538',
+              clusterBorder: '#3b4a6b',
+              // Edge colors - subtle blue-gray
+              lineColor: '#4a5568',
+              edgeLabelBackground: '#1e2538',
+              // Node colors - refined dark blue-gray
+              nodeBkg: '#151b2e',
+              nodeBorder: '#2d3748',
+              // Label colors
+              labelBackground: '#1e2538',
+              labelTextColor: '#e2e8f0',
             },
           });
           (window as any)[initKey] = true;
