@@ -287,7 +287,7 @@ The final phase involves comprehensive comparison of exploration efficiency, sea
 
 The timeline for a typical experiment ranges from minutes to hours depending on dataset size and search budget. Quantum simulation adds computational overhead but provides superior exploration. A detailed implementation is demonstrated in the [quantum sampler notebook](https://github.com/devenshah2018/METIS/blob/main/quantum-sampler/quantum_sampler_demo.ipynb).
 
-#### System Architecture
+### Architecture
 
 The METIS system implements a microservices architecture with four main components. The frontend, built with React and Vite, provides the user interface for dataset upload and results visualization. The API Gateway, implemented in Go using the Gin framework, coordinates communication between services and manages job queues. The AutoML Core, a Python FastAPI service, handles dataset preprocessing, search space construction, model training, and evaluation. The Quantum Sampler, also a Python FastAPI service, implements the QAOA-based candidate generation.
 
