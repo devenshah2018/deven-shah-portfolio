@@ -93,7 +93,7 @@ The AutoML core leverages scikit-learn for classical machine learning models, Op
 | **Classical ML** | scikit-learn | Traditional machine learning models |
 | **Hyperparameter Optimization** | Optuna | Bayesian optimization for hyperparameter tuning |
 
-The web application provides a user interface for dataset upload, configuration specification, and results visualization. The system is containerized using Docker for consistent deployment across environments. Python was chosen for the quantum implementation due to the extensive quantum computing libraries available, including PennyLane for circuit construction and NumPy for numerical operations.
+The system is containerized using Docker for consistent deployment across environments. Python was chosen for the quantum implementation due to the extensive quantum computing libraries available, including PennyLane for circuit construction and NumPy for numerical operations.
 
 ### Technical Implementation
 
@@ -298,7 +298,7 @@ The METIS system implements a microservices architecture with four main componen
 | AutoML Core | Python + FastAPI | Dataset preprocessing, search space construction, model training & evaluation |
 | Quantum Sampler | Python + FastAPI + PennyLane | QAOA-based candidate generation for feature selection |
 
-This architecture enables independent development and scaling of components. The quantum sampler can be replaced with alternative implementations or real quantum hardware without affecting other components. The system communicates via HTTP/JSON REST APIs, making it language-agnostic and facilitating future extensions. The web application makes the quantum-enhanced AutoML process accessible to users without requiring quantum computing expertise.
+This architecture enables independent development and scaling of components. The quantum sampler can be replaced with alternative implementations or real quantum hardware without affecting other components. The system communicates via HTTP/JSON REST APIs, making it language-agnostic and facilitating future extensions.
 
 <div data-video="/demos/METIS-demo.mp4"></div>
 
@@ -330,6 +330,53 @@ The quantum method achieved approximately 10,000 combinations per second, compar
 Quantum sampling achieved 100% coverage of the search space, while random sampling covered only 1.95%. This complete coverage ensures that no potentially optimal configurations are missed. Random sampling's low coverage reflects the exponential growth of the search space relative to the number of samples.
 
 These results validate the hypothesis that quantum algorithms can enhance AutoML by providing superior search space exploration. The quantum method's ability to explore combinations in superposition enables comprehensive coverage that classical random sampling cannot achieve with equivalent sample counts.
+
+## Applications
+
+METIS is available in two deployment models, providing flexibility for different use cases and user preferences. Both implementations leverage the same underlying quantum-classical hybrid architecture, ensuring consistent performance and capabilities.
+
+### Web Application
+
+The METIS web application provides an interactive interface for quantum-enhanced AutoML, making the technology accessible to users without requiring programming expertise or quantum computing knowledge. The application implements a microservices architecture with four main components: a React frontend for dataset upload and results visualization, a Go API gateway for service coordination, a Python AutoML core for model training and evaluation, and a Python quantum sampler for QAOA-based candidate generation.
+
+Users can upload datasets in various formats (CSV, JSON, Parquet), configure optimization parameters through an intuitive interface, and visualize results including model performance metrics, selected features, and hyperparameter configurations. The web application handles all underlying complexity, from QUBO encoding to quantum circuit execution, presenting results in an accessible format. This deployment model is ideal for interactive exploration, educational purposes, and users who prefer graphical interfaces over programmatic APIs.
+
+### Python Package
+
+METIS is distributed as a production-ready Python package (`metis-automl`) available on PyPI, enabling seamless integration into existing machine learning pipelines and workflows. The package abstracts the underlying quantum and classical components, exposing a straightforward API that requires minimal quantum computing expertise.
+
+**Installation and Basic Usage**
+
+The package can be installed via pip:
+
+```bash
+pip install metis-automl
+```
+
+The core API centers around the `metis.fit()` function, which accepts datasets in multiple formats (CSV, JSON, Parquet file paths or pandas DataFrames) and returns a trained model with optimal hyperparameters and feature selections:
+
+```python
+import metis
+
+# Simple one-line usage
+model = metis.fit(
+    dataset="iris.csv",
+    config={
+        "metric": "accuracy",
+        "objective": "maximize",
+        "search_budget": 100,
+        "use_quantum": True,
+    }
+)
+
+# Access results
+print("Best model:", model.metadata['model_name'])
+print("Hyperparameters:", model.hyperparameters)
+print("Selected features:", model.selected_features)
+print("Validation score:", model.metrics['validation_score'])
+```
+
+This dual deployment model ensures flexibility for different use cases, from interactive exploration to programmatic integration in production systems. The Python package makes quantum-enhanced AutoML capabilities accessible to practitioners without requiring deep quantum computing knowledge, while maintaining the full power of the underlying hybrid quantum-classical architecture.
 
 ## Discussion
 
