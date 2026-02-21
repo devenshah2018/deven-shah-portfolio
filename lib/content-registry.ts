@@ -45,7 +45,7 @@ export const SKILLS = {
     'GraphQL',
   ],
   database: ['SQL', 'SOQL', 'Oracle', 'PostgreSQL', 'MySQL', 'MongoDB'],
-  aimal: ['Python', 'LLMs', 'Sklearn', 'Tensorflow', 'Pytorch', 'LangGraph'],
+  aimal: ['Python', 'LLMs', 'Sklearn', 'Tensorflow', 'Pytorch', 'LangGraph', 'CNNs'],
   devops: ['Docker', 'Github/Git', 'GCP', 'AWS', 'Azure'],
   apis: ['C#', 'Python', 'Apex', 'Azure', 'REST API', 'GraphQL', 'TypeScript'],
   collaboration: ['Jira', 'Confluence', 'Agile', 'Scrum'],
@@ -56,11 +56,11 @@ export const SKILL_MAPPINGS = [
   { skill: 'Scrum', experienceIds: ['suno-analytics', 'patelco'] },
   { skill: 'Agile', experienceIds: ['suno-analytics', 'patelco'] },
   { skill: 'Confluence', experienceIds: ['suno-analytics', 'patelco'] },
-  { skill: 'Python', experienceIds: ['suno-analytics', 'netapp', 'build-fellowship'], projectIds: ['ares-project', 'molecule-mutation-prediction', 'crypto-forecasting-project', 'drone-build-project'], educationIds: ['sjsu-bachelors'] },
-  { skill: 'TypeScript', experienceIds: ['suno-analytics', 'patelco', 'build-fellowship'], projectIds: ['drone-build-project', 'portfolio-project', 'ares-project', 'gumball-project'] },
+  { skill: 'Python', experienceIds: ['suno-analytics', 'netapp', 'build-fellowship-1', 'build-fellowship-2', 'research-assistant'], projectIds: ['ares-project', 'molecule-mutation-prediction', 'crypto-forecasting-project', 'drone-build-project'], educationIds: ['sjsu-bachelors'] },
+  { skill: 'TypeScript', experienceIds: ['suno-analytics', 'patelco', 'build-fellowship-1'], projectIds: ['drone-build-project', 'portfolio-project', 'ares-project'] },
   { skill: 'C#', experienceIds: ['patelco'], educationIds: ['sjsu-bachelors'] },
   { skill: 'React', experienceIds: ['suno-analytics'], projectIds: ['drone-build-project', 'portfolio-project', 'breaking-dijkstra-project'] },
-  { skill: 'Azure', experienceIds: ['suno-analytics', 'patelco'], projectIds: ['ares-project', 'gumball-project'] },
+  { skill: 'Azure', experienceIds: ['suno-analytics', 'patelco'], projectIds: ['ares-project'] },
   { skill: 'LangGraph', experienceIds: ['suno-analytics'] },
   { skill: '.NET', experienceIds: ['patelco'] },
   { skill: 'SQL', experienceIds: ['suno-analytics', 'patelco', 'netapp'], projectIds: ['ares-project'], educationIds: ['sjsu-bachelors'] },
@@ -83,11 +83,11 @@ export const SKILL_MAPPINGS = [
   { skill: 'LLMs', experienceIds: ['suno-analytics'], projectIds: ['ares-project'] },
   { skill: 'Sklearn', experienceIds: ['suno-analytics'], projectIds: ['molecule-mutation-prediction', 'crypto-forecasting-project'] },
   { skill: 'Tensorflow', experienceIds: ['suno-analytics'], projectIds: ['crypto-forecasting-project'] },
-  { skill: 'Pytorch', projectIds: ['crypto-forecasting-project'] },
-  { skill: 'Docker', experienceIds: ['netapp', 'suno-analytics'] },
-  { skill: 'Jupyter', projectIds: ['drone-build-project'], experienceIds: ['build-fellowship'] },
+  { skill: 'Pytorch', experienceIds: ['build-fellowship-2', 'research-assistant'], projectIds: ['crypto-forecasting-project'] },
+  { skill: 'Docker', experienceIds: ['netapp', 'suno-analytics', 'build-fellowship-2'] },
+  { skill: 'Jupyter', projectIds: ['drone-build-project'], experienceIds: ['build-fellowship-1', 'build-fellowship-2', 'research-assistant'] },
   { skill: 'C++', educationIds: ['bu-masters'] },
-  { skill: 'Github/Git', experienceIds: ['suno-analytics', 'patelco', 'netapp', 'build-fellowship'], projectIds: ['drone-build-project', 'portfolio-project', 'ares-project', 'gumball-project', 'molecule-mutation-prediction', 'crypto-forecasting-project'], educationIds: ['sjsu-bachelors'] },
+  { skill: 'Github/Git', experienceIds: ['suno-analytics', 'patelco', 'netapp', 'build-fellowship-1'], projectIds: ['drone-build-project', 'portfolio-project', 'ares-project', 'molecule-mutation-prediction', 'crypto-forecasting-project'], educationIds: ['sjsu-bachelors'] },
   { skill: 'REST API', experienceIds: ['suno-analytics', 'patelco', 'netapp'] },
   { skill: 'GraphQL', experienceIds: ['suno-analytics'] },
   { skill: 'MySQL', experienceIds: ['patelco'] },
@@ -96,6 +96,7 @@ export const SKILL_MAPPINGS = [
   { skill: 'ASP.NET Core', experienceIds: ['patelco'] },
   { skill: 'Next.js', projectIds: ['drone-build-project'], experienceIds: ['suno-analytics'] },
   { skill: 'Jira', experienceIds: ['patelco', 'suno-analytics'] },
+  { skill: 'CNNs', experienceIds: ['build-fellowship-2', 'research-assistant'] },
 ];
 
 export const SKILL_CATEGORIES = [
@@ -125,7 +126,7 @@ export const EXPERIENCES = [
     company: 'Suno Analytics',
     companyLogo: '/suno-logo.jpeg',
     location: 'Remote',
-    period: '12/2024 – Present',
+    period: '12/2024 – 01/2026',
     description:
       'Built an e-commerce analytics platform offering deep insights and AI agents for inventory management.',
     achievements: [
@@ -176,7 +177,7 @@ export const EXPERIENCES = [
     link: 'https://www.netapp.com',
   },
   {
-    id: 'build-fellowship',
+    id: 'build-fellowship-1',
     title: 'Build Student Consultant',
     company: 'Build Fellowship by Open Avenues',
     companyLogo: '/build-logo.png',
@@ -191,8 +192,228 @@ export const EXPERIENCES = [
     ],
     gradient: 'from-blue-500 to-cyan-500',
     link: 'https://www.buildfellowship.com/'
-  }
+  },
+  {
+    id: 'build-fellowship-2',
+    title: 'Build Student Consultant',
+    company: 'Build Fellowship by Open Avenues',
+    companyLogo: '/build-logo.png',
+    location: 'Remote',
+    period: '02/2026 – 03/2026',
+    description:
+      'Developing AI image retrieval pipelines using CNNs and vector databases.',
+    achievements: [],
+    gradient: 'from-blue-500 to-cyan-500',
+    link: 'https://www.buildfellowship.com/'
+  },
+  {
+    id: 'research-assistant',
+    title: 'Research Assistant',
+    company: 'Boston University',
+    companyLogo: '/bu-logo.png',
+    location: 'Boston, MA',
+    period: '02/2026 – Present',
+    description:
+      'Researching segmentation techniques using computer vision and deep learning.',
+    achievements: [],
+    gradient: 'from-blue-500 to-cyan-500',
+    link: 'https://www.bu.edu/'
+  },
+  {
+    id: 'teaching-assistant',
+    title: 'Teaching Assistant',
+    company: 'Boston University',
+    companyLogo: '/bu-logo.png',
+    location: 'Boston, MA',
+    period: '01/2026 – Present',
+    description:
+      'Teaching assistant for the course "CS 566: Analysis of Algorithms".',
+    achievements: [],
+    gradient: 'from-blue-500 to-cyan-500',
+    link: 'https://www.bu.edu/'
+  },
 ];
+
+export type Experience = (typeof EXPERIENCES)[number];
+
+export type OrgGroup = {
+  company: string;
+  companyLogo?: string;
+  location: string;
+  link: string;
+  gradient?: string;
+  duration: string;
+  positions: Experience[];
+};
+
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+/** Parse period string to numeric month/year. Present uses current date as end. */
+function parsePeriod(period: string): { startY: number; startM: number; endY: number; endM: number } | null {
+  const dates = period.match(/(\d{2})\/(\d{4})/g);
+  if (!dates || dates.length === 0) return null;
+  const startMatch = dates[0].match(/(\d{2})\/(\d{4})/);
+  if (!startMatch?.[1] || !startMatch?.[2]) return null;
+  const startM = parseInt(startMatch[1], 10);
+  const startY = parseInt(startMatch[2], 10);
+  let endM: number;
+  let endY: number;
+  if (period.includes('Present')) {
+    const now = new Date();
+    endM = now.getMonth() + 1;
+    endY = now.getFullYear();
+  } else if (dates.length >= 2) {
+    const endMatch = dates[dates.length - 1]!.match(/(\d{2})\/(\d{4})/);
+    if (!endMatch?.[1] || !endMatch?.[2]) return null;
+    endM = parseInt(endMatch[1], 10);
+    endY = parseInt(endMatch[2], 10);
+  } else {
+    endM = startM;
+    endY = startY;
+  }
+  return { startM, startY, endM, endY };
+}
+
+/** Format period for display, e.g. "Dec 2024 – Jan 2026" or "Feb 2026 – Present". */
+export function formatPeriodDisplay(period: string): string {
+  const p = parsePeriod(period);
+  if (!p) return period;
+  const startStr = `${MONTHS[p.startM - 1]} ${p.startY}`;
+  const endStr = period.includes('Present') ? 'Present' : `${MONTHS[p.endM - 1]} ${p.endY}`;
+  return `${startStr} – ${endStr}`;
+}
+
+/** Start date only, e.g. "Dec 2024". */
+export function formatPeriodStart(period: string): string {
+  const p = parsePeriod(period);
+  if (!p) return period;
+  return `${MONTHS[p.startM - 1]} ${p.startY}`;
+}
+
+/** End date only, e.g. "Jan 2026" or "Present". */
+export function formatPeriodEnd(period: string): string {
+  const p = parsePeriod(period);
+  if (!p) return period;
+  return period.includes('Present') ? 'Present' : `${MONTHS[p.endM - 1]} ${p.endY}`;
+}
+
+/** Get duration in months between start and end. */
+function periodMonths(period: string): number | null {
+  const p = parsePeriod(period);
+  if (!p) return null;
+  return (p.endY - p.startY) * 12 + (p.endM - p.startM) + 1;
+}
+
+/** Format total months as "2 yrs 3 mo" or "6 mo". */
+export function formatDuration(period: string): string {
+  const months = periodMonths(period);
+  if (months == null || months < 1) return '';
+  if (months < 12) return `${months} mo`;
+  const yrs = Math.floor(months / 12);
+  const mo = months % 12;
+  if (mo === 0) return yrs === 1 ? '1 yr' : `${yrs} yrs`;
+  return `${yrs} yr${yrs > 1 ? 's' : ''} ${mo} mo`;
+}
+
+function getEndDate(period: string): number {
+  if (period.includes('Present')) return 999999;
+  const dates = period.match(/(\d{2})\/(\d{4})/g);
+  if (dates && dates.length >= 2) {
+    const lastDate = dates[dates.length - 1];
+    if (lastDate) {
+      const m = lastDate.match(/(\d{2})\/(\d{4})/);
+      if (m?.[1] && m?.[2]) return parseInt(m[2] + m[1]);
+    }
+  }
+  if (dates && dates.length === 1) {
+    const m = dates[0].match(/(\d{2})\/(\d{4})/);
+    if (m?.[1] && m?.[2]) return parseInt(m[2] + m[1]);
+  }
+  return 0;
+}
+
+/** Total org duration as sum of each position's duration (no overlap). */
+function getOrgDuration(positions: Experience[]): string {
+  let totalMonths = 0;
+  for (const pos of positions) {
+    const m = periodMonths(pos.period);
+    if (m != null && m > 0) totalMonths += m;
+  }
+  if (totalMonths < 1) return '';
+  if (totalMonths < 12) return `${totalMonths} mo`;
+  const yrs = Math.floor(totalMonths / 12);
+  const mo = totalMonths % 12;
+  if (mo === 0) return yrs === 1 ? '1 yr' : `${yrs} yrs`;
+  return `${yrs} yr${yrs > 1 ? 's' : ''} ${mo} mo`;
+}
+
+/** Groups experiences by organization (LinkedIn-style), sorted by most recent position. */
+export function groupExperiencesByOrg(): OrgGroup[] {
+  const byCompany = new Map<string, Experience[]>();
+  for (const exp of EXPERIENCES) {
+    const key = exp.company;
+    if (!byCompany.has(key)) byCompany.set(key, []);
+    byCompany.get(key)!.push(exp);
+  }
+  return Array.from(byCompany.entries()).map(([company, positions]) => {
+    const first = positions[0]!;
+    const sorted = [...positions].sort((a, b) => getEndDate(b.period) - getEndDate(a.period));
+    return {
+      company,
+      companyLogo: first.companyLogo,
+      location: first.location,
+      link: first.link,
+      gradient: first.gradient,
+      duration: getOrgDuration(sorted),
+      positions: sorted,
+    };
+  }).sort((a, b) => getEndDate(b.positions[0]!.period) - getEndDate(a.positions[0]!.period));
+}
+
+/** Month tick labels from earliest experience start to now. stepMonths = 3 gives ~quarterly. */
+export function getTimelineTicks(stepMonths: number = 3): { label: string; sortKey: number }[] {
+  let minStartY = Infinity;
+  let minStartM = Infinity;
+  for (const exp of EXPERIENCES) {
+    const p = parsePeriod(exp.period);
+    if (!p) continue;
+    if (p.startY < minStartY || (p.startY === minStartY && p.startM < minStartM)) {
+      minStartY = p.startY;
+      minStartM = p.startM;
+    }
+  }
+  if (minStartY === Infinity) return [];
+  const now = new Date();
+  const ticks: { label: string; sortKey: number }[] = [];
+  let y = minStartY;
+  let m = minStartM;
+  while (y < now.getFullYear() || (y === now.getFullYear() && m <= now.getMonth() + 1)) {
+    ticks.push({ label: `${MONTHS[m - 1]} ${y}`, sortKey: y * 100 + m });
+    m += stepMonths;
+    while (m > 12) {
+      m -= 12;
+      y += 1;
+    }
+  }
+  return ticks.reverse();
+}
+
+/** Year tick labels from earliest experience start to now, for timeline right-side labels. */
+export function getTimelineYearTicks(): { label: string; sortKey: number }[] {
+  let minStartY = Infinity;
+  for (const exp of EXPERIENCES) {
+    const p = parsePeriod(exp.period);
+    if (!p) continue;
+    if (p.startY < minStartY) minStartY = p.startY;
+  }
+  if (minStartY === Infinity) return [];
+  const now = new Date();
+  const ticks: { label: string; sortKey: number }[] = [];
+  for (let y = now.getFullYear(); y >= minStartY; y--) {
+    ticks.push({ label: String(y), sortKey: y * 100 + 12 });
+  }
+  return ticks;
+}
 
 export const PROJECT_CATEGORIES = [
   { key: 'all', label: 'All' },
@@ -236,7 +457,7 @@ export const PROJECTS: Project[] = [
     entry_point: 'vscode',
     link: 'http://marketplace.visualstudio.com/items?itemName=strive-ai.strive',
     status: 'Live',
-    categories: ['ai', 'featured', 'tools'],
+    categories: ['ai', 'tools'],
     accessible_at: ['vscode'],
     access_points: [
       { type: 'vscode', url: 'http://marketplace.visualstudio.com/items?itemName=strive-ai.strive', label: 'VSCode' },
@@ -300,26 +521,7 @@ export const PROJECTS: Project[] = [
       { type: 'hosted', url: 'https://drone-path-planner.vercel.app/', label: 'Live Demo' },
       { type: 'github', url: 'https://github.com/devenshah2018/drone-trajectory-planner', label: 'Github' },
     ],
-    related_experiences: ['build-fellowship'],
-  },
-  {
-    id: 'gumball-project',
-    title: 'Gumball',
-    subtitle: 'Automated Developer Productivity Tool',
-    period: '04/2024 - Present',
-    sortDate: '2024-04',
-    description:
-      'A productivity tool that automates repetitive development tasks, enhancing efficiency and workflow for developers.',
-    technologies: getProjectSkillsFromMapping('gumball-project'),
-    entry_point: 'vscode',
-    link: 'https://marketplace.visualstudio.com/items?itemName=Gumball.gumball&ssr=false#overview',
-    status: 'Live',
-    categories: ['featured', 'tools'],
-    accessible_at: ['vscode', 'github'],
-    access_points: [
-      { type: 'vscode', url: 'https://marketplace.visualstudio.com/items?itemName=Gumball.gumball&ssr=false#overview', label: 'VSCode' },
-      { type: 'github', url: 'https://github.com/devenshah2018/gumball', label: 'Code' },
-    ]
+    related_experiences: ['build-fellowship-1'],
   },
   {
     id: 'task-scheduling-project',
@@ -374,7 +576,7 @@ export const EDUCATION = [
     icon: GraduationCap,
     logo: '/bu-logo.png',
     isActive: true,
-    coursework: ['Operating Systems', 'Analysis of Algorithms'],
+    coursework: ['Operating Systems', 'Analysis of Algorithms', 'Database Management', 'Computer Language Theory'],
   },
   {
     id: 'sjsu-bachelors',
@@ -496,6 +698,15 @@ for hybrid AI architectures.`,
 // Helper functions to look up full objects from IDs
 export function getExperienceById(id: string) {
   return EXPERIENCES.find(exp => exp.id === id);
+}
+
+/** Returns skill names mapped to the given experience id (from SKILL_MAPPINGS). */
+export function getSkillsForExperienceId(experienceId: string): string[] {
+  const skills: string[] = [];
+  SKILL_MAPPINGS.forEach(m => {
+    if (m.experienceIds?.includes(experienceId)) skills.push(m.skill);
+  });
+  return skills.sort((a, b) => a.localeCompare(b));
 }
 
 export function getProjectById(id: string) {

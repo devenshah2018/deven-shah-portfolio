@@ -38,10 +38,6 @@ export function HeroSection() {
             </h1>
             <div className='mt-5 flex flex-wrap items-center justify-center gap-2'>
               <h2 className='inline-flex items-center rounded-full border border-slate-700/50 bg-slate-800/60 px-4 py-1.5 text-sm font-medium text-slate-200 shadow-sm sm:text-base'>
-                Co-Founder & CTO
-              </h2>
-              <span className='text-slate-600'>•</span>
-              <h2 className='inline-flex items-center rounded-full border border-slate-700/50 bg-slate-800/60 px-4 py-1.5 text-sm font-medium text-slate-200 shadow-sm sm:text-base'>
                 AI Researcher
               </h2>
               <span className='text-slate-600'>•</span>

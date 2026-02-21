@@ -97,15 +97,6 @@ export function EducationSection() {
               </h2>
               <div className='mx-auto h-1 w-20 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500' />
             </motion.div>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              viewport={{ once: true }}
-              className='mx-auto max-w-3xl text-lg font-light leading-relaxed text-slate-400'
-            >
-              Academic foundation, professional certifications, and research contributions advancing the field.
-            </motion.p>
           </div>
 
           {/* Two-Column Layout - Research Papers (Left) and Education/Certs (Right) */}
@@ -170,7 +161,7 @@ export function EducationSection() {
                               </div>
                               <a
                                 href={`${getResearchSiteUrl()}/${paper.slug || paper.id}`}
-                                className='flex-shrink-0 inline-flex items-center gap-1.5 border border-slate-700/50 bg-slate-800/40 px-3 py-1.5 text-xs font-medium text-slate-300 transition-all duration-200 hover:border-blue-500/50 hover:bg-blue-950/30 hover:text-blue-300'
+                                className='flex-shrink-0 inline-flex items-center gap-1.5 rounded-full border border-slate-700/50 bg-slate-800/40 px-3.5 py-1.5 text-xs font-medium text-slate-300 transition-all duration-200 hover:border-slate-600/50 hover:bg-slate-700/40 hover:text-white'
                                 onClick={(e) => e.stopPropagation()}
                               >
                                 <FileText className='h-3.5 w-3.5' />
@@ -306,7 +297,7 @@ export function EducationSection() {
                           <div className='mt-3 border-t border-slate-700/30 pt-3'>
                             <button
                               onClick={() => toggleCoursework(edu.id)}
-                              className='flex w-full items-center justify-between rounded-md px-2 py-1.5 text-xs font-medium text-slate-300 transition-all duration-200 hover:bg-slate-800/40 hover:text-blue-300'
+                              className='flex w-full items-center justify-between rounded-full px-3 py-1.5 text-xs font-medium text-slate-300 transition-all duration-200 hover:bg-slate-800/40 hover:text-slate-200'
                             >
                               <span className='flex items-center gap-1.5'>
                                 <GraduationCap className='h-3 w-3' />

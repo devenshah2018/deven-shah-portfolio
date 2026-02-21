@@ -125,15 +125,6 @@ export function ContactSection() {
               </h2>
               <div className='mx-auto h-1 w-20 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500' />
             </motion.div>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              viewport={{ once: true }}
-              className='mx-auto max-w-4xl text-xl font-light leading-relaxed text-slate-400'
-            >
-              Innovation starts with collaboration—let’s connect!
-            </motion.p>
           </div>
 
           <motion.div

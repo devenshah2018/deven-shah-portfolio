@@ -85,18 +85,6 @@ export function AboutSection() {
               </h2>
               <div className='mx-auto h-1 w-16 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500' />
             </motion.div>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              viewport={{ once: true }}
-              className='mx-auto max-w-3xl text-base font-light leading-relaxed text-slate-400 sm:text-lg'
-            >
-              Passionate builder bridging advanced technology with real-world impact. I architect,
-              code, and launch products at the intersection of AI, analytics, and security. As a
-              frequent Spartan Race competitor, physical fitness has become a cornerstone of my
-              life, driving my discipline and resilience.
-            </motion.p>
           </div>
 
           {/* Twitter and Strava Section */}
@@ -170,7 +158,7 @@ export function AboutSection() {
                     <button
                     key={skill}
                     type='button'
-                    className={`inline-flex items-center rounded-md border-none border-slate-600 bg-slate-900/80 px-3 py-1.5 text-sm font-medium text-slate-100 transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-blue-400/60 focus:ring-offset-2 focus:ring-offset-slate-900 ${
+                    className={`inline-flex items-center rounded-md border-none border-slate-600 bg-transparent px-3 py-1.5 text-sm font-medium text-slate-100 transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-blue-400/60 focus:ring-offset-2 focus:ring-offset-slate-900 ${
                       hasMapping(skill)
                       ? 'hover:bg-gradient-to-r hover:from-blue-900/80 hover:to-blue-700/60 hover:text-white hover:shadow-lg focus:bg-gradient-to-r focus:from-blue-900/90 focus:to-blue-700/70 focus:text-white focus:shadow-lg'
                       : 'cursor-default opacity-80'

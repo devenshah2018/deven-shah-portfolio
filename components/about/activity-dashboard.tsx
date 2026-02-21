@@ -201,24 +201,6 @@ export function ActivityDashboard({
               </p>
             </div>
           </div>
-          <div className='flex gap-2'>
-            <button
-              onClick={() => window.open(LINKS.strava, '_blank')}
-              className='group flex items-center justify-center gap-2 rounded-lg border border-orange-600/40 bg-orange-800/20 px-3 py-1.5 text-xs font-medium text-orange-300 backdrop-blur-sm transition-all duration-200 hover:border-orange-500 hover:bg-orange-800/30 hover:text-orange-200 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-slate-900'
-              aria-label='View Strava Profile'
-            >
-              <ExternalLink className='h-3 w-3' />
-              <span className='hidden sm:inline'>Strava</span>
-            </button>
-            <button
-              onClick={() => window.open(LINKS.hevy, '_blank')}
-              className='group flex items-center justify-center gap-2 rounded-lg border border-pink-600/40 bg-pink-800/20 px-3 py-1.5 text-xs font-medium text-pink-300 backdrop-blur-sm transition-all duration-200 hover:border-pink-500 hover:bg-pink-800/30 hover:text-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-offset-2 focus:ring-offset-slate-900'
-              aria-label='View Hevy Profile'
-            >
-              <ExternalLink className='h-3 w-3' />
-              <span className='hidden sm:inline'>Hevy</span>
-            </button>
-          </div>
         </div>
         <div className='overflow-hidden rounded-xl backdrop-blur-sm'>
           <div className='grid grid-cols-1 gap-0 md:grid-cols-2'>
