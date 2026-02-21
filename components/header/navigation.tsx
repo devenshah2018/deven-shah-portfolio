@@ -253,6 +253,14 @@ export function Navigation({}: NavigationProps) {
               >
                 <Link
                   href={item.href}
+                  onClick={(e) => {
+                    if (item.href.startsWith('#')) {
+                      e.preventDefault();
+                      const id = item.href.slice(1);
+                      window.history.pushState(null, '', item.href);
+                      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                  }}
                   className={
                     item.name === 'Connect'
                       ? 'rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 px-6 py-3 font-sans text-sm font-bold uppercase tracking-widest text-white shadow-lg transition-all duration-300 hover:from-blue-600 hover:to-indigo-600 hover:shadow-xl'
@@ -413,7 +421,17 @@ export function Navigation({}: NavigationProps) {
                             ? 'block rounded-full border-2 border-blue-400/60 bg-gradient-to-r from-blue-500 to-indigo-500 px-6 py-3 text-lg font-bold text-white shadow-lg transition-all duration-300 hover:from-blue-600 hover:to-indigo-600'
                             : 'block rounded-lg px-4 py-3 text-lg font-semibold text-slate-200 transition-all duration-300 hover:text-white'
                         }
-                        onClick={() => setMobileNavOpen(false)}
+                        onClick={(e) => {
+                          setMobileNavOpen(false);
+                          if (item.href.startsWith('#')) {
+                            e.preventDefault();
+                            const id = item.href.slice(1);
+                            window.history.pushState(null, '', item.href);
+                            setTimeout(() => {
+                              document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }, 300);
+                          }
+                        }}
                       >
                         {item.name}
                       </Link>

@@ -1,5 +1,4 @@
-import { LINKS } from '@/lib/content-registry';
-import { ExternalLink } from 'lucide-react';
+
 import { useEffect, useState, useRef } from 'react';
 
 interface ActivityDashboardProps {

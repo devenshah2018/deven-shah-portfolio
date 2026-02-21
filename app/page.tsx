@@ -3,7 +3,6 @@
 import { HeroSection } from '@/components/hero/hero-section';
 import { AboutSection } from '@/components/about/about-section';
 import { ExperienceSection } from '@/components/experience/experience-section';
-import { ProjectsSection } from '@/components/projects/projects-section';
 import { EducationSection } from '@/components/education/education-section';
 import { ContactSection } from '@/components/contact/contact-section';
 import { generatePersonSchema } from '@/lib/jsonld';
@@ -66,7 +65,6 @@ export default function HomePage() {
         <HeroSection />
         <AboutSection />
         <ExperienceSection />
-        <ProjectsSection />
         <EducationSection />
         <ContactSection />
       </main>

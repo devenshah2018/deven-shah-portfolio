@@ -426,6 +426,25 @@ export const PROJECT_CATEGORIES = [
 
 export const PROJECTS: Project[] = [
   {
+    id: 'iris-project',
+    title: 'Iris',
+    subtitle: 'AI Planner',
+    period: '01/2026 – Present',
+    sortDate: '2025-01',
+    description:
+      'AI-powered daily assistant that sits on top of your conversations and workflows to organize what matters',
+    technologies: getProjectSkillsFromMapping('portfolio-project'),
+    entry_point: 'live',
+    link: 'https://www.iris-plan.com',
+    status: 'In Progress',
+    readMe: false,
+    categories: ['web', 'featured'],
+    accessible_at: ['hosted'],
+    access_points: [
+      { type: 'hosted', url: 'https://www.iris-plan.com', label: 'Live Site' }
+    ]
+  },
+  {
     id: 'portfolio-project',
     title: 'Portfolio Website',
     subtitle: 'Modern SPA for My Work & Skills',

@@ -5,6 +5,7 @@ import { MapPin, ExternalLink, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { groupExperiencesByOrg, formatPeriodDisplay, getSkillsForExperienceId } from '@/lib/content-registry';
 import { Badge } from '@/components/ui/badge';
+import { ProjectsSidebar } from '@/components/projects/projects-sidebar';
 
 export function ExperienceSection() {
   const [flippedIds, setFlippedIds] = useState<Set<string>>(new Set());
@@ -66,28 +67,32 @@ export function ExperienceSection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className='mx-auto max-w-3xl'
+          className='mx-auto max-w-6xl'
         >
-          {/* Section Header */}
-          <div className='mb-10 text-center'>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
+          <div className='mb-12 text-center'>
+            <motion.h2
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 0.5 }}
               viewport={{ once: true }}
-              className='mb-4'
+              className='mb-2 bg-gradient-to-r from-white to-slate-300 bg-clip-text text-3xl font-bold tracking-tight text-transparent sm:text-4xl'
             >
-              <h2 className='mb-2 py-1 bg-gradient-to-r from-white to-slate-300 bg-clip-text text-4xl font-bold tracking-tight text-transparent sm:text-5xl'>
-                Professional Journey
-              </h2>
-              <div className='mx-auto h-1 w-16 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500' />
-            </motion.div>
+              Experience
+            </motion.h2>
+            <div className='mx-auto h-1 w-14 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500' />
           </div>
 
-          {/* Timeline */}
-          <div className='relative'>
-            <div className='absolute left-[3.5rem] top-2 bottom-2 w-px bg-slate-700/60' aria-hidden />
-            <div className='space-y-10'>
+          <div className='grid grid-cols-1 gap-12 lg:grid-cols-[1fr_400px] lg:gap-10 xl:grid-cols-[1fr_440px]'>
+            {/* Left: Professional Journey */}
+            <div className='min-w-0'>
+              <h3 className='mb-6 text-sm font-semibold uppercase tracking-wider text-slate-400'>
+                Professional Journey
+              </h3>
+
+              {/* Timeline */}
+              <div className='relative'>
+                <div className='absolute left-[3.5rem] top-2 bottom-2 w-px bg-slate-700/60' aria-hidden />
+                <div className='space-y-10'>
               {orgsWithYearLabels.map(({ org, yearLabel }, index) => (
                 <motion.article
                   key={org.company}
@@ -216,6 +221,13 @@ export function ExperienceSection() {
                   </div>
                 </motion.article>
               ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Right: Projects */}
+            <div id='projects' className='lg:sticky lg:top-24 self-start'>
+              <ProjectsSidebar />
             </div>
           </div>
         </motion.div>

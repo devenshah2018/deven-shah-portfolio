@@ -107,6 +107,7 @@
 /* Smooth scrolling for anchor links */
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 6rem; /* Account for fixed nav (h-20) */
 }
 
 /* Custom scrollbar */
