@@ -1,5 +1,3 @@
-import type React from 'react';
-
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { ExternalLink, Calendar, Award, Code, Briefcase, Zap } from 'lucide-react';

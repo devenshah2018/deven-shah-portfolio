@@ -12,8 +12,8 @@ export function PDFViewer({ pdfUrl, title }: PDFViewerProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [retryCount, setRetryCount] = useState(0);
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const checkIntervalRef = useRef<NodeJS.Timeout>();
-  const timeoutRef = useRef<NodeJS.Timeout>();
+  const checkIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const maxRetries = 3;
 
   // Extract filename from pdfUrl (e.g., /papers/file.pdf -> file.pdf)

@@ -28,7 +28,7 @@ export function VideoPlayer({ src, poster, title, className = '' }: VideoPlayerP
   const [isBuffering, setIsBuffering] = useState(false);
   const [showControls, setShowControls] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const controlsTimeoutRef = useRef<NodeJS.Timeout>();
+  const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const sourcesLoadedRef = useRef<string>('');
 
   // Normalize src to array format
