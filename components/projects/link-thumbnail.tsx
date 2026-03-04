@@ -4,17 +4,17 @@ import { useState } from 'react';
 import { ExternalLink } from 'lucide-react';
 
 // 11ty screenshot API - returns image directly, no fetch needed (1200×630 opengraph size)
-// Optional: set NEXT_PUBLIC_THUMBNAIL_CACHE_BUST (e.g. "20250304" or "v2") and redeploy to force refetch all thumbnails
-// See https://v1-0-0.11ty.dev/docs/services/screenshots/ for wait/timeout options
+// Optional: set NEXT_PUBLIC_THUMBNAIL_CACHE_BUST (e.g. "v2", "v3", "20250304") and redeploy to force refetch
+// 11ty only accepts wait/timeout in path - unknown params trigger 302 redirect. We vary timeout (9→10–14)
+// based on cache bust value so the path changes and 11ty cache misses. See 11ty api-screenshot source.
 function getScreenshotSrc(url: string): string {
   const encoded = encodeURIComponent(url);
-  const cacheBust = typeof process !== 'undefined' && process.env?.['NEXT_PUBLIC_THUMBNAIL_CACHE_BUST'];
-  const options = [
-    'wait:3',      // wait for network idle (helps capture full render)
-    'timeout:9',   // 9s timeout for slow sites
-    ...(cacheBust ? [cacheBust] : []),
-  ].join('_');
-  return `https://v1.screenshot.11ty.dev/${encoded}/opengraph/_${options}/`;
+  const cacheBust =
+    typeof process !== 'undefined' && process.env?.['NEXT_PUBLIC_THUMBNAIL_CACHE_BUST'];
+  // Vary timeout 10–14 so different cache-bust values produce different paths (v2→12, v3→13, 20250304→14)
+  const timeout = cacheBust ? 10 + (parseInt(cacheBust.replace(/\D/g, '') || '0', 10) % 5) : 9;
+  const pathOptions = ['wait:3', `timeout:${timeout}`].join('_');
+  return `https://v1.screenshot.11ty.dev/${encoded}/opengraph/_${pathOptions}/`;
 }
 
 interface LinkThumbnailProps {

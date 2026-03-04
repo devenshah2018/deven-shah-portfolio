@@ -128,12 +128,12 @@ export const EXPERIENCES = [
     location: 'Remote',
     period: '12/2024 – 01/2026',
     description:
-      'Built an e-commerce analytics platform offering deep insights and AI agents for inventory management.',
+      'Co-founded Suno Analytics and led technical vision from prototype to production, delivering an AI-powered enterprise resource planning (ERP) platform for ecommerce companies.',
     achievements: [
-      'Led a global development team, improving project timelines and consistently delivering key initiatives to clients',
-      'Designed system architecture for high availability and performance, ensuring robust data handling',
-      'Conduct client discovery and demos, driving engagement with companies up to $50M ARR',
-      'Launched AI-powered analytics features that increased client retention and platform adoption',
+      'Spearheaded a globally distributed Agile engineering team across backend, frontend, and ML, driving rapid feature development and client issue resolution to maintain SLA standards.',
+      'Architected a full-stack web platform (React + TypeScript frontend, PostgreSQL backend) with OAuth authentication and WebSocket-based connections for real-time updates.',
+      'Engineering a forecasting system to generate purchase orders with ~80% confidence and maintain reliable stock levels through DeepAR and PyTorch, trained on historical sales and seasonal patterns.',
+      'Launched AI-powered analytics features that increased client retention and platform adoption.',
     ],
     featured: true,
     gradient: 'from-blue-500 to-cyan-500',
@@ -147,13 +147,11 @@ export const EXPERIENCES = [
     location: 'Dublin, CA',
     period: '04/2023 – 04/2024',
     description:
-      'Responsible for developing full-stack applications to streamline the acquisition of new Patelco members.',
+      'Shipped member-facing and internal banking applications to 500K+ users, working with product managers and stakeholders to convert requirements into compliant production systems.',
     achievements: [
-      'Developed full-stack features using Azure and ASP.NET, improving member acquisition with SFDC expertise',
-      'Lead administrative tool development for acquisition monitoring, ensuring alignment with business needs',
-      'Automated fraud request submission process, reducing handling time and ensuring SLA compliance',
-      'Created a virtual appointment scheduling system, reducing branch visits for members (Q2 Hackathon winner)',
-      'Developed a HELOAN/HELOC rate update automation web app to achieve a 1000% increase in efficiency',
+      'Eliminated required in-branch visits by architecting a virtual fraud request system (Visualforce frontend + Apex backend) enabling members to submit and track fraud claims digitally.',
+      'Reduced HELOAN and HELOC rate update time by 10x through an internal management platform (ASP.NET Core + MySQL), eliminating manual record adjustments and spreadsheet-based tracking.',
+      'Facilitated development of a hackathon-winning platform (Angular + Salesforce) to streamline appointment scheduling with members and Certified Financial Specialists directly.'
     ],
     gradient: 'from-blue-500 to-cyan-500',
     link: 'https://www.patelco.org',
@@ -168,10 +166,9 @@ export const EXPERIENCES = [
     description:
       'Automated big data management and supported sales meetings by gathering client requirements.',
     achievements: [
-      'Automated data backup solutions, cutting RMAN time by 50% using Oracle and ONTAP expertise',
-      'Developed scripts for performance insights, enhancing data analysis with Oracle and SQL skills',
-      'Created alert system for storage health, reducing monitoring time by 90% with Python and Bash',
-      'Migrated legacy system API to REST, improving integration with modern applications',
+      'Worked with solutions architects, enterprise clients, and storage engineers to modernize ONTAP-based backup workflows for Oracle databases.',
+      'Automated Oracle RMAN backup processes using the Oracle SDK and Python, decreasing backup execution time by 50% and minimizing manual DBA intervention.',
+      'Designed a Python and Bash-based monitoring and alerting system to track storage array health metrics, cutting manual monitoring time by 90%.',
     ],
     gradient: 'from-blue-500 to-cyan-500',
     link: 'https://www.netapp.com',
@@ -184,12 +181,8 @@ export const EXPERIENCES = [
     location: 'Remote',
     period: '09/2025 – 11/2025',
     description:
-      'Developed data-driven image sensing and visualization tools for drone flight path planning.',
-    achievements: [
-      'Developed Python data models and APIs to calculate drone positions, speeds, and efficient flight paths.',
-      'Applied camera models and photogrammetry to compute image footprints, sampling distances, and motion-blur limits.',
-      'Built visualization tools in Jupyter to analyze trajectories and optimize drone-based path planning.',
-    ],
+      'Developed a robotics-based drone path planning system in Python to efficiently capture high-quality imaging datasets using APIs and trajectory visualization tools.',
+    achievements: [],
     gradient: 'from-blue-500 to-cyan-500',
     link: 'https://www.buildfellowship.com/'
   },
@@ -201,7 +194,7 @@ export const EXPERIENCES = [
     location: 'Remote',
     period: '02/2026 – 03/2026',
     description:
-      'Developing AI image retrieval pipelines using CNNs and vector databases.',
+      'Implementing an AI-powered image retrieval system using Python, PyTorch, FAISS, Qdrant, and Docker to enable scalable semantic search with vector databases.',
     achievements: [],
     gradient: 'from-blue-500 to-cyan-500',
     link: 'https://www.buildfellowship.com/'
@@ -214,8 +207,12 @@ export const EXPERIENCES = [
     location: 'Boston, MA',
     period: '02/2026 – Present',
     description:
-      'Researching segmentation techniques using computer vision and deep learning.',
-    achievements: [],
+      'Discovering automated osteoarthritis diagnosis techniques through AI computer vision with a research team of faculty, PhD candidates, and medical advisors.',
+    achievements: [
+      'Developing a U-Net–based deep learning approach to automate osteoarthritis MRI analysis, enabling end-to-end segmentation of knee cartilage directly from MRI DICOM images.',
+      'Eliminating the need for a manual MRI cartilage measurement workflow (previously requiring ~2–3 hours) by designing a U-Net model to automatically trace cartilage boundaries in knee MRI DICOM images.',
+      'Reduced knee segmentation time by 90% through a CNN-based pipeline (VGG16 encoder + U-Net decoder) in Python to detect knee cartilage regions.'
+    ],
     gradient: 'from-blue-500 to-cyan-500',
     link: 'https://www.bu.edu/'
   },
