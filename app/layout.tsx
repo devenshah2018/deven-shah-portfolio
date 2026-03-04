@@ -12,11 +12,11 @@ const BASE_URL = 'https://deven-shah.com';
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: 'Deven Shah | Co-Founder & CTO at Suno Analytics',
+    default: 'Deven Shah | Software Engineer & AI Researcher',
     template: '%s | Deven Shah',
   },
   description:
-    'Portfolio of Deven Shah, Co-founder & CTO of Suno Analytics and Graduate MSCS student at Boston University. Software engineer specializing in full-stack development, AI/ML, and cloud infrastructure.',
+    'M.S. Computer Science student (AI & ML concentration) at Boston University. Shaping the next generation of AI-driven analytics, intelligent systems, and scalable solutions. Specializing in building scalable systems, leading teams, and optimizing client-focused solutions.',
   keywords: [
     'Deven Shah',
     'Software Engineer',
@@ -55,27 +55,27 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: BASE_URL,
     siteName: 'Deven Shah',
-    title: 'Deven Shah | Co-Founder & CTO at Suno Analytics',
+    title: 'Deven Shah | Software Engineer & AI Researcher',
     description:
-      'Portfolio of Deven Shah, Co-founder & CTO of Suno Analytics and Graduate MSCS student at Boston University.',
+      'M.S. Computer Science student (AI & ML concentration) at Boston University. Shaping the next generation of AI-driven analytics, intelligent systems, and scalable solutions.',
     images: [
       {
-        url: `${BASE_URL}/linkedin-profile.jpeg`,
+        url: `${BASE_URL}/thumbnail.png`,
         width: 1200,
         height: 630,
-        alt: 'Deven Shah - Co-Founder & CTO at Suno Analytics',
-        type: 'image/jpeg',
+        alt: 'Deven Shah - Software Engineer & AI Researcher',
+        type: 'image/png',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Deven Shah | Co-Founder & CTO at Suno Analytics',
+    title: 'Deven Shah | Software Engineer & AI Researcher',
     description:
-      'Portfolio of Deven Shah, Co-founder & CTO of Suno Analytics and Graduate MSCS student at Boston University.',
+      'M.S. Computer Science student (AI & ML concentration) at Boston University. Shaping the next generation of AI-driven analytics, intelligent systems, and scalable solutions.',
     creator: '@devenshah2018',
     site: '@devenshah2018',
-    images: [`${BASE_URL}/linkedin-profile.jpeg`],
+    images: [`${BASE_URL}/thumbnail.png`],
   },
   alternates: {
     canonical: BASE_URL,

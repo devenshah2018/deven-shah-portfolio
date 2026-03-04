@@ -12,10 +12,10 @@ export function generatePersonSchema() {
     '@context': 'https://schema.org',
     '@type': 'Person',
     name: 'Deven Shah',
-    jobTitle: 'Co-Founder & CTO',
+    jobTitle: 'Software Engineer & AI Researcher',
     url: BASE_URL,
-    image: `${BASE_URL}/linkedin-profile.jpeg`,
-    description: 'Co-founder & CTO of Suno Analytics and Graduate MSCS student at Boston University',
+    image: `${BASE_URL}/thumbnail.png`,
+    description: 'M.S. Computer Science student at Boston University. Shaping the next generation of AI-driven analytics, intelligent systems, and scalable solutions.',
     sameAs: [
       LINKS.linkedin,
       LINKS.github,
@@ -95,7 +95,7 @@ export function generateArticleSchema(paper: ResearchPaper) {
       name: paper.institution || 'Deven Shah',
       logo: {
         '@type': 'ImageObject',
-        url: `${BASE_URL}/linkedin-profile.jpeg`,
+        url: `${BASE_URL}/thumbnail.png`,
       },
     },
     mainEntityOfPage: {
