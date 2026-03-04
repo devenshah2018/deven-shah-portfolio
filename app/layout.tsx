@@ -1,13 +1,11 @@
 import type React from 'react';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { GeistSans } from 'geist/font/sans';
 import './globals.css';
 import { Analytics } from '@vercel/analytics/next';
 import { GoogleTagManager } from '@next/third-parties/google';
 import { LayoutWrapper } from '@/components/layout-wrapper';
 import { headers } from 'next/headers';
-
-const inter = Inter({ subsets: ['latin'] });
 
 const BASE_URL = 'https://deven-shah.com';
 
@@ -124,7 +122,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   if (subdomain === 'research') {
     return (
       <html lang='en' className='dark' suppressHydrationWarning>
-        <body className={`${inter.className} bg-black text-white antialiased`}>
+        <body className={`${GeistSans.className} bg-[#141414] text-[#f5f5f0] antialiased`}>
           {process.env.NODE_ENV === 'production' && (
             <GoogleTagManager gtmId='GTM-MQBDDCBQ' />
           )}
@@ -138,7 +136,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   // Otherwise, use full portfolio layout
   return (
     <html lang='en' className='dark' suppressHydrationWarning>
-      <body className={inter.className}>
+      <body className={`${GeistSans.className} bg-[#141414] text-[#f5f5f0]`}>
         {process.env.NODE_ENV === 'production' && (
           <GoogleTagManager gtmId='GTM-MQBDDCBQ' />
         )}

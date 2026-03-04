@@ -439,6 +439,7 @@ export const PROJECTS: Project[] = [
     status: 'In Progress',
     readMe: false,
     categories: ['web', 'featured'],
+    current_work: true,
     accessible_at: ['hosted'],
     access_points: [
       { type: 'hosted', url: 'https://www.iris-plan.com', label: 'Live Site' }

@@ -89,7 +89,7 @@ export function Navigation({}: NavigationProps) {
       transition={{ duration: 0.6 }}
       className={`fixed top-0 z-50 w-full transition-all duration-500 ${
         isScrolled
-          ? 'border-b border-slate-800/50 bg-slate-950/90 shadow-2xl backdrop-blur-xl'
+          ? 'border-b border-[#404040]/30 bg-[#141414]/98 shadow-2xl backdrop-blur-xl'
           : 'bg-transparent'
       }`}
     >
@@ -113,7 +113,7 @@ export function Navigation({}: NavigationProps) {
                     className='group relative'
                   >
                     <span
-                      className='block cursor-pointer bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-2xl font-bold text-transparent'
+                      className="block cursor-pointer text-2xl font-semibold text-[#f5f5f0]"
                       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                     >
                       Deven Shah
@@ -129,13 +129,13 @@ export function Navigation({}: NavigationProps) {
                         transition={{ duration: 0.2, ease: 'easeOut' }}
                         className='relative mt-2'
                       >
-                        <div className='rounded-lg border border-slate-700/40 bg-slate-950/90 p-2 shadow-xl backdrop-blur-lg'>
+                        <div className="rounded-lg border border-[#404040]/40 bg-[#141414]/98 p-2 shadow-xl backdrop-blur-lg">
                           <div className='flex items-center gap-2'>
                             <a
                               href={LINKS.github}
                               target='_blank'
                               rel='noopener noreferrer'
-                              className='group/item flex h-7 w-7 items-center justify-center rounded bg-slate-800/30 text-slate-500 transition-all duration-150 hover:scale-105 hover:bg-slate-700/50 hover:text-slate-200'
+                              className="group/item flex h-7 w-7 items-center justify-center rounded bg-[#262626] text-[#a3a3a3] transition-all duration-150 hover:scale-105 hover:bg-[#404040] hover:text-[#f5f5f0]"
                               aria-label='GitHub Profile'
                             >
                               <svg className='h-3.5 w-3.5' fill='currentColor' viewBox='0 0 24 24'>
@@ -147,7 +147,7 @@ export function Navigation({}: NavigationProps) {
                               href={LINKS.linkedin}
                               target='_blank'
                               rel='noopener noreferrer'
-                              className='group/item flex h-7 w-7 items-center justify-center rounded bg-slate-800/30 text-slate-500 transition-all duration-150 hover:scale-105 hover:bg-blue-600/15 hover:text-blue-400'
+                              className="group/item flex h-7 w-7 items-center justify-center rounded bg-[#262626] text-[#a3a3a3] transition-all duration-150 hover:scale-105 hover:bg-[#404040] hover:text-[#f5f5f0]"
                               aria-label='LinkedIn Profile'
                             >
                               <svg className='h-3.5 w-3.5' fill='currentColor' viewBox='0 0 24 24'>
@@ -157,7 +157,7 @@ export function Navigation({}: NavigationProps) {
 
                             <a
                               href={`mailto:${LINKS.email}`}
-                              className='group/item flex h-7 w-7 items-center justify-center rounded bg-slate-800/30 text-slate-500 transition-all duration-150 hover:scale-105 hover:bg-green-600/15 hover:text-green-400'
+                              className="group/item flex h-7 w-7 items-center justify-center rounded bg-[#262626] text-[#a3a3a3] transition-all duration-150 hover:scale-105 hover:bg-[#404040] hover:text-[#f5f5f0]"
                               aria-label='Email Contact'
                             >
                               <svg
@@ -198,7 +198,7 @@ export function Navigation({}: NavigationProps) {
                           </div>
                         </div>
 
-                        <div className='absolute -top-1 left-4 h-2 w-2 rotate-45 transform border-l border-t border-slate-700/40 bg-slate-950/90'></div>
+                        <div className="absolute -top-1 left-4 h-2 w-2 rotate-45 transform border-l border-t border-[#404040]/40 bg-[#141414]/98"></div>
                       </motion.div>
                     </div>
                   </motion.div>
@@ -212,11 +212,11 @@ export function Navigation({}: NavigationProps) {
                     className='block'
                   >
                     <span
-                      className='inline-flex select-none items-center rounded-lg bg-slate-900/80 px-3 py-1 font-mono text-lg font-semibold tracking-widest text-slate-100'
+                      className="inline-flex select-none items-center rounded-md px-3 py-1 text-lg font-medium tracking-widest text-[#f5f5f0]"
                       title={timeZoneFull}
                     >
-                      <svg
-                        className='mr-2 h-5 w-5 text-blue-400'
+                        <svg
+                          className="mr-2 h-5 w-5 text-[#a3a3a3]"
                         fill='none'
                         stroke='currentColor'
                         strokeWidth='2'
@@ -234,7 +234,7 @@ export function Navigation({}: NavigationProps) {
                         <path strokeLinecap='round' strokeLinejoin='round' d='M12 6v6l4 2' />
                       </svg>
                       <span className='tabular-nums'>{currentTime}</span>
-                      <span className='ml-2 text-xs font-bold uppercase tracking-wider text-blue-300'>
+                      <span className="ml-2 text-xs font-medium uppercase tracking-wider text-[#a3a3a3]">
                         {timeZoneAbbr}
                       </span>
                     </span>
@@ -263,8 +263,8 @@ export function Navigation({}: NavigationProps) {
                   }}
                   className={
                     item.name === 'Connect'
-                      ? 'rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 px-6 py-3 font-sans text-sm font-bold uppercase tracking-widest text-white shadow-lg transition-all duration-300 hover:from-blue-600 hover:to-indigo-600 hover:shadow-xl'
-                      : 'rounded-full px-6 py-3 font-sans text-sm font-semibold uppercase tracking-wider text-slate-300 transition-all duration-300 hover:bg-slate-800/50 hover:text-white'
+                      ? 'rounded-md border border-[#404040]/50 bg-[#f5f5f0] px-6 py-2.5 font-sans text-sm font-medium uppercase tracking-widest text-[#141414] transition-colors hover:bg-[#e8e8e3]'
+                      : 'rounded-md  px-6 py-2.5 font-sans text-sm font-medium uppercase tracking-wider text-[#a3a3a3] transition-colors hover:border-[#525252] hover:text-[#f5f5f0]'
                   }
                 >
                   {item.name}
@@ -278,7 +278,7 @@ export function Navigation({}: NavigationProps) {
                 <Button
                   variant='ghost'
                   size='icon'
-                  className={`flex h-12 w-12 items-center justify-center rounded-full bg-slate-900/80 transition-all duration-200 hover:bg-slate-800/90 focus:outline-none ${mobileNavOpen ? 'scale-105' : ''}`}
+                  className={`flex h-12 w-12 items-center justify-center rounded-md border border-[#404040]/40 bg-[#1a1a1a] transition-colors hover:bg-[#262626] focus:outline-none ${mobileNavOpen ? 'scale-105' : ''}`}
                   aria-label={mobileNavOpen ? 'Close navigation menu' : 'Open navigation menu'}
                   style={{ border: 'none', outline: 'none' }}
                 >
@@ -304,7 +304,7 @@ export function Navigation({}: NavigationProps) {
                             xmlns='http://www.w3.org/2000/svg'
                             aria-hidden='true'
                             focusable='false'
-                            className='h-9 w-9 text-blue-400 drop-shadow-xl transition-colors duration-200'
+                            className="h-9 w-9 text-[#f5f5f0] drop-shadow-xl transition-colors duration-200"
                             role='img'
                             aria-label='Close navigation menu'
                           >
@@ -378,7 +378,7 @@ export function Navigation({}: NavigationProps) {
                             xmlns='http://www.w3.org/2000/svg'
                             aria-hidden='true'
                             focusable='false'
-                            className='h-7 w-7 rotate-90 transform text-slate-200 transition-transform duration-200'
+                            className="h-7 w-7 rotate-90 transform text-[#a3a3a3] transition-transform duration-200"
                             role='img'
                             aria-label='Open navigation menu'
                           >
@@ -398,7 +398,7 @@ export function Navigation({}: NavigationProps) {
                 </Button>
               </SheetTrigger>
               <SheetContent
-                className={`translate-y-0 overflow-hidden rounded-3xl border border-slate-800/50 bg-slate-950/90 shadow-2xl backdrop-blur-2xl transition-all duration-500 ${mobileNavOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'} `}
+                className={`translate-y-0 overflow-hidden rounded-2xl border border-[#404040]/40 bg-[#141414] shadow-2xl backdrop-blur-2xl transition-all duration-500 ${mobileNavOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}
                 style={{
                   WebkitBackdropFilter: 'blur(30px)',
                   backdropFilter: 'blur(30px)',
@@ -418,8 +418,8 @@ export function Navigation({}: NavigationProps) {
                         href={item.href}
                         className={
                           item.name === 'Connect'
-                            ? 'block rounded-full border-2 border-blue-400/60 bg-gradient-to-r from-blue-500 to-indigo-500 px-6 py-3 text-lg font-bold text-white shadow-lg transition-all duration-300 hover:from-blue-600 hover:to-indigo-600'
-                            : 'block rounded-lg px-4 py-3 text-lg font-semibold text-slate-200 transition-all duration-300 hover:text-white'
+                            ? 'block rounded-md border border-[#404040]/50 bg-[#f5f5f0] px-6 py-3 text-lg font-medium text-[#141414] transition-colors hover:bg-[#e8e8e3]'
+                            : 'block rounded-lg px-4 py-3 text-lg font-medium text-[#a3a3a3] transition-colors hover:text-[#f5f5f0]'
                         }
                         onClick={(e) => {
                           setMobileNavOpen(false);

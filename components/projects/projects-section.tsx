@@ -3,6 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { LinkThumbnail } from '@/components/projects/link-thumbnail';
 import { Calendar, Star, Grid3x3, List, CheckCircle2, Clock, Pause, ExternalLink, Link } from 'lucide-react';
 import { motion } from 'framer-motion';
 import React, { useState, useMemo } from 'react';
@@ -168,35 +169,15 @@ function RelatedLogos({ project }: { project: Project }) {
   }
 
   const scrollToSection = (type: 'experience' | 'education', id?: string) => {
+    const itemId = type === 'experience' ? `experience-${id}` : `education-${id}`;
     const sectionId = type === 'experience' ? 'experience' : 'education';
-    const section = document.getElementById(sectionId);
-    if (section) {
-      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      
-      // If an ID is provided, scroll to and highlight the specific item
+    const target = id ? document.getElementById(itemId) : document.getElementById(sectionId);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: id ? 'center' : 'start' });
       if (id) {
-        setTimeout(() => {
-          const itemId = type === 'experience' ? `experience-${id}` : `education-${id}`;
-          const item = document.getElementById(itemId);
-          if (item) {
-            item.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            
-            // Highlight the experience/education card
-            const card = item.querySelector('[data-card]') || item;
-            const originalTransition = (card as HTMLElement).style.transition;
-            (card as HTMLElement).style.transition = 'all 0.3s ease-in-out';
-            (card as HTMLElement).style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.5), 0 0 30px rgba(59, 130, 246, 0.3)';
-            (card as HTMLElement).style.transform = 'scale(1.02)';
-            
-            setTimeout(() => {
-              (card as HTMLElement).style.boxShadow = '';
-              (card as HTMLElement).style.transform = '';
-              setTimeout(() => {
-                (card as HTMLElement).style.transition = originalTransition;
-              }, 300);
-            }, 3000);
-          }
-        }, 800);
+        const card = target.querySelector('[data-card]') || target;
+        (card as HTMLElement).classList.add('scroll-highlight');
+        setTimeout(() => (card as HTMLElement).classList.remove('scroll-highlight'), 3000);
       }
     }
   };
@@ -245,12 +226,7 @@ export function ProjectsSection() {
         activeCategory === 'all' || getProjectCategories(project).includes(activeCategory);
       
       return matchesCategory;
-    }).sort((a, b) => {
-      if (a.sortDate && b.sortDate) {
-        return b.sortDate.localeCompare(a.sortDate);
-      }
-      return 0;
-    });
+    }).sort((a, b) => (a.sortDate || '').localeCompare(b.sortDate || ''));
   }, [activeCategory]);
 
   return (
@@ -271,7 +247,7 @@ export function ProjectsSection() {
               viewport={{ once: true }}
               className='mb-4'
             >
-              <h2 className='mb-2 bg-gradient-to-r from-white to-slate-300 bg-clip-text text-4xl font-bold tracking-tight text-transparent sm:text-5xl py-1'>
+              <h2 className='mb-2 bg-gradient-to-r from-white to-slate-300 bg-clip-text text-5xl font-bold tracking-tight text-transparent sm:text-6xl py-1'>
                 Projects
               </h2>
               <div className='mx-auto h-1 w-16 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500' />
@@ -378,10 +354,19 @@ export function ProjectsSection() {
                 viewport={{ once: true }}
                 className='group'
               >
-                <Card className={`relative flex h-full flex-col overflow-hidden rounded-xl border-none bg-transparent transition-all duration-300 gap-2`}>
-                  {isProjectFeatured(project) && (
+                <Card className={`relative flex h-full min-h-[180px] flex-col overflow-visible rounded-xl border-none bg-transparent transition-all duration-300 gap-2 ${activeCategory === 'featured' && isProjectFeatured(project) ? 'sm:flex-row sm:items-start' : ''}`}>
+                  {activeCategory === 'featured' && isProjectFeatured(project) && (
                     <div className='absolute top-3 right-3 z-10'>
                       <Star className='h-5 w-5 text-amber-400 fill-amber-400/50' />
+                    </div>
+                  )}
+                  {activeCategory === 'featured' && isProjectFeatured(project) && getWebLink(project) && (
+                    <div className='flex shrink-0 items-start px-6 pt-2 sm:w-1/2 sm:px-0 sm:pt-6 sm:pl-6'>
+                      <LinkThumbnail
+                        url={getWebLink(project)!.url}
+                        title={project.title}
+                        className='block h-[70%] w-full min-h-[140px] sm:min-h-[120px]'
+                      />
                     </div>
                   )}
                   <CardHeader className='flex flex-col gap-2 pb-3'>
@@ -394,12 +379,12 @@ export function ProjectsSection() {
                           href={getWebLink(project)!.url}
                           target='_blank'
                           rel='noopener noreferrer'
-                          className='flex-shrink-0 inline-flex items-center gap-1.5 px-2 py-1 hover:border-blue-500/50 transition-all duration-200 group/link max-w-[140px]'
+                          className='flex-shrink-0 inline-flex items-center gap-1.5 px-2 py-1 hover:border-blue-500/50 transition-all duration-200 group/link max-w-full'
                           title={getWebLink(project)!.url}
                         >
                           <Link className='h-3 w-3 flex-shrink-0 text-blue-400 group-hover/link:text-blue-300' />
-                          <span className='text-xs font-bold text-blue-400 group-hover/link:text-blue-300 truncate overflow-hidden'>
-                            {getWebLink(project)!.url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')}
+                          <span className='text-xs font-bold text-blue-400 group-hover/link:text-blue-300 break-all'>
+                            {getWebLink(project)!.url}
                           </span>
                         </a>
                       )}
@@ -462,79 +447,111 @@ export function ProjectsSection() {
                   viewport={{ once: true }}
                   className='group'
                 >
-                  <Card className={`relative flex flex-col sm:flex-row overflow-hidden rounded-xl border-none bg-transparent transition-all duration-300 ${
-                    isProjectFeatured(project) 
-                      ? 'ring-2 ring-amber-500/20' 
+                  <Card className={`relative flex min-h-[180px] flex-col sm:flex-row overflow-visible rounded-xl border-none bg-transparent transition-all duration-300 ${
+                    activeCategory === 'featured' && isProjectFeatured(project)
+                      ? 'ring-2 ring-amber-500/20 sm:items-start' 
                       : ''
                   }`}>
-                    {isProjectFeatured(project) && (
+                    {activeCategory === 'featured' && isProjectFeatured(project) && (
                       <div className='absolute top-3 right-3 z-10'>
                         <Star className='h-5 w-5 text-amber-400 fill-amber-400/50' />
                       </div>
                     )}
-                    
-                    <div className='flex-1 min-w-0'>
-                      <CardHeader className='pb-2'>
-                        <div className='flex items-center gap-2 mb-2'>
-                          <CardTitle className='whitespace-normal break-words text-lg font-bold text-white leading-tight'>
-                            {project.title}
-                          </CardTitle>
-                          {getWebLink(project) && (
-                            <a
-                              href={getWebLink(project)!.url}
-                              target='_blank'
-                              rel='noopener noreferrer'
-                              className='flex-shrink-0 inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-slate-800/50 border border-slate-700/50 hover:bg-blue-950/30 hover:border-blue-500/50 transition-all duration-200 group/link max-w-[160px]'
-                              title={getWebLink(project)!.url}
-                            >
-                              <ExternalLink className='h-3 w-3 flex-shrink-0 text-blue-400 group-hover/link:text-blue-300' />
-                              <span className='text-xs font-bold text-blue-400 group-hover/link:text-blue-300 truncate overflow-hidden'>
-                                {getWebLink(project)!.url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')}
-                              </span>
-                            </a>
+                    {activeCategory === 'featured' && isProjectFeatured(project) && getWebLink(project) && (
+                      <div className='order-first flex w-full shrink-0 items-start p-4 pb-0 sm:order-none sm:w-1/2 sm:py-6 sm:pl-6 sm:pr-4 sm:pb-2'>
+                        <LinkThumbnail
+                          url={getWebLink(project)!.url}
+                          title={project.title}
+                          className='block h-[70%] w-full min-h-[120px] sm:min-h-0'
+                        />
+                      </div>
+                    )}
+                    <div className='flex min-w-0 flex-1 flex-col gap-1 px-4 py-4 sm:pl-0 sm:pr-6'>
+                      <div className='flex items-center justify-between gap-2'>
+                        <CardTitle className='min-w-0 flex-1 whitespace-normal break-words text-lg font-bold text-white leading-tight'>
+                          {project.title}
+                        </CardTitle>
+                        {activeCategory !== 'featured' && (
+                          <div className='flex flex-shrink-0 items-center gap-1'>
+                            {getWebLink(project) && (
+                              <a
+                                href={getWebLink(project)!.url}
+                                target='_blank'
+                                rel='noopener noreferrer'
+                                className='flex h-8 w-8 items-center justify-center rounded text-slate-400 transition-colors hover:text-blue-400'
+                                aria-label={`Live: ${getWebLink(project)!.url}`}
+                                title={getWebLink(project)!.url}
+                              >
+                                <ExternalLink className='h-4 w-4' />
+                              </a>
+                            )}
+                            {getAccessPoints(project)
+                              .filter(ap => ap.type !== 'hosted' && ap.type !== 'web')
+                              .map((accessPoint, i) => (
+                                <AccessPointBadge key={i} index={i} type={accessPoint.type} url={accessPoint.url} label={accessPoint.label} />
+                              ))}
+                          </div>
+                        )}
+                      </div>
+                      {activeCategory === 'featured' && isProjectFeatured(project) ? (
+                        <div className='flex flex-col gap-1'>
+                          <span className='flex items-center gap-1 text-xs text-slate-400'>
+                            <Calendar className='h-3 w-3 shrink-0' />
+                            {project.period}
+                          </span>
+                          {getStatusBadge(project.status, 'sm')}
+                          {getRelatedLogos(project).length > 0 && (
+                            <div className='flex items-center gap-2'>
+                              <RelatedLogos project={project} />
+                            </div>
+                          )}
+                          <div className='flex items-center gap-1'>
+                            {getWebLink(project) && (
+                              <a
+                                href={getWebLink(project)!.url}
+                                target='_blank'
+                                rel='noopener noreferrer'
+                                className='flex h-8 w-8 items-center justify-center rounded text-slate-400 transition-colors hover:text-blue-400'
+                                aria-label={`Live: ${getWebLink(project)!.url}`}
+                                title={getWebLink(project)!.url}
+                              >
+                                <ExternalLink className='h-4 w-4' />
+                              </a>
+                            )}
+                            {getAccessPoints(project)
+                              .filter(ap => ap.type !== 'hosted' && ap.type !== 'web')
+                              .map((accessPoint, i) => (
+                                <AccessPointBadge key={i} index={i} type={accessPoint.type} url={accessPoint.url} label={accessPoint.label} />
+                              ))}
+                          </div>
+                        </div>
+                      ) : (
+                        <div className='flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-400'>
+                          <span className='flex items-center gap-1'>
+                            <Calendar className='h-3 w-3 shrink-0' />
+                            {project.period}
+                          </span>
+                          {getStatusBadge(project.status, 'sm')}
+                          {getRelatedLogos(project).length > 0 && (
+                            <>
+                              <span className='text-slate-600'>·</span>
+                              <RelatedLogos project={project} />
+                            </>
                           )}
                         </div>
-                        <div className='flex items-center justify-between gap-4 flex-wrap'>
-                          <div className='flex items-center gap-2 flex-wrap'>
-                            <div className='flex items-center gap-1'>
-                              <Calendar className='h-3 w-3 text-slate-400' />
-                              <span className='text-xs font-medium text-slate-400'>
-                                {project.period}
-                              </span>
-                            </div>
-                            {getStatusBadge(project.status, 'sm')}
-                            {project.technologies?.slice(0, 4).map((tech: string, i: number) => (
-                              <Badge
-                                key={i}
-                                variant='outline'
-                                className='border-slate-700 bg-slate-800/50 text-xs text-slate-300'
-                              >
-                                {tech}
-                              </Badge>
-                            ))}
-                          </div>
-                          <div className='flex items-center -space-x-2 ml-auto'>
-                            <RelatedLogos project={project} />
-                          </div>
+                      )}
+                      {project.technologies && project.technologies.length > 0 && (
+                        <div className='flex flex-wrap gap-1'>
+                          {project.technologies.slice(0, 4).map((tech: string, i: number) => (
+                            <Badge key={i} variant='outline' className='border-slate-700 bg-slate-800/50 text-xs text-slate-300'>
+                              {tech}
+                            </Badge>
+                          ))}
                         </div>
-                      </CardHeader>
-                      <CardContent className='pt-0 pb-3'>
-                        <p className='text-sm text-slate-300 leading-relaxed'>{project.description}</p>
+                      )}
+                      <CardContent className='px-0 pt-0 pb-3'>
+                        {project.description && <p className='text-sm text-slate-300 leading-relaxed'>{project.description}</p>}
                       </CardContent>
-                    </div>
-
-                    <div className='flex items-center px-4 py-3 sm:py-0 sm:pr-6'>
-                      <div className='flex -space-x-2'>
-                        {getAccessPoints(project).map((accessPoint, i) => (
-                          <AccessPointBadge
-                            key={i}
-                            index={i}
-                            type={accessPoint.type}
-                            url={accessPoint.url}
-                            label={accessPoint.label}
-                          />
-                        ))}
-                      </div>
                     </div>
                   </Card>
                 </motion.div>

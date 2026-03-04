@@ -1,36 +1,35 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 84% 4.9%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    /* Warm dark palette - hammadh-inspired */
+    --background: 24 6% 8%;
+    --foreground: 40 12% 96%;
+    --card: 24 6% 10%;
+    --card-foreground: 40 12% 96%;
+    --popover: 24 6% 10%;
+    --popover-foreground: 40 12% 96%;
+    --primary: 40 12% 96%;
+    --primary-foreground: 24 6% 8%;
+    --secondary: 24 6% 14%;
+    --secondary-foreground: 40 12% 96%;
+    --muted: 24 6% 18%;
+    --muted-foreground: 40 8% 65%;
+    --accent: 24 6% 18%;
+    --accent-foreground: 40 12% 96%;
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 94.1%;
-    --radius: 0.75rem;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    --destructive-foreground: 40 12% 96%;
+    --border: 24 6% 20%;
+    --input: 24 6% 22%;
+    --ring: 40 12% 90%;
+    --radius: 0.5rem;
+    --chart-1: 0 0% 60%;
+    --chart-2: 0 0% 50%;
+    --chart-3: 0 0% 40%;
+    --chart-4: 0 0% 55%;
+    --chart-5: 0 0% 45%;
   }
 }
 
@@ -41,28 +40,24 @@
   body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
+    font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
   }
 }
 
 .bg-grid-pattern {
-  background-image: radial-gradient(circle, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
-  background-size: 20px 20px;
+  background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
-/* Enhanced Tour Highlighting */
+/* Tour Highlighting - B&W */
 .tour-highlight {
   position: relative !important;
   border-radius: 12px !important;
-  background: linear-gradient(
-    135deg,
-    rgba(59, 130, 246, 0.08),
-    rgba(147, 51, 234, 0.05)
-  ) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
   box-shadow:
-    0 0 0 2px rgba(59, 130, 246, 0.4),
-    0 0 0 4px rgba(59, 130, 246, 0.15),
-    0 8px 32px rgba(59, 130, 246, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+    0 0 0 1px rgba(255, 255, 255, 0.15),
+    0 0 0 2px rgba(255, 255, 255, 0.08) !important;
   transform: translateZ(0) !important;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
   animation: tour-highlight-pulse 2s ease-in-out infinite !important;
@@ -72,17 +67,13 @@
   0%,
   100% {
     box-shadow:
-      0 0 0 2px rgba(59, 130, 246, 0.4),
-      0 0 0 4px rgba(59, 130, 246, 0.15),
-      0 8px 32px rgba(59, 130, 246, 0.2),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      0 0 0 1px rgba(255, 255, 255, 0.15),
+      0 0 0 2px rgba(255, 255, 255, 0.08);
   }
   50% {
     box-shadow:
-      0 0 0 2px rgba(59, 130, 246, 0.6),
-      0 0 0 6px rgba(59, 130, 246, 0.25),
-      0 12px 40px rgba(59, 130, 246, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      0 0 0 1px rgba(255, 255, 255, 0.25),
+      0 0 0 3px rgba(255, 255, 255, 0.12);
   }
 }
 
@@ -102,6 +93,58 @@
 /* Smooth transitions for all tour elements */
 .tour-tooltip-container * {
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Scroll-to highlight - diagonal shine sweep */
+.scroll-highlight {
+  position: relative !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+}
+
+.scroll-highlight::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    135deg,
+    transparent 42%,
+    rgba(255, 255, 255, 0.2) 50%,
+    transparent 58%
+  );
+  animation: scroll-shine-sweep 1.6s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes scroll-shine-sweep {
+  0% {
+    transform: translateX(-100%) translateY(-100%);
+  }
+  100% {
+    transform: translateX(100%) translateY(100%);
+  }
+}
+
+/* GitHub contribution calendar - fit without horizontal scroll */
+.github-calendar-wrapper {
+  max-width: 100%;
+  overflow: hidden;
+}
+.github-calendar-wrapper .react-activity-calendar {
+  width: 100%;
+  max-width: 100%;
+}
+.github-calendar-wrapper .react-activity-calendar > div {
+  overflow-x: hidden !important;
+  overflow-y: hidden;
+  max-width: 100%;
+}
+.github-calendar-wrapper .react-activity-calendar svg {
+  max-width: 100%;
+  height: auto;
 }
 
 /* Smooth scrolling for anchor links */
@@ -144,82 +187,38 @@ html {
   animation: fadeInUp 0.6s ease-out;
 }
 
-/* Subtle, dark-theme-integrated animated border glow for the IDE button */
+/* IDE button animations - B&W */
 .animate-ide-border-glow {
-  background: linear-gradient(90deg, hsl(217, 80%, 32%) 0%, hsl(187, 80%, 28%) 100%);
+  background: rgba(255, 255, 255, 0.1);
   opacity: 0.1;
-  filter: blur(6px) brightness(0.7) saturate(0.7);
+  filter: blur(6px);
   animation: ide-border-glow 2.8s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;
-  transition:
-    opacity 0.3s,
-    filter 0.3s;
+  transition: opacity 0.3s, filter 0.3s;
 }
 
 @keyframes ide-border-glow {
-  0% {
-    opacity: 0.08;
-    filter: blur(6px) brightness(0.7) saturate(0.7);
-  }
-  50% {
-    opacity: 0.16;
-    filter: blur(10px) brightness(0.8) saturate(0.8);
-  }
-  100% {
-    opacity: 0.08;
-    filter: blur(6px) brightness(0.7) saturate(0.7);
-  }
+  0% { opacity: 0.08; filter: blur(6px); }
+  50% { opacity: 0.16; filter: blur(10px); }
+  100% { opacity: 0.08; filter: blur(6px); }
 }
 
-/* Pulsating border animation for Try IDE button */
 @keyframes ide-pulse-border {
   0% {
-    box-shadow:
-      0 0 0 0 rgba(34, 211, 238, 0.18),
-      0 0 0 2px rgba(34, 211, 238, 0.12);
-    border-color: rgba(34, 211, 238, 0.32);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.18), 0 0 0 2px rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.32);
   }
   50% {
-    box-shadow:
-      0 0 8px 4px rgba(34, 211, 238, 0.22),
-      0 0 0 4px rgba(34, 211, 238, 0.18);
-    border-color: rgba(34, 211, 238, 0.55);
+    box-shadow: 0 0 8px 4px rgba(255, 255, 255, 0.22), 0 0 0 4px rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.55);
   }
   100% {
-    box-shadow:
-      0 0 0 0 rgba(34, 211, 238, 0.18),
-      0 0 0 2px rgba(34, 211, 238, 0.12);
-    border-color: rgba(34, 211, 238, 0.32);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.18), 0 0 0 2px rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.32);
   }
 }
-.animate-ide-pulse-border {
-  animation: ide-pulse-border 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  border-radius: 1rem;
-  transition: border-color 0.3s;
-}
-
-/* Pulsating blue border animation for Try IDE button */
-@keyframes ide-pulse-border-blue {
-  0% {
-    box-shadow:
-      0 0 0 0 rgba(59, 130, 246, 0.18),
-      0 0 0 2px rgba(59, 130, 246, 0.12);
-    border-color: rgba(59, 130, 246, 0.32);
-  }
-  50% {
-    box-shadow:
-      0 0 8px 4px rgba(59, 130, 246, 0.22),
-      0 0 0 4px rgba(59, 130, 246, 0.18);
-    border-color: rgba(59, 130, 246, 0.55);
-  }
-  100% {
-    box-shadow:
-      0 0 0 0 rgba(59, 130, 246, 0.18),
-      0 0 0 2px rgba(59, 130, 246, 0.12);
-    border-color: rgba(59, 130, 246, 0.32);
-  }
-}
+.animate-ide-pulse-border,
 .animate-ide-pulse-border-blue {
-  animation: ide-pulse-border-blue 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  animation: ide-pulse-border 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   border-radius: 1rem;
   transition: border-color 0.3s;
 }
@@ -231,10 +230,10 @@ html {
   position: relative;
   z-index: 50 !important;
   box-shadow:
-    0 0 0 2px #0090ff,
-    0 2px 12px 0 rgba(0, 144, 255, 0.1);
+    0 0 0 2px rgba(255, 255, 255, 0.6),
+    0 2px 12px 0 rgba(0, 0, 0, 0.2);
   border-radius: 12px !important;
-  border: 2px solid #0090ff !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
   transition:
     box-shadow 0.18s cubic-bezier(0.4, 0, 0.2, 1),
     border-color 0.18s cubic-bezier(0.4, 0, 0.2, 1);
@@ -247,11 +246,10 @@ html {
 
 /* Toast-style tour tooltip - override existing styles */
 .tour-tooltip {
-  font-family: 'JetBrains Mono', monospace;
-  border: 1px solid rgba(59, 130, 246, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow:
     0 20px 40px rgba(0, 0, 0, 0.4),
-    0 0 20px rgba(59, 130, 246, 0.2);
+    0 0 20px rgba(255, 255, 255, 0.1);
   max-height: 400px !important;
   overflow-y: auto;
   min-width: 300px;
@@ -262,19 +260,15 @@ html {
 }
 
 .tour-tooltip-title {
-  font-family: 'JetBrains Mono', monospace;
   font-weight: 700;
-  text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
   letter-spacing: 0.5px;
   font-size: 0.875rem !important;
   line-height: 1.4 !important;
 }
 
 .tour-tooltip-content {
-  font-family: 'JetBrains Mono', monospace;
   font-weight: 400;
   line-height: 1.6;
-  text-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
   font-size: 0.75rem !important;
 }
 

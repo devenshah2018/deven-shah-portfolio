@@ -1,37 +1,15 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { SkillModal } from '@/components/about/skill-modal';
-import { RotatingTweets } from '@/components/about/rotating-tweets';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXTwitter, faLinkedin } from '@fortawesome/free-brands-svg-icons';
+import { CurrentProjects } from '@/components/about/current-projects';
 import { CATEGORIZED_SKILLS, SKILL_CATEGORIES, SKILL_MAPPINGS } from '@/lib/content-registry';
-import { ActivityDashboard } from './activity-dashboard';
 
 export function AboutSection() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
   const [activeCategory, setActiveCategory] = useState<string>('all');
-  const [currentAchievementIndex, setCurrentAchievementIndex] = useState(0);
-  const [currentPostType, setCurrentPostType] = useState<'tweet' | 'linkedin'>('tweet');
-
-  const pastAchievements = [
-    { name: 'Spartan Sprint', date: '06/2022', type: 'Obstacle Racing' },
-    { name: 'Spartan Sprint', date: '04/2023', type: 'Obstacle Racing' },
-    { name: 'Spartan Super', date: '08/2024', type: 'Obstacle Racing' },
-    { name: 'Olympic Triathlon', date: '06/2025', type: 'Triathlon' },
-  ];
-
-  useEffect(() => {
-    if (pastAchievements.length > 1) {
-      const interval = setInterval(() => {
-        setCurrentAchievementIndex(prev => (prev + 1) % pastAchievements.length);
-      }, 5000);
-      return () => clearInterval(interval);
-    }
-    return undefined;
-  }, [pastAchievements.length]);
 
   const handleSkillClick = (skill: string) => {
     const skillMapping = SKILL_MAPPINGS.find(mapping => mapping.skill === skill);
@@ -60,78 +38,43 @@ export function AboutSection() {
     return experienceCount + projectCount + educationCount;
   };
 
-  const handlePostTypeChange = (type: 'tweet' | 'linkedin') => setCurrentPostType(type);
-
   return (
-    <section id='about' className='bg-gradient-to-b from-slate-950 to-slate-900 py-20'>
-      <div className='container mx-auto px-6 lg:px-8'>
+    <section id="about" className="bg-[#141414] py-24 sm:py-32">
+      <div className="container mx-auto w-full max-w-7xl px-8 sm:px-10 lg:px-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className='mx-auto max-w-7xl'
+          className="mx-auto"
         >
-          <div className='mb-10 text-center sm:mb-14'>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-              className='mb-4'
-            >
-              <h2 className='mb-2 bg-gradient-to-r from-white to-slate-300 bg-clip-text text-4xl font-bold tracking-tight text-transparent sm:text-5xl'>
-                About Me
-              </h2>
-              <div className='mx-auto h-1 w-16 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500' />
-            </motion.div>
-          </div>
+          <h2 className="mb-12 text-base font-medium uppercase tracking-[0.2em] text-[#a3a3a3] sm:text-lg">About Me</h2>
 
-          {/* Twitter and Strava Section */}
-          <div className='mb-20 grid grid-cols-1 gap-12 lg:grid-cols-5'>
-            <div className='flex lg:col-span-2'>
-              <div className='relative min-h-[320px] w-full max-w-md overflow-visible'>
-                <h3 className='mb-3 flex items-center gap-2 text-2xl font-bold text-white'>
-                  <FontAwesomeIcon
-                    icon={currentPostType === 'linkedin' ? faLinkedin : faXTwitter}
-                    className='h-6 w-6 text-blue-400'
-                  />
-                  Recent Thoughts
-                </h3>
-                <div>
-                  <RotatingTweets onPostTypeChange={handlePostTypeChange} />
-                </div>
-              </div>
+          {/* Simple About + Current Work - use full width */}
+          <div className="mb-20 grid grid-cols-1 gap-16 lg:grid-cols-[1fr_320px] xl:grid-cols-[1.2fr_380px]">
+            <div>
+              <p className="max-w-xl text-base leading-[1.8] text-[#d4d4d4] sm:text-lg">
+              M.S. Computer Science student (AI & ML concentration) at Boston University specializing in building scalable systems, leading small to large teams, and optimizing client-focused solutions. I am actively seeking opportunities to leverage my expertise and deliver exceptional value to impactful teams.
+              </p>
             </div>
-
-            {/* Add extra space only on mobile */}
-            <div className='block h-4 lg:hidden'></div>
-
-            <div className='lg:col-span-3'>
-              <ActivityDashboard
-                pastAchievements={pastAchievements}
-                currentAchievementIndex={currentAchievementIndex}
-                setCurrentAchievementIndex={setCurrentAchievementIndex}
-              />
+            <div>
+              <CurrentProjects />
             </div>
           </div>
 
-          {/* Technical Skills Section - Full Width */}
+          {/* Technical Skills Section */}
           <div>
-            <h3 className='mb-3 flex items-center gap-2 text-2xl font-bold text-white'>
-              Technical Skills
-            </h3>
+            <h3 className="mb-6 text-xs font-medium uppercase tracking-[0.2em] text-[#a3a3a3]">Technical Skills</h3>
 
-            {/* Category Toggles - Top Horizontal */}
-            <div className='mb-6 flex flex-wrap gap-2'>
-              {SKILL_CATEGORIES.map(cat => (
+            <div className="mb-6 flex flex-wrap gap-2">
+              {SKILL_CATEGORIES.map((cat) => (
                 <button
                   key={cat.key}
-                  type='button'
-                  className={`rounded-md border px-3 py-1.5 text-xs font-bold uppercase tracking-wide transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400/70 focus:ring-offset-2 focus:ring-offset-slate-900 ${
+                  type="button"
+                  className={`rounded-md border px-3 py-1.5 text-xs font-bold uppercase tracking-wide transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 ${
                     activeCategory === cat.key
-                      ? 'border-blue-400 bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-lg'
-                      : 'border-blue-800/50 bg-slate-900 text-blue-200 hover:border-blue-400 hover:bg-blue-900/40 hover:text-white'
+                      ? 'border-[#525252]/50 bg-[#262626] text-[#f5f5f0]'
+                      : 'border-[#404040]/50 bg-transparent text-[#a3a3a3] hover:border-[#525252] hover:text-[#f5f5f0]'
                   }`}
                   style={{ letterSpacing: '0.08em' }}
                   onClick={() => setActiveCategory(cat.key)}
@@ -157,11 +100,11 @@ export function AboutSection() {
                 .map((skill: string) => (
                     <button
                     key={skill}
-                    type='button'
-                    className={`inline-flex items-center rounded-md border-none border-slate-600 bg-transparent px-3 py-1.5 text-sm font-medium text-slate-100 transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-blue-400/60 focus:ring-offset-2 focus:ring-offset-slate-900 ${
+                    type="button"
+                    className={`inline-flex items-center rounded-md border px-3 py-1.5 text-sm font-medium transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-white/50 ${
                       hasMapping(skill)
-                      ? 'hover:bg-gradient-to-r hover:from-blue-900/80 hover:to-blue-700/60 hover:text-white hover:shadow-lg focus:bg-gradient-to-r focus:from-blue-900/90 focus:to-blue-700/70 focus:text-white focus:shadow-lg'
-                      : 'cursor-default opacity-80'
+                        ? 'border-[#404040]/50 bg-transparent text-[#d4d4d4] hover:border-[#525252] hover:bg-[#262626]'
+                        : 'cursor-default border-[#404040]/30 text-[#737373]'
                     }`}
                     style={{
                       minWidth: 0,
@@ -179,8 +122,8 @@ export function AboutSection() {
                     >
                     <span className='max-w-[110px] truncate'>{skill}</span>
                     {hasMapping(skill) && (
-                        <span className="ml-2 flex items-center justify-center h-5 w-5 rounded-full bg-blue-900 border border-blue-300/40 text-[0.70em] font-semibold text-blue-100 leading-none">
-                          <span className="flex items-center justify-center w-full h-full">{getMappingCount(skill)}</span>
+                        <span className="ml-2 flex h-5 w-5 items-center justify-center rounded-full border border-[#404040]/50 text-[0.70em] font-semibold leading-none text-[#a3a3a3]">
+                          {getMappingCount(skill)}
                         </span>
                     )}
                     </button>

@@ -22,6 +22,7 @@ export type Project = {
   achievements?: string[];
   readMe?: boolean;
   categories?: string[];
+  current_work?: boolean;
   accessible_at: ('github' | 'vscode' | 'kaggle' | 'hosted')[];
   access_points?: AccessPoint[];
   related_experiences?: string[];
@@ -44,6 +45,7 @@ export type ResearchPaper = {
   doi?: string;
   citations?: number;
   status?: 'Published' | 'Under Review' | 'Preprint' | 'In Progress';
+  current_work?: boolean;
   relatedProjectId?: string;
 };
 
