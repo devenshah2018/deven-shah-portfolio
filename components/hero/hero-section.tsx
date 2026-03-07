@@ -7,6 +7,7 @@ import { Download, Mail, Github, Linkedin, Activity } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { LINKS } from '@/lib/content-registry';
+import { CONTACT_CARD_SHINE_EVENT } from '@/components/contact/contact-section';
 import { GitHubContributionChart } from '@/components/hero/github-contribution-chart';
 
 export function HeroSection() {
@@ -55,8 +56,7 @@ export function HeroSection() {
               size="lg"
               className="rounded-md border border-[#525252]/50 bg-[#f5f5f0] px-6 py-2.5 text-sm font-medium text-[#141414] transition-colors hover:bg-[#e8e8e3]"
               onClick={() => {
-                const contactSection = document.getElementById('contact');
-                if (contactSection) contactSection.scrollIntoView({ behavior: 'smooth' });
+                window.dispatchEvent(new Event(CONTACT_CARD_SHINE_EVENT));
               }}
             >
               <Activity className="mr-2 h-5 w-5" />

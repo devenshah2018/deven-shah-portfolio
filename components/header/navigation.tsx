@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LINKS } from '@/lib/content-registry';
+import { CONTACT_CARD_SHINE_EVENT } from '@/components/contact/contact-section';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faKaggle } from '@fortawesome/free-brands-svg-icons';
 
@@ -251,24 +252,30 @@ export function Navigation({}: NavigationProps) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: index * 0.1 }}
               >
-                <Link
-                  href={item.href}
-                  onClick={(e) => {
-                    if (item.href.startsWith('#')) {
-                      e.preventDefault();
-                      const id = item.href.slice(1);
-                      window.history.pushState(null, '', item.href);
-                      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                  }}
-                  className={
-                    item.name === 'Connect'
-                      ? 'rounded-md border border-[#404040]/50 bg-[#f5f5f0] px-6 py-2.5 font-sans text-sm font-medium uppercase tracking-widest text-[#141414] transition-colors hover:bg-[#e8e8e3]'
-                      : 'rounded-md  px-6 py-2.5 font-sans text-sm font-medium uppercase tracking-wider text-[#a3a3a3] transition-colors hover:border-[#525252] hover:text-[#f5f5f0]'
-                  }
-                >
-                  {item.name}
-                </Link>
+                {item.name === 'Connect' ? (
+                  <button
+                    type="button"
+                    onClick={() => window.dispatchEvent(new Event(CONTACT_CARD_SHINE_EVENT))}
+                    className="rounded-md border border-[#404040]/50 bg-[#f5f5f0] px-6 py-2.5 font-sans text-sm font-medium uppercase tracking-widest text-[#141414] transition-colors hover:bg-[#e8e8e3]"
+                  >
+                    {item.name}
+                  </button>
+                ) : (
+                  <Link
+                    href={item.href}
+                    onClick={(e) => {
+                      if (item.href.startsWith('#')) {
+                        e.preventDefault();
+                        const id = item.href.slice(1);
+                        window.history.pushState(null, '', item.href);
+                        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                      }
+                    }}
+                    className="rounded-md px-6 py-2.5 font-sans text-sm font-medium uppercase tracking-wider text-[#a3a3a3] transition-colors hover:border-[#525252] hover:text-[#f5f5f0]"
+                  >
+                    {item.name}
+                  </Link>
+                )}
               </motion.div>
             ))}
           </div>
@@ -414,27 +421,36 @@ export function Navigation({}: NavigationProps) {
                       transition={{ duration: 0.4, delay: index * 0.1 }}
                       className='py-2'
                     >
-                      <Link
-                        href={item.href}
-                        className={
-                          item.name === 'Connect'
-                            ? 'block rounded-md border border-[#404040]/50 bg-[#f5f5f0] px-6 py-3 text-lg font-medium text-[#141414] transition-colors hover:bg-[#e8e8e3]'
-                            : 'block rounded-lg px-4 py-3 text-lg font-medium text-[#a3a3a3] transition-colors hover:text-[#f5f5f0]'
-                        }
-                        onClick={(e) => {
-                          setMobileNavOpen(false);
-                          if (item.href.startsWith('#')) {
-                            e.preventDefault();
-                            const id = item.href.slice(1);
-                            window.history.pushState(null, '', item.href);
-                            setTimeout(() => {
-                              document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                            }, 300);
-                          }
-                        }}
-                      >
-                        {item.name}
-                      </Link>
+                      {item.name === 'Connect' ? (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setMobileNavOpen(false);
+                            window.dispatchEvent(new Event(CONTACT_CARD_SHINE_EVENT));
+                          }}
+                          className="block w-full rounded-md border border-[#404040]/50 bg-[#f5f5f0] px-6 py-3 text-left text-lg font-medium text-[#141414] transition-colors hover:bg-[#e8e8e3]"
+                        >
+                          {item.name}
+                        </button>
+                      ) : (
+                        <Link
+                          href={item.href}
+                          className="block rounded-lg px-4 py-3 text-lg font-medium text-[#a3a3a3] transition-colors hover:text-[#f5f5f0]"
+                          onClick={(e) => {
+                            setMobileNavOpen(false);
+                            if (item.href.startsWith('#')) {
+                              e.preventDefault();
+                              const id = item.href.slice(1);
+                              window.history.pushState(null, '', item.href);
+                              setTimeout(() => {
+                                document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                              }, 300);
+                            }
+                          }}
+                        >
+                          {item.name}
+                        </Link>
+                      )}
                     </motion.div>
                   ))}
                 </div>
