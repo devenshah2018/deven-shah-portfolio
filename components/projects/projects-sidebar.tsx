@@ -52,9 +52,10 @@ function getRelatedLabels(project: Project): { name: string; type: 'experience' 
     .filter(Boolean) as { name: string; type: 'experience' | 'education'; id: string; logo?: string }[];
 }
 
-function getStatusBadge(status: string) {
-  const iconCls = 'h-2.5 w-2.5';
-  const base = 'inline-flex items-center gap-1 text-[10px] font-medium text-[#a3a3a3]';
+function getStatusBadge(status: string, size: 'sm' | 'md' | 'lg' = 'sm') {
+  const iconCls = size === 'lg' ? 'h-4 w-4' : size === 'md' ? 'h-3.5 w-3.5' : 'h-2.5 w-2.5';
+  const textCls = size === 'lg' ? 'text-base' : size === 'md' ? 'text-[15px] leading-[1.7]' : 'text-[10px]';
+  const base = `inline-flex items-center gap-1 ${textCls} font-medium text-[#a3a3a3]`;
   if (status === 'Live' || status === 'Completed') {
     return (
       <span className={base}>
@@ -264,11 +265,11 @@ export function ProjectsSidebar() {
                     </div>
                     {activeCategory === 'featured' && isProjectFeatured(project) ? (
                       <div className='flex flex-col gap-1'>
-                        <span className='flex items-center gap-1 text-[10px] text-[#a3a3a3]'>
-                          <Calendar className='h-2.5 w-2.5 shrink-0' />
+                        <span className='flex items-center gap-1 text-[15px] text-[#d4d4d4]'>
+                          <Calendar className='h-3.5 w-3.5 shrink-0' />
                           {project.period}
                         </span>
-                        {getStatusBadge(project.status)}
+                        {getStatusBadge(project.status, 'md')}
                         {related.length > 0 && (
                           <div className='flex flex-wrap gap-1'>
                             {related.map((r, i) => (
@@ -280,10 +281,10 @@ export function ProjectsSidebar() {
                                     ? scrollToExperience(r.id)
                                     : document.getElementById(`education-${r.id}`)?.scrollIntoView({ behavior: 'smooth' })
                                 }
-                                className="inline-flex items-center gap-1 text-[10px] font-medium text-[#a3a3a3] underline decoration-[#404040] underline-offset-1 transition-colors hover:text-[#f5f5f0] hover:underline-[#525252]"
+                                className="inline-flex items-center gap-1 text-[15px] font-medium text-[#d4d4d4] underline decoration-[#404040] underline-offset-1 transition-colors hover:text-[#f5f5f0] hover:underline-[#525252]"
                               >
                                 {r.logo ? (
-                                  <img src={r.logo} alt='' className='h-3 w-3 rounded object-contain' />
+                                  <img src={r.logo} alt='' className='h-5 w-5 rounded object-contain shrink-0' />
                                 ) : r.type === 'experience' ? (
                                   <Building2 className='h-2.5 w-2.5 shrink-0' />
                                 ) : (
@@ -333,12 +334,12 @@ export function ProjectsSidebar() {
                       </div>
                     ) : (
                       <>
-                        <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5 text-[10px] text-[#a3a3a3]">
+                        <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5 text-[15px] text-[#d4d4d4]">
                           <span className='flex items-center gap-1'>
                             <Calendar className='h-2.5 w-2.5 shrink-0' />
                             {project.period}
                           </span>
-                          {getStatusBadge(project.status)}
+                          {getStatusBadge(project.status, 'md')}
                           {related.length > 0 && (
                             <>
                               <span className='text-[#525252]'>·</span>
@@ -354,7 +355,7 @@ export function ProjectsSidebar() {
                                   className="inline-flex items-center gap-1 font-medium underline decoration-[#404040] underline-offset-1 transition-colors hover:text-[#f5f5f0] hover:underline-[#525252]"
                                 >
                                   {r.logo ? (
-                                    <img src={r.logo} alt='' className='h-3 w-3 rounded object-contain' />
+                                    <img src={r.logo} alt='' className='h-5 w-5 rounded object-contain shrink-0' />
                                   ) : r.type === 'experience' ? (
                                     <Building2 className='h-2.5 w-2.5 shrink-0' />
                                   ) : (
@@ -372,7 +373,7 @@ export function ProjectsSidebar() {
                 </div>
 
                 {project.description && (
-                  <p className="mt-1 break-words text-xs leading-relaxed text-[#a3a3a3]">
+                  <p className="mt-1 break-words text-[15px] leading-[1.7] text-[#d4d4d4]">
                     {project.description}
                   </p>
                 )}

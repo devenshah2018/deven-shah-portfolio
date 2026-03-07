@@ -18,12 +18,14 @@ function isProjectFeatured(project: Project): boolean {
   return getProjectCategories(project).includes('featured');
 }
 
-function getStatusBadge(status: string, size: 'sm' | 'md' = 'sm') {
+function getStatusBadge(status: string, size: 'sm' | 'md' | 'lg' = 'sm') {
   const baseClasses = size === 'sm' 
     ? 'inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium shadow-sm'
-    : 'inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-medium shadow-sm';
+    : size === 'md'
+    ? 'inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[15px] leading-[1.7] font-medium shadow-sm'
+    : 'inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-base font-medium shadow-sm';
   
-  const iconSize = size === 'sm' ? 'h-3 w-3' : 'h-3.5 w-3.5';
+  const iconSize = size === 'sm' ? 'h-3 w-3' : size === 'md' ? 'h-3.5 w-3.5' : 'h-4 w-4';
   
   if (status === 'Live' || status === 'Completed') {
     return (
@@ -188,7 +190,7 @@ function RelatedLogos({ project }: { project: Project }) {
         <button
           key={index}
           onClick={() => scrollToSection(logoData.type, logoData.id)}
-          className='flex items-center justify-center h-8 w-8 rounded-lg bg-transparent object-contain shadow-sm overflow-hidden transition-all duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900'
+          className='flex items-center justify-center h-14 w-14 rounded-lg bg-transparent object-contain shadow-sm overflow-hidden transition-all duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900'
           style={{
             marginLeft: index !== 0 ? '0.3rem' : 0,
           }}
@@ -198,7 +200,7 @@ function RelatedLogos({ project }: { project: Project }) {
           <img
             src={logoData.logo}
             alt={logoData.alt}
-            className='h-[85%] w-[85%] object-contain object-center'
+            className='h-[95%] w-[95%] object-contain object-center'
             draggable={false}
           />
         </button>
@@ -383,7 +385,7 @@ export function ProjectsSection() {
                           title={getWebLink(project)!.url}
                         >
                           <Link className='h-3 w-3 flex-shrink-0 text-blue-400 group-hover/link:text-blue-300' />
-                          <span className='text-xs font-bold text-blue-400 group-hover/link:text-blue-300 break-all'>
+                          <span className='text-[15px] leading-[1.7] font-bold text-blue-400 group-hover/link:text-blue-300 break-all'>
                             {getWebLink(project)!.url}
                           </span>
                         </a>
@@ -391,8 +393,8 @@ export function ProjectsSection() {
                     </div>
                     <div className='flex items-center justify-between w-full'>
                       <div className='flex items-center gap-1'>
-                        <Calendar className='h-3 w-3 text-slate-400' />
-                        <span className='text-xs font-medium text-slate-400'>
+                        <Calendar className='h-3.5 w-3.5 text-slate-400' />
+                        <span className='text-[15px] leading-[1.7] font-medium text-[#d4d4d4]'>
                           {project.period}
                         </span>
                       </div>
@@ -408,13 +410,13 @@ export function ProjectsSection() {
                           <Badge
                             key={i}
                             variant='outline'
-                            className='border-slate-700 bg-slate-800/50 text-xs text-slate-300'
+                            className='border-slate-700 bg-slate-800/50 text-[15px] leading-[1.7] text-[#d4d4d4]'
                           >
                             {tech}
                           </Badge>
                         ))}
                       </div>
-                      { project.description && (<p className='mb-2 text-sm text-slate-300'>{project.description}</p>)}
+                      { project.description && (<p className='mb-2 text-[15px] leading-[1.7] text-[#d4d4d4]'>{project.description}</p>)}
                     </div>
                     <div className='mt-2 flex items-center justify-between'>
                       {getStatusBadge(project.status, 'md')}
@@ -495,11 +497,11 @@ export function ProjectsSection() {
                       </div>
                       {activeCategory === 'featured' && isProjectFeatured(project) ? (
                         <div className='flex flex-col gap-1'>
-                          <span className='flex items-center gap-1 text-xs text-slate-400'>
-                            <Calendar className='h-3 w-3 shrink-0' />
+                          <span className='flex items-center gap-1 text-[15px] leading-[1.7] text-[#d4d4d4]'>
+                            <Calendar className='h-3.5 w-3.5 shrink-0' />
                             {project.period}
                           </span>
-                          {getStatusBadge(project.status, 'sm')}
+                          {getStatusBadge(project.status, 'md')}
                           {getRelatedLogos(project).length > 0 && (
                             <div className='flex items-center gap-2'>
                               <RelatedLogos project={project} />
@@ -526,12 +528,12 @@ export function ProjectsSection() {
                           </div>
                         </div>
                       ) : (
-                        <div className='flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-400'>
+                        <div className='flex flex-wrap items-center gap-x-3 gap-y-1 text-[15px] leading-[1.7] text-[#d4d4d4]'>
                           <span className='flex items-center gap-1'>
                             <Calendar className='h-3 w-3 shrink-0' />
                             {project.period}
                           </span>
-                          {getStatusBadge(project.status, 'sm')}
+                          {getStatusBadge(project.status, 'md')}
                           {getRelatedLogos(project).length > 0 && (
                             <>
                               <span className='text-slate-600'>·</span>
@@ -543,14 +545,14 @@ export function ProjectsSection() {
                       {project.technologies && project.technologies.length > 0 && (
                         <div className='flex flex-wrap gap-1'>
                           {project.technologies.slice(0, 4).map((tech: string, i: number) => (
-                            <Badge key={i} variant='outline' className='border-slate-700 bg-slate-800/50 text-xs text-slate-300'>
+                            <Badge key={i} variant='outline' className='border-slate-700 bg-slate-800/50 text-[15px] leading-[1.7] text-[#d4d4d4]'>
                               {tech}
                             </Badge>
                           ))}
                         </div>
                       )}
                       <CardContent className='px-0 pt-0 pb-3'>
-                        {project.description && <p className='text-sm text-slate-300 leading-relaxed'>{project.description}</p>}
+                        {project.description && <p className='text-[15px] leading-[1.7] text-[#d4d4d4]'>{project.description}</p>}
                       </CardContent>
                     </div>
                   </Card>
