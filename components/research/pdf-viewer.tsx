@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { FileText, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 
 interface PDFViewerProps {
   pdfUrl: string;
@@ -116,60 +116,45 @@ export function PDFViewer({ pdfUrl, title }: PDFViewerProps) {
   }, [apiUrl]);
 
   return (
-    <div className='relative w-full h-full bg-black border-0 overflow-hidden'>
-      {/* Refined loading state */}
+    <div className='relative flex-1 min-h-0 w-full flex flex-col overflow-hidden'>
+      {/* Loading state - minimal and reassuring */}
       {isLoading && (
-        <div className='absolute inset-0 flex items-center justify-center bg-black border border-gray-800 z-20'>
-          <div className='text-center px-6'>
-            {/* Smooth spinner */}
-            <div className='relative inline-block mb-6'>
-              <div className='w-16 h-16 border-2 border-gray-800 border-t-cyan-400/60 animate-spin rounded-full' style={{ animationDuration: '1s' }} />
-              <div className='absolute inset-0 flex items-center justify-center'>
-                <FileText className='h-6 w-6 text-cyan-400/40' />
-              </div>
+        <div className='absolute inset-0 flex items-center justify-center rounded-lg bg-[#0f0f0f] z-20'>
+          <div className='flex flex-col items-center gap-5 max-w-sm px-8'>
+            <div className='flex h-12 w-12 items-center justify-center rounded-full border border-[#262626] bg-[#1a1a1a]'>
+              <Loader2 className='h-5 w-5 text-[#737373] animate-spin' strokeWidth={2} />
             </div>
-            <div className='space-y-1'>
-              <p className='text-sm font-semibold text-gray-300'>Loading Document</p>
-              <p className='text-xs font-mono text-gray-500'>Initializing viewer...</p>
-              {retryCount > 0 && (
-                <p className='text-xs font-mono text-cyan-400/70 mt-3'>
-                  Retry {retryCount}/{maxRetries}
-                </p>
-              )}
+            <div className='text-center space-y-1.5'>
+              <p className='text-sm font-medium text-[#a3a3a3]'>
+                {retryCount > 0 ? 'Loading…' : 'Preparing document'}
+              </p>
+              <p className='text-xs text-[#525252] line-clamp-2' title={title}>
+                {title}
+              </p>
             </div>
-            {/* Subtle progress indicator */}
-            <div className='mt-6 flex justify-center gap-1.5'>
-              <div className='w-1 h-6 bg-gray-800 animate-pulse' style={{ animationDelay: '0ms' }} />
-              <div className='w-1 h-6 bg-cyan-400/40 animate-pulse' style={{ animationDelay: '200ms' }} />
-              <div className='w-1 h-6 bg-gray-800 animate-pulse' style={{ animationDelay: '400ms' }} />
-            </div>
+            {retryCount > 0 && retryCount < maxRetries && (
+              <button
+                type='button'
+                onClick={handleRetry}
+                className='text-xs text-[#525252] hover:text-[#a3a3a3] transition-colors'
+              >
+                Try again
+              </button>
+            )}
           </div>
         </div>
       )}
 
-      {/* PDF iframe - always rendered, just hidden when loading */}
+      {/* PDF iframe - absolute fill to eliminate bottom gap */}
       <iframe
         ref={iframeRef}
         src={apiUrl}
-        className='w-full h-full min-h-[600px] border-0 bg-white'
+        className='absolute inset-0 w-full h-full border-0 bg-[#f5f5f0]'
         title={title}
         onLoad={handleLoad}
         style={{ opacity: isLoading ? 0 : 1, transition: 'opacity 0.3s ease-in-out' }}
         allow='fullscreen'
       />
-
-      {/* Retry button (only show if we've tried and it's been a while) */}
-      {!isLoading && retryCount > 0 && retryCount < maxRetries && (
-        <div className='absolute bottom-4 right-4 z-10'>
-          <button
-            onClick={handleRetry}
-            className='px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-lg transition-colors shadow-lg flex items-center gap-2'
-          >
-            <Loader2 className='h-4 w-4' />
-            Retry Loading
-          </button>
-        </div>
-      )}
     </div>
   );
 }

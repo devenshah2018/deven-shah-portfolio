@@ -2,101 +2,106 @@
 
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
-import { PROJECTS, RESEARCH_PAPERS, getExperienceById, getEducationById } from '@/lib/content-registry';
-import { scrollToProject, scrollToExperience, scrollToEducation, getResearchSiteUrl } from '@/lib/url-utils';
-import { Project } from '@/lib/types';
-
-function getRelatedLabels(project: Project): { name: string; type: 'experience' | 'education'; id: string }[] {
-  if (!project.related_experiences || project.related_experiences.length === 0) return [];
-  const seen = new Set<string>();
-  return project.related_experiences
-    .map((id) => {
-      const experience = getExperienceById(id);
-      if (experience && !seen.has(experience.company)) {
-        seen.add(experience.company);
-        return { name: experience.company, type: 'experience' as const, id };
-      }
-      const education = getEducationById(id);
-      if (education && !seen.has(education.institution)) {
-        seen.add(education.institution);
-        return { name: education.institution, type: 'education' as const, id };
-      }
-      return null;
-    })
-    .filter(Boolean) as { name: string; type: 'experience' | 'education'; id: string }[];
-}
-
-type CurrentWorkItem =
-  | { type: 'project'; id: string; title: string; sortDate: string; related?: ReturnType<typeof getRelatedLabels> }
-  | { type: 'paper'; id: string; slug: string | undefined; title: string; sortDate: string };
+import { Badge } from '@/components/ui/badge';
+import { getCurrentWorkItems } from '@/lib/content-registry';
+import { scrollToProject, scrollToExperience, scrollToEducation } from '@/lib/url-utils';
 
 export function CurrentProjects() {
-  const currentProjects: CurrentWorkItem[] = PROJECTS.filter((p) => p.current_work === true)
-    .map((p) => ({ type: 'project' as const, id: p.id, title: p.title, sortDate: p.sortDate || '', related: getRelatedLabels(p) }));
-  const currentPapers: CurrentWorkItem[] = RESEARCH_PAPERS.filter((p) => p.current_work === true)
-    .map((p) => ({ type: 'paper' as const, id: p.id, slug: p.slug, title: p.title, sortDate: p.sortDate || '' }));
-  const currentWork = [...currentProjects, ...currentPapers]
-    .sort((a, b) => (a.sortDate || '').localeCompare(b.sortDate || ''))
-    .slice(0, 5);
+  const currentWork = getCurrentWorkItems();
 
-  const handleScrollToProject = (projectId: string) => {
-    scrollToProject(projectId);
-  };
-
-  const handleScrollToExperience = (type: 'experience' | 'education', id: string) => {
-    if (type === 'experience') {
-      scrollToExperience(id);
-    } else {
-      scrollToEducation(id);
+  const handleClick = (item: (typeof currentWork)[number]) => {
+    if (item.type === 'project') {
+      scrollToProject(item.id);
+    } else if (item.type === 'experience') {
+      scrollToExperience(item.id);
+    } else if (item.type === 'education') {
+      scrollToEducation(item.id);
     }
+    // paper: handled by Link
   };
 
   return (
     <div className="space-y-4">
-      <h3 className="mb-4 text-xs font-medium uppercase tracking-[0.2em] text-[#a3a3a3]">Current Work</h3>
+      <h3 className="mb-4 text-md font-medium uppercase tracking-[0.2em] text-[#a3a3a3]">Current Work</h3>
       <ul className="space-y-3">
-        {currentWork.map((item) =>
-          item.type === 'project' ? (
-            <li key={`project-${item.id}`} className="group">
-              <div className="flex flex-col gap-1.5">
-                <button
-                  type="button"
-                  onClick={() => handleScrollToProject(item.id)}
-                  className="flex items-center gap-2 text-left text-sm font-medium text-[#f5f5f0] transition-colors hover:text-[#d4d4d4]"
-                >
-                  <span>{item.title}</span>
-                  <ChevronRight className="h-3.5 w-3.5 opacity-60" />
-                </button>
-                {item.related && item.related.length > 0 && (
-                  <div className="flex flex-wrap gap-1.5">
-                    {item.related.map((r) => (
-                      <button
-                        key={`${r.name}-${r.id}`}
-                        type="button"
-                        onClick={() => handleScrollToExperience(r.type, r.id)}
-                        className="text-xs text-[#a3a3a3] underline decoration-[#525252] underline-offset-2 transition-colors hover:text-[#f5f5f0]"
-                      >
-                        {r.name}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </li>
-          ) : (
-            <li key={`paper-${item.id}`} className="group">
-              <Link
-                href={`${getResearchSiteUrl()}/${item.slug || item.id}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 text-left text-sm font-medium text-[#f5f5f0] transition-colors hover:text-[#d4d4d4]"
+        {currentWork.map((item) => {
+          const baseClass = 'flex items-center gap-2 text-left text-sm font-medium text-[#d4d4d4] transition-colors hover:text-[#a3a3a3] whitespace-nowrap';
+          const dimClass = 'text-[#737373]';
+          const summaryClass = 'text-[#d4d4d4]';
+
+          const renderLabel = () => {
+            if (item.type === 'experience') {
+              return (
+                <>
+                  <Badge variant="outline" className="border-[#404040]/50 bg-[#262626]/50 px-2 py-0.5 text-sm font-medium text-[#f5f5f0]">
+                    {item.title}
+                  </Badge>
+                  {item.summary && <span className={`${summaryClass} min-w-0 `}> · {item.summary}</span>}
+                </>
+              );
+            }
+            if (item.type === 'education') {
+              return (
+                <>
+                  <Badge variant="outline" className="border-[#404040]/50 bg-[#262626]/50 px-2 py-0.5 text-sm font-medium text-[#f5f5f0]">
+                    {item.degree}
+                  </Badge>
+                  <span className={dimClass}> @ {item.institution}</span>
+                  {item.summary && <span className={`${summaryClass} min-w-0 `}> · {item.summary}</span>}
+                </>
+              );
+            }
+            if (item.type === 'project') {
+              return (
+                <>
+                  <Badge variant="outline" className="border-[#404040]/50 bg-[#262626]/50 px-2 py-0.5 text-sm font-medium text-[#f5f5f0]">
+                    {item.title}
+                  </Badge>
+                  {item.summary && <span className={`${summaryClass} min-w-0 `}> · {item.summary}</span>}
+                </>
+              );
+            }
+            return (
+              <>
+                <Badge variant="outline" className="border-[#404040]/50 bg-[#262626]/50 px-2 py-0.5 text-sm font-medium text-[#f5f5f0]">
+                  {item.title}
+                </Badge>
+                {item.summary && <span className={`${summaryClass} min-w-0 `}> · {item.summary}</span>}
+              </>
+            );
+          };
+
+          if (item.type === 'paper') {
+            return (
+              <li key={`paper-${item.id}`} className="group">
+                <Link href={`/papers/${item.slug || item.id}`} className={`${baseClass}`}>
+                  <Badge variant="outline" className="border-[#404040]/50 bg-[#262626]/50 px-2 py-0.5 text-sm font-medium text-[#f5f5f0]">
+                    {item.title}
+                  </Badge>
+                  {item.summary && <span className={`${summaryClass} min-w-0 `}> · {item.summary}</span>}
+                  <ChevronRight className="h-3.5 w-3.5 flex-shrink-0 opacity-60" />
+                </Link>
+              </li>
+            );
+          }
+
+          return (
+            <li key={`${item.type}-${item.id}`} className="group">
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  handleClick(item);
+                }}
+                className={`w-full min-w-0 ${baseClass}`}
               >
-                <span>{item.title}</span>
-                <ChevronRight className="h-3.5 w-3.5 opacity-60" />
-              </Link>
+                <span className="flex min-w-0 flex-nowrap items-center gap-1.5 whitespace-nowrap overflow-hidden">{renderLabel()}</span>
+                <ChevronRight className="h-3.5 w-3.5 flex-shrink-0 opacity-60" />
+              </button>
             </li>
-          )
-        )}
+          );
+        })}
       </ul>
     </div>
   );

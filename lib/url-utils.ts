@@ -48,30 +48,61 @@ export function getResearchSiteUrl(): string {
  */
 export function scrollToProject(projectId: string) {
   window.dispatchEvent(new Event('resetProjectFilter'));
-  setTimeout(() => {
-    const projectCard = document.getElementById(`project-${projectId}`);
+  const id = `project-${projectId}`;
+  const maxAttempts = 40;
+  let attempts = 0;
+
+  function tryScroll() {
+    const projectCard = document.getElementById(id);
     if (projectCard) {
       projectCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
       projectCard.classList.add('scroll-highlight');
       setTimeout(() => projectCard.classList.remove('scroll-highlight'), 3000);
+      return true;
     }
-  }, 100);
+    return false;
+  }
+
+  function poll() {
+    if (tryScroll() || ++attempts >= maxAttempts) return;
+    setTimeout(poll, 50);
+  }
+
+  requestAnimationFrame(() => requestAnimationFrame(poll));
 }
 
 /**
- * Scroll to an experience and highlight it
- * This function is used when navigating from research subdomain
+ * Scroll to an experience and highlight it.
+ * Centers the target in the viewport for unified smooth expand+scroll.
  */
 export function scrollToExperience(experienceId: string) {
-  setTimeout(() => {
-    const experienceCard = document.getElementById(`experience-${experienceId}`);
+  const id = `experience-${experienceId}`;
+  const maxAttempts = 40;
+  let attempts = 0;
+
+  function tryScroll() {
+    const experienceCard = document.getElementById(id);
     if (experienceCard) {
-      experienceCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      const rect = experienceCard.getBoundingClientRect();
+      const viewportCenter = window.innerHeight / 2;
+      const elementCenter = rect.top + rect.height / 2;
+      const scrollTop = window.scrollY + elementCenter - viewportCenter;
+      const clamped = Math.max(0, scrollTop);
+      window.scrollTo({ top: clamped, behavior: 'smooth' });
       const card = experienceCard.querySelector('[data-card]') || experienceCard;
       (card as HTMLElement).classList.add('scroll-highlight');
       setTimeout(() => (card as HTMLElement).classList.remove('scroll-highlight'), 3000);
+      return true;
     }
-  }, 100);
+    return false;
+  }
+
+  function poll() {
+    if (tryScroll() || ++attempts >= maxAttempts) return;
+    setTimeout(poll, 50);
+  }
+
+  requestAnimationFrame(() => requestAnimationFrame(poll));
 }
 
 export function scrollToEducation(educationId: string) {

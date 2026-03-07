@@ -4,7 +4,8 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { SkillModal } from '@/components/about/skill-modal';
 import { CurrentProjects } from '@/components/about/current-projects';
-import { CATEGORIZED_SKILLS, SKILL_CATEGORIES, SKILL_MAPPINGS } from '@/lib/content-registry';
+import { CATEGORIZED_SKILLS, SKILL_CATEGORIES, SKILL_MAPPINGS, CERTIFICATIONS } from '@/lib/content-registry';
+import { ExternalLink } from 'lucide-react';
 
 export function AboutSection() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -48,13 +49,13 @@ export function AboutSection() {
           viewport={{ once: true }}
           className="mx-auto"
         >
-          <h2 className="mb-12 text-base font-medium uppercase tracking-[0.2em] text-[#a3a3a3] sm:text-lg">About Me</h2>
+          <h2 className="mb-12 text-left text-3xl font-medium uppercase tracking-[0.2em] text-[#a3a3a3]">About Me</h2>
 
           {/* Simple About + Current Work - use full width */}
-          <div className="mb-20 grid grid-cols-1 gap-16 lg:grid-cols-[1fr_320px] xl:grid-cols-[1.2fr_380px]">
+          <div className="mb-20 grid grid-cols-1 gap-16 lg:grid-cols-[1fr_minmax(320px,480px)] xl:grid-cols-[1.2fr_minmax(380px,560px)]">
             <div>
               <p className="max-w-xl text-base leading-[1.8] text-[#d4d4d4] sm:text-lg">
-              M.S. Computer Science student (AI & ML concentration) at Boston University specializing in building scalable systems, leading small to large teams, and optimizing client-focused solutions. I am actively seeking opportunities to leverage my expertise and deliver exceptional value to impactful teams.
+              M.S. Computer Science student (AI & ML concentration) at Boston University specializing in building scalable systems, leading small to large teams, and optimizing client-focused solutions.
               </p>
             </div>
             <div>
@@ -64,7 +65,7 @@ export function AboutSection() {
 
           {/* Technical Skills Section */}
           <div>
-            <h3 className="mb-6 text-xs font-medium uppercase tracking-[0.2em] text-[#a3a3a3]">Technical Skills</h3>
+            <h3 className="mb-6 text-md font-medium uppercase tracking-[0.2em] text-[#a3a3a3]">Technical Skills</h3>
 
             <div className="mb-6 flex flex-wrap gap-2">
               {SKILL_CATEGORIES.map((cat) => (
@@ -101,7 +102,7 @@ export function AboutSection() {
                     <button
                     key={skill}
                     type="button"
-                    className={`inline-flex items-center rounded-md border px-3 py-1.5 text-sm font-medium transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-white/50 ${
+                    className={`inline-flex items-center rounded-md border px-3 py-1.5 text-xs font-medium transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-white/50 ${
                       hasMapping(skill)
                         ? 'border-[#404040]/50 bg-transparent text-[#d4d4d4] hover:border-[#525252] hover:bg-[#262626]'
                         : 'cursor-default border-[#404040]/30 text-[#737373]'
@@ -109,7 +110,7 @@ export function AboutSection() {
                     style={{
                       minWidth: 0,
                       minHeight: 0,
-                      fontSize: '1rem',
+                      fontSize: '0.875rem',
                       letterSpacing: '0.02em',
                       lineHeight: 1.25,
                       fontWeight: 500,
@@ -129,6 +130,45 @@ export function AboutSection() {
                     </button>
                 ))}
             </div>
+
+            {/* Certifications - under Technical Skills */}
+            {CERTIFICATIONS.length > 0 && (
+              <div className="mt-12">
+                <h3 className="mb-4 text-md font-medium uppercase tracking-[0.2em] text-[#a3a3a3]">
+                  Certifications
+                </h3>
+                <div className="flex flex-wrap gap-3">
+                  {CERTIFICATIONS.map((cert) => (
+                    <a
+                      key={cert.id}
+                      href={cert.verificationUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex items-center gap-3 rounded-xl border border-[#404040]/40 bg-[#262626]/50 px-4 py-3 transition-colors hover:border-[#525252]/50 hover:bg-[#262626]"
+                    >
+                      {cert.logo && (
+                        <img
+                          src={cert.logo}
+                          alt=""
+                          className="h-9 w-9 rounded-lg object-contain ring-1 ring-[#404040]/40"
+                        />
+                      )}
+                      <div>
+                        <div className="text-sm font-semibold text-[#f5f5f0] group-hover:text-[#d4d4d4]">
+                          {cert.title}
+                        </div>
+                        <div className="flex items-center gap-2 text-xs text-[#a3a3a3]">
+                          <span>{cert.issuer}</span>
+                          <span className="text-[#525252]">·</span>
+                          <span>{cert.period}</span>
+                        </div>
+                      </div>
+                      <ExternalLink className="h-3.5 w-3.5 flex-shrink-0 text-[#525252] group-hover:text-[#a3a3a3]" />
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </motion.div>
       </div>

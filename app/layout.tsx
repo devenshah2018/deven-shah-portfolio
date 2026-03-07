@@ -4,7 +4,7 @@ import { GeistSans } from 'geist/font/sans';
 import './globals.css';
 import { Analytics } from '@vercel/analytics/next';
 import { GoogleTagManager } from '@next/third-parties/google';
-import { LayoutWrapper } from '@/components/layout-wrapper';
+import { ConditionalLayout } from '@/components/conditional-layout';
 import { headers } from 'next/headers';
 
 const BASE_URL = 'https://deven-shah.com';
@@ -140,7 +140,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         {process.env.NODE_ENV === 'production' && (
           <GoogleTagManager gtmId='GTM-MQBDDCBQ' />
         )}
-        <LayoutWrapper>{children}</LayoutWrapper>
+        <ConditionalLayout>{children}</ConditionalLayout>
         <Analytics />
       </body>
     </html>

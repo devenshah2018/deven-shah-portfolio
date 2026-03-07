@@ -1,5 +1,6 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
 import { Navigation } from '@/components/header/navigation';
 import { Footer } from '@/components/footer/footer';
 
@@ -8,11 +9,14 @@ interface LayoutWrapperProps {
 }
 
 export function LayoutWrapper({ children }: LayoutWrapperProps) {
+  const pathname = usePathname();
+  const isPaperPage = pathname?.startsWith('/papers');
+
   return (
     <>
-      <Navigation />
+      {!isPaperPage && <Navigation />}
       {children}
-      <Footer />
+      {!isPaperPage && <Footer />}
     </>
   );
 }

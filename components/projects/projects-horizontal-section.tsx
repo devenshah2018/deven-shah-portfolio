@@ -286,7 +286,7 @@ export function ProjectsHorizontalSection() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h2 className="mb-12 text-base font-medium uppercase tracking-[0.2em] text-[#a3a3a3] sm:text-lg">
+          <h2 className="mb-12 text-left text-3xl font-medium uppercase tracking-[0.2em] text-[#a3a3a3]">
             Projects
           </h2>
 
@@ -294,7 +294,7 @@ export function ProjectsHorizontalSection() {
             {/* Left: Featured block grid - big + 2 small */}
             {featuredProjects.length > 0 && (
               <div>
-                <h3 className="mb-6 text-xs font-medium uppercase tracking-[0.2em] text-[#737373]">
+                <h3 className="mb-6 text-base font-medium uppercase tracking-[0.2em] text-[#737373]">
                   Featured
                 </h3>
                 <div className="grid grid-cols-2 gap-4">
@@ -320,7 +320,7 @@ export function ProjectsHorizontalSection() {
             {/* Right: More projects - 2 column grid */}
             {otherProjects.length > 0 && (
               <div>
-                <h3 className="mb-6 text-xs font-medium uppercase tracking-[0.2em] text-[#737373]">
+                <h3 className="mb-6 text-base font-medium uppercase tracking-[0.2em] text-[#737373]">
                   More Projects
                 </h3>
                 <div className="grid grid-cols-1 gap-4 items-stretch">

@@ -2,7 +2,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Button } from '@/components/ui/button';
 import { ExternalLink, Calendar, Award, Code, Briefcase, Zap } from 'lucide-react';
 import { expandSkillMapping, type SKILL_MAPPINGS } from '@/lib/content-registry';
-import { scrollToProject, scrollToExperience } from '@/lib/url-utils';
+import { scrollToProject, scrollToExperience, scrollToEducation } from '@/lib/url-utils';
 
 interface SkillModalProps {
   open: boolean;
@@ -27,15 +27,7 @@ export function SkillModal({ open, onOpenChange, skillName, skillMappings }: Ski
 
   const handleScrollToEducation = (educationId: string) => {
     onOpenChange(false);
-    setTimeout(() => {
-      const section = document.getElementById('education');
-      if (section) {
-        section.scrollIntoView({ behavior: 'smooth' });
-        setTimeout(() => {
-          document.getElementById(`education-${educationId}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }, 500);
-      }
-    }, 200);
+    setTimeout(() => scrollToEducation(educationId), 200);
   };
 
   if (!skillData || !skillName) {

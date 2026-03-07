@@ -4,10 +4,9 @@ import { HeroSection } from '@/components/hero/hero-section';
 import { AboutSection } from '@/components/about/about-section';
 import { ExperienceSection } from '@/components/experience/experience-section';
 import { ProjectsHorizontalSection } from '@/components/projects/projects-horizontal-section';
-import { EducationSection } from '@/components/education/education-section';
 import { ContactSection } from '@/components/contact/contact-section';
 import { generatePersonSchema } from '@/lib/jsonld';
-import { scrollToProject, scrollToExperience } from '@/lib/url-utils';
+import { scrollToProject, scrollToExperience, scrollToEducation } from '@/lib/url-utils';
 import { useEffect } from 'react';
 
 export default function HomePage() {
@@ -26,6 +25,16 @@ export default function HomePage() {
         const experienceId = hash.replace('#experience-', '');
         if (experienceId) {
           scrollToExperience(experienceId);
+        }
+      } else if (hash && hash.startsWith('#education-')) {
+        const educationId = hash.replace('#education-', '');
+        if (educationId) {
+          scrollToEducation(educationId);
+        }
+      } else if (hash === '#education') {
+        const section = document.getElementById('education');
+        if (section) {
+          section.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       }
     };
@@ -69,7 +78,6 @@ export default function HomePage() {
         <AboutSection />
         <ExperienceSection />
         <ProjectsHorizontalSection />
-        <EducationSection />
         <ContactSection />
       </main>
     </>

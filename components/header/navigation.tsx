@@ -15,8 +15,8 @@ interface NavigationProps {}
 const navItems = [
   { name: 'About', href: '#about' },
   { name: 'Experience', href: '#experience' },
-  { name: 'Projects', href: '#projects' },
   { name: 'Education', href: '#education' },
+  { name: 'Projects', href: '#projects' },
   { name: 'Connect', href: '#contact' },
 ];
 

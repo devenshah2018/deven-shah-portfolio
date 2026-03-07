@@ -23,13 +23,10 @@ export function HeroSection() {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="mb-6"
             >
-              <p className="mb-2 text-xs font-medium uppercase tracking-[0.2em] text-[#a3a3a3]">
-                Software Engineer
-              </p>
-              <h1 className="text-4xl font-semibold tracking-tight text-[#f5f5f0] sm:text-5xl lg:text-[2.75rem] xl:text-[3rem]">
+              <h1 className="text-6xl font-semibold tracking-tight text-[#f5f5f0]">
                 Deven Shah
               </h1>
-              <p className="mt-3 text-base text-[#a3a3a3] sm:text-lg">
+              <p className="mt-3 text-base text-[#a3a3a3] sm:text-md">
                 AI Researcher & M.S. Computer Science Candidate
               </p>
             </motion.div>
@@ -40,8 +37,8 @@ export function HeroSection() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="mb-8"
             >
-              <p className="max-w-xl text-base leading-[1.8] text-[#d4d4d4] sm:text-lg">
-                Shaping the next generation of AI-driven analytics, intelligent systems, and scalable solutions.
+              <p className="max-w-xl text-base leading-[1.8] text-[#d4d4d4] sm:text-xl">
+                Shaping the next generation of intelligent technology.
               </p>
             </motion.div>
 

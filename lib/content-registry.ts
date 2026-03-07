@@ -137,7 +137,7 @@ export const EXPERIENCES = [
     ],
     featured: true,
     gradient: 'from-blue-500 to-cyan-500',
-    link: 'https://www.sunoanalytics.com',
+    link: 'https://www.sunoanalytics.com'
   },
   {
     id: 'patelco',
@@ -217,6 +217,8 @@ export const EXPERIENCES = [
     gradient: 'from-blue-500 to-cyan-500',
     link: 'https://www.bu.edu/',
     featured: true,
+    current_work: true,
+    summary: 'Osteoarthritis diagnosis through AI computer vision',
   },
   {
     id: 'teaching-assistant',
@@ -453,6 +455,8 @@ export const PROJECTS: Project[] = [
     readMe: false,
     categories: ['web', 'featured'],
     current_work: true,
+    summary: 'AI daily planner for your conversations and workflows',
+    related_experiences: ['suno-analytics'],
     accessible_at: ['hosted'],
     access_points: [
       { type: 'hosted', url: 'https://www.iris-plan.com', label: 'Live Site' }
@@ -748,6 +752,79 @@ export function getProjectById(id: string) {
 
 export function getEducationById(id: string) {
   return EDUCATION.find(edu => edu.id === id);
+}
+
+export type CurrentWorkItem =
+  | { type: 'project'; id: string; title: string; summary?: string; sortDate: string; related?: { type: 'experience' | 'education'; id: string }[] }
+  | { type: 'experience'; id: string; title: string; company: string; summary?: string; sortDate: string }
+  | { type: 'education'; id: string; degree: string; institution: string; summary?: string; sortDate: string }
+  | { type: 'paper'; id: string; slug: string | undefined; title: string; summary?: string; sortDate: string };
+
+/** Returns all items tagged current_work from projects, experiences, education, and papers. */
+export function getCurrentWorkItems(): CurrentWorkItem[] {
+  const items: CurrentWorkItem[] = [];
+  const getSortDate = (p: string) => {
+    const m = p.match(/(\d{4})-(\d{2})/);
+    if (m) return m[0];
+    if (p.includes('Present')) return new Date().toISOString().slice(0, 7);
+    return p;
+  };
+  for (const p of PROJECTS) {
+    if (p.current_work) {
+      const related = (p.related_experiences || []).map((id) => {
+        if (getExperienceById(id)) return { type: 'experience' as const, id };
+        if (getEducationById(id)) return { type: 'education' as const, id };
+        return null;
+      }).filter(Boolean) as { type: 'experience' | 'education'; id: string }[];
+      items.push({
+        type: 'project',
+        id: p.id,
+        title: p.title,
+        sortDate: p.sortDate || getSortDate(p.period),
+        ...(p.summary != null && { summary: p.summary }),
+        ...(related.length > 0 && { related }),
+      });
+    }
+  }
+  for (const e of EXPERIENCES) {
+    if ((e as Experience & { current_work?: boolean }).current_work) {
+      const exp = e as Experience & { current_work?: boolean; summary?: string };
+      items.push({
+        type: 'experience',
+        id: exp.id,
+        title: exp.title,
+        company: exp.company,
+        sortDate: getSortDate(exp.period),
+        ...(exp.summary != null && { summary: exp.summary }),
+      });
+    }
+  }
+  for (const edu of EDUCATION) {
+    const ed = edu as { id: string; degree: string; institution: string; period: string; current_work?: boolean; summary?: string };
+    if (ed.current_work) {
+      items.push({
+        type: 'education',
+        id: ed.id,
+        degree: ed.degree,
+        institution: ed.institution,
+        sortDate: getSortDate(ed.period),
+        ...(ed.summary != null && { summary: ed.summary }),
+      });
+    }
+  }
+  for (const p of RESEARCH_PAPERS) {
+    if (p.current_work) {
+      items.push({
+        type: 'paper',
+        id: p.id,
+        slug: p.slug,
+        title: p.title,
+        sortDate: p.sortDate || '',
+        ...(p.summary != null && { summary: p.summary }),
+      });
+    }
+  }
+  return items.sort((a, b) => (b.sortDate || '').localeCompare(a.sortDate || '')).slice(0, 8);
 }
 
 export function getResearchPaperBySlug(slug: string) {
