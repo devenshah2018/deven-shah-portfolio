@@ -153,6 +153,7 @@ export const EXPERIENCES = [
       'Reduced HELOAN and HELOC rate update time by 10x through an internal management platform (ASP.NET Core + MySQL), eliminating manual record adjustments and spreadsheet-based tracking.',
       'Facilitated development of a hackathon-winning platform (Angular + Salesforce) to streamline appointment scheduling with members and Certified Financial Specialists directly.'
     ],
+    featured: true,
     gradient: 'from-blue-500 to-cyan-500',
     link: 'https://www.patelco.org',
   },
@@ -214,7 +215,8 @@ export const EXPERIENCES = [
       'Reduced knee segmentation time by 90% through a CNN-based pipeline (VGG16 encoder + U-Net decoder) in Python to detect knee cartilage regions.'
     ],
     gradient: 'from-blue-500 to-cyan-500',
-    link: 'https://www.bu.edu/'
+    link: 'https://www.bu.edu/',
+    featured: true,
   },
   {
     id: 'teaching-assistant',
@@ -367,6 +369,20 @@ export function groupExperiencesByOrg(): OrgGroup[] {
   }).sort((a, b) => getEndDate(b.positions[0]!.period) - getEndDate(a.positions[0]!.period));
 }
 
+/** Top 3 org groups (personally flagged via featured: true on positions). */
+export function getTopOrgGroups(): OrgGroup[] {
+  const all = groupExperiencesByOrg();
+  return all.filter(org => org.positions.some(p => (p as Experience & { featured?: boolean }).featured)).slice(0, 3);
+}
+
+/** Remaining org groups (not in top 3). */
+export function getOtherOrgGroups(): OrgGroup[] {
+  const all = groupExperiencesByOrg();
+  const top = getTopOrgGroups();
+  const topCompanies = new Set(top.map(o => o.company));
+  return all.filter(org => !topCompanies.has(org.company));
+}
+
 /** Month tick labels from earliest experience start to now. stepMonths = 3 gives ~quarterly. */
 export function getTimelineTicks(stepMonths: number = 3): { label: string; sortKey: number }[] {
   let minStartY = Infinity;
@@ -424,10 +440,10 @@ export const PROJECT_CATEGORIES = [
 export const PROJECTS: Project[] = [
   {
     id: 'iris-project',
+    sortDate: '2026-01',
     title: 'Iris',
     subtitle: 'AI Planner',
     period: '01/2026 – Present',
-    sortDate: '2025-01',
     description:
       'AI-powered daily assistant that sits on top of your conversations and workflows to organize what matters',
     technologies: getProjectSkillsFromMapping('portfolio-project'),

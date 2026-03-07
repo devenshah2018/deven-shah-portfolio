@@ -39,7 +39,7 @@ export function AboutSection() {
   };
 
   return (
-    <section id="about" className="bg-[#141414] py-24 sm:py-32">
+    <section id="about" className="bg-[#141414] pt-12 pb-24 sm:pt-16 sm:pb-32">
       <div className="container mx-auto w-full max-w-7xl px-8 sm:px-10 lg:px-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

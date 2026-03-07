@@ -21,9 +21,10 @@ interface LinkThumbnailProps {
   url: string;
   title: string;
   className?: string;
+  objectFit?: 'cover' | 'contain';
 }
 
-export function LinkThumbnail({ url, title, className = '' }: LinkThumbnailProps) {
+export function LinkThumbnail({ url, title, className = '', objectFit = 'cover' }: LinkThumbnailProps) {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
 
@@ -59,7 +60,7 @@ export function LinkThumbnail({ url, title, className = '' }: LinkThumbnailProps
         <img
           src={imgSrc}
           alt={`${title} preview`}
-          className="absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-500"
+          className={`absolute inset-0 h-full w-full object-center transition-opacity duration-500 ${objectFit === 'contain' ? 'object-contain' : 'object-cover'}`}
           style={{ opacity: loaded && !error ? 1 : 0 }}
           loading="lazy"
           onLoad={() => setLoaded(true)}
