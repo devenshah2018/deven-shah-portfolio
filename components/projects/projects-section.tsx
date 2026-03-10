@@ -363,11 +363,11 @@ export function ProjectsSection() {
                     </div>
                   )}
                   {activeCategory === 'featured' && isProjectFeatured(project) && getWebLink(project) && (
-                    <div className='flex shrink-0 items-start px-6 pt-2 sm:w-1/2 sm:px-0 sm:pt-6 sm:pl-6'>
+                    <div className='flex shrink-0 items-start overflow-hidden rounded-xl px-6 pt-2 sm:w-1/2 sm:px-0 sm:pt-0 sm:pl-6'>
                       <LinkThumbnail
                         url={getWebLink(project)!.url}
                         title={project.title}
-                        className='block h-[70%] w-full min-h-[140px] sm:min-h-[120px]'
+                        className='block aspect-[40/21] w-full'
                       />
                     </div>
                   )}
@@ -460,11 +460,11 @@ export function ProjectsSection() {
                       </div>
                     )}
                     {activeCategory === 'featured' && isProjectFeatured(project) && getWebLink(project) && (
-                      <div className='order-first flex w-full shrink-0 items-start p-4 pb-0 sm:order-none sm:w-1/2 sm:py-6 sm:pl-6 sm:pr-4 sm:pb-2'>
+                      <div className='order-first flex w-full shrink-0 items-start overflow-hidden rounded-xl p-4 pb-0 sm:order-none sm:w-1/2 sm:p-6 sm:pb-2'>
                         <LinkThumbnail
                           url={getWebLink(project)!.url}
                           title={project.title}
-                          className='block h-[70%] w-full min-h-[120px] sm:min-h-0'
+                          className='block aspect-[40/21] w-full'
                         />
                       </div>
                     )}

@@ -49,7 +49,7 @@ export function getResearchSiteUrl(): string {
 export function scrollToProject(projectId: string) {
   window.dispatchEvent(new Event('resetProjectFilter'));
   const id = `project-${projectId}`;
-  const maxAttempts = 40;
+  const maxAttempts = 60;
   let attempts = 0;
 
   function tryScroll() {
@@ -106,14 +106,27 @@ export function scrollToExperience(experienceId: string) {
 }
 
 export function scrollToEducation(educationId: string) {
-  setTimeout(() => {
-    const educationCard = document.getElementById(`education-${educationId}`);
+  const id = `education-${educationId}`;
+  const maxAttempts = 40;
+  let attempts = 0;
+
+  function tryScroll() {
+    const educationCard = document.getElementById(id);
     if (educationCard) {
       educationCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
       const card = educationCard.querySelector('[data-card]') || educationCard;
       (card as HTMLElement).classList.add('scroll-highlight');
       setTimeout(() => (card as HTMLElement).classList.remove('scroll-highlight'), 3000);
+      return true;
     }
-  }, 100);
+    return false;
+  }
+
+  function poll() {
+    if (tryScroll() || ++attempts >= maxAttempts) return;
+    setTimeout(poll, 50);
+  }
+
+  requestAnimationFrame(() => requestAnimationFrame(poll));
 }
 

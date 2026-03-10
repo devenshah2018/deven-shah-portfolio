@@ -2,7 +2,6 @@
 
 import {
   Calendar,
-  Star,
   CheckCircle2,
   Clock,
   Pause,
@@ -18,7 +17,7 @@ import {
   getExperienceById,
   getEducationById,
 } from '@/lib/content-registry';
-import { scrollToExperience } from '@/lib/url-utils';
+import { scrollToExperience, scrollToEducation } from '@/lib/url-utils';
 import { Project } from '@/lib/types';
 
 function getProjectCategories(project: Project): string[] {
@@ -99,7 +98,7 @@ function FeaturedProjectCard({ project, index, size = 'normal' }: { project: Pro
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, delay: index * 0.05 }}
-      className={`group flex h-full w-full flex-col ${isLarge ? 'min-h-0' : ''}`}
+      className={`group flex h-full w-full flex-col scroll-mt-20 ${isLarge ? 'min-h-0' : ''}`}
     >
       <a
         href={webLink?.url ?? project.link}
@@ -108,14 +107,13 @@ function FeaturedProjectCard({ project, index, size = 'normal' }: { project: Pro
         className="flex h-full w-full flex-col overflow-hidden rounded-xl border-none bg-transparent transition-colors"
       >
         {webLink && (
-          <div className={`w-full flex-shrink-0 overflow-hidden aspect-video ${isLarge ? 'max-h-64 sm:max-h-72' : ''}`}>
+          <div className="w-full flex-shrink-0 overflow-hidden aspect-[40/21]">
             <LinkThumbnail url={webLink.url} title={project.title} className="h-full w-full transition-transform duration-300 group-hover:scale-[1.02]" objectFit="contain" />
           </div>
         )}
         <div className="flex min-h-0 flex-1 flex-col p-4">
           <div className="flex items-center gap-2">
             <h4 className={`font-semibold text-[#f5f5f0] ${isLarge ? 'text-base sm:text-lg' : ''}`}>{project.title}</h4>
-            <Star className="h-3.5 w-3.5 flex-shrink-0 text-[#a3a3a3] fill-[#525252]/50" />
           </div>
           <div className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-sm text-[#a3a3a3]">
             <span className="flex items-center gap-1">
@@ -138,7 +136,7 @@ function FeaturedProjectCard({ project, index, size = 'normal' }: { project: Pro
                   e.preventDefault();
                   r.type === 'experience'
                     ? scrollToExperience(r.id)
-                    : document.getElementById(`education-${r.id}`)?.scrollIntoView({ behavior: 'smooth' });
+                    : scrollToEducation(r.id);
                 }}
                 className="inline-flex items-center gap-1 text-xs font-medium text-[#a3a3a3] underline decoration-[#404040] underline-offset-1 transition-colors hover:text-[#f5f5f0]"
               >
@@ -196,7 +194,7 @@ function OtherProjectCard({ project, index }: { project: Project; index: number 
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: index * 0.03 }}
-      className="group flex h-full flex-col rounded-xl border-none bg-transparent p-4 transition-colors"
+      className="group flex h-full flex-col scroll-mt-20 rounded-xl border-none bg-transparent p-4 transition-colors"
     >
       <div className="flex items-start justify-between gap-2">
         <h4 className="font-semibold text-[#f5f5f0]">{project.title}</h4>
@@ -248,7 +246,7 @@ function OtherProjectCard({ project, index }: { project: Project; index: number 
                 onClick={() =>
                   r.type === 'experience'
                     ? scrollToExperience(r.id)
-                    : document.getElementById(`education-${r.id}`)?.scrollIntoView({ behavior: 'smooth' })
+                    : scrollToEducation(r.id)
                 }
                 className="font-medium underline decoration-[#404040] underline-offset-1 transition-colors hover:text-[#f5f5f0]"
               >

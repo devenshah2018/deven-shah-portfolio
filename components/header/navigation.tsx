@@ -251,12 +251,13 @@ export function Navigation({}: NavigationProps) {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: index * 0.1 }}
+                className="cursor-pointer"
               >
                 {item.name === 'Connect' ? (
                   <button
                     type="button"
                     onClick={() => window.dispatchEvent(new Event(CONTACT_CARD_SHINE_EVENT))}
-                    className="rounded-md border border-[#404040]/50 bg-[#f5f5f0] px-6 py-2.5 font-sans text-sm font-medium uppercase tracking-widest text-[#141414] transition-colors hover:bg-[#e8e8e3]"
+                    className="cursor-pointer rounded-md border border-[#404040]/50 bg-[#f5f5f0] px-6 py-2.5 font-sans text-sm font-medium uppercase tracking-widest text-[#141414] transition-colors hover:bg-[#e8e8e3]"
                   >
                     {item.name}
                   </button>
@@ -271,7 +272,7 @@ export function Navigation({}: NavigationProps) {
                         document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
                       }
                     }}
-                    className="rounded-md px-6 py-2.5 font-sans text-sm font-medium uppercase tracking-wider text-[#a3a3a3] transition-colors hover:border-[#525252] hover:text-[#f5f5f0]"
+                    className="cursor-pointer rounded-md px-6 py-2.5 font-sans text-sm font-medium uppercase tracking-wider text-[#a3a3a3] transition-colors hover:border-[#525252] hover:text-[#f5f5f0]"
                   >
                     {item.name}
                   </Link>
@@ -419,7 +420,7 @@ export function Navigation({}: NavigationProps) {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
                       transition={{ duration: 0.4, delay: index * 0.1 }}
-                      className='py-2'
+                      className='cursor-pointer py-2'
                     >
                       {item.name === 'Connect' ? (
                         <button
@@ -428,14 +429,14 @@ export function Navigation({}: NavigationProps) {
                             setMobileNavOpen(false);
                             window.dispatchEvent(new Event(CONTACT_CARD_SHINE_EVENT));
                           }}
-                          className="block w-full rounded-md border border-[#404040]/50 bg-[#f5f5f0] px-6 py-3 text-left text-lg font-medium text-[#141414] transition-colors hover:bg-[#e8e8e3]"
+                          className="block w-full cursor-pointer rounded-md border border-[#404040]/50 bg-[#f5f5f0] px-6 py-3 text-left text-lg font-medium text-[#141414] transition-colors hover:bg-[#e8e8e3]"
                         >
                           {item.name}
                         </button>
                       ) : (
                         <Link
                           href={item.href}
-                          className="block rounded-lg px-4 py-3 text-lg font-medium text-[#a3a3a3] transition-colors hover:text-[#f5f5f0]"
+                          className="block cursor-pointer rounded-lg px-4 py-3 text-lg font-medium text-[#a3a3a3] transition-colors hover:text-[#f5f5f0]"
                           onClick={(e) => {
                             setMobileNavOpen(false);
                             if (item.href.startsWith('#')) {

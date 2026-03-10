@@ -12,10 +12,17 @@ import { useEffect } from 'react';
 export default function HomePage() {
   const personSchema = generatePersonSchema();
 
-  // Handle hash-based navigation from research subdomain
+  // Handle hash-based navigation from research subdomain, papers page, etc.
   useEffect(() => {
     const handleHashNavigation = () => {
       const hash = window.location.hash;
+      // Check sessionStorage first (set by papers page for reliable shine effect)
+      const projectFromPaper = typeof window !== 'undefined' ? sessionStorage.getItem('scrollToProjectWithShine') : null;
+      if (projectFromPaper) {
+        sessionStorage.removeItem('scrollToProjectWithShine');
+        scrollToProject(projectFromPaper);
+        return;
+      }
       if (hash && hash.startsWith('#project-')) {
         const projectId = hash.replace('#project-', '');
         if (projectId) {
@@ -39,18 +46,20 @@ export default function HomePage() {
       }
     };
 
-    // Handle initial load with hash (including cross-domain navigation)
+    // Handle initial load with hash (including cross-domain navigation from papers, etc.)
     const handleInitialLoad = () => {
-      if (window.location.hash) {
-        // Wait for page to fully load and components to render
-        // Use multiple timeouts to ensure DOM is ready
+      const hasProjectHash = window.location.hash.startsWith('#project-');
+      const hasProjectFromPaper = typeof window !== 'undefined' && !!sessionStorage.getItem('scrollToProjectWithShine');
+      if (window.location.hash || hasProjectFromPaper) {
+        // Wait for Projects section to render; papers navigation needs extra time
+        const delay = (hasProjectHash || hasProjectFromPaper) ? 450 : 100;
         setTimeout(() => {
           if (document.readyState === 'complete') {
             handleHashNavigation();
           } else {
             window.addEventListener('load', handleHashNavigation, { once: true });
           }
-        }, 100);
+        }, delay);
       }
     };
 

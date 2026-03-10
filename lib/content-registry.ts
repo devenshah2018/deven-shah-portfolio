@@ -456,7 +456,7 @@ export const PROJECTS: Project[] = [
     categories: ['web', 'featured'],
     current_work: true,
     summary: 'AI daily planner for your conversations and workflows',
-    related_experiences: ['suno-analytics'],
+    related_experiences: [],
     accessible_at: ['hosted'],
     access_points: [
       { type: 'hosted', url: 'https://www.iris-plan.com', label: 'Live Site' }

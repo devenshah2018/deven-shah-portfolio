@@ -29,7 +29,7 @@ export function EducationResearchSidebar() {
                 key={edu.id}
                 id={`education-${edu.id}`}
                 data-card
-                className="group relative flex gap-4 py-5 first:pt-0 last:pb-0 transition-colors rounded-r-md -ml-1 pl-1 hover:bg-[#262626]/20"
+                className="group relative flex gap-4 py-5 first:pt-0 last:pb-0 transition-colors rounded-r-md -ml-1 pl-1 hover:bg-[#262626]/20 scroll-mt-20"
               >
                 {/* Timeline node */}
                 <div className="relative z-10 flex flex-shrink-0 flex-col items-center pt-0.5">

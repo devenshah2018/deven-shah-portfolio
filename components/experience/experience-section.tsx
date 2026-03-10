@@ -267,7 +267,7 @@ export function ExperienceSection() {
               <div className="space-y-14">
                 {/* More/Less button row */}
                 {hasMore && (
-                  <div className="mb-6 flex justify-start">
+                  <div className="mb-6 flex items-center justify-start gap-3">
                     {expanded ? (
                       <button
                         type="button"
@@ -283,47 +283,48 @@ export function ExperienceSection() {
                         <ChevronDown className="h-4 w-4 rotate-180" />
                       </button>
                     ) : (
-                      <div className="flex items-center gap-3">
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            scrollYRef.current = window.scrollY;
-                            setExpanded(true);
-                          }}
-                          className="flex items-center gap-1.5 rounded-md py-2 text-sm font-medium text-[#a3a3a3] transition-colors hover:text-[#f5f5f0] focus:outline-none focus:ring-0"
-                        >
-                          More
-                          <ChevronDown className="h-4 w-4" />
-                        </button>
-                        <div className="flex items-center gap-2">
-                          {otherOrgs.map(({ org }) =>
-                            org.companyLogo ? (
-                              <button
-                                key={org.company}
-                                type="button"
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  e.stopPropagation();
-                                  handleExpandToExperience(org.positions[0]!.id);
-                                }}
-                                className="rounded-lg transition-opacity hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[#525252] focus:ring-offset-2 focus:ring-offset-[#141414]"
-                                aria-label={`Expand to ${org.company}`}
-                              >
-                                <motion.img
-                                  layoutId={`logo-${org.company}`}
-                                  src={org.companyLogo}
-                                  alt={org.company}
-                                  className="h-10 w-10 flex-shrink-0 rounded-lg object-contain ring-1 ring-[#404040]/40"
-                                  transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-                                />
-                              </button>
-                            ) : null
-                          )}
-                        </div>
-                      </div>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          scrollYRef.current = window.scrollY;
+                          setExpanded(true);
+                        }}
+                        className="flex items-center gap-1.5 rounded-md py-2 text-sm font-medium text-[#a3a3a3] transition-colors hover:text-[#f5f5f0] focus:outline-none focus:ring-0"
+                      >
+                        More
+                        <ChevronDown className="h-4 w-4" />
+                      </button>
                     )}
+                    <AnimatePresence mode="popLayout">
+                      {!expanded &&
+                        otherOrgs.map(({ org }) =>
+                          org.companyLogo ? (
+                            <motion.button
+                              key={org.company}
+                              layout
+                              type="button"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                handleExpandToExperience(org.positions[0]!.id);
+                              }}
+                              className="rounded-lg transition-opacity hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[#525252] focus:ring-offset-2 focus:ring-offset-[#141414]"
+                              aria-label={`Expand to ${org.company}`}
+                              transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                            >
+                              <motion.img
+                                layoutId={`logo-${org.company}`}
+                                src={org.companyLogo}
+                                alt={org.company}
+                                className="h-10 w-10 flex-shrink-0 rounded-lg object-contain ring-1 ring-[#404040]/40"
+                                transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                              />
+                            </motion.button>
+                          ) : null
+                        )}
+                    </AnimatePresence>
                   </div>
                 )}
 

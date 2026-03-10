@@ -21,7 +21,7 @@ import {
   getExperienceById,
   getEducationById,
 } from '@/lib/content-registry';
-import { scrollToExperience } from '@/lib/url-utils';
+import { scrollToExperience, scrollToEducation } from '@/lib/url-utils';
 import { Project } from '@/lib/types';
 
 function getProjectCategories(project: Project): string[] {
@@ -206,11 +206,11 @@ export function ProjectsSidebar() {
               >
                 <div className={`flex gap-4 ${activeCategory === 'featured' && isProjectFeatured(project) && getWebLink(project) ? 'mb-6 items-start' : ''}`}>
                   {activeCategory === 'featured' && isProjectFeatured(project) && getWebLink(project) && (
-                    <div className='flex w-1/2 shrink-0 items-start'>
+                    <div className='flex w-1/2 shrink-0 items-start overflow-hidden rounded-xl'>
                       <LinkThumbnail
                         url={getWebLink(project)!.url}
                         title={project.title}
-                        className='block h-[70%] w-full min-h-[120px]'
+                        className='block aspect-[40/21] w-full'
                       />
                     </div>
                   )}
@@ -220,9 +220,6 @@ export function ProjectsSidebar() {
                         <h4 className="truncate text-base font-semibold leading-tight text-[#f5f5f0]">
                           {project.title}
                         </h4>
-                        {activeCategory === 'featured' && isProjectFeatured(project) && (
-                          <Star className="h-3 w-3 flex-shrink-0 text-[#a3a3a3] fill-[#525252]/50" />
-                        )}
                       </div>
                       {activeCategory !== 'featured' && (
                         <div className='flex flex-shrink-0 items-center gap-1.5'>
@@ -277,9 +274,9 @@ export function ProjectsSidebar() {
                                 key={`${r.name}-${i}`}
                                 type="button"
                                 onClick={() =>
-                                  r.type === 'experience'
+                                    r.type === 'experience'
                                     ? scrollToExperience(r.id)
-                                    : document.getElementById(`education-${r.id}`)?.scrollIntoView({ behavior: 'smooth' })
+                                    : scrollToEducation(r.id)
                                 }
                                 className="inline-flex items-center gap-1 text-[15px] font-medium text-[#d4d4d4] underline decoration-[#404040] underline-offset-1 transition-colors hover:text-[#f5f5f0] hover:underline-[#525252]"
                               >
@@ -349,8 +346,8 @@ export function ProjectsSidebar() {
                                   type="button"
                                   onClick={() =>
                                     r.type === 'experience'
-                                      ? scrollToExperience(r.id)
-                                      : document.getElementById(`education-${r.id}`)?.scrollIntoView({ behavior: 'smooth' })
+                                    ? scrollToExperience(r.id)
+                                    : scrollToEducation(r.id)
                                   }
                                   className="inline-flex items-center gap-1 font-medium underline decoration-[#404040] underline-offset-1 transition-colors hover:text-[#f5f5f0] hover:underline-[#525252]"
                                 >

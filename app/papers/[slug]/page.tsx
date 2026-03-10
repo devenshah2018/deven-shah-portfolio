@@ -2,8 +2,9 @@ import { getResearchPaperBySlug, getProjectById } from '@/lib/content-registry';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import { Calendar, Building2, ArrowLeft, FileText, Tag, Link2 } from 'lucide-react';
+import { Calendar, Building2, ArrowLeft, FileText, Tag } from 'lucide-react';
 import { PDFViewer } from '@/components/research/pdf-viewer';
+import { ConnectedProjectLink } from '@/components/research/connected-project-link';
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -83,6 +84,11 @@ export default async function PaperPage({ params }: Props) {
               </div>
             </div>
 
+            {/* Connected project - prominent, right under title/metadata */}
+            {relatedProject && (
+              <ConnectedProjectLink projectId={relatedProject.id} title={relatedProject.title} />
+            )}
+
             {/* Abstract */}
             {paper.abstract && (
               <div className="space-y-3">
@@ -112,22 +118,6 @@ export default async function PaperPage({ params }: Props) {
                     </span>
                   ))}
                 </div>
-              </div>
-            )}
-
-            {/* Related project */}
-            {relatedProject && (
-              <div className="space-y-3">
-                <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-[#525252] flex items-center gap-2">
-                  <Link2 className="h-3.5 w-3.5" />
-                  Related Project
-                </h2>
-                <Link
-                  href={`/#project-${relatedProject.id}`}
-                  className="block rounded-lg border border-[#262626] bg-[#1a1a1a] p-3 text-sm font-medium text-[#a3a3a3] transition-all hover:border-[#404040] hover:bg-[#262626] hover:text-[#f5f5f0]"
-                >
-                  {relatedProject.title}
-                </Link>
               </div>
             )}
           </aside>
