@@ -121,6 +121,16 @@ CATEGORIZED_SKILLS['all'] = Array.from(new Set(Object.values(SKILLS).flat()));
 
 export const EXPERIENCES = [
   {
+    id: 'juntrax',
+    title: 'User Interface Engineer',
+    company: 'Juntrax Solutions',
+    companyLogo: '/juntrax.jpeg',
+    location: 'Dublin, CA',
+    period: '07/2018 - 08/2019',
+    description: 'Developed testing oracles to ensure the front end of the web application performs as expected. Engineered pipelines to ensure issues were prioritized and resolved efficiently.',
+    link: 'https://juntrax.com/'
+  },
+  {
     id: 'suno-analytics',
     title: 'Co-Founder & CTO',
     company: 'Suno Analytics',
@@ -201,8 +211,23 @@ export const EXPERIENCES = [
     link: 'https://www.buildfellowship.com/'
   },
   {
+    id: 'research-assistant-2',
+    title: 'Graduate Research Assistant',
+    company: 'Boston University',
+    companyLogo: '/bu-logo.png',
+    location: 'Boston, MA',
+    period: '03/2026 – Present',
+    description:
+      'Advancing deepfake detection through cutting-edge AI research, building robust methods to exceed current state-of-the-art benchmarks for media integrity.',
+    achievements: [],
+    gradient: 'from-blue-500 to-cyan-500',
+    link: 'https://www.bu.edu/',
+    current_work: true,
+    summary: 'Deepfake detection through AI research',
+  },
+  {
     id: 'research-assistant',
-    title: 'Research Assistant',
+    title: 'Graduate Research Assistant',
     company: 'Boston University',
     companyLogo: '/bu-logo.png',
     location: 'Boston, MA',
@@ -222,7 +247,7 @@ export const EXPERIENCES = [
   },
   {
     id: 'teaching-assistant',
-    title: 'Teaching Assistant',
+    title: 'Graduate Teaching Assistant',
     company: 'Boston University',
     companyLogo: '/bu-logo.png',
     location: 'Boston, MA',
@@ -361,10 +386,10 @@ export function groupExperiencesByOrg(): OrgGroup[] {
     const sorted = [...positions].sort((a, b) => getEndDate(b.period) - getEndDate(a.period));
     return {
       company,
-      companyLogo: first.companyLogo,
+      ...(first.companyLogo !== undefined && { companyLogo: first.companyLogo }),
       location: first.location,
       link: first.link,
-      gradient: first.gradient,
+      ...(first.gradient !== undefined && { gradient: first.gradient }),
       duration: getOrgDuration(sorted),
       positions: sorted,
     };
