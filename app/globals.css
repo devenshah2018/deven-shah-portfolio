@@ -147,6 +147,13 @@
   height: auto;
 }
 
+/* Technical skills search - hide native clear, style for B&W matte theme */
+input[type="search"].skills-search-input::-webkit-search-cancel-button,
+input[type="search"].skills-search-input::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
 /* Smooth scrolling for anchor links */
 html {
   scroll-behavior: smooth;

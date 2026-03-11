@@ -30,32 +30,14 @@ export const SKILLS = {
   ],
   platforms: ['Linux', 'AWS', 'Salesforce', 'Azure', 'LangGraph', 'GCP', 'Jupyter'],
   frameworks: ['React', '.NET', 'Flask', 'TailwindCSS', 'Angular', 'ASP.NET Core', 'Next.js'],
-  frontend: ['TypeScript', 'JavaScript', 'HTML', 'CSS', 'React', 'TailwindCSS'],
-  backend: [
-    'Python',
-    'C#',
-    'Java',
-    'TypeScript',
-    '.NET',
-    'Flask',
-    'Bash',
-    'Rust',
-    'Docker',
-    'REST API',
-    'GraphQL',
-  ],
   database: ['SQL', 'SOQL', 'Oracle', 'PostgreSQL', 'MySQL', 'MongoDB'],
   aimal: ['Python', 'LLMs', 'Sklearn', 'Tensorflow', 'Pytorch', 'LangGraph', 'CNNs'],
   devops: ['Docker', 'Github/Git', 'GCP', 'AWS', 'Azure'],
   apis: ['C#', 'Python', 'Apex', 'Azure', 'REST API', 'GraphQL', 'TypeScript'],
-  collaboration: ['Jira', 'Confluence', 'Agile', 'Scrum'],
 };
 
 // Simplified skill mappings - only store IDs instead of duplicating full object data
 export const SKILL_MAPPINGS = [
-  { skill: 'Scrum', experienceIds: ['suno-analytics', 'patelco'] },
-  { skill: 'Agile', experienceIds: ['suno-analytics', 'patelco'] },
-  { skill: 'Confluence', experienceIds: ['suno-analytics', 'patelco'] },
   { skill: 'Python', experienceIds: ['suno-analytics', 'netapp', 'build-fellowship-1', 'build-fellowship-2', 'research-assistant'], projectIds: ['ares-project', 'molecule-mutation-prediction', 'crypto-forecasting-project', 'drone-build-project'], educationIds: ['sjsu-bachelors'] },
   { skill: 'TypeScript', experienceIds: ['suno-analytics', 'patelco', 'build-fellowship-1'], projectIds: ['drone-build-project', 'portfolio-project', 'ares-project'] },
   { skill: 'C#', experienceIds: ['patelco'], educationIds: ['sjsu-bachelors'] },
@@ -95,7 +77,6 @@ export const SKILL_MAPPINGS = [
   { skill: 'Angular', experienceIds: ['patelco'] },
   { skill: 'ASP.NET Core', experienceIds: ['patelco'] },
   { skill: 'Next.js', projectIds: ['drone-build-project'], experienceIds: ['suno-analytics'] },
-  { skill: 'Jira', experienceIds: ['patelco', 'suno-analytics'] },
   { skill: 'CNNs', experienceIds: ['build-fellowship-2', 'research-assistant'] },
 ];
 
@@ -103,14 +84,11 @@ export const SKILL_CATEGORIES = [
   { key: 'all', label: 'All' },
   { key: 'aimal', label: 'AI/ML' },
   { key: 'apis', label: 'API' },
-  { key: 'backend', label: 'Backend' },
   { key: 'database', label: 'Database' },
   { key: 'devops', label: 'DevOps' },
-  { key: 'frontend', label: 'Frontend' },
   { key: 'frameworks', label: 'Frameworks' },
   { key: 'languages', label: 'Languages' },
   { key: 'platforms', label: 'Platforms' },
-  { key: 'collaboration', label: 'Collaboration' },
 ];
 
 export const CATEGORIZED_SKILLS = Object.fromEntries(
@@ -341,7 +319,7 @@ export function formatDuration(period: string): string {
   return `${yrs} yr${yrs > 1 ? 's' : ''} ${mo} mo`;
 }
 
-function getEndDate(period: string): number {
+export function getEndDate(period: string): number {
   if (period.includes('Present')) return 999999;
   const dates = period.match(/(\d{2})\/(\d{4})/g);
   if (dates && dates.length >= 2) {
@@ -384,9 +362,7 @@ export function groupExperiencesByOrg(): OrgGroup[] {
   return Array.from(byCompany.entries()).map(([company, positions]) => {
     const first = positions[0]!;
     const sorted = [...positions].sort((a, b) => getEndDate(b.period) - getEndDate(a.period));
-    return {
-      company,
-      ...(first.companyLogo !== undefined && { companyLogo: first.companyLogo }),
+    return {      ...(first.companyLogo !== undefined && { companyLogo: first.companyLogo }),
       location: first.location,
       link: first.link,
       ...(first.gradient !== undefined && { gradient: first.gradient }),
@@ -780,10 +756,10 @@ export function getEducationById(id: string) {
 }
 
 export type CurrentWorkItem =
-  | { type: 'project'; id: string; title: string; summary?: string; sortDate: string; related?: { type: 'experience' | 'education'; id: string }[] }
-  | { type: 'experience'; id: string; title: string; company: string; summary?: string; sortDate: string }
-  | { type: 'education'; id: string; degree: string; institution: string; summary?: string; sortDate: string }
-  | { type: 'paper'; id: string; slug: string | undefined; title: string; summary?: string; sortDate: string };
+  | { type: 'project'; id: string; title: string; summary?: string; description?: string; sortDate: string; related?: { type: 'experience' | 'education'; id: string }[] }
+  | { type: 'experience'; id: string; title: string; company: string; summary?: string; description?: string; sortDate: string }
+  | { type: 'education'; id: string; degree: string; institution: string; summary?: string; description?: string; sortDate: string }
+  | { type: 'paper'; id: string; slug: string | undefined; title: string; summary?: string; abstract?: string; sortDate: string };
 
 /** Returns all items tagged current_work from projects, experiences, education, and papers. */
 export function getCurrentWorkItems(): CurrentWorkItem[] {
@@ -807,13 +783,14 @@ export function getCurrentWorkItems(): CurrentWorkItem[] {
         title: p.title,
         sortDate: p.sortDate || getSortDate(p.period),
         ...(p.summary != null && { summary: p.summary }),
+        ...(p.description != null && { description: p.description }),
         ...(related.length > 0 && { related }),
       });
     }
   }
   for (const e of EXPERIENCES) {
     if ((e as Experience & { current_work?: boolean }).current_work) {
-      const exp = e as Experience & { current_work?: boolean; summary?: string };
+      const exp = e as Experience & { current_work?: boolean; summary?: string; description?: string };
       items.push({
         type: 'experience',
         id: exp.id,
@@ -821,11 +798,12 @@ export function getCurrentWorkItems(): CurrentWorkItem[] {
         company: exp.company,
         sortDate: getSortDate(exp.period),
         ...(exp.summary != null && { summary: exp.summary }),
+        ...(exp.description != null && { description: exp.description }),
       });
     }
   }
   for (const edu of EDUCATION) {
-    const ed = edu as { id: string; degree: string; institution: string; period: string; current_work?: boolean; summary?: string };
+    const ed = edu as { id: string; degree: string; institution: string; period: string; current_work?: boolean; summary?: string; description?: string };
     if (ed.current_work) {
       items.push({
         type: 'education',
@@ -834,6 +812,7 @@ export function getCurrentWorkItems(): CurrentWorkItem[] {
         institution: ed.institution,
         sortDate: getSortDate(ed.period),
         ...(ed.summary != null && { summary: ed.summary }),
+        ...(ed.description != null && { description: ed.description }),
       });
     }
   }
@@ -846,6 +825,7 @@ export function getCurrentWorkItems(): CurrentWorkItem[] {
         title: p.title,
         sortDate: p.sortDate || '',
         ...(p.summary != null && { summary: p.summary }),
+        ...(p.abstract != null && { abstract: p.abstract }),
       });
     }
   }
