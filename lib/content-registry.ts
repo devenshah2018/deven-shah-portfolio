@@ -362,7 +362,9 @@ export function groupExperiencesByOrg(): OrgGroup[] {
   return Array.from(byCompany.entries()).map(([company, positions]) => {
     const first = positions[0]!;
     const sorted = [...positions].sort((a, b) => getEndDate(b.period) - getEndDate(a.period));
-    return {      ...(first.companyLogo !== undefined && { companyLogo: first.companyLogo }),
+    return {
+      company,
+      ...(first.companyLogo !== undefined && { companyLogo: first.companyLogo }),
       location: first.location,
       link: first.link,
       ...(first.gradient !== undefined && { gradient: first.gradient }),
