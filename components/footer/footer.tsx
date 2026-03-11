@@ -10,7 +10,7 @@ export function Footer() {
           <div className='text-center md:text-left'>
             <h3 className="mb-2 text-lg font-semibold text-[#f5f5f0]">Deven Shah</h3>
             <p className="text-sm text-[#a3a3a3]">
-              Co-founder & CTO at Suno Analytics | Graduate MSCS Student at Boston University
+              AI Researcher & M.S. Computer Science Candidate 
             </p>
           </div>
 
@@ -19,7 +19,7 @@ export function Footer() {
         <Separator className='my-6' />
 
         <div className="flex flex-col items-center justify-between gap-4 text-sm text-[#a3a3a3] md:flex-row">
-          <p>© 2025 Deven Shah. All rights reserved.</p>
+          <p>© 2026 Deven Shah. All rights reserved.</p>
         </div>
       </div>
     </footer>

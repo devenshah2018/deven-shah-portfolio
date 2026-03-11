@@ -1,11 +1,12 @@
 'use client';
 
-import { useState, useMemo, useRef, useLayoutEffect, useEffect } from 'react';
+import { useState, useMemo, useRef, useEffect, useCallback } from 'react';
 import { MapPin, ExternalLink, ChevronRight, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   getTopOrgGroups,
   getOtherOrgGroups,
+  groupExperiencesByOrg,
   formatPeriodDisplay,
   getSkillsForExperienceId,
   type OrgGroup,
@@ -64,10 +65,12 @@ function ExperienceCard({
       }}
       className="grid grid-cols-[2rem_3rem_1fr] gap-4 items-start"
     >
-      <div className="min-h-[1.5rem] flex items-center pt-1">
-        <div className="h-full min-h-[2rem] w-px bg-[#404040]/40" aria-hidden />
-      </div>
-      <div className="min-h-[1.5rem] flex items-start justify-end pt-1">
+      <div className="min-h-[1.5rem]" aria-hidden />
+      <div
+        data-year-cell
+        data-has-year={yearLabel ? 'true' : undefined}
+        className="min-h-[1.5rem] flex items-start justify-end pt-1"
+      >
         {yearLabel && (
           <span className="text-base font-medium tabular-nums tracking-tight text-[#737373]">
             {yearLabel}
@@ -79,10 +82,10 @@ function ExperienceCard({
           <div className="flex items-center gap-2.5">
             {org.companyLogo && (
               <motion.img
-                layoutId={`logo-${org.company}`}
+                layoutId={`logo-bottom-${org.company}`}
                 src={org.companyLogo}
                 alt=""
-                className="h-9 w-9 flex-shrink-0 rounded-lg object-contain ring-1 ring-[#404040]/40"
+                className="h-9 w-9 flex-shrink-0 rounded-lg object-contain ring-1 ring-[#262626]"
                 transition={{ type: 'spring', stiffness: 350, damping: 30 }}
               />
             )}
@@ -162,7 +165,7 @@ function ExperienceCard({
                       transition={{ duration: 0.25, ease: 'easeOut' }}
                       className="overflow-hidden"
                     >
-                      <div className="mt-3 border-l border-[#404040]/40 pl-4">
+                      <div className="mt-3 pl-4">
                         <ul className="space-y-2">
                           {achievements.map((achievement, i) => (
                             <li key={i} className="flex gap-2 text-sm leading-[1.6] text-[#d4d4d4]">
@@ -189,34 +192,97 @@ export function ExperienceSection() {
   const [expanded, setExpanded] = useState(false);
   const scrollYRef = useRef<number | null>(null);
   const scrollToExperienceIdRef = useRef<string | null>(null);
+  const timelineContainerRef = useRef<HTMLDivElement>(null);
+  const timelineMaskId = useRef(`timeline-mask-${Math.random().toString(36).slice(2)}`).current;
+  const [timelineSvg, setTimelineSvg] = useState<{
+    top: number;
+    left: number;
+    height: number;
+    gapRects: { y: number; height: number }[];
+  } | null>(null);
 
-  useLayoutEffect(() => {
-    if (scrollYRef.current === null || scrollToExperienceIdRef.current !== null) return;
-    const y = scrollYRef.current;
-    scrollYRef.current = null;
-    const restore = () => window.scrollTo({ top: y, left: 0, behavior: 'auto' });
-    // Delay restores until after collapse animation (~350ms) so we don't fight the layout
-    const t1 = setTimeout(restore, 380);
-    const t2 = setTimeout(restore, 450);
-    const t3 = setTimeout(restore, 600);
-    return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-      clearTimeout(t3);
-    };
+  const updateTimelineLine = useCallback(() => {
+    const container = timelineContainerRef.current;
+    if (!container) return;
+    const cardsWrapper = container.querySelector<HTMLElement>(
+      expanded ? '[data-expanded-cards]' : '[data-collapsed-cards]'
+    );
+    const yearCells = cardsWrapper?.querySelectorAll<HTMLElement>('[data-year-cell]') ?? [];
+    if (yearCells.length < 2) {
+      setTimelineSvg(null);
+      return;
+    }
+    const containerRect = container.getBoundingClientRect();
+    const GAP = 4;
+    const first = yearCells[0]!;
+    const last = yearCells[yearCells.length - 1]!;
+    const firstRect = first.getBoundingClientRect();
+    const lastRect = last.getBoundingClientRect();
+    const yearCenterX = firstRect.left + firstRect.width / 2 - containerRect.left;
+    const lineTop = firstRect.bottom - containerRect.top + GAP;
+    const lineBottom = lastRect.top - containerRect.top - GAP;
+    const lineHeight = Math.max(0, lineBottom - lineTop);
+
+    const gapRects: { y: number; height: number }[] = [];
+    for (let i = 0; i < yearCells.length; i++) {
+      const cell = yearCells[i]!;
+      if (!cell.hasAttribute('data-has-year')) continue;
+      const rect = cell.getBoundingClientRect();
+      const gapTop = rect.top - containerRect.top - GAP;
+      const gapHeight = rect.height + GAP * 2;
+      const gapBottom = gapTop + gapHeight;
+      if (gapBottom <= lineTop || gapTop >= lineTop + lineHeight) continue;
+      const clipTop = Math.max(0, gapTop - lineTop);
+      const clipBottom = Math.min(lineHeight, gapBottom - lineTop);
+      gapRects.push({
+        y: clipTop,
+        height: Math.max(0, clipBottom - clipTop),
+      });
+    }
+
+    setTimelineSvg({
+      top: lineTop,
+      left: yearCenterX,
+      height: lineHeight,
+      gapRects,
+    });
   }, [expanded]);
 
   useEffect(() => {
-    if (!expanded || !scrollToExperienceIdRef.current) return;
-    const id = scrollToExperienceIdRef.current;
-    scrollToExperienceIdRef.current = null;
-    // Single scroll after expand animation settles (~350ms)
-    const t = setTimeout(() => scrollToExperience(id), 380);
+    updateTimelineLine();
+    const t = setTimeout(updateTimelineLine, 400);
+    const container = timelineContainerRef.current;
+    if (!container) return () => clearTimeout(t);
+    const obs = new ResizeObserver(updateTimelineLine);
+    obs.observe(container);
+    return () => {
+      clearTimeout(t);
+      obs.disconnect();
+    };
+  }, [expanded, updateTimelineLine]);
+
+  useEffect(() => {
+    if (scrollToExperienceIdRef.current) {
+      const id = scrollToExperienceIdRef.current;
+      scrollToExperienceIdRef.current = null;
+      const t = setTimeout(() => scrollToExperience(id), 400);
+      return () => clearTimeout(t);
+    }
+    if (scrollYRef.current === null) return;
+    const y = scrollYRef.current;
+    scrollYRef.current = null;
+    const EXIT_DURATION = 380;
+    const restore = () => {
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      window.scrollTo({ top: Math.min(y, maxScroll), left: 0, behavior: 'auto' });
+    };
+    const t = setTimeout(restore, EXIT_DURATION);
     return () => clearTimeout(t);
   }, [expanded]);
 
   const handleExpandToExperience = (experienceId: string) => {
     scrollToExperienceIdRef.current = experienceId;
+    scrollYRef.current = null;
     setExpanded(true);
   };
 
@@ -237,6 +303,11 @@ export function ExperienceSection() {
   const otherOrgs = useMemo(() => {
     const other = getOtherOrgGroups();
     return addYearLabels(other.map((org) => ({ org })));
+  }, []);
+
+  const allOrgsSorted = useMemo(() => {
+    const all = groupExperiencesByOrg();
+    return addYearLabels(all.map((org) => ({ org })));
   }, []);
 
   const hasMore = otherOrgs.length > 0;
@@ -263,17 +334,59 @@ export function ExperienceSection() {
               <h3 className="text-left text-base font-medium uppercase tracking-[0.2em] text-[#a3a3a3] lg:mb-4">
                 Education
               </h3>
-              <div className="relative min-w-0" style={{ overflowAnchor: 'none' }}>
+              <div ref={timelineContainerRef} className="relative min-w-0" style={{ overflowAnchor: 'none' }}>
+              {/* Vertical timeline - single line, SVG mask cuts gaps at years (no discoloration, true gaps) */}
+              {timelineSvg && timelineSvg.height > 0 && (
+                <svg
+                  className="absolute pointer-events-none overflow-visible"
+                  style={{
+                    top: timelineSvg.top,
+                    left: timelineSvg.left,
+                    width: 4,
+                    height: timelineSvg.height,
+                    transform: 'translateX(-50%)',
+                  }}
+                  aria-hidden
+                >
+                  <defs>
+                    <mask id={timelineMaskId}>
+                      <rect x="0" y="0" width="4" height={timelineSvg.height} fill="white" />
+                      {timelineSvg.gapRects.map((g, i) => (
+                        <rect
+                          key={i}
+                          x="0"
+                          y={g.y}
+                          width="4"
+                          height={g.height}
+                          fill="black"
+                        />
+                      ))}
+                    </mask>
+                  </defs>
+                  <rect
+                    x="1"
+                    y="0"
+                    width="1"
+                    height={timelineSvg.height}
+                    fill="#404040"
+                    fillOpacity="0.4"
+                    mask={timelineSvg.gapRects.length > 0 ? `url(#${timelineMaskId})` : undefined}
+                  />
+                </svg>
+              )}
               <div className="space-y-14">
-                {/* More/Less button row */}
+                {/* More/Less button row at top - More/Less aligned with year, logos in content column */}
                 {hasMore && (
-                  <div className="mb-6 flex items-center justify-start gap-3">
+                  <div className="mb-6 grid grid-cols-[2rem_3rem_1fr] gap-4 items-center">
+                    <div aria-hidden />
+                    <div className="flex min-w-0 items-center justify-end pt-1">
                     {expanded ? (
                       <button
                         type="button"
                         onClick={(e) => {
                           e.preventDefault();
                           e.stopPropagation();
+                          (e.currentTarget as HTMLButtonElement).blur();
                           scrollYRef.current = window.scrollY;
                           setExpanded(false);
                         }}
@@ -288,48 +401,56 @@ export function ExperienceSection() {
                         onClick={(e) => {
                           e.preventDefault();
                           e.stopPropagation();
+                          (e.currentTarget as HTMLButtonElement).blur();
                           scrollYRef.current = window.scrollY;
                           setExpanded(true);
                         }}
                         className="flex items-center gap-1.5 rounded-md py-2 text-sm font-medium text-[#a3a3a3] transition-colors hover:text-[#f5f5f0] focus:outline-none focus:ring-0"
                       >
                         More
-                        <ChevronDown className="h-4 w-4" />
+                          <ChevronDown className="h-4 w-4" />
                       </button>
                     )}
-                    <AnimatePresence mode="popLayout">
-                      {!expanded &&
-                        otherOrgs.map(({ org }) =>
-                          org.companyLogo ? (
-                            <motion.button
-                              key={org.company}
-                              layout
-                              type="button"
-                              onClick={(e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                handleExpandToExperience(org.positions[0]!.id);
-                              }}
-                              className="rounded-lg transition-opacity hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[#525252] focus:ring-offset-2 focus:ring-offset-[#141414]"
-                              aria-label={`Expand to ${org.company}`}
-                              transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-                            >
-                              <motion.img
-                                layoutId={`logo-${org.company}`}
-                                src={org.companyLogo}
-                                alt={org.company}
-                                className="h-10 w-10 flex-shrink-0 rounded-lg object-contain ring-1 ring-[#404040]/40"
+                    </div>
+                    <div className="flex min-w-0 items-center gap-3 pl-1">
+                      {!expanded && (
+                        <AnimatePresence mode="popLayout">
+                          {otherOrgs.map(({ org }) =>
+                            org.companyLogo && org.positions[0] ? (
+                              <motion.button
+                                key={org.company}
+                                layout
+                                type="button"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  (e.currentTarget as HTMLButtonElement).blur();
+                                  handleExpandToExperience(org.positions[0]!.id);
+                                }}
+                                className="rounded-md transition-opacity hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[#525252] focus:ring-offset-2 focus:ring-offset-[#141414]"
+                                aria-label={`Expand to ${org.company}`}
                                 transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-                              />
-                            </motion.button>
-                          ) : null
-                        )}
-                    </AnimatePresence>
+                              >
+                                <motion.img
+                                  layoutId={`logo-top-${org.company}`}
+                                  src={org.companyLogo}
+                                  alt={org.company}
+                                  className="h-9 w-9 flex-shrink-0 rounded-md object-contain ring-1 ring-[#262626]"
+                                  transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                                />
+                              </motion.button>
+                            ) : null
+                          )}
+                        </AnimatePresence>
+                      )}
+                    </div>
                   </div>
                 )}
 
-                {/* Top orgs - always visible, never unmount */}
-                {topOrgs.map(({ org, yearLabel }, index) => (
+                {/* Collapsed: featured orgs only */}
+                {!expanded && (
+                  <div data-collapsed-cards className="contents">
+                    {topOrgs.map(({ org, yearLabel }, index) => (
                   <ExperienceCard
                     key={org.company}
                     org={org}
@@ -338,21 +459,81 @@ export function ExperienceSection() {
                     flippedIds={flippedIds}
                     toggleFlip={toggleFlip}
                   />
-                ))}
+                    ))}
+                  </div>
+                )}
 
-                {/* Other orgs - animate in/out when expanding/collapsing */}
+                {/* More trigger - bottom of featured list when collapsed */}
+                {hasMore && !expanded && (
+                  <div className="grid grid-cols-[2rem_3rem_1fr] gap-4 items-center">
+                    <div aria-hidden />
+                    <div aria-hidden />
+                    <div className="flex min-w-0 items-center gap-4">
+                      <div className="flex-1 h-px min-w-0 bg-[#404040]/40" aria-hidden />
+                      <div className="flex shrink-0 items-center gap-3">
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          (e.currentTarget as HTMLButtonElement).blur();
+                          scrollYRef.current = window.scrollY;
+                          setExpanded(true);
+                        }}
+                        className="flex items-center gap-1.5 rounded-md py-2 text-sm font-medium text-[#5a5a5a] transition-colors hover:text-[#a3a3a3] focus:outline-none focus:ring-0"
+                        aria-label="Expand to show full experience list"
+                      >
+                        More
+                        <ChevronDown className="h-4 w-4" />
+                      </button>
+                      <AnimatePresence mode="popLayout">
+                        {otherOrgs.map(({ org }) =>
+                          org.companyLogo && org.positions[0] ? (
+                            <motion.button
+                              key={org.company}
+                              layout
+                              type="button"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                (e.currentTarget as HTMLButtonElement).blur();
+                                handleExpandToExperience(org.positions[0]!.id);
+                              }}
+                              className="rounded-md transition-opacity hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[#404040] focus:ring-offset-2 focus:ring-offset-[#141414]"
+                              aria-label={`Expand to ${org.company}`}
+                              transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                            >
+                              <motion.img
+                                layoutId={`logo-bottom-${org.company}`}
+                                src={org.companyLogo}
+                                alt={org.company}
+                                className="h-9 w-9 flex-shrink-0 rounded-md object-contain ring-1 ring-[#262626]"
+                                transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                              />
+                            </motion.button>
+                          ) : null
+                        )}
+                      </AnimatePresence>
+                      </div>
+                      <div className="flex-1 h-px min-w-0 bg-[#404040]/40" aria-hidden />
+                    </div>
+                  </div>
+                )}
+
+                {/* Expanded: full list sorted by recency */}
                 <AnimatePresence>
                   {expanded && (
                     <motion.div
-                      key="other-orgs"
+                      key="all-orgs"
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
                       transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
                       className="overflow-hidden"
+                      style={{ overflowAnchor: 'none' }}
                     >
-                      <div className="space-y-14 pt-0">
-                        {otherOrgs.map(({ org, yearLabel }, index) => (
+                      <div data-expanded-cards className="space-y-14 pt-0">
+                        {allOrgsSorted.map(({ org, yearLabel }, index) => (
                           <ExperienceCard
                             key={org.company}
                             org={org}
@@ -363,6 +544,32 @@ export function ExperienceSection() {
                             isExpandedContent
                           />
                         ))}
+                        {/* Less trigger - bottom of full list when expanded */}
+                        <div className="grid grid-cols-[2rem_3rem_1fr] gap-4 items-center">
+                          <div aria-hidden />
+                          <div aria-hidden />
+                          <div className="flex min-w-0 items-center gap-4">
+                            <div className="flex-1 h-px min-w-0 bg-[#404040]/40" aria-hidden />
+                            <div className="flex shrink-0 items-center gap-3">
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                (e.currentTarget as HTMLButtonElement).blur();
+                                scrollYRef.current = window.scrollY;
+                                setExpanded(false);
+                              }}
+                              className="flex items-center gap-1.5 rounded-md py-2 text-sm font-medium text-[#5a5a5a] transition-colors hover:text-[#a3a3a3] focus:outline-none focus:ring-0"
+                              aria-label="Collapse experience list"
+                            >
+                              Less
+                              <ChevronDown className="h-4 w-4 rotate-180" />
+                            </button>
+                            </div>
+                            <div className="flex-1 h-px min-w-0 bg-[#404040]/40" aria-hidden />
+                          </div>
+                        </div>
                       </div>
                     </motion.div>
                   )}
