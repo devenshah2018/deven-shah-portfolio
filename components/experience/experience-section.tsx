@@ -119,7 +119,7 @@ function ExperienceCard({
             const periodDisplay = formatPeriodDisplay(pos.period);
 
             return (
-              <div key={pos.id} id={`experience-${pos.id}`} data-card className="relative overflow-hidden rounded-xl">
+              <div key={pos.id} id={`experience-${pos.id}`} data-card className="relative overflow-hidden rounded-xl px-4 py-3">
                 <div className="flex flex-row items-center justify-between gap-3">
                   <h3 className="min-w-0 truncate text-base font-semibold text-[#f5f5f0]">{pos.title}</h3>
                   <Badge
