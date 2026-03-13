@@ -79,7 +79,7 @@ function ExperienceCard({
       </div>
       <div className="min-w-0 pl-1">
         <div className="space-y-1.5 mb-4">
-          <div className="flex items-center gap-2.5">
+          <div data-logo-row className="flex items-center gap-2.5">
             {org.companyLogo && (
               <motion.img
                 layoutId={`logo-bottom-${org.company}`}
@@ -199,6 +199,7 @@ export function ExperienceSection() {
     left: number;
     height: number;
     gapRects: { y: number; height: number }[];
+    ticks: { y: number }[];
   } | null>(null);
 
   const updateTimelineLine = useCallback(() => {
@@ -224,20 +225,35 @@ export function ExperienceSection() {
     const lineHeight = Math.max(0, lineBottom - lineTop);
 
     const gapRects: { y: number; height: number }[] = [];
+    const ticks: { y: number }[] = [];
     for (let i = 0; i < yearCells.length; i++) {
       const cell = yearCells[i]!;
-      if (!cell.hasAttribute('data-has-year')) continue;
       const rect = cell.getBoundingClientRect();
-      const gapTop = rect.top - containerRect.top - GAP;
-      const gapHeight = rect.height + GAP * 2;
-      const gapBottom = gapTop + gapHeight;
-      if (gapBottom <= lineTop || gapTop >= lineTop + lineHeight) continue;
-      const clipTop = Math.max(0, gapTop - lineTop);
-      const clipBottom = Math.min(lineHeight, gapBottom - lineTop);
-      gapRects.push({
-        y: clipTop,
-        height: Math.max(0, clipBottom - clipTop),
-      });
+
+      if (cell.hasAttribute('data-has-year')) {
+        const gapTop = rect.top - containerRect.top - GAP;
+        const gapHeight = rect.height + GAP * 2;
+        const gapBottom = gapTop + gapHeight;
+        if (gapBottom <= lineTop || gapTop >= lineTop + lineHeight) continue;
+        const clipTop = Math.max(0, gapTop - lineTop);
+        const clipBottom = Math.min(lineHeight, gapBottom - lineTop);
+        gapRects.push({
+          y: clipTop,
+          height: Math.max(0, clipBottom - clipTop),
+        });
+      } else {
+        const card = cell.closest('article');
+        const logoRow = card?.querySelector<HTMLElement>('[data-logo-row]');
+        const anchorRect = logoRow?.getBoundingClientRect();
+        const cellCenterY = rect.top + rect.height / 2 - containerRect.top;
+        const centerY = anchorRect
+          ? anchorRect.top + anchorRect.height / 2 - containerRect.top
+          : cellCenterY;
+        const tickY = centerY - lineTop;
+        if (tickY >= 0 && tickY <= lineHeight) {
+          ticks.push({ y: tickY });
+        }
+      }
     }
 
     setTimelineSvg({
@@ -245,6 +261,7 @@ export function ExperienceSection() {
       left: yearCenterX,
       height: lineHeight,
       gapRects,
+      ticks,
     });
   }, [expanded]);
 
@@ -342,7 +359,7 @@ export function ExperienceSection() {
                   style={{
                     top: timelineSvg.top,
                     left: timelineSvg.left,
-                    width: 4,
+                    width: 12,
                     height: timelineSvg.height,
                     transform: 'translateX(-50%)',
                   }}
@@ -350,13 +367,13 @@ export function ExperienceSection() {
                 >
                   <defs>
                     <mask id={timelineMaskId}>
-                      <rect x="0" y="0" width="4" height={timelineSvg.height} fill="white" />
+                      <rect x="0" y="0" width="12" height={timelineSvg.height} fill="white" />
                       {timelineSvg.gapRects.map((g, i) => (
                         <rect
                           key={i}
                           x="0"
                           y={g.y}
-                          width="4"
+                          width="12"
                           height={g.height}
                           fill="black"
                         />
@@ -372,6 +389,18 @@ export function ExperienceSection() {
                     fillOpacity="0.4"
                     mask={timelineSvg.gapRects.length > 0 ? `url(#${timelineMaskId})` : undefined}
                   />
+                  {timelineSvg.ticks.map((tick, i) => (
+                    <line
+                      key={i}
+                      x1="1"
+                      y1={tick.y}
+                      x2="8"
+                      y2={tick.y}
+                      stroke="#525252"
+                      strokeOpacity="0.5"
+                      strokeWidth="1"
+                    />
+                  ))}
                 </svg>
               )}
               <div className="space-y-14">
@@ -449,7 +478,7 @@ export function ExperienceSection() {
 
                 {/* Collapsed: featured orgs only */}
                 {!expanded && (
-                  <div data-collapsed-cards className="contents">
+                  <div data-collapsed-cards className="space-y-14">
                     {topOrgs.map(({ org, yearLabel }, index) => (
                   <ExperienceCard
                     key={org.company}
