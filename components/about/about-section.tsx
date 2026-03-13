@@ -70,7 +70,7 @@ export function AboutSection() {
     : categorySkills;
 
   return (
-    <section id="about" className="relative bg-[#141414] py-16 sm:py-20">
+    <section id="about" className="relative bg-[#141414] pt-10 pb-16 sm:pt-14 sm:pb-20">
       <div className="container mx-auto w-full max-w-7xl px-8 sm:px-10 lg:px-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

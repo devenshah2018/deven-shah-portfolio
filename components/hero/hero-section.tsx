@@ -12,7 +12,7 @@ import { GitHubContributionChart } from '@/components/hero/github-contribution-c
 
 export function HeroSection() {
   return (
-    <section id="hero" className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#141414] pt-20 pb-8">
+    <section id="hero" className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#141414] pt-20 pb-2">
       <div className="container relative z-10 mx-auto w-full max-w-7xl px-8 sm:px-10 lg:px-16">
         <div className="relative z-20 grid grid-cols-1 gap-12 lg:grid-cols-[1fr_400px] lg:gap-16 xl:grid-cols-[1.2fr_720px]">
           {/* Left: Name, tagline, CTA */}
