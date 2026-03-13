@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo, useRef, useEffect, useCallback } from 'react';
-import { MapPin, ExternalLink, ChevronRight, ChevronDown } from 'lucide-react';
+import { MapPin, ChevronRight, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   getTopOrgGroups,
@@ -96,7 +96,6 @@ function ExperienceCard({
               className="inline-flex items-center gap-1.5 text-base font-semibold text-[#f5f5f0] transition-colors hover:text-[#d4d4d4]"
             >
               {org.company}
-              <ExternalLink className="h-3.5 w-3.5 opacity-50" />
             </a>
           </div>
           <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-sm text-[#a3a3a3]">

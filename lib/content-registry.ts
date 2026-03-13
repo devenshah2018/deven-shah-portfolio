@@ -35,6 +35,7 @@ export const SKILLS = {
   aimal: ['Python', 'LLMs', 'Sklearn', 'Tensorflow', 'Pytorch', 'LangGraph', 'CNNs'],
   devops: ['Docker', 'Github/Git', 'GCP', 'AWS', 'Azure'],
   apis: ['C#', 'Python', 'Apex', 'Azure', 'REST API', 'GraphQL', 'TypeScript'],
+  featured: ['Python', 'TypeScript', 'C#', 'SQL', 'Salesforce', 'Azure', 'React', 'ASP.NET Core', 'PostgreSQL', 'CNNs', 'Pytorch', 'Docker']
 };
 
 // Simplified skill mappings - only store IDs instead of duplicating full object data
@@ -83,6 +84,7 @@ export const SKILL_MAPPINGS = [
 ];
 
 export const SKILL_CATEGORIES = [
+  { key: 'featured', label: 'Featured' },
   { key: 'all', label: 'All' },
   { key: 'aimal', label: 'AI/ML' },
   { key: 'apis', label: 'API' },
@@ -384,6 +386,52 @@ function getOrgDuration(positions: Experience[]): string {
   const mo = totalMonths % 12;
   if (mo === 0) return yrs === 1 ? '1 yr' : `${yrs} yrs`;
   return `${yrs} yr${yrs > 1 ? 's' : ''} ${mo} mo`;
+}
+
+/** Total professional experience across all companies, merged (no double-counting overlaps). */
+export function getTotalExperienceYears(): string {
+  const ranges: { start: number; end: number }[] = [];
+  for (const exp of EXPERIENCES) {
+    const p = parsePeriod(exp.period);
+    if (!p) continue;
+    const start = p.startY * 12 + p.startM;
+    const end = p.endY * 12 + p.endM;
+    if (start > end) continue;
+    ranges.push({ start, end });
+  }
+  if (ranges.length === 0) return '0+ years';
+  ranges.sort((a, b) => a.start - b.start);
+  const merged: { start: number; end: number }[] = [ranges[0]!];
+  for (let i = 1; i < ranges.length; i++) {
+    const curr = ranges[i]!;
+    const last = merged[merged.length - 1]!;
+    if (curr.start <= last.end + 1) {
+      last.end = Math.max(last.end, curr.end);
+    } else {
+      merged.push(curr);
+    }
+  }
+  let totalMonths = 0;
+  for (const { start, end } of merged) {
+    totalMonths += end - start + 1;
+  }
+  if (totalMonths < 1) return '0+ years';
+  const yrs = Math.floor(totalMonths / 12);
+  return `${yrs}+ years`;
+}
+
+/** Highest / most recent degree: current if in progress, else most recent by end date. Returns degree + major (e.g. "M.S. Computer Science") and institution. */
+export function getHighestDegree(): { id: string; degreeAndMajor: string; institution: string } | null {
+  const edu = EDUCATION as Array<{ id: string; degree: string; institution: string; period: string; isActive?: boolean }>;
+  if (edu.length === 0) return null;
+  const withEnd = edu.map((e) => ({
+    ...e,
+    endSort: e.period.includes('Present') ? 999999 : getEndDate(e.period),
+  }));
+  withEnd.sort((a, b) => b.endSort - a.endSort);
+  const top = withEnd[0]!;
+  const degreeAndMajor = top.degree.replace(/\s+in\s+/i, ' ').trim();
+  return { id: top.id, degreeAndMajor, institution: top.institution };
 }
 
 /** Groups experiences by organization (LinkedIn-style), sorted by most recent position. */
