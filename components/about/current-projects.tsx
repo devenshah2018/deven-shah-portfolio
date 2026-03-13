@@ -3,7 +3,7 @@
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { getCurrentWorkItems } from '@/lib/content-registry';
-import { scrollToProject, scrollToExperience, scrollToEducation } from '@/lib/url-utils';
+import { scrollToProject, requestScrollToExperience, scrollToEducation } from '@/lib/url-utils';
 
 function getPrimaryStatement(item: ReturnType<typeof getCurrentWorkItems>[number]): string {
   if ('summary' in item && item.summary) return item.summary;
@@ -32,7 +32,7 @@ export function CurrentProjects({ showHeading = true }: { showHeading?: boolean 
 
   const handleClick = (item: (typeof currentWork)[number]) => {
     if (item.type === 'project') scrollToProject(item.id);
-    else if (item.type === 'experience') scrollToExperience(item.id);
+    else if (item.type === 'experience') requestScrollToExperience(item.id);
     else if (item.type === 'education') scrollToEducation(item.id);
   };
 

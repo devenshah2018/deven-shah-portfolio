@@ -17,7 +17,7 @@ import {
   getExperienceById,
   getEducationById,
 } from '@/lib/content-registry';
-import { scrollToExperience, scrollToEducation } from '@/lib/url-utils';
+import { requestScrollToExperience, scrollToEducation } from '@/lib/url-utils';
 import { Project } from '@/lib/types';
 
 function getProjectCategories(project: Project): string[] {
@@ -135,7 +135,7 @@ function FeaturedProjectCard({ project, index, size = 'normal' }: { project: Pro
                 onClick={(e) => {
                   e.preventDefault();
                   r.type === 'experience'
-                    ? scrollToExperience(r.id)
+                    ? requestScrollToExperience(r.id)
                     : scrollToEducation(r.id);
                 }}
                 className="inline-flex items-center gap-1 text-xs font-medium text-[#a3a3a3] underline decoration-[#404040] underline-offset-1 transition-colors hover:text-[#f5f5f0]"
@@ -245,7 +245,7 @@ function OtherProjectCard({ project, index }: { project: Project; index: number 
                 type="button"
                 onClick={() =>
                   r.type === 'experience'
-                    ? scrollToExperience(r.id)
+                    ? requestScrollToExperience(r.id)
                     : scrollToEducation(r.id)
                 }
                 className="font-medium underline decoration-[#404040] underline-offset-1 transition-colors hover:text-[#f5f5f0]"

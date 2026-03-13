@@ -26,7 +26,8 @@ export const SKILLS = {
     'CSS',
     'Bash',
     'Rust',
-    'C++'
+    'C++',
+    'Solidity'
   ],
   platforms: ['Linux', 'AWS', 'Salesforce', 'Azure', 'LangGraph', 'GCP', 'Jupyter'],
   frameworks: ['React', '.NET', 'Flask', 'TailwindCSS', 'Angular', 'ASP.NET Core', 'Next.js'],
@@ -38,6 +39,7 @@ export const SKILLS = {
 
 // Simplified skill mappings - only store IDs instead of duplicating full object data
 export const SKILL_MAPPINGS = [
+  { skill: 'Solidity', experienceIds: ['build-fellowship-3'] },
   { skill: 'Python', experienceIds: ['suno-analytics', 'netapp', 'build-fellowship-1', 'build-fellowship-2', 'research-assistant'], projectIds: ['ares-project', 'molecule-mutation-prediction', 'crypto-forecasting-project', 'drone-build-project'], educationIds: ['sjsu-bachelors'] },
   { skill: 'TypeScript', experienceIds: ['suno-analytics', 'patelco', 'build-fellowship-1'], projectIds: ['drone-build-project', 'portfolio-project', 'ares-project'] },
   { skill: 'C#', experienceIds: ['patelco'], educationIds: ['sjsu-bachelors'] },
@@ -184,6 +186,19 @@ export const EXPERIENCES = [
     period: '02/2026 – 03/2026',
     description:
       'Implementing an AI-powered image retrieval system using Python, PyTorch, FAISS, Qdrant, and Docker to enable scalable semantic search with vector databases.',
+    achievements: [],
+    gradient: 'from-blue-500 to-cyan-500',
+    link: 'https://www.buildfellowship.com/'
+  },
+  {
+    id: 'build-fellowship-3',
+    title: 'Build Student Consultant',
+    company: 'Build Fellowship by Open Avenues',
+    companyLogo: '/build-logo.png',
+    location: 'Remote',
+    period: '03/2026 – 04/2026',
+    description:
+      'Built and deployed an Ethereum smart contract simulating a decentralized lottery system on Sepolia Testnet, focusing on transparency, fairness, and rigorous testing for security and reliability.',
     achievements: [],
     gradient: 'from-blue-500 to-cyan-500',
     link: 'https://www.buildfellowship.com/'
@@ -336,12 +351,32 @@ export function getEndDate(period: string): number {
   return 0;
 }
 
-/** Total org duration as sum of each position's duration (no overlap). */
+/** Merge overlapping date ranges and return total months (no double-counting). */
 function getOrgDuration(positions: Experience[]): string {
-  let totalMonths = 0;
+  const ranges: { start: number; end: number }[] = [];
   for (const pos of positions) {
-    const m = periodMonths(pos.period);
-    if (m != null && m > 0) totalMonths += m;
+    const p = parsePeriod(pos.period);
+    if (!p) continue;
+    const start = p.startY * 12 + p.startM;
+    const end = p.endY * 12 + p.endM;
+    if (start > end) continue;
+    ranges.push({ start, end });
+  }
+  if (ranges.length === 0) return '';
+  ranges.sort((a, b) => a.start - b.start);
+  const merged: { start: number; end: number }[] = [ranges[0]!];
+  for (let i = 1; i < ranges.length; i++) {
+    const curr = ranges[i]!;
+    const last = merged[merged.length - 1]!;
+    if (curr.start <= last.end + 1) {
+      last.end = Math.max(last.end, curr.end);
+    } else {
+      merged.push(curr);
+    }
+  }
+  let totalMonths = 0;
+  for (const { start, end } of merged) {
+    totalMonths += end - start + 1;
   }
   if (totalMonths < 1) return '';
   if (totalMonths < 12) return `${totalMonths} mo`;

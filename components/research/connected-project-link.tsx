@@ -1,5 +1,7 @@
 'use client';
 
+import { Paperclip } from 'lucide-react';
+
 interface ConnectedProjectLinkProps {
   projectId: string;
   title: string;
@@ -16,12 +18,10 @@ export function ConnectedProjectLink({ projectId, title }: ConnectedProjectLinkP
     <a
       href={`/#project-${projectId}`}
       onClick={handleClick}
-      className="group inline-block transition-colors"
+      className="group inline-flex items-center gap-2 text-[#737373] transition-colors duration-150"
     >
-      <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#525252] group-hover:text-[#60a5fa]/90">
-        Connected project
-      </span>
-      <span className="mt-1 block border-b border-[#404040]/30 pb-0.5 text-[15px] font-medium leading-snug text-[#d4d4d4] transition-colors group-hover:border-[#60a5fa]/50 group-hover:text-[#60a5fa]">
+      <Paperclip className="h-3.5 w-3.5 shrink-0 opacity-60 transition-opacity group-hover:opacity-100" />
+      <span className="text-sm font-medium transition-colors group-hover:text-[#f5f5f0]">
         {title}
       </span>
     </a>

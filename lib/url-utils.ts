@@ -71,6 +71,20 @@ export function scrollToProject(projectId: string) {
   requestAnimationFrame(() => requestAnimationFrame(poll));
 }
 
+export const REQUEST_SCROLL_TO_EXPERIENCE = 'requestScrollToExperience';
+
+/**
+ * Request scroll to an experience. Dispatches an event so ExperienceSection
+ * can expand to "All" first if the experience isn't in the featured list.
+ * Use this instead of scrollToExperience when linking from skills, hash, etc.
+ */
+export function requestScrollToExperience(experienceId: string) {
+  if (typeof window === 'undefined') return;
+  window.dispatchEvent(
+    new CustomEvent(REQUEST_SCROLL_TO_EXPERIENCE, { detail: { experienceId } })
+  );
+}
+
 /**
  * Scroll to an experience and highlight it.
  * Centers the target in the viewport for unified smooth expand+scroll.

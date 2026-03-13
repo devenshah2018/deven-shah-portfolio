@@ -11,7 +11,7 @@ import {
   getSkillsForExperienceId,
   type OrgGroup,
 } from '@/lib/content-registry';
-import { scrollToExperience } from '@/lib/url-utils';
+import { scrollToExperience, REQUEST_SCROLL_TO_EXPERIENCE } from '@/lib/url-utils';
 import { Badge } from '@/components/ui/badge';
 import { EducationResearchSidebar } from './education-research-sidebar';
 
@@ -63,7 +63,7 @@ function ExperienceCard({
         delay: isExpandedContent ? 0 : index * 0.04,
         ease: [0.32, 0.72, 0, 1],
       }}
-      className="grid grid-cols-[2rem_3rem_1fr] gap-4 items-start"
+      className="grid grid-cols-[1.5rem_2.5rem_1fr] gap-3 items-start"
     >
       <div className="min-h-[1.5rem]" aria-hidden />
       <div
@@ -303,6 +303,32 @@ export function ExperienceSection() {
     setExpanded(true);
   };
 
+  const topOrgs = useMemo(() => {
+    const top = getTopOrgGroups();
+    return addYearLabels(top.map((org) => ({ org })));
+  }, []);
+
+  const isExperienceVisible = useCallback(
+    (experienceId: string) => {
+      if (expanded) return true;
+      return topOrgs.some(({ org }) => org.positions.some((p) => p.id === experienceId));
+    },
+    [expanded, topOrgs]
+  );
+
+  useEffect(() => {
+    const handler = (e: CustomEvent<{ experienceId: string }>) => {
+      const { experienceId } = e.detail;
+      if (isExperienceVisible(experienceId)) {
+        setTimeout(() => scrollToExperience(experienceId), 100);
+      } else {
+        handleExpandToExperience(experienceId);
+      }
+    };
+    window.addEventListener(REQUEST_SCROLL_TO_EXPERIENCE, handler as EventListener);
+    return () => window.removeEventListener(REQUEST_SCROLL_TO_EXPERIENCE, handler as EventListener);
+  }, [isExperienceVisible]);
+
   const toggleFlip = (id: string) => {
     setFlippedIds((prev) => {
       const newSet = new Set(prev);
@@ -311,11 +337,6 @@ export function ExperienceSection() {
       return newSet;
     });
   };
-
-  const topOrgs = useMemo(() => {
-    const top = getTopOrgGroups();
-    return addYearLabels(top.map((org) => ({ org })));
-  }, []);
 
   const otherOrgs = useMemo(() => {
     const other = getOtherOrgGroups();
@@ -345,13 +366,59 @@ export function ExperienceSection() {
             </h2>
 
             <div className="grid grid-cols-1 gap-8 lg:grid-cols-[7fr_3fr] lg:gap-10 items-start lg:items-start">
-              <h3 className="text-left text-base font-medium uppercase tracking-[0.2em] text-[#a3a3a3] lg:mb-4">
-                Professional Journey
-              </h3>
+              <div className="flex items-center justify-between gap-4 lg:mb-4">
+                <h3 className="text-left text-base font-medium uppercase tracking-[0.2em] text-[#a3a3a3]">
+                  Professional Journey
+                </h3>
+                {hasMore && (
+                  <div
+                    role="tablist"
+                    aria-label="Experience filter"
+                    className="inline-flex shrink-0 rounded-md border border-[#404040]/40 p-0.5"
+                  >
+                    <button
+                      role="tab"
+                      aria-selected={!expanded}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        (e.currentTarget as HTMLButtonElement).blur();
+                        scrollYRef.current = window.scrollY;
+                        setExpanded(false);
+                      }}
+                      className={`rounded px-3 py-1.5 text-xs font-medium transition-colors focus:outline-none focus:ring-0 ${
+                        !expanded
+                          ? 'bg-[#262626] text-[#f5f5f0]'
+                          : 'text-[#737373] hover:text-[#a3a3a3]'
+                      }`}
+                    >
+                      Featured
+                    </button>
+                    <button
+                      role="tab"
+                      aria-selected={expanded}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        (e.currentTarget as HTMLButtonElement).blur();
+                        scrollYRef.current = window.scrollY;
+                        setExpanded(true);
+                      }}
+                      className={`rounded px-3 py-1.5 text-xs font-medium transition-colors focus:outline-none focus:ring-0 ${
+                        expanded
+                          ? 'bg-[#262626] text-[#f5f5f0]'
+                          : 'text-[#737373] hover:text-[#a3a3a3]'
+                      }`}
+                    >
+                      All
+                    </button>
+                  </div>
+                )}
+              </div>
               <h3 className="text-left text-base font-medium uppercase tracking-[0.2em] text-[#a3a3a3] lg:mb-4">
                 Education
               </h3>
-              <div ref={timelineContainerRef} className="relative min-w-0" style={{ overflowAnchor: 'none' }}>
+              <div ref={timelineContainerRef} className="relative min-w-0 -ml-5" style={{ overflowAnchor: 'none' }}>
               {/* Vertical timeline - single line, SVG mask cuts gaps at years (no discoloration, true gaps) */}
               {timelineSvg && timelineSvg.height > 0 && (
                 <svg
@@ -404,78 +471,6 @@ export function ExperienceSection() {
                 </svg>
               )}
               <div className="space-y-14">
-                {/* More/Less button row at top - More/Less aligned with year, logos in content column */}
-                {hasMore && (
-                  <div className="mb-6 grid grid-cols-[2rem_3rem_1fr] gap-4 items-center">
-                    <div aria-hidden />
-                    <div className="flex min-w-0 items-center justify-end pt-1">
-                    {expanded ? (
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          (e.currentTarget as HTMLButtonElement).blur();
-                          scrollYRef.current = window.scrollY;
-                          setExpanded(false);
-                        }}
-                        className="flex items-center gap-1.5 rounded-md py-2 text-sm font-medium text-[#a3a3a3] transition-colors hover:text-[#f5f5f0] focus:outline-none focus:ring-0"
-                      >
-                        Less
-                        <ChevronDown className="h-4 w-4 rotate-180" />
-                      </button>
-                    ) : (
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          (e.currentTarget as HTMLButtonElement).blur();
-                          scrollYRef.current = window.scrollY;
-                          setExpanded(true);
-                        }}
-                        className="flex items-center gap-1.5 rounded-md py-2 text-sm font-medium text-[#a3a3a3] transition-colors hover:text-[#f5f5f0] focus:outline-none focus:ring-0"
-                      >
-                        More
-                          <ChevronDown className="h-4 w-4" />
-                      </button>
-                    )}
-                    </div>
-                    <div className="flex min-w-0 items-center gap-3 pl-1">
-                      {!expanded && (
-                        <AnimatePresence mode="popLayout">
-                          {otherOrgs.map(({ org }) =>
-                            org.companyLogo && org.positions[0] ? (
-                              <motion.button
-                                key={org.company}
-                                layout
-                                type="button"
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  e.stopPropagation();
-                                  (e.currentTarget as HTMLButtonElement).blur();
-                                  handleExpandToExperience(org.positions[0]!.id);
-                                }}
-                                className="rounded-md transition-opacity hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[#525252] focus:ring-offset-2 focus:ring-offset-[#141414]"
-                                aria-label={`Expand to ${org.company}`}
-                                transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-                              >
-                                <motion.img
-                                  layoutId={`logo-top-${org.company}`}
-                                  src={org.companyLogo}
-                                  alt={org.company}
-                                  className="h-9 w-9 flex-shrink-0 rounded-md object-contain ring-1 ring-[#262626]"
-                                  transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-                                />
-                              </motion.button>
-                            ) : null
-                          )}
-                        </AnimatePresence>
-                      )}
-                    </div>
-                  </div>
-                )}
-
                 {/* Collapsed: featured orgs only */}
                 {!expanded && (
                   <div data-collapsed-cards className="space-y-14">
@@ -494,7 +489,7 @@ export function ExperienceSection() {
 
                 {/* More trigger - bottom of featured list when collapsed */}
                 {hasMore && !expanded && (
-                  <div className="grid grid-cols-[2rem_3rem_1fr] gap-4 items-center">
+                  <div className="grid grid-cols-[1.5rem_2.5rem_1fr] gap-3 items-center">
                     <div aria-hidden />
                     <div aria-hidden />
                     <div className="flex min-w-0 items-center gap-4">
@@ -574,7 +569,7 @@ export function ExperienceSection() {
                           />
                         ))}
                         {/* Less trigger - bottom of full list when expanded */}
-                        <div className="grid grid-cols-[2rem_3rem_1fr] gap-4 items-center">
+                        <div className="grid grid-cols-[1.5rem_2.5rem_1fr] gap-3 items-center">
                           <div aria-hidden />
                           <div aria-hidden />
                           <div className="flex min-w-0 items-center gap-4">

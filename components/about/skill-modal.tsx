@@ -2,7 +2,7 @@
 
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { expandSkillMapping, getEndDate, formatPeriodDisplay, SKILL_CATEGORIES, CATEGORIZED_SKILLS, type SKILL_MAPPINGS } from '@/lib/content-registry';
-import { scrollToProject, scrollToExperience, scrollToEducation } from '@/lib/url-utils';
+import { scrollToProject, requestScrollToExperience, scrollToEducation } from '@/lib/url-utils';
 import { ChevronRight, Briefcase, Code, GraduationCap } from 'lucide-react';
 import type { Experience } from '@/lib/content-registry';
 import type { Project } from '@/lib/types';
@@ -38,7 +38,7 @@ export function SkillModal({ open, onOpenChange, skillName, skillMappings }: Ski
 
   const handleScrollToExperience = (experienceId: string) => {
     onOpenChange(false);
-    setTimeout(() => scrollToExperience(experienceId), 200);
+    setTimeout(() => requestScrollToExperience(experienceId), 200);
   };
 
   const handleScrollToProject = (projectId: string) => {
