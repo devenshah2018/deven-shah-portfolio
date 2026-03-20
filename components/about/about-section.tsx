@@ -5,7 +5,8 @@ import { motion } from 'framer-motion';
 import { SkillModal } from '@/components/about/skill-modal';
 import { Profile } from '@/components/about/profile';
 import { GitHubContributionChart } from '@/components/hero/github-contribution-chart';
-import { CATEGORIZED_SKILLS, SKILL_CATEGORIES, SKILL_MAPPINGS, CERTIFICATIONS } from '@/lib/content-registry';
+import { CATEGORIZED_SKILLS, SKILL_CATEGORIES, SKILL_MAPPINGS, CERTIFICATIONS, groupExperiencesByOrg } from '@/lib/content-registry';
+import { requestScrollToExperience } from '@/lib/url-utils';
 import { Search, X } from 'lucide-react';
 
 export function AboutSection() {
@@ -164,7 +165,7 @@ export function AboutSection() {
                     </span>
                   )}
                 </div>
-                <div className="flex flex-wrap gap-2.5 pt-0.5">
+                <div className="flex flex-wrap gap-3 pt-0.5">
                   {skills.length === 0 ? (
                     <p className="text-[13px] text-[#5a5a5a]">No results</p>
                   ) : (
@@ -172,7 +173,7 @@ export function AboutSection() {
                       <button
                         key={skill}
                         type="button"
-                        className={`inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-[13px] font-medium tracking-tight transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#404040] focus:ring-offset-2 focus:ring-offset-[#141414] ${
+                        className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[14px] font-medium tracking-tight transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#404040] focus:ring-offset-2 focus:ring-offset-[#141414] ${
                           hasMapping(skill)
                             ? 'border-[#333]/60 bg-transparent text-[#c4c4c4] hover:border-[#3a3a3a]/80 hover:bg-[#1f1f1f]'
                             : 'cursor-default border-[#2a2a2a] bg-transparent text-[#5a5a5a]'
@@ -183,9 +184,9 @@ export function AboutSection() {
                         onClick={() => hasMapping(skill) && handleSkillClick(skill)}
                         tabIndex={0}
                       >
-                        <span className="max-w-[140px] truncate">{skill}</span>
+                        <span className="max-w-[160px] truncate">{skill}</span>
                         {hasMapping(skill) && (
-                          <span className="flex h-[17px] min-w-[17px] items-center justify-center rounded-full bg-[#2a2a2a] text-[10px] font-medium leading-none text-[#6b6b6b] tabular-nums">
+                          <span className="flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-[#2a2a2a] text-[11px] font-medium leading-none text-[#6b6b6b] tabular-nums">
                             {getMappingCount(skill)}
                           </span>
                         )}
@@ -198,13 +199,38 @@ export function AboutSection() {
 
             {/* Right column */}
             <div className="flex min-w-0 flex-col gap-6">
+              {/* PREV @ - spans width of profile container */}
+              <div className="flex min-w-0 w-full max-w-full items-center gap-3 overflow-hidden">
+                <span className="shrink-0 text-xs font-medium text-[#6b6b6b]">PREV @</span>
+                <div className="flex min-w-0 flex-1 flex-wrap items-center gap-3">
+                  {groupExperiencesByOrg().map((org) => {
+                    const firstId = org.positions[0]?.id;
+                    if (!org.companyLogo || !firstId) return null;
+                    return (
+                      <button
+                        key={org.company}
+                        type="button"
+                        onClick={() => requestScrollToExperience(firstId)}
+                        className="transition-opacity hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-[#404040] focus:ring-offset-2 focus:ring-offset-[#141414]"
+                        aria-label={`Scroll to ${org.company}`}
+                      >
+                        <img
+                          src={org.companyLogo}
+                          alt=""
+                          className="h-7 w-7 rounded object-contain sm:h-8 sm:w-8"
+                        />
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
               {/* Profile */}
               <Profile />
               {/* Certifications */}
               {CERTIFICATIONS.length > 0 && (
-                <div className="overflow-hidden rounded-lg border border-[#333]/80 bg-[#1a1a1a]/90 ring-1 ring-[#fff]/[0.02]">
-                  <div className="border-b border-[#333]/60 bg-[#222]/50 px-4 py-2.5">
-                    <h3 className="text-left text-[11px] font-semibold uppercase tracking-[0.2em] text-[#8a8a8a]">
+                <div className="overflow-hidden rounded-xl border border-[#2a2a2a]/80 bg-[#161616]/95 shadow-[0_1px_0_0_rgba(255,255,255,0.03)] backdrop-blur-sm">
+                  <div className="border-b border-[#2a2a2a]/60 px-5 py-3.5">
+                    <h3 className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#737373]">
                       Certifications
                     </h3>
                   </div>
@@ -215,10 +241,10 @@ export function AboutSection() {
                         href={cert.verificationUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-3 border-b border-[#222]/60 px-4 py-3.5 text-left last:border-b-0 focus:outline-none focus:ring-2 focus:ring-[#404040] focus:ring-inset"
+                        className="group flex items-center gap-3.5 border-b border-[#262626]/40 px-5 py-3.5 text-left transition-colors last:border-b-0 focus:outline-none focus:ring-2 focus:ring-[#404040] focus:ring-inset hover:bg-[#1a1a1a]/50"
                       >
                         {cert.logo && (
-                          <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-md border border-[#333]/60 bg-[#262626]/80 p-1.5">
+                          <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg border border-[#2a2a2a]/60 bg-[#1f1f1f]/80 p-1.5">
                             <img
                               src={cert.logo}
                               alt=""
@@ -227,14 +253,14 @@ export function AboutSection() {
                           </div>
                         )}
                         <div className="min-w-0 flex-1">
-                          <div className="truncate text-[13px] font-medium text-[#d4d4d4]">
+                          <div className="truncate text-[13px] font-medium text-[#d4d4d4] transition-colors group-hover:text-[#e5e5e5]">
                             {cert.title}
                           </div>
                           <div className="truncate text-[11px] text-[#737373]">
                             {cert.issuer} · {cert.period}
                           </div>
                         </div>
-                        <span className="flex-shrink-0 text-[#404040]" aria-hidden>
+                        <span className="flex-shrink-0 text-[#3a3a3a] transition-colors group-hover:text-[#525252]" aria-hidden>
                           <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                           </svg>

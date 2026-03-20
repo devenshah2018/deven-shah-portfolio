@@ -1,12 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { Briefcase, ChevronRight, GraduationCap } from 'lucide-react';
-import {
-  getCurrentWorkItems,
-  getTotalExperienceYears,
-  getHighestDegree,
-} from '@/lib/content-registry';
+import { ChevronRight } from 'lucide-react';
+import { getCurrentWorkItems } from '@/lib/content-registry';
 import { scrollToProject, requestScrollToExperience, scrollToEducation } from '@/lib/url-utils';
 
 type CurrentWorkItem = ReturnType<typeof getCurrentWorkItems>[number];
@@ -30,8 +26,6 @@ function getSubheaderLine(item: CurrentWorkItem): string | null {
 
 export function Profile() {
   const currentWork = getCurrentWorkItems();
-  const years = getTotalExperienceYears();
-  const degree = getHighestDegree();
 
   const handleClick = (item: CurrentWorkItem) => {
     if (item.type === 'project') scrollToProject(item.id);
@@ -40,43 +34,15 @@ export function Profile() {
   };
 
   const itemClass =
-    'group flex items-start justify-between gap-4 py-4 text-left transition-colors border-b border-[#222]/50 last:border-b-0';
+    'group flex items-start justify-between gap-4 py-3.5 text-left transition-colors border-b border-[#262626]/40 last:border-b-0 last:pb-0 rounded-md hover:bg-[#1a1a1a]/40';
 
   return (
-    <div className="rounded-lg border border-[#252525] bg-[#1a1a1a]/80 px-5 py-5">
-      <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.25em] text-[#6b6b6b]">Profile</p>
-
-      {/* Key stats with headers */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-start sm:gap-x-8">
-        <div className="flex items-start gap-3">
-          <Briefcase className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#5a5a5a]" aria-hidden />
-          <div>
-            <span className="block text-[10px] font-medium uppercase tracking-wider text-[#525252]">Years of experience</span>
-            <span className="block text-lg font-semibold tabular-nums text-[#e5e5e5]">{years}</span>
-          </div>
-        </div>
-        {degree && (
-          <div className="flex items-start gap-3">
-            <GraduationCap className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#5a5a5a]" aria-hidden />
-            <div>
-              <span className="block text-[10px] font-medium uppercase tracking-wider text-[#525252]">Education</span>
-              <span className="block text-[15px] font-medium text-[#d4d4d4]">{degree.degreeAndMajor}</span>
-              <button
-                type="button"
-                onClick={() => scrollToEducation(degree.id)}
-                className="block text-left text-[13px] font-normal text-[#8a8a8a] transition-colors hover:text-[#b8b8b8] focus:outline-none focus:ring-2 focus:ring-[#404040] focus:ring-offset-2 focus:ring-offset-[#1a1a1a]"
-              >
-                @ {degree.institution}
-              </button>
-            </div>
-          </div>
-        )}
+    <div className="overflow-hidden rounded-xl border border-[#2a2a2a]/80 bg-[#161616]/95 shadow-[0_1px_0_0_rgba(255,255,255,0.03)] backdrop-blur-sm">
+      <div className="border-b border-[#2a2a2a]/60 px-5 py-3.5">
+        <h3 className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#737373]">Current work</h3>
       </div>
-
       {currentWork.length > 0 && (
-        <div className="mt-5 pt-5 border-t border-[#222]">
-          <span className="block mb-3 text-[10px] uppercase tracking-wider text-[#525252]">Current work</span>
-          <ul>
+        <ul className="px-5 py-3">
             {currentWork.map((item) => {
               const primary = getPrimaryStatement(item);
               const subheader = getSubheaderLine(item);
@@ -120,7 +86,6 @@ export function Profile() {
               );
             })}
           </ul>
-        </div>
       )}
     </div>
   );
