@@ -25,20 +25,20 @@ export function HeroSection() {
               className="flex flex-col gap-3"
             >
               <div className="flex flex-wrap items-center gap-2">
-                <span className="rounded-full bg-[#262626] px-3 py-1 text-sm font-medium text-[#a3a3a3] ring-1 ring-[#333]">
+                <span className="rounded-full bg-[#262626] px-2.5 py-0.5 text-xs font-medium text-[#a3a3a3] ring-1 ring-[#333]">
                   {years.replace(' years', ' years of experience')}
                 </span>
                 {degree && (
                   <button
                     type="button"
                     onClick={() => scrollToEducation(degree.id)}
-                    className="rounded-full bg-[#262626] px-3 py-1 text-sm font-medium text-[#a3a3a3] ring-1 ring-[#333] transition-colors hover:bg-[#333] hover:text-[#d4d4d4] focus:outline-none focus:ring-2 focus:ring-[#404040] focus:ring-offset-2 focus:ring-offset-[#141414]"
+                    className="rounded-full bg-[#262626] px-2.5 py-0.5 text-xs font-medium text-[#a3a3a3] ring-1 ring-[#333] transition-colors hover:bg-[#333] hover:text-[#d4d4d4] focus:outline-none focus:ring-2 focus:ring-[#404040] focus:ring-offset-2 focus:ring-offset-[#141414]"
                   >
                     {degree.degreeAndMajor} @ {degree.institution}
                   </button>
                 )}
               </div>
-              <h1 className="text-7xl font-semibold tracking-tight text-[#f5f5f0] sm:text-8xl">
+              <h1 className="text-[4rem] font-semibold leading-[1.05] tracking-tight text-[#f5f5f0] sm:text-[5.25rem]">
                 Deven Shah
               </h1>
             </motion.div>
