@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -111,11 +112,18 @@ export function Navigation({}: NavigationProps) {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.2, ease: 'easeInOut' }}
-                    className='group relative'
+                    className='group relative flex cursor-pointer items-center gap-3'
+                    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                   >
+                    <Image
+                      src="/profile.jpg"
+                      alt=""
+                      width={48}
+                      height={48}
+                      className="h-10 w-10 flex-shrink-0 rounded-full object-cover object-top"
+                    />
                     <span
-                      className="block cursor-pointer text-2xl font-semibold text-[#f5f5f0]"
-                      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                      className="block text-2xl font-semibold text-[#f5f5f0]"
                     >
                       Deven Shah
                     </span>

@@ -6,15 +6,15 @@ import { faXTwitter } from '@fortawesome/free-brands-svg-icons';
 import { Download, Mail, Github, Linkedin, Activity } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 import { LINKS } from '@/lib/content-registry';
 import { CONTACT_CARD_SHINE_EVENT } from '@/components/contact/contact-section';
-import { GitHubContributionChart } from '@/components/hero/github-contribution-chart';
 
 export function HeroSection() {
   return (
-    <section id="hero" className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#141414] pt-20 pb-2">
+    <section id="hero" className="relative flex min-h-screen items-center overflow-hidden bg-[#141414] pt-20 pb-2">
       <div className="container relative z-10 mx-auto w-full max-w-7xl px-8 sm:px-10 lg:px-16">
-        <div className="relative z-20 grid grid-cols-1 gap-12 lg:grid-cols-[1fr_400px] lg:gap-16 xl:grid-cols-[1.2fr_720px]">
+        <div className="relative z-20 grid grid-cols-1 items-center gap-8 lg:grid-cols-[1fr_auto] lg:gap-10">
           {/* Left: Name, tagline, CTA */}
           <div className="flex flex-col justify-center">
             <motion.div
@@ -101,16 +101,21 @@ export function HeroSection() {
           </motion.div>
           </div>
 
-          {/* Right: GitHub contribution chart */}
+          {/* Right: Profile photo */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="flex items-center"
+            className="flex items-center justify-center lg:justify-end"
           >
-            <div className="w-full">
-              <GitHubContributionChart />
-            </div>
+            <Image
+              src="/profile.jpg"
+              alt="Deven Shah"
+              width={400}
+              height={400}
+              className="h-48 w-48 rounded-full object-cover object-top sm:h-56 sm:w-56 lg:h-64 lg:w-64"
+              priority
+            />
           </motion.div>
         </div>
       </div>

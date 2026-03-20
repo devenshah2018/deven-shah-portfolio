@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { SkillModal } from '@/components/about/skill-modal';
 import { Profile } from '@/components/about/profile';
+import { GitHubContributionChart } from '@/components/hero/github-contribution-chart';
 import { CATEGORIZED_SKILLS, SKILL_CATEGORIES, SKILL_MAPPINGS, CERTIFICATIONS } from '@/lib/content-registry';
 import { Search, X } from 'lucide-react';
 
@@ -86,22 +87,27 @@ export function AboutSection() {
           {/* Grid: matches Experience & Projects — 7fr 3fr */}
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-[7fr_3fr] lg:gap-16">
             {/* Left column */}
-            <div className="flex min-w-0 flex-col gap-12">
+            <div className="flex min-w-0 flex-col gap-8">
               {/* Overview */}
               <div className="border-l-2 border-[#2a2a2a] pl-6">
                 <h3 className="mb-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#6b6b6b]">
                   Overview
                 </h3>
                 <p className="max-w-2xl text-[15px] leading-[1.9] text-[#c4c4c4] sm:text-[16px] sm:leading-[1.85]">
-                Software engineer and AI researcher focused on turning research into production. I advance medical imaging and deepfake detection at Boston University, where I am pursuing an M.S. in Computer Science. My background includes leading product vision at Suno Analytics, building member-facing applications at Patelco, and ensuring safe and secure data operations at NetApp.
+                  Software engineer and AI researcher focused on turning research into production. I advance medical imaging and deepfake detection at Boston University, where I am pursuing an M.S. in Computer Science. My background includes leading product vision at Suno Analytics, building member-facing applications at Patelco, and ensuring safe and secure data operations at NetApp.
                 </p>
               </div>
 
-              {/* Technical skills */}
+              {/* GitHub contribution chart */}
+              <div className="w-full">
+                <GitHubContributionChart />
+              </div>
+
+              {/* Skills */}
               <div>
                 <div className="mb-4 flex flex-wrap items-center justify-between gap-4">
                   <h3 className="text-left text-sm font-medium uppercase tracking-[0.15em] text-[#6b6b6b]">
-                    Technical Skills
+                    Skills
                   </h3>
                   <label className="flex w-[180px] items-center gap-2 bg-transparent px-0 py-1.5 transition-colors focus-within:border-[#404040]">
                     <Search className="h-3 w-3 flex-shrink-0 text-[#4a4a4a]" />
@@ -160,7 +166,7 @@ export function AboutSection() {
                 </div>
                 <div className="flex flex-wrap gap-2.5 pt-0.5">
                   {skills.length === 0 ? (
-                    <p className="text-[13px] text-[#5a5a5a]">No skills match</p>
+                    <p className="text-[13px] text-[#5a5a5a]">No results</p>
                   ) : (
                     skills.map((skill) => (
                       <button
@@ -188,48 +194,56 @@ export function AboutSection() {
                   )}
                 </div>
               </div>
-
-              {/* Certifications */}
-              {CERTIFICATIONS.length > 0 && (
-                <div>
-                  <h3 className="mb-4 text-left text-sm font-medium uppercase tracking-[0.15em] text-[#6b6b6b]">
-                    Certifications
-                  </h3>
-                  <div className="flex flex-col gap-0">
-                    {CERTIFICATIONS.map((cert) => (
-                      <a
-                        key={cert.id}
-                        href={cert.verificationUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="group flex items-center gap-3 border-b border-[#222]/50 py-4 text-left transition-colors last:border-b-0 hover:text-[#e5e5e5] focus:outline-none focus:ring-2 focus:ring-[#404040] focus:ring-offset-2 focus:ring-offset-[#141414]"
-                      >
-                        {cert.logo && (
-                          <img
-                            src={cert.logo}
-                            alt=""
-                            className="h-6 w-6 flex-shrink-0 rounded object-contain opacity-70 transition-opacity group-hover:opacity-100"
-                          />
-                        )}
-                        <div className="min-w-0 flex-1">
-                          <div className="text-[13px] font-medium text-[#c4c4c4] group-hover:text-[#e5e5e5]">
-                            {cert.title}
-                          </div>
-                          <div className="text-[11px] text-[#6b6b6b]">
-                            {cert.issuer} · {cert.period}
-                          </div>
-                        </div>
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              )}
             </div>
 
             {/* Right column */}
             <div className="flex min-w-0 flex-col gap-6">
               {/* Profile */}
               <Profile />
+              {/* Certifications */}
+              {CERTIFICATIONS.length > 0 && (
+                <div className="overflow-hidden rounded-lg border border-[#333]/80 bg-[#1a1a1a]/90 ring-1 ring-[#fff]/[0.02]">
+                  <div className="border-b border-[#333]/60 bg-[#222]/50 px-4 py-2.5">
+                    <h3 className="text-left text-[11px] font-semibold uppercase tracking-[0.2em] text-[#8a8a8a]">
+                      Certifications
+                    </h3>
+                  </div>
+                  <div className="flex flex-col">
+                    {CERTIFICATIONS.map((cert) => (
+                      <a
+                        key={cert.id}
+                        href={cert.verificationUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-3 border-b border-[#222]/60 px-4 py-3.5 text-left last:border-b-0 focus:outline-none focus:ring-2 focus:ring-[#404040] focus:ring-inset"
+                      >
+                        {cert.logo && (
+                          <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-md border border-[#333]/60 bg-[#262626]/80 p-1.5">
+                            <img
+                              src={cert.logo}
+                              alt=""
+                              className="h-full w-full object-contain opacity-90"
+                            />
+                          </div>
+                        )}
+                        <div className="min-w-0 flex-1">
+                          <div className="truncate text-[13px] font-medium text-[#d4d4d4]">
+                            {cert.title}
+                          </div>
+                          <div className="truncate text-[11px] text-[#737373]">
+                            {cert.issuer} · {cert.period}
+                          </div>
+                        </div>
+                        <span className="flex-shrink-0 text-[#404040]" aria-hidden>
+                          <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                          </svg>
+                        </span>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </motion.div>

@@ -72,9 +72,9 @@ export function SkillModal({ open, onOpenChange, skillName, skillMappings }: Ski
     <Dialog modal={false} open={open} onOpenChange={onOpenChange}>
       <DialogContent
         overlayClassName="bg-transparent"
-        className="left-6 bottom-6 right-auto top-auto w-full max-w-[300px] translate-x-0 translate-y-0 rounded-lg bg-[#141414] p-0 shadow-none ring-1 ring-[#333] sm:left-8 sm:bottom-8"
+        className="left-6 bottom-6 right-auto top-auto w-full max-w-[300px] translate-x-0 translate-y-0 rounded-lg border border-[#333]/25 bg-[#141414] p-0 shadow-none ring-1 ring-[#333]/20 sm:left-8 sm:bottom-8"
       >
-        <div className="border-b border-[#262626] px-4 py-3">
+        <div className="border-b border-[#262626]/40 px-4 py-3">
           <div className="flex flex-wrap items-center gap-2">
             <DialogTitle className="text-sm font-medium leading-tight text-[#f5f5f0]">
               {skillName}
@@ -84,7 +84,7 @@ export function SkillModal({ open, onOpenChange, skillName, skillMappings }: Ski
                 {categoryTags.map((tag) => (
                   <span
                     key={tag}
-                    className="rounded border border-[#333] px-1.5 py-0.5 text-[9px] font-medium uppercase tracking-wider text-[#6b6b6b]"
+                    className="rounded border border-[#333]/40 px-1.5 py-0.5 text-[9px] font-medium uppercase tracking-wider text-[#6b6b6b]"
                   >
                     {tag}
                   </span>

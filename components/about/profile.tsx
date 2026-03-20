@@ -20,9 +20,11 @@ function getPrimaryStatement(item: CurrentWorkItem): string {
   return item.title;
 }
 
-function getOrgLine(item: CurrentWorkItem): string | null {
+function getSubheaderLine(item: CurrentWorkItem): string | null {
   if (item.type === 'experience' && 'company' in item && item.company) return `@ ${item.company}`;
   if (item.type === 'education' && 'institution' in item && item.institution) return `@ ${item.institution}`;
+  if (item.type === 'project' && item.title) return item.title;
+  if (item.type === 'paper' && item.title) return item.title;
   return null;
 }
 
@@ -49,7 +51,7 @@ export function Profile() {
         <div className="flex items-start gap-3">
           <Briefcase className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#5a5a5a]" aria-hidden />
           <div>
-            <span className="block text-[10px] font-medium uppercase tracking-wider text-[#525252]">Experience</span>
+            <span className="block text-[10px] font-medium uppercase tracking-wider text-[#525252]">Years of experience</span>
             <span className="block text-lg font-semibold tabular-nums text-[#e5e5e5]">{years}</span>
           </div>
         </div>
@@ -57,7 +59,7 @@ export function Profile() {
           <div className="flex items-start gap-3">
             <GraduationCap className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#5a5a5a]" aria-hidden />
             <div>
-              <span className="block text-[10px] font-medium uppercase tracking-wider text-[#525252]">Highest degree</span>
+              <span className="block text-[10px] font-medium uppercase tracking-wider text-[#525252]">Education</span>
               <span className="block text-[15px] font-medium text-[#d4d4d4]">{degree.degreeAndMajor}</span>
               <button
                 type="button"
@@ -77,14 +79,14 @@ export function Profile() {
           <ul>
             {currentWork.map((item) => {
               const primary = getPrimaryStatement(item);
-              const orgLine = getOrgLine(item);
+              const subheader = getSubheaderLine(item);
               const content = (
                 <>
                   <span className="block text-[14px] leading-[1.5] text-[#b8b8b8] transition-colors group-hover:text-[#d4d4d4]">
                     {primary}
                   </span>
-                  {orgLine && (
-                    <span className="mt-1 block text-[11px] tracking-widest text-[#525252] uppercase">{orgLine}</span>
+                  {subheader && (
+                    <span className="mt-1 block text-[11px] tracking-widest text-[#525252] uppercase">{subheader}</span>
                   )}
                 </>
               );

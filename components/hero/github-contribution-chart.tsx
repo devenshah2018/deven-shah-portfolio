@@ -11,17 +11,21 @@ const WARM_DARK_THEME = {
   dark: ['rgba(64, 64, 64, 0.4)', '#525252', '#737373', '#a3a3a3', '#d4d4d4'],
 };
 
-export function GitHubContributionChart() {
+interface GitHubContributionChartProps {
+  compact?: boolean;
+}
+
+export function GitHubContributionChart({ compact = false }: GitHubContributionChartProps) {
   return (
     <div className="w-full min-w-0">
-      <div className="github-calendar-wrapper rounded-lg p-4">
+      <div className={`github-calendar-wrapper rounded-lg ${compact ? 'p-2' : 'p-4'}`}>
         <GitHubCalendar
           username={GITHUB_USERNAME}
           theme={WARM_DARK_THEME}
           colorScheme="dark"
-          blockSize={14}
-          blockMargin={3}
-          fontSize={14}
+          blockSize={compact ? 10 : 14}
+          blockMargin={compact ? 2 : 3}
+          fontSize={compact ? 11 : 14}
           showWeekdayLabels={false}
           showMonthLabels={false}
           labels={{
