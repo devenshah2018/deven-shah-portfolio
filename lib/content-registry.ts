@@ -206,39 +206,25 @@ export const EXPERIENCES = [
     link: 'https://www.buildfellowship.com/'
   },
   {
-    id: 'research-assistant-2',
-    title: 'Graduate Research Assistant',
-    company: 'Boston University',
-    companyLogo: '/bu-logo.png',
-    location: 'Boston, MA',
-    period: '03/2026 – Present',
-    description:
-      'Advancing deepfake detection through cutting-edge AI research, building robust methods to exceed current state-of-the-art benchmarks for media integrity.',
-    achievements: [],
-    gradient: 'from-blue-500 to-cyan-500',
-    link: 'https://www.bu.edu/',
-    current_work: true,
-    summary: 'Deepfake detection through AI research',
-  },
-  {
     id: 'research-assistant',
     title: 'Graduate Research Assistant',
     company: 'Boston University',
     companyLogo: '/bu-logo.png',
     location: 'Boston, MA',
-    period: '02/2026 – Present',
+    period: '10/2025 – Present',
     description:
-      'Discovering automated osteoarthritis diagnosis techniques through AI computer vision with a research team of faculty, PhD candidates, and medical advisors.',
+      'Conducting AI computer vision research with faculty and interdisciplinary experts across medical and criminal justice. Automating osteoarthritis diagnosis (U-Net MRI segmentation) and advancing deepfake detection.',
     achievements: [
       'Developing a U-Net–based deep learning approach to automate osteoarthritis MRI analysis, enabling end-to-end segmentation of knee cartilage directly from MRI DICOM images.',
       'Eliminating the need for a manual MRI cartilage measurement workflow (previously requiring ~2–3 hours) by designing a U-Net model to automatically trace cartilage boundaries in knee MRI DICOM images.',
-      'Reduced knee segmentation time by 90% through a CNN-based pipeline (VGG16 encoder + U-Net decoder) in Python to detect knee cartilage regions.'
+      'Reduced knee segmentation time by 90% through a CNN-based pipeline (VGG16 encoder + U-Net decoder) in Python to detect knee cartilage regions.',
+      'Advancing deepfake detection through cutting-edge AI research, building robust methods to exceed current state-of-the-art benchmarks for media integrity.'
     ],
     gradient: 'from-blue-500 to-cyan-500',
     link: 'https://www.bu.edu/',
     featured: true,
     current_work: true,
-    summary: 'Osteoarthritis diagnosis through AI computer vision',
+    summary: 'AI computer vision research in osteoarthritis diagnosis and deepfake detection',
   },
   {
     id: 'teaching-assistant',
