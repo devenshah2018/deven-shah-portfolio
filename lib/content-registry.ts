@@ -178,6 +178,21 @@ export const EXPERIENCES = [
     link: 'https://www.buildfellowship.com/'
   },
   {
+    id: 'accenture',
+    title: 'Technical Architecture Analyst',
+    company: 'Accenture',
+    companyLogo: '/accenture-logo.svg',
+    location: 'San Francisco, CA',
+    period: '05/2026 – Present',
+    description:
+      '',
+    achievements: [],
+    gradient: 'from-blue-500 to-cyan-500',
+    link: 'https://www.accenture.com',
+    current_work: true,
+    summary: 'Building enterprise software solutions for clients.'
+  },
+  {
     id: 'research-assistant',
     title: 'Graduate Research Assistant',
     company: 'Boston University',
@@ -185,18 +200,16 @@ export const EXPERIENCES = [
     location: 'Boston, MA',
     period: '10/2025 – Present',
     description:
-      'Conducting AI computer vision research with faculty and interdisciplinary experts across medical and criminal justice. Automating osteoarthritis diagnosis  and advancing deepfake detection.',
+      'Conducting computer vision and AI research across two labs at Boston University, across biotechnology and criminal justice.',
     achievements: [
-      'Developing a U-Net–based deep learning approach to automate osteoarthritis MRI analysis, enabling end-to-end segmentation of knee cartilage directly from MRI DICOM images.',
-      'Eliminating the need for a manual MRI cartilage measurement workflow (previously requiring ~2–3 hours) by designing a U-Net model to automatically trace cartilage boundaries in knee MRI DICOM images.',
-      'Reduced knee segmentation time by 90% through a CNN-based pipeline (VGG16 encoder + U-Net decoder) in Python to detect knee cartilage regions.',
-      'Advancing deepfake detection through cutting-edge AI research, building robust methods to exceed current state-of-the-art benchmarks for media integrity.'
+      'Digital Forensics Research Lab (Mar 2026 – Present): Researching deepfake generation and detection landscape alongside faculty and peers across AI and criminal justice, building frameworks that hold up against real-world media integrity threats.',
+      'Artificial Intelligence and Computer Vision Lab (Oct 2025 – Present): Researching automated osteoarthritis diagnosis alongside faculty, medical professionals, and peers across computer vision and clinical radiology, building pipelines that replace hours of manual MRI review.'
     ],
     gradient: 'from-blue-500 to-cyan-500',
     link: 'https://www.bu.edu/',
     featured: true,
     current_work: true,
-    summary: 'AI computer vision research in osteoarthritis diagnosis and deepfake detection',
+    summary: 'AI computer vision research in biotechnology and criminal justice.',
   },
   {
     id: 'teaching-assistant',
@@ -206,7 +219,7 @@ export const EXPERIENCES = [
     location: 'Boston, MA',
     period: '01/2026 – Present',
     description:
-      'Teaching assistant for the course "CS 566: Analysis of Algorithms".',
+      'Teaching assistant for CS 566: Analysis of Algorithms.',
     achievements: [],
     gradient: 'from-blue-500 to-cyan-500',
     link: 'https://www.bu.edu/'
@@ -412,7 +425,14 @@ export function groupExperiencesByOrg(): OrgGroup[] {
       duration: getOrgDuration(sorted),
       positions: sorted,
     };
-  }).sort((a, b) => getEndDate(b.positions[0]!.period) - getEndDate(a.positions[0]!.period));
+  }).sort((a, b) => {
+    const endDiff = getEndDate(b.positions[0]!.period) - getEndDate(a.positions[0]!.period);
+    if (endDiff !== 0) return endDiff;
+    const aStart = parsePeriod(a.positions[0]!.period);
+    const bStart = parsePeriod(b.positions[0]!.period);
+    if (!aStart || !bStart) return 0;
+    return (bStart.startY * 12 + bStart.startM) - (aStart.startY * 12 + aStart.startM);
+  });
 }
 
 /** Top 3 org groups (personally flagged via featured: true on positions). */
@@ -498,7 +518,7 @@ export const PROJECTS: Project[] = [
     status: 'In Progress',
     readMe: false,
     categories: ['web', 'featured'],
-    current_work: true,
+    current_work: false,
     summary: 'AI daily planner for your conversations and workflows',
     related_experiences: [],
     accessible_at: ['hosted'],
@@ -657,7 +677,7 @@ export const EDUCATION = [
     icon: GraduationCap,
     logo: '/bu-logo.png',
     isActive: true,
-    coursework: ['Operating Systems', 'Analysis of Algorithms', 'Database Management', 'Computer Language Theory'],
+    coursework: ['Generative AI', 'Operating Systems', 'Analysis of Algorithms', 'Database Management', 'Computer Language Theory'],
   },
   {
     id: 'sjsu-bachelors',
