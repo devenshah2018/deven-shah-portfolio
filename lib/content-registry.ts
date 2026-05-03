@@ -116,7 +116,7 @@ export const EXPERIENCES = [
     company: 'Suno Analytics',
     companyLogo: '/suno-logo.jpeg',
     location: 'Remote',
-    period: '12/2024 – 01/2026',
+    period: '04/2024 – 01/2026',
     description:
       'Co-founded Suno Analytics and led technical vision from prototype to production, delivering an AI-powered enterprise resource planning (ERP) platform for ecommerce companies.',
     achievements: [

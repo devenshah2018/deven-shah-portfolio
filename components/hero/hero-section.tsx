@@ -4,14 +4,10 @@ import { Button } from '@/components/ui/button';
 import { Download, Activity } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { getTotalExperienceYears, getHighestDegree } from '@/lib/content-registry';
 import { CONTACT_CARD_SHINE_EVENT } from '@/components/contact/contact-section';
-import { scrollToEducation } from '@/lib/url-utils';
+import { requestScrollToExperience } from '@/lib/url-utils';
 
 export function HeroSection() {
-  const years = getTotalExperienceYears();
-  const degree = getHighestDegree();
-
   return (
     <section id="hero" className="relative flex min-h-screen items-center overflow-hidden bg-[#141414] pt-20 pb-2">
       <div className="container relative z-10 mx-auto w-full max-w-7xl px-8 sm:px-10 lg:px-16">
@@ -25,18 +21,20 @@ export function HeroSection() {
               className="flex flex-col gap-3"
             >
               <div className="flex flex-wrap items-center gap-2">
-                <span className="rounded-full bg-[#262626] px-2.5 py-0.5 text-xs font-medium text-[#a3a3a3] ring-1 ring-[#333]">
-                  {years.replace(' years', ' years of experience')}
-                </span>
-                {degree && (
-                  <button
-                    type="button"
-                    onClick={() => scrollToEducation(degree.id)}
-                    className="rounded-full bg-[#262626] px-2.5 py-0.5 text-xs font-medium text-[#a3a3a3] ring-1 ring-[#333] transition-colors hover:bg-[#333] hover:text-[#d4d4d4] focus:outline-none focus:ring-2 focus:ring-[#404040] focus:ring-offset-2 focus:ring-offset-[#141414]"
-                  >
-                    {degree.degreeAndMajor} @ {degree.institution}
-                  </button>
-                )}
+                <button
+                  type="button"
+                  onClick={() => requestScrollToExperience('accenture')}
+                  className="rounded-full bg-[#262626] px-2.5 py-0.5 text-xs font-medium text-[#a3a3a3] ring-1 ring-[#333] transition-colors hover:bg-[#333] hover:text-[#d4d4d4] focus:outline-none focus:ring-2 focus:ring-[#404040] focus:ring-offset-2 focus:ring-offset-[#141414]"
+                >
+                  Technical Analyst @ Accenture
+                </button>
+                <button
+                  type="button"
+                  onClick={() => requestScrollToExperience('research-assistant')}
+                  className="rounded-full bg-[#262626] px-2.5 py-0.5 text-xs font-medium text-[#a3a3a3] ring-1 ring-[#333] transition-colors hover:bg-[#333] hover:text-[#d4d4d4] focus:outline-none focus:ring-2 focus:ring-[#404040] focus:ring-offset-2 focus:ring-offset-[#141414]"
+                >
+                  Research @ Boston University
+                </button>
               </div>
               <h1 className="text-[4rem] font-semibold leading-[1.05] tracking-tight text-[#f5f5f0] sm:text-[5.25rem]">
                 Deven Shah
