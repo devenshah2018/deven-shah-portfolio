@@ -1,9 +1,8 @@
-import { RESEARCH_PAPERS } from '@/lib/content-registry';
+import { RESEARCH_PAPERS } from '@/database/content-registry';
 import { getAllStudies } from '@/lib/study-registry';
 import { headers } from 'next/headers';
 import type { Metadata } from 'next';
 import { FileText, BookOpen, ArrowRight } from 'lucide-react';
-import { ResearchChatbot } from '@/components/chatbot/research-chatbot';
 import { ResearchHero } from '@/components/research/research-hero';
 import { ResearchPaperCard } from '@/components/research/research-paper-card';
 import { StudyList } from '@/components/studies/study-list';
@@ -35,10 +34,8 @@ export default async function ResearchIndexPage() {
 
   return (
     <div className='min-h-screen bg-slate-950 text-slate-50'>
-      {/* Hero Section with Split Layout */}
-      <ResearchHero papers={sortedPapers} studies={studies}>
-        <ResearchChatbot />
-      </ResearchHero>
+      {/* Hero Section */}
+      <ResearchHero papers={sortedPapers} studies={studies} />
 
       {/* Main Content: Studies (Primary) and Papers (Sidebar) */}
       <section className='border-t border-slate-800/50 bg-slate-950'>

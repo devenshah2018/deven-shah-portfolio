@@ -1,10 +1,10 @@
 'use client';
 
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
-import { expandSkillMapping, getEndDate, formatPeriodDisplay, SKILL_CATEGORIES, CATEGORIZED_SKILLS, type SKILL_MAPPINGS } from '@/lib/content-registry';
+import { expandSkillMapping, getEndDate, formatPeriodDisplay, SKILL_CATEGORIES, CATEGORIZED_SKILLS, type SKILL_MAPPINGS } from '@/database/content-registry';
 import { scrollToProject, requestScrollToExperience, scrollToEducation } from '@/lib/url-utils';
 import { ChevronRight, Briefcase, Code, GraduationCap } from 'lucide-react';
-import type { Experience } from '@/lib/content-registry';
+import type { Experience } from '@/database/content-registry';
 import type { Project } from '@/lib/types';
 
 interface SkillModalProps {

@@ -16,7 +16,7 @@ import {
   PROJECTS,
   getExperienceById,
   getEducationById,
-} from '@/lib/content-registry';
+} from '@/database/content-registry';
 import { requestScrollToExperience, scrollToEducation } from '@/lib/url-utils';
 import { Project } from '@/lib/types';
 

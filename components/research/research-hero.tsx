@@ -55,8 +55,8 @@ export function ResearchHero({ children, papers = [], studies = [] }: ResearchHe
           </Link>
         </motion.div>
 
-        {/* Split Layout: Info Left, Chatbot Right */}
-        <div className='grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start'>
+        {/* Layout: Info column, with an optional aside when children are provided */}
+        <div className={`grid grid-cols-1 ${children ? 'lg:grid-cols-2' : ''} gap-12 lg:gap-16 items-start`}>
           {/* Left: Info, Education, Contact */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -88,15 +88,17 @@ export function ResearchHero({ children, papers = [], studies = [] }: ResearchHe
             </Button>
           </motion.div>
 
-          {/* Right: Chatbot */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className='lg:sticky lg:top-8'
-          >
-            {children}
-          </motion.div>
+          {/* Right: optional aside */}
+          {children && (
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className='lg:sticky lg:top-8'
+            >
+              {children}
+            </motion.div>
+          )}
         </div>
       </div>
     </section>

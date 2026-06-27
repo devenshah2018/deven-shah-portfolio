@@ -1,4 +1,4 @@
-import { LINKS, EXPERIENCES, EDUCATION, PROJECTS } from './content-registry';
+import { LINKS, EXPERIENCES, EDUCATION, PROJECTS } from '../database/content-registry';
 import type { ResearchPaper } from './types';
 
 const BASE_URL = 'https://deven-shah.com';

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { ChevronDown, ChevronUp, FileText } from 'lucide-react';
-import { EDUCATION, RESEARCH_PAPERS } from '@/lib/content-registry';
+import { EDUCATION, RESEARCH_PAPERS } from '@/database/content-registry';
 export function EducationResearchSidebar() {
   const [expandedCoursework, setExpandedCoursework] = useState<Set<string>>(new Set());
 

@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { SkillModal } from '@/components/about/skill-modal';
 import { Profile } from '@/components/about/profile';
 import { GitHubContributionChart } from '@/components/hero/github-contribution-chart';
-import { CATEGORIZED_SKILLS, SKILL_CATEGORIES, SKILL_MAPPINGS, CERTIFICATIONS, groupExperiencesByOrg } from '@/lib/content-registry';
+import { CATEGORIZED_SKILLS, SKILL_CATEGORIES, SKILL_MAPPINGS, CERTIFICATIONS, groupExperiencesByOrg } from '@/database/content-registry';
 import { requestScrollToExperience } from '@/lib/url-utils';
 import { Search, X } from 'lucide-react';
 

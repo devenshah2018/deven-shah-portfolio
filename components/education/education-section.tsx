@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { GraduationCap, Award, Calendar, ExternalLink, FileText, Building2, Link, ChevronDown, ChevronUp } from 'lucide-react';
-import { CERTIFICATIONS, EDUCATION, RESEARCH_PAPERS, PROJECTS } from '@/lib/content-registry';
+import { CERTIFICATIONS, EDUCATION, RESEARCH_PAPERS, PROJECTS } from '@/database/content-registry';
 import { generateArticleSchema } from '@/lib/jsonld';
 import { getResearchSiteUrl } from '@/lib/url-utils';
 import { useState } from 'react';

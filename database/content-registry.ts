@@ -1,5 +1,5 @@
 import { GraduationCap, Award } from 'lucide-react';
-import { Project, ResearchPaper } from './types';
+import { Project, ResearchPaper } from '../lib/types';
 
 export const LINKS = {
   linkedin: 'https://www.linkedin.com/in/deven-a-shah/',

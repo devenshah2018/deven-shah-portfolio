@@ -1,7 +1,7 @@
 'use client';
 
 import { GitHubCalendar } from 'react-github-calendar';
-import { LINKS } from '@/lib/content-registry';
+import { LINKS } from '@/database/content-registry';
 import 'react-activity-calendar/tooltips.css';
 
 const GITHUB_USERNAME = LINKS.github.replace(/^https?:\/\/github\.com\/?/, '').replace(/\/$/, '') || 'devenshah2018';

@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { motion, AnimatePresence } from 'framer-motion';
-import { LINKS } from '@/lib/content-registry';
+import { LINKS } from '@/database/content-registry';
 import { CONTACT_CARD_SHINE_EVENT } from '@/components/contact/contact-section';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faKaggle } from '@fortawesome/free-brands-svg-icons';

@@ -7,7 +7,7 @@ import { LinkThumbnail } from '@/components/projects/link-thumbnail';
 import { Calendar, Star, Grid3x3, List, CheckCircle2, Clock, Pause, ExternalLink, Link } from 'lucide-react';
 import { motion } from 'framer-motion';
 import React, { useState, useMemo } from 'react';
-import { PROJECTS, PROJECT_CATEGORIES, getExperienceById, getEducationById } from '@/lib/content-registry';
+import { PROJECTS, PROJECT_CATEGORIES, getExperienceById, getEducationById } from '@/database/content-registry';
 import { Project } from '@/lib/types';
 
 function getProjectCategories(project: Project): string[] {

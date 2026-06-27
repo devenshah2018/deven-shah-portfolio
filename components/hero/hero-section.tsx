@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Download, Activity } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { getTotalExperienceYears, getHighestDegree } from '@/lib/content-registry';
+import { getTotalExperienceYears, getHighestDegree } from '@/database/content-registry';
 import { CONTACT_CARD_SHINE_EVENT } from '@/components/contact/contact-section';
 import { scrollToEducation } from '@/lib/url-utils';
 

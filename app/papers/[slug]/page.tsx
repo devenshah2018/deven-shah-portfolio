@@ -1,4 +1,4 @@
-import { getResearchPaperBySlug, getProjectById } from '@/lib/content-registry';
+import { getResearchPaperBySlug, getProjectById } from '@/database/content-registry';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import type { Metadata } from 'next';

@@ -1,10 +1,8 @@
-export const dynamic = 'force-dynamic';
-import { supabaseClient } from "@/lib/supabase-client";
+import { POSTS } from '@/database/posts-registry';
 
 export async function GET() {
-    const { data, error } = await supabaseClient.from('posts').select('*');
-    if (error) {
-        return new Response(JSON.stringify({ error: error.message }), { status: 500 });
-    }
-    return new Response(JSON.stringify(data || []), { status: 200 });
+  return new Response(JSON.stringify(POSTS), {
+    status: 200,
+    headers: { 'Content-Type': 'application/json' },
+  });
 }

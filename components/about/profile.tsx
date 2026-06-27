@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
-import { getCurrentWorkItems } from '@/lib/content-registry';
+import { getCurrentWorkItems } from '@/database/content-registry';
 import { scrollToProject, requestScrollToExperience, scrollToEducation } from '@/lib/url-utils';
 
 type CurrentWorkItem = ReturnType<typeof getCurrentWorkItems>[number];

@@ -65,14 +65,6 @@ TERM     # Terminate program
 - **Time Zone Detection**: Automatically adjusts for visitor's local time
 - **Mobile Optimized**: Touch-friendly interface for mobile booking
 
-#### **Strava Athletic Dashboard**
-
-- **Live Statistics**: Real-time cycling and running metrics via Strava API
-- **Performance Tracking**: Total distance, elevation gain, and active hours
-- **Caching Strategy**: Intelligent caching to minimize API calls and improve
-  performance
-- **Achievement Display**: Visual representation of athletic accomplishments
-
 #### **GitHub Integration**
 
 - **Contribution Calendar**: Live GitHub activity visualization

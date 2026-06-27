@@ -1,4 +1,4 @@
-import { PROJECTS, RESEARCH_PAPERS } from '@/lib/content-registry';
+import { PROJECTS, RESEARCH_PAPERS } from '@/database/content-registry';
 import { NextResponse } from 'next/server';
 
 const BASE_URL = 'https://deven-shah.com';

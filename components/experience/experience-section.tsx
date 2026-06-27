@@ -8,7 +8,7 @@ import {
   formatPeriodDisplay,
   getSkillsForExperienceId,
   type OrgGroup,
-} from '@/lib/content-registry';
+} from '@/database/content-registry';
 import { scrollToExperience, REQUEST_SCROLL_TO_EXPERIENCE } from '@/lib/url-utils';
 import { Badge } from '@/components/ui/badge';
 import { EducationResearchSidebar } from './education-research-sidebar';

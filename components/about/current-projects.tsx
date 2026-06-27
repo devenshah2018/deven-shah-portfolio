@@ -2,7 +2,7 @@
 
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
-import { getCurrentWorkItems } from '@/lib/content-registry';
+import { getCurrentWorkItems } from '@/database/content-registry';
 import { scrollToProject, requestScrollToExperience, scrollToEducation } from '@/lib/url-utils';
 
 function getPrimaryStatement(item: ReturnType<typeof getCurrentWorkItems>[number]): string {
