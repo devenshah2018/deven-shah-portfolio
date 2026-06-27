@@ -26,8 +26,7 @@ export const SKILLS = {
     'CSS',
     'Bash',
     'Rust',
-    'C++',
-    'Solidity'
+    'C++'
   ],
   platforms: ['Linux', 'AWS', 'Salesforce', 'Azure', 'LangGraph', 'GCP', 'Jupyter'],
   frameworks: ['React', '.NET', 'Flask', 'TailwindCSS', 'Angular', 'ASP.NET Core', 'Next.js'],
@@ -40,9 +39,8 @@ export const SKILLS = {
 
 // Simplified skill mappings - only store IDs instead of duplicating full object data
 export const SKILL_MAPPINGS = [
-  { skill: 'Solidity', experienceIds: ['build-fellowship-3'] },
-  { skill: 'Python', experienceIds: ['suno-analytics', 'netapp', 'build-fellowship-1', 'build-fellowship-2', 'research-assistant'], projectIds: ['ares-project', 'molecule-mutation-prediction', 'drone-build-project'], educationIds: ['sjsu-bachelors'] },
-  { skill: 'TypeScript', experienceIds: ['suno-analytics', 'patelco', 'build-fellowship-1'], projectIds: ['drone-build-project', 'portfolio-project', 'ares-project'] },
+  { skill: 'Python', experienceIds: ['suno-analytics', 'netapp', 'build-fellowship', 'research-assistant'], projectIds: ['ares-project', 'molecule-mutation-prediction', 'drone-build-project'], educationIds: ['sjsu-bachelors'] },
+  { skill: 'TypeScript', experienceIds: ['suno-analytics', 'patelco', 'build-fellowship'], projectIds: ['drone-build-project', 'portfolio-project', 'ares-project'] },
   { skill: 'C#', experienceIds: ['patelco'], educationIds: ['sjsu-bachelors'] },
   { skill: 'React', experienceIds: ['suno-analytics'], projectIds: ['drone-build-project', 'portfolio-project', 'breaking-dijkstra-project'] },
   { skill: 'Azure', experienceIds: ['suno-analytics', 'patelco'], projectIds: ['ares-project'] },
@@ -68,11 +66,11 @@ export const SKILL_MAPPINGS = [
   { skill: 'LLMs', experienceIds: ['suno-analytics'], projectIds: ['ares-project'] },
   { skill: 'Sklearn', experienceIds: ['suno-analytics'], projectIds: ['molecule-mutation-prediction'] },
   { skill: 'Tensorflow', experienceIds: ['suno-analytics'] },
-  { skill: 'Pytorch', experienceIds: ['build-fellowship-2', 'research-assistant'] },
-  { skill: 'Docker', experienceIds: ['netapp', 'suno-analytics', 'build-fellowship-2'] },
-  { skill: 'Jupyter', projectIds: ['drone-build-project'], experienceIds: ['build-fellowship-1', 'build-fellowship-2', 'research-assistant'] },
+  { skill: 'Pytorch', experienceIds: ['build-fellowship', 'research-assistant'] },
+  { skill: 'Docker', experienceIds: ['netapp', 'suno-analytics', 'build-fellowship'] },
+  { skill: 'Jupyter', projectIds: ['drone-build-project'], experienceIds: ['build-fellowship', 'research-assistant'] },
   { skill: 'C++', educationIds: ['bu-masters'] },
-  { skill: 'Github/Git', experienceIds: ['suno-analytics', 'patelco', 'netapp', 'build-fellowship-1'], projectIds: ['drone-build-project', 'portfolio-project', 'ares-project', 'molecule-mutation-prediction'], educationIds: ['sjsu-bachelors'] },
+  { skill: 'Github/Git', experienceIds: ['suno-analytics', 'patelco', 'netapp', 'build-fellowship'], projectIds: ['drone-build-project', 'portfolio-project', 'ares-project', 'molecule-mutation-prediction'], educationIds: ['sjsu-bachelors'] },
   { skill: 'REST API', experienceIds: ['suno-analytics', 'patelco', 'netapp'] },
   { skill: 'GraphQL', experienceIds: ['suno-analytics'] },
   { skill: 'MySQL', experienceIds: ['patelco'] },
@@ -80,7 +78,7 @@ export const SKILL_MAPPINGS = [
   { skill: 'Angular', experienceIds: ['patelco'] },
   { skill: 'ASP.NET Core', experienceIds: ['patelco'] },
   { skill: 'Next.js', projectIds: ['drone-build-project'], experienceIds: ['suno-analytics'] },
-  { skill: 'CNNs', experienceIds: ['build-fellowship-2', 'research-assistant'] },
+  { skill: 'CNNs', experienceIds: ['build-fellowship', 'research-assistant'] },
 ];
 
 export const SKILL_CATEGORIES = [
@@ -118,7 +116,7 @@ export const EXPERIENCES = [
     company: 'Suno Analytics',
     companyLogo: '/suno-logo.jpeg',
     location: 'Remote',
-    period: '12/2024 – 01/2026',
+    period: '04/2024 – 01/2026',
     description:
       'Co-founded Suno Analytics and led technical vision from prototype to production, delivering an AI-powered enterprise resource planning (ERP) platform for ecommerce companies.',
     achievements: [
@@ -167,58 +165,32 @@ export const EXPERIENCES = [
     link: 'https://www.netapp.com',
   },
   {
-    id: 'build-fellowship-1',
+    id: 'build-fellowship',
     title: 'Build Student Consultant',
     company: 'Build Fellowship by Open Avenues',
     companyLogo: '/build-logo.png',
     location: 'Remote',
-    period: '09/2025 – 11/2025',
+    period: '09/2025 – 04/2026',
     description:
-      'Developed a robotics-based drone path planning system in Python to efficiently capture high-quality imaging datasets using APIs and trajectory visualization tools.',
+      'Built AI-powered image retrieval and drone path planning systems in Python, leveraging PyTorch, FAISS, Qdrant, and Docker for scalable semantic search and dataset capture.',
     achievements: [],
     gradient: 'from-blue-500 to-cyan-500',
     link: 'https://www.buildfellowship.com/'
   },
   {
-    id: 'build-fellowship-2',
-    title: 'Build Student Consultant',
-    company: 'Build Fellowship by Open Avenues',
-    companyLogo: '/build-logo.png',
-    location: 'Remote',
-    period: '02/2026 – 03/2026',
+    id: 'accenture',
+    title: 'Technical Architecture Analyst',
+    company: 'Accenture',
+    companyLogo: '/accenture-logo.svg',
+    location: 'San Francisco, CA',
+    period: '05/2026 – Present',
     description:
-      'Implementing an AI-powered image retrieval system using Python, PyTorch, FAISS, Qdrant, and Docker to enable scalable semantic search with vector databases.',
+      '',
     achievements: [],
     gradient: 'from-blue-500 to-cyan-500',
-    link: 'https://www.buildfellowship.com/'
-  },
-  {
-    id: 'build-fellowship-3',
-    title: 'Build Student Consultant',
-    company: 'Build Fellowship by Open Avenues',
-    companyLogo: '/build-logo.png',
-    location: 'Remote',
-    period: '03/2026 – 04/2026',
-    description:
-      'Built and deployed an Ethereum smart contract simulating a decentralized lottery system on Sepolia Testnet, focusing on transparency, fairness, and rigorous testing for security and reliability.',
-    achievements: [],
-    gradient: 'from-blue-500 to-cyan-500',
-    link: 'https://www.buildfellowship.com/'
-  },
-  {
-    id: 'research-assistant-2',
-    title: 'Graduate Research Assistant',
-    company: 'Boston University',
-    companyLogo: '/bu-logo.png',
-    location: 'Boston, MA',
-    period: '03/2026 – Present',
-    description:
-      'Advancing deepfake detection through cutting-edge AI research, building robust methods to exceed current state-of-the-art benchmarks for media integrity.',
-    achievements: [],
-    gradient: 'from-blue-500 to-cyan-500',
-    link: 'https://www.bu.edu/',
+    link: 'https://www.accenture.com',
     current_work: true,
-    summary: 'Deepfake detection through AI research',
+    summary: 'Building enterprise software solutions for clients.'
   },
   {
     id: 'research-assistant',
@@ -226,19 +198,18 @@ export const EXPERIENCES = [
     company: 'Boston University',
     companyLogo: '/bu-logo.png',
     location: 'Boston, MA',
-    period: '02/2026 – Present',
+    period: '10/2025 – Present',
     description:
-      'Discovering automated osteoarthritis diagnosis techniques through AI computer vision with a research team of faculty, PhD candidates, and medical advisors.',
+      'Conducting computer vision and AI research across two labs at Boston University, across biotechnology and criminal justice.',
     achievements: [
-      'Developing a U-Net–based deep learning approach to automate osteoarthritis MRI analysis, enabling end-to-end segmentation of knee cartilage directly from MRI DICOM images.',
-      'Eliminating the need for a manual MRI cartilage measurement workflow (previously requiring ~2–3 hours) by designing a U-Net model to automatically trace cartilage boundaries in knee MRI DICOM images.',
-      'Reduced knee segmentation time by 90% through a CNN-based pipeline (VGG16 encoder + U-Net decoder) in Python to detect knee cartilage regions.'
+      'Digital Forensics Research Lab (Mar 2026 – Present): Researching deepfake generation and detection landscape alongside faculty and peers across AI and criminal justice, building frameworks that hold up against real-world media integrity threats.',
+      'Artificial Intelligence and Computer Vision Lab (Oct 2025 – Present): Researching automated osteoarthritis diagnosis alongside faculty, medical professionals, and peers across computer vision and clinical radiology, building pipelines that replace hours of manual MRI review.'
     ],
     gradient: 'from-blue-500 to-cyan-500',
     link: 'https://www.bu.edu/',
     featured: true,
     current_work: true,
-    summary: 'Osteoarthritis diagnosis through AI computer vision',
+    summary: 'AI computer vision research in biotechnology and criminal justice.',
   },
   {
     id: 'teaching-assistant',
@@ -248,7 +219,7 @@ export const EXPERIENCES = [
     location: 'Boston, MA',
     period: '01/2026 – Present',
     description:
-      'Teaching assistant for the course "CS 566: Analysis of Algorithms".',
+      'Teaching assistant for CS 566: Analysis of Algorithms.',
     achievements: [],
     gradient: 'from-blue-500 to-cyan-500',
     link: 'https://www.bu.edu/'
@@ -454,7 +425,14 @@ export function groupExperiencesByOrg(): OrgGroup[] {
       duration: getOrgDuration(sorted),
       positions: sorted,
     };
-  }).sort((a, b) => getEndDate(b.positions[0]!.period) - getEndDate(a.positions[0]!.period));
+  }).sort((a, b) => {
+    const endDiff = getEndDate(b.positions[0]!.period) - getEndDate(a.positions[0]!.period);
+    if (endDiff !== 0) return endDiff;
+    const aStart = parsePeriod(a.positions[0]!.period);
+    const bStart = parsePeriod(b.positions[0]!.period);
+    if (!aStart || !bStart) return 0;
+    return (bStart.startY * 12 + bStart.startM) - (aStart.startY * 12 + aStart.startM);
+  });
 }
 
 /** Top 3 org groups (personally flagged via featured: true on positions). */
@@ -540,7 +518,7 @@ export const PROJECTS: Project[] = [
     status: 'In Progress',
     readMe: false,
     categories: ['web', 'featured'],
-    current_work: true,
+    current_work: false,
     summary: 'AI daily planner for your conversations and workflows',
     related_experiences: [],
     accessible_at: ['hosted'],
@@ -644,7 +622,7 @@ export const PROJECTS: Project[] = [
       { type: 'hosted', url: 'https://drone-path-planner.vercel.app/', label: 'Live Demo' },
       { type: 'github', url: 'https://github.com/devenshah2018/drone-trajectory-planner', label: 'Github' },
     ],
-    related_experiences: ['build-fellowship-1'],
+    related_experiences: ['build-fellowship'],
   },
   {
     id: 'task-scheduling-project',
@@ -699,7 +677,7 @@ export const EDUCATION = [
     icon: GraduationCap,
     logo: '/bu-logo.png',
     isActive: true,
-    coursework: ['Operating Systems', 'Analysis of Algorithms', 'Database Management', 'Computer Language Theory'],
+    coursework: ['Generative AI', 'Operating Systems', 'Analysis of Algorithms', 'Database Management', 'Computer Language Theory'],
   },
   {
     id: 'sjsu-bachelors',

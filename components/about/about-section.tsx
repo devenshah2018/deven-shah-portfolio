@@ -200,8 +200,8 @@ export function AboutSection() {
             {/* Right column */}
             <div className="flex min-w-0 flex-col gap-6">
               {/* PREV @ - spans width of profile container */}
-              <div className="flex min-w-0 w-full max-w-full items-center gap-3 overflow-hidden">
-                <span className="shrink-0 text-xs font-medium text-[#6b6b6b]">PREV @</span>
+              <div className="flex min-w-0 w-full max-w-full items-center gap-8 overflow-hidden">
+                <span className="shrink-0 mr-2 text-md font-medium text-[#6b6b6b]">PREV @</span>
                 <div className="flex min-w-0 flex-1 flex-wrap items-center gap-3">
                   {groupExperiencesByOrg().map((org) => {
                     const firstId = org.positions[0]?.id;
@@ -217,7 +217,7 @@ export function AboutSection() {
                         <img
                           src={org.companyLogo}
                           alt=""
-                          className="h-7 w-7 rounded object-contain sm:h-8 sm:w-8"
+                          className="h-16 w-16 rounded object-contain sm:h-8 sm:w-8"
                         />
                       </button>
                     );
