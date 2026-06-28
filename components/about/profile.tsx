@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
 import { getCurrentWorkItems } from '@/database/content-registry';
 import { scrollToProject, requestScrollToExperience, scrollToEducation } from '@/lib/url-utils';
@@ -10,7 +9,6 @@ type CurrentWorkItem = ReturnType<typeof getCurrentWorkItems>[number];
 function getPrimaryStatement(item: CurrentWorkItem): string {
   if ('summary' in item && item.summary) return item.summary;
   if ('description' in item && item.description) return item.description;
-  if ('abstract' in item && item.abstract) return item.abstract;
   if (item.type === 'experience') return item.title;
   if (item.type === 'education') return item.degree;
   return item.title;
@@ -20,7 +18,6 @@ function getSubheaderLine(item: CurrentWorkItem): string | null {
   if (item.type === 'experience' && 'company' in item && item.company) return `@ ${item.company}`;
   if (item.type === 'education' && 'institution' in item && item.institution) return `@ ${item.institution}`;
   if (item.type === 'project' && item.title) return item.title;
-  if (item.type === 'paper' && item.title) return item.title;
   return null;
 }
 
@@ -56,17 +53,6 @@ export function Profile() {
                   )}
                 </>
               );
-
-              if (item.type === 'paper') {
-                return (
-                  <li key={`paper-${item.id}`}>
-                    <Link href={`/papers/${item.slug || item.id}`} className={itemClass}>
-                      <div className="min-w-0 flex-1">{content}</div>
-                      <ChevronRight className="mt-1 h-4 w-4 flex-shrink-0 text-[#3a3a3a] transition-colors group-hover:text-[#6b6b6b]" />
-                    </Link>
-                  </li>
-                );
-              }
 
               return (
                 <li key={`${item.type}-${item.id}`}>

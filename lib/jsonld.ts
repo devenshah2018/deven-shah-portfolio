@@ -1,5 +1,4 @@
-import { LINKS, EXPERIENCES, EDUCATION, PROJECTS } from '../database/content-registry';
-import type { ResearchPaper } from './types';
+import { LINKS, EXPERIENCES, EDUCATION } from '../database/content-registry';
 
 const BASE_URL = 'https://deven-shah.com';
 
@@ -48,70 +47,6 @@ export function generatePersonSchema() {
           }
         : null,
     ].filter(Boolean),
-  };
-}
-
-export function generateArticleSchema(paper: ResearchPaper) {
-  const relatedProject = paper.relatedProjectId
-    ? PROJECTS.find(p => p.id === paper.relatedProjectId)
-    : null;
-
-  // Parse date from paper.date (format: "December 2022")
-  const dateMatch = paper.date.match(/(\w+)\s+(\d{4})/);
-  let datePublished = '';
-  if (dateMatch) {
-    const monthMap: Record<string, string> = {
-      January: '01',
-      February: '02',
-      March: '03',
-      April: '04',
-      May: '05',
-      June: '06',
-      July: '07',
-      August: '08',
-      September: '09',
-      October: '10',
-      November: '11',
-      December: '12',
-    };
-    const month = monthMap[dateMatch[1]!] || '01';
-    datePublished = `${dateMatch[2]}-${month}-01`;
-  }
-
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'ScholarlyArticle',
-    headline: paper.title,
-    description: paper.abstract?.substring(0, 200) || paper.title,
-    datePublished: datePublished || paper.sortDate,
-    dateModified: datePublished || paper.sortDate,
-    author: {
-      '@type': 'Person',
-      name: 'Deven Shah',
-      url: BASE_URL,
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: paper.institution || 'Deven Shah',
-      logo: {
-        '@type': 'ImageObject',
-        url: `${BASE_URL}/thumbnail.png`,
-      },
-    },
-    mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': `${BASE_URL}/#education`,
-    },
-    url: paper.pdfUrl,
-    keywords: paper.keywords?.join(', ') || '',
-    inLanguage: 'en-US',
-    isAccessibleForFree: true,
-    ...(relatedProject && {
-      about: {
-        '@type': 'Thing',
-        name: relatedProject.title || '',
-      },
-    }),
   };
 }
 

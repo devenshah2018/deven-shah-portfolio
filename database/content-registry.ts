@@ -1,5 +1,5 @@
 import { GraduationCap, Award } from 'lucide-react';
-import { Project, ResearchPaper } from '../lib/types';
+import { Project } from '../lib/types';
 
 export const LINKS = {
   linkedin: 'https://www.linkedin.com/in/deven-a-shah/',
@@ -185,7 +185,7 @@ export const EXPERIENCES = [
     location: 'San Francisco, CA',
     period: '05/2026 – Present',
     description:
-      '',
+      'Automating enterprise software solutions for Fortune 500 clients using AI and cloud technologies, focusing on scalable architecture and efficient deployment.',
     achievements: [],
     gradient: 'from-blue-500 to-cyan-500',
     link: 'https://www.accenture.com',
@@ -217,7 +217,7 @@ export const EXPERIENCES = [
     company: 'Boston University',
     companyLogo: '/bu-logo.png',
     location: 'Boston, MA',
-    period: '01/2026 – Present',
+    period: '01/2026 – 05/2026',
     description:
       'Teaching assistant for CS 566: Analysis of Algorithms.',
     achievements: [],
@@ -712,6 +712,21 @@ export const EDUCATION = [
 
 export const CERTIFICATIONS = [
   {
+    id: 'accenture-agentic-ai',
+    title: 'Reinvention with Agentic AI',
+    issuer: 'Accenture',
+    period: 'June 2026',
+    status: 'Active',
+    gradient: 'from-purple-500 to-fuchsia-500',
+    icon: Award,
+    logo: '/accenture-logo.svg',
+    // SVG has a baked-in black background with wide internal margins; fill the tile and scale up the mark.
+    logoWrapperClassName:
+      'flex h-9 w-9 flex-shrink-0 items-center justify-center overflow-hidden rounded-lg border border-[#2a2a2a]/60 bg-black',
+    logoClassName: 'h-full w-full object-contain scale-[1.5]',
+    verificationUrl: 'https://www.credly.com/badges/0f79ad3e-4f5c-47de-b96b-c9ccfa1c7bb0',
+  },
+  {
     id: 'aws-cloud-practitioner',
     title: 'AWS Certified Cloud Practitioner',
     issuer: 'Amazon Web Services',
@@ -722,78 +737,52 @@ export const CERTIFICATIONS = [
     gradient: 'from-orange-500 to-yellow-500',
     icon: Award,
     logo: '/aws-logo.jpg',
+    // White-background JPG with wide internal margins; render as a filled white tile with the mark scaled up.
+    logoWrapperClassName:
+      'flex h-9 w-9 flex-shrink-0 items-center justify-center overflow-hidden rounded-lg border border-[#2a2a2a]/60 bg-white',
+    logoClassName: 'h-full w-full object-contain scale-[1.45]',
     verificationUrl: 'https://aws.amazon.com/verification',
   },
 ];
 
-export const RESEARCH_PAPERS: ResearchPaper[] = [
+export type Organization = {
+  id: string;
+  name: string;
+  role: string;
+  period: string;
+  description: string;
+  institution: string;
+  logo?: string;
+  link?: string;
+  /** Tie to an experience or education entry; clicking an org scrolls to and highlights it. */
+  related: { type: 'experience' | 'education'; id: string };
+};
+
+export const ORGANIZATIONS: Organization[] = [
   {
-    id: 'cryptocurrency-forecasting-model-paper',
-    slug: 'crypto-forecasting',
-    title: 'Cryptocurrency Forecasting Model',
-    institution: 'San Jose State University',
-    date: 'December 2022',
-    sortDate: '2022-12',
-    pdfUrl: '/papers/cryptocurrency-forecasting-model.pdf',
-    keywords: ['Machine Learning', 'Cryptocurrency', 'Neural Networks', 'NLP'],
-    abstract: `The cryptocurrency exchange domain is a relatively volatile space. The most widely traded cryptocurrency coin Bitcoin has experienced a high of $44,533.00 and a low of $36,259.01 in the week of 1/31/22 - 2/7/22. The volatility of the cryptocurrency market stems from three accepted analyses. A technical analysis solely relies on metrics ranging from historical trends to net unrealized profit/loss to derive the effects of price movements. A fundamental analysis relies on factors that affect price movements, such as government policies. A sentimental analysis relies on the sentiment of a coin at a particular time, which can be identified using social media trends. Given the abundance of variables that affect price movements, forecasting even near-future prices prove difficult for many traders. Each of the three analyses stated (technical, fundamental, and sentimental) have sub-analyses that would take an abundance of time even for the experienced trader. As the digital asset market increased exponentially over the past 2 years, many traders are not accustomed to these analyses, much less able to derive conclusions from them. The cryptocurrency forecasting model aimed to traverse, analyze, and interpret data from the three types of analyses with a greater focus on technical and sentimental analysis. Using the data interpreted, the model has the ability to forecast price movements to the time scale of the customer's preference. This project reduced the time spent significantly analyzing technical data, assisted traders to make confident trading decisions, and detailed the price movement patterns that are difficult to infer with purely human capabilities.`,
-    // relatedProjectId: 'crypto-forecasting-project',
-  },
-  {
-    id: 'molecule-mutation-prediction-paper',
-    slug: 'braf-mutation-prediction',
-    title: 'Small Molecule Drug Development for the BRAF V600 Mutation',
-    institution: 'San Jose State University',
-    date: 'December 2022',
-    sortDate: '2022-12',
-    pdfUrl: '/papers/small-molecule-prediction.pdf',
-    keywords: ['BRAF-V600E', 'Machine Learning', 'SVM', 'Random Forest Classifier', 'QuaSAR'],
-    abstract: `This report presents the findings behind the use of computational or in-silico
-methods to find therapeutic targets allows for the effective integration of the massive
-amounts of data currently available and the accurate prediction of the effectiveness of a
-given target molecule that could potentially inhibit the expression of the most common
-B-Raf Proto-Oncogene, Serine/Threonine Kinase (BRAF) mutation. In order to find
-small chemical molecules that may prevent the expression of the most prevalent BRAF
-oncogenic mutation, machine-learning algorithms, such as the SVM (Support Vector
-Machine). An SVM model utilizes support vectors to adjust the threshold of the
-hyperplane to categorize data points and is widely used for classification models.
-Complemented with a Random Forest Classifier, the linear SVM model was able to use
-a dataset with 243 different compounds to achieve an average of 0.976 precision, 0.975
-recall, 0.966 accuracies, and a 0.962 area under the receiving operating characteristic
-curve across 50 independent iterations. 10 common features were present in all 50
-iterations, which provides computational evidence that these features directly affect the
-identification of the model. The model is not limited to strictly identifying compounds, as
-it affords the ability to determine if certain features truly affect the identification. This
-model may be used to conclude whether a QuaSAR descriptor truly correlates with the
-potential of a compound to inhibit the expression of the BRAF mutation. The model
-consistently achieved optimal performance with each iteration.
-Future work will implement an improved feature selection process to achieve
-perfect performance, a deeper analysis of feature importances, and use alternative
-classification models.`,
-    relatedProjectId: 'molecule-mutation-prediction',
-  },
-  {
-    id: 'task-scheduling-paper',
-    slug: 'ai-task-scheduling',
-    title: 'Task Scheduling for AI Workloads',
+    id: 'digital-forensics-lab',
+    name: 'Digital Forensics Lab',
+    role: 'Research Assistant',
+    period: 'Mar 2026 – Present',
+    description:
+      'Boston University lab at the intersection of AI and criminal justice. Researching deepfake generation and detection to build frameworks resilient to real-world media integrity threats.',
     institution: 'Boston University',
-    date: 'December 2025',
-    sortDate: '2025-12',
-    pdfUrl: '/papers/task-scheduling.pdf',
-    keywords: ['Task Scheduling', 'Parallel Computing', 'Thread Management', 'Resource Allocation'],
-    abstract: `The rapid growth of AI workloads has exposed limitations in traditional CPU and GPU scheduling. CPUs
-provide fairness and responsiveness but struggle with parallelism and memory-intensive operations, while
-GPUs deliver high-throughput execution yet rely on CPU coordination for tasks such as data
-preprocessing and kernel management. Hybrid CPU–GPU scheduling addresses these challenges by
-dynamically distributing tasks to leverage both CPU flexibility and GPU parallelism. This study evaluates
-CPU-only, GPU-only, and hybrid approaches across benchmarks for workload scaling, composition,
-resource constraints, and real-world AI scenario test suites. Results from experts and experimentation
-show that hybrid scheduling dramatically improves throughput for compute-bound, parallel workloads
-while maintaining high GPU utilization, though latency-sensitive inference tasks may incur slight
-overhead. These findings underscore the importance of adaptive, workload-aware scheduling strategies
-for hybrid AI architectures.`,
-    relatedProjectId: 'task-scheduling-project',
-  }
+    logo: '/bu-logo.png',
+    link: 'https://www.bu.edu/',
+    related: { type: 'experience', id: 'research-assistant' },
+  },
+  {
+    id: 'ai-computer-vision-lab',
+    name: 'Artificial Intelligence and Computer Vision Lab',
+    role: 'Research Assistant',
+    period: 'Oct 2025 – Present',
+    description:
+      'Boston University computer vision lab focused on medical imaging. Building MRI segmentation pipelines for automated osteoarthritis diagnosis that replace hours of manual radiology review.',
+    institution: 'Boston University',
+    logo: '/bu-logo.png',
+    link: 'https://www.bu.edu/',
+    related: { type: 'experience', id: 'research-assistant' },
+  },
 ];
 
 // Helper functions to look up full objects from IDs
@@ -821,10 +810,9 @@ export function getEducationById(id: string) {
 export type CurrentWorkItem =
   | { type: 'project'; id: string; title: string; summary?: string; description?: string; sortDate: string; related?: { type: 'experience' | 'education'; id: string }[] }
   | { type: 'experience'; id: string; title: string; company: string; summary?: string; description?: string; sortDate: string }
-  | { type: 'education'; id: string; degree: string; institution: string; summary?: string; description?: string; sortDate: string }
-  | { type: 'paper'; id: string; slug: string | undefined; title: string; summary?: string; abstract?: string; sortDate: string };
+  | { type: 'education'; id: string; degree: string; institution: string; summary?: string; description?: string; sortDate: string };
 
-/** Returns all items tagged current_work from projects, experiences, education, and papers. */
+/** Returns all items tagged current_work from projects, experiences, and education. */
 export function getCurrentWorkItems(): CurrentWorkItem[] {
   const items: CurrentWorkItem[] = [];
   const getSortDate = (p: string) => {
@@ -879,24 +867,7 @@ export function getCurrentWorkItems(): CurrentWorkItem[] {
       });
     }
   }
-  for (const p of RESEARCH_PAPERS) {
-    if (p.current_work) {
-      items.push({
-        type: 'paper',
-        id: p.id,
-        slug: p.slug,
-        title: p.title,
-        sortDate: p.sortDate || '',
-        ...(p.summary != null && { summary: p.summary }),
-        ...(p.abstract != null && { abstract: p.abstract }),
-      });
-    }
-  }
   return items.sort((a, b) => (b.sortDate || '').localeCompare(a.sortDate || '')).slice(0, 8);
-}
-
-export function getResearchPaperBySlug(slug: string) {
-  return RESEARCH_PAPERS.find(paper => paper.slug === slug || paper.id === slug);
 }
 
 // Helper function to expand skill mapping from IDs to full objects (for backwards compatibility)

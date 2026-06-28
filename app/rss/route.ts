@@ -1,4 +1,4 @@
-import { PROJECTS, RESEARCH_PAPERS } from '@/database/content-registry';
+import { PROJECTS } from '@/database/content-registry';
 import { NextResponse } from 'next/server';
 
 const BASE_URL = 'https://deven-shah.com';
@@ -42,11 +42,6 @@ export async function GET() {
     return 0;
   }).slice(0, 10);
 
-  // Get recent research papers (sorted by date)
-  const recentPapers = RESEARCH_PAPERS.sort((a, b) =>
-    b.sortDate.localeCompare(a.sortDate)
-  );
-
   const rssItems = [
     ...recentProjects.map(project => {
       const pubDate = project.sortDate
@@ -61,36 +56,6 @@ export async function GET() {
       <category>Project</category>
     </item>`;
     }),
-    ...recentPapers.map(paper => {
-      const dateMatch = paper.date.match(/(\w+)\s+(\d{4})/);
-      let pubDate = rssDate;
-      if (dateMatch) {
-        const monthMap: Record<string, string> = {
-          January: '01',
-          February: '02',
-          March: '03',
-          April: '04',
-          May: '05',
-          June: '06',
-          July: '07',
-          August: '08',
-          September: '09',
-          October: '10',
-          November: '11',
-          December: '12',
-        };
-        const month = monthMap[dateMatch[1]!] || '01';
-        pubDate = formatRSSDate(new Date(`${dateMatch[2]}-${month}-01`));
-      }
-      return `    <item>
-      <title>${escapeXml(paper.title)}</title>
-      <link>${paper.pdfUrl || `${BASE_URL}/#education`}</link>
-      <guid isPermaLink="false">${BASE_URL}/#paper-${paper.id}</guid>
-      <description>${escapeXml(paper.abstract?.substring(0, 300) || paper.title)}</description>
-      <pubDate>${pubDate}</pubDate>
-      <category>Research Paper</category>
-    </item>`;
-    }),
   ].join('\n');
 
   const rss = `<?xml version="1.0" encoding="UTF-8"?>
@@ -98,7 +63,7 @@ export async function GET() {
   <channel>
     <title>Deven Shah Portfolio</title>
     <link>${BASE_URL}</link>
-    <description>Portfolio updates, projects, and research papers from Deven Shah, Co-founder & CTO at Suno Analytics</description>
+    <description>Portfolio updates and projects from Deven Shah, Co-founder & CTO at Suno Analytics</description>
     <language>en-US</language>
     <lastBuildDate>${rssDate}</lastBuildDate>
     <pubDate>${rssDate}</pubDate>

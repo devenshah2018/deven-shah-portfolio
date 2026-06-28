@@ -244,11 +244,16 @@ export function AboutSection() {
                         className="group flex items-center gap-3.5 border-b border-[#262626]/40 px-5 py-3.5 text-left transition-colors last:border-b-0 focus:outline-none focus:ring-2 focus:ring-[#404040] focus:ring-inset hover:bg-[#1a1a1a]/50"
                       >
                         {cert.logo && (
-                          <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg border border-[#2a2a2a]/60 bg-[#1f1f1f]/80 p-1.5">
+                          <div
+                            className={
+                              cert.logoWrapperClassName ??
+                              'flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg border border-[#2a2a2a]/60 bg-[#1f1f1f]/80 p-1.5'
+                            }
+                          >
                             <img
                               src={cert.logo}
                               alt=""
-                              className="h-full w-full object-contain opacity-90"
+                              className={cert.logoClassName ?? 'h-full w-full object-contain opacity-90'}
                             />
                           </div>
                         )}

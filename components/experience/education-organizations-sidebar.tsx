@@ -1,10 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
-import { ChevronDown, ChevronUp, FileText } from 'lucide-react';
-import { EDUCATION, RESEARCH_PAPERS } from '@/database/content-registry';
-export function EducationResearchSidebar() {
+import { ChevronDown, ChevronUp, ChevronRight, Building2 } from 'lucide-react';
+import { EDUCATION, ORGANIZATIONS, type Organization } from '@/database/content-registry';
+import { requestScrollToExperience, scrollToEducation } from '@/lib/url-utils';
+
+export function EducationOrganizationsSidebar() {
   const [expandedCoursework, setExpandedCoursework] = useState<Set<string>>(new Set());
 
   const toggleCoursework = (eduId: string) => {
@@ -14,6 +15,14 @@ export function EducationResearchSidebar() {
       else next.add(eduId);
       return next;
     });
+  };
+
+  const handleOrgClick = (org: Organization) => {
+    if (org.related.type === 'experience') {
+      requestScrollToExperience(org.related.id);
+    } else {
+      scrollToEducation(org.related.id);
+    }
   };
 
   return (
@@ -80,33 +89,52 @@ export function EducationResearchSidebar() {
           </div>
         </div>
 
-        {/* Technical Papers - always expanded, row layout */}
-        <div className="mt-4 border-t border-[#404040]/40 pt-4">
-          <div className="mb-2 flex items-center gap-1.5 text-base font-medium uppercase tracking-[0.15em] text-[#737373]">
-            <FileText className="h-3 w-3" />
-            Technical Papers ({RESEARCH_PAPERS.length})
+        {/* Organizations - clickable cards that scroll to the tied experience/education */}
+        {ORGANIZATIONS.length > 0 && (
+          <div className="mt-4 border-t border-[#404040]/40 pt-4">
+            <div className="mb-3 flex items-center gap-1.5 text-base font-medium uppercase tracking-[0.15em] text-[#737373]">
+              <Building2 className="h-3 w-3" />
+              Organizations ({ORGANIZATIONS.length})
+            </div>
+            <div className="space-y-2.5">
+              {ORGANIZATIONS.map((org) => (
+                <button
+                  key={org.id}
+                  type="button"
+                  onClick={() => handleOrgClick(org)}
+                  title={`Jump to ${org.role} role`}
+                  className="group block w-full rounded-lg border border-[#404040]/30 bg-[#1a1a1a]/40 p-3 text-left transition-colors hover:border-[#404040]/60 hover:bg-[#262626]/40"
+                >
+                  <div className="flex items-start gap-2.5">
+                    {org.logo && (
+                      <img
+                        src={org.logo}
+                        alt=""
+                        className="mt-0.5 h-6 w-6 flex-shrink-0 rounded object-contain opacity-80 transition-opacity group-hover:opacity-100"
+                      />
+                    )}
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-start justify-between gap-2">
+                        <h4 className="min-w-0 text-[13px] font-semibold leading-snug text-[#f5f5f0]">
+                          {org.name}
+                        </h4>
+                        <ChevronRight className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-[#525252] transition-colors group-hover:text-[#a3a3a3]" />
+                      </div>
+                      <p className="mt-1 flex flex-wrap items-center gap-x-1.5 text-[11px] text-[#a3a3a3]">
+                        <span className="font-medium text-[#d4d4d4]">{org.role}</span>
+                        <span className="text-[#404040]/80">·</span>
+                        <span className="tabular-nums text-[#525252]">{org.period}</span>
+                      </p>
+                      <p className="mt-1.5 text-[11px] leading-relaxed text-[#737373]">
+                        {org.description}
+                      </p>
+                    </div>
+                  </div>
+                </button>
+              ))}
+            </div>
           </div>
-          <div className="space-y-0">
-            {[...RESEARCH_PAPERS]
-              .sort((a, b) => b.sortDate.localeCompare(a.sortDate))
-              .map((paper) => {
-                const slug = paper.slug || paper.id;
-                return (
-                  <Link
-                    key={paper.id}
-                    href={`/papers/${slug}`}
-                    className="group flex items-center justify-between gap-2 border-b border-[#404040]/20 py-2.5 last:border-b-0 transition-colors hover:bg-[#262626]/30 -mx-1 px-1 rounded"
-                  >
-                    <span className="min-w-0 flex-1 truncate text-[11px] font-medium leading-snug text-[#a3a3a3] group-hover:text-[#f5f5f0]">
-                      {paper.title}
-                    </span>
-                    <span className="flex-shrink-0 text-[9px] text-[#525252] tabular-nums">{paper.date}</span>
-                    <FileText className="h-3 w-3 flex-shrink-0 text-[#404040] group-hover:text-[#737373]" />
-                  </Link>
-                );
-              })}
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );

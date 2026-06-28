@@ -1,14 +1,12 @@
 'use client';
 
 import { ChevronRight } from 'lucide-react';
-import Link from 'next/link';
 import { getCurrentWorkItems } from '@/database/content-registry';
 import { scrollToProject, requestScrollToExperience, scrollToEducation } from '@/lib/url-utils';
 
 function getPrimaryStatement(item: ReturnType<typeof getCurrentWorkItems>[number]): string {
   if ('summary' in item && item.summary) return item.summary;
   if ('description' in item && item.description) return item.description;
-  if ('abstract' in item && item.abstract) return item.abstract;
   if (item.type === 'experience') return item.title;
   if (item.type === 'education') return item.degree;
   return item.title;
@@ -69,17 +67,6 @@ export function CurrentProjects({ showHeading = true }: { showHeading?: boolean 
               )}
             </>
           );
-
-          if (item.type === 'paper') {
-            return (
-              <li key={`paper-${item.id}`}>
-                <Link href={`/papers/${item.slug || item.id}`} className={itemClass}>
-                  <div className="min-w-0 flex-1">{content}</div>
-                  <ChevronRight className="mt-1 h-4 w-4 flex-shrink-0 text-[#3a3a3a] transition-colors group-hover:text-[#6b6b6b]" />
-                </Link>
-              </li>
-            );
-          }
 
           return (
             <li key={`${item.type}-${item.id}`}>

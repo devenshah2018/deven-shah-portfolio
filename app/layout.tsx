@@ -5,7 +5,6 @@ import './globals.css';
 import { Analytics } from '@vercel/analytics/next';
 import { GoogleTagManager } from '@next/third-parties/google';
 import { ConditionalLayout } from '@/components/conditional-layout';
-import { headers } from 'next/headers';
 
 const BASE_URL = 'https://deven-shah.com';
 
@@ -114,26 +113,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const headersList = await headers();
-  const subdomain = headersList.get('x-subdomain');
-
-  // If on research subdomain, use minimal layout with brutalist styling
-  if (subdomain === 'research') {
-    return (
-      <html lang='en' className='dark' suppressHydrationWarning>
-        <body className={`${GeistSans.className} bg-[#141414] text-[#f5f5f0] antialiased`}>
-          {process.env.NODE_ENV === 'production' && (
-            <GoogleTagManager gtmId='GTM-MQBDDCBQ' />
-          )}
-          {children}
-          <Analytics />
-        </body>
-      </html>
-    );
-  }
-
-  // Otherwise, use full portfolio layout
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang='en' className='dark' suppressHydrationWarning>
       <body className={`${GeistSans.className} bg-[#141414] text-[#f5f5f0]`}>

@@ -11,7 +11,7 @@ import {
 } from '@/database/content-registry';
 import { scrollToExperience, REQUEST_SCROLL_TO_EXPERIENCE } from '@/lib/url-utils';
 import { Badge } from '@/components/ui/badge';
-import { EducationResearchSidebar } from './education-research-sidebar';
+import { EducationOrganizationsSidebar } from './education-organizations-sidebar';
 
 function getEndYear(org: OrgGroup): number {
   const p = org.positions[0]?.period;
@@ -473,7 +473,7 @@ export function ExperienceSection() {
               </div>
             </div>
               <aside className="min-w-0 lg:sticky lg:top-24 lg:self-start">
-                <EducationResearchSidebar />
+                <EducationOrganizationsSidebar />
               </aside>
             </div>
           </div>
