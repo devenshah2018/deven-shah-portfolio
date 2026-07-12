@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { ChevronDown, ChevronUp, ChevronRight, Building2 } from 'lucide-react';
-import { EDUCATION, ORGANIZATIONS, type Organization } from '@/database/content-registry';
+import { EDUCATION, ORGANIZATIONS, getOrganizations, type Organization } from '@/database/content-registry';
 import { requestScrollToExperience, scrollToEducation } from '@/lib/url-utils';
 
 export function EducationOrganizationsSidebar() {
@@ -18,10 +18,14 @@ export function EducationOrganizationsSidebar() {
   };
 
   const handleOrgClick = (org: Organization) => {
-    if (org.related.type === 'experience') {
-      requestScrollToExperience(org.related.id);
-    } else {
-      scrollToEducation(org.related.id);
+    if (org.related) {
+      if (org.related.type === 'experience') {
+        requestScrollToExperience(org.related.id);
+      } else {
+        scrollToEducation(org.related.id);
+      }
+    } else if (org.link) {
+      window.open(org.link, '_blank', 'noopener,noreferrer');
     }
   };
 
@@ -89,20 +93,20 @@ export function EducationOrganizationsSidebar() {
           </div>
         </div>
 
-        {/* Organizations - clickable cards that scroll to the tied experience/education */}
+        {/* Organizations - clickable cards that scroll to the tied experience/education (or open the org link) */}
         {ORGANIZATIONS.length > 0 && (
-          <div className="mt-4 border-t border-[#404040]/40 pt-4">
+          <div id="organizations" className="mt-4 scroll-mt-24 border-t border-[#404040]/40 pt-4">
             <div className="mb-3 flex items-center gap-1.5 text-base font-medium uppercase tracking-[0.15em] text-[#737373]">
               <Building2 className="h-3 w-3" />
               Organizations ({ORGANIZATIONS.length})
             </div>
             <div className="space-y-2.5">
-              {ORGANIZATIONS.map((org) => (
+              {getOrganizations().map((org) => (
                 <button
                   key={org.id}
                   type="button"
                   onClick={() => handleOrgClick(org)}
-                  title={`Jump to ${org.role} role`}
+                  title={org.related ? `Jump to ${org.role} role` : `Visit ${org.name}`}
                   className="group block w-full rounded-lg border border-[#404040]/30 bg-[#1a1a1a]/40 p-3 text-left transition-colors hover:border-[#404040]/60 hover:bg-[#262626]/40"
                 >
                   <div className="flex items-start gap-2.5">

@@ -234,7 +234,7 @@ function ExperienceCard({
 
 export function ExperienceSection() {
   const [flippedIds, setFlippedIds] = useState<Set<string>>(new Set());
-  const [viewMode, setViewMode] = useState<'detailed' | 'compact'>('detailed');
+  const [viewMode, setViewMode] = useState<'detailed' | 'compact'>('compact');
   const scrollToExperienceIdRef = useRef<string | null>(null);
   const timelineContainerRef = useRef<HTMLDivElement>(null);
   const timelineMaskId = useRef(`timeline-mask-${Math.random().toString(36).slice(2)}`).current;
@@ -379,18 +379,6 @@ export function ExperienceSection() {
                 >
                   <button
                     role="tab"
-                    aria-selected={viewMode === 'detailed'}
-                    onClick={() => setViewMode('detailed')}
-                    className={`rounded px-3 py-1.5 text-xs font-medium transition-colors focus:outline-none focus:ring-0 ${
-                      viewMode === 'detailed'
-                        ? 'bg-[#262626] text-[#f5f5f0]'
-                        : 'text-[#737373] hover:text-[#a3a3a3]'
-                    }`}
-                  >
-                    Detailed
-                  </button>
-                  <button
-                    role="tab"
                     aria-selected={viewMode === 'compact'}
                     onClick={() => setViewMode('compact')}
                     className={`rounded px-3 py-1.5 text-xs font-medium transition-colors focus:outline-none focus:ring-0 ${
@@ -400,6 +388,18 @@ export function ExperienceSection() {
                     }`}
                   >
                     Compact
+                  </button>
+                  <button
+                    role="tab"
+                    aria-selected={viewMode === 'detailed'}
+                    onClick={() => setViewMode('detailed')}
+                    className={`rounded px-3 py-1.5 text-xs font-medium transition-colors focus:outline-none focus:ring-0 ${
+                      viewMode === 'detailed'
+                        ? 'bg-[#262626] text-[#f5f5f0]'
+                        : 'text-[#737373] hover:text-[#a3a3a3]'
+                    }`}
+                  >
+                    Detailed
                   </button>
                 </div>
               </div>

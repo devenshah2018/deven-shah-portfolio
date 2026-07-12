@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { SkillModal } from '@/components/about/skill-modal';
-import { Profile } from '@/components/about/profile';
+import { ProjectGallery } from '@/components/about/project-gallery';
 import { GitHubContributionChart } from '@/components/hero/github-contribution-chart';
 import { CATEGORIZED_SKILLS, SKILL_CATEGORIES, SKILL_MAPPINGS, CERTIFICATIONS, groupExperiencesByOrg } from '@/database/content-registry';
 import { requestScrollToExperience } from '@/lib/url-utils';
@@ -224,8 +224,8 @@ export function AboutSection() {
                   })}
                 </div>
               </div>
-              {/* Profile */}
-              <Profile />
+              {/* Rotating project gallery */}
+              <ProjectGallery />
               {/* Certifications */}
               {CERTIFICATIONS.length > 0 && (
                 <div className="overflow-hidden rounded-xl border border-[#2a2a2a]/80 bg-[#161616]/95 shadow-[0_1px_0_0_rgba(255,255,255,0.03)] backdrop-blur-sm">

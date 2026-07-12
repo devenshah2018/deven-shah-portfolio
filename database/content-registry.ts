@@ -28,10 +28,10 @@ export const SKILLS = {
     'Rust',
     'C++'
   ],
-  platforms: ['Linux', 'AWS', 'Salesforce', 'Azure', 'LangGraph', 'GCP', 'Jupyter'],
-  frameworks: ['React', '.NET', 'Flask', 'TailwindCSS', 'Angular', 'ASP.NET Core', 'Next.js'],
+  platforms: ['Linux', 'AWS', 'Salesforce', 'Azure', 'LangGraph', 'GCP', 'Jupyter', 'Supabase', 'Stripe', 'Inngest'],
+  frameworks: ['React', '.NET', 'Flask', 'TailwindCSS', 'Angular', 'ASP.NET Core', 'Next.js', 'Node.js', 'Vite'],
   database: ['SQL', 'SOQL', 'Oracle', 'PostgreSQL', 'MySQL', 'MongoDB'],
-  aimal: ['Python', 'LLMs', 'Sklearn', 'Tensorflow', 'Pytorch', 'LangGraph', 'CNNs'],
+  aimal: ['Python', 'LLMs', 'Sklearn', 'Tensorflow', 'Pytorch', 'LangGraph', 'CNNs', 'OpenAI', 'FAISS'],
   devops: ['Docker', 'Github/Git', 'GCP', 'AWS', 'Azure'],
   apis: ['C#', 'Python', 'Apex', 'Azure', 'REST API', 'GraphQL', 'TypeScript'],
   featured: ['Python', 'TypeScript', 'C#', 'SQL', 'Salesforce', 'Azure', 'React', 'ASP.NET Core', 'PostgreSQL', 'CNNs', 'Pytorch', 'Docker']
@@ -39,46 +39,53 @@ export const SKILLS = {
 
 // Simplified skill mappings - only store IDs instead of duplicating full object data
 export const SKILL_MAPPINGS = [
-  { skill: 'Python', experienceIds: ['suno-analytics', 'netapp', 'build-fellowship', 'research-assistant'], projectIds: ['ares-project', 'molecule-mutation-prediction', 'drone-build-project'], educationIds: ['sjsu-bachelors'] },
-  { skill: 'TypeScript', experienceIds: ['suno-analytics', 'patelco', 'build-fellowship'], projectIds: ['drone-build-project', 'portfolio-project', 'ares-project'] },
+  { skill: 'Python', experienceIds: ['suno-analytics', 'netapp', 'build-fellowship', 'research-assistant', 'accenture'], projectIds: ['molecule-mutation-prediction', 'drone-build-project', 'image-retrieval-project'], educationIds: ['sjsu-bachelors'] },
+  { skill: 'TypeScript', experienceIds: ['suno-analytics', 'patelco', 'build-fellowship'], projectIds: ['drone-build-project', 'iris-project', 'boosted-project', 'any-project', 'umlazy-project', 'graf-project'] },
   { skill: 'C#', experienceIds: ['patelco'], educationIds: ['sjsu-bachelors'] },
-  { skill: 'React', experienceIds: ['suno-analytics'], projectIds: ['drone-build-project', 'portfolio-project', 'breaking-dijkstra-project'] },
-  { skill: 'Azure', experienceIds: ['suno-analytics', 'patelco'], projectIds: ['ares-project'] },
+  { skill: 'React', experienceIds: ['suno-analytics'], projectIds: ['drone-build-project', 'iris-project', 'breaking-dijkstra-project', 'boosted-project', 'any-project', 'umlazy-project', 'graf-project'] },
+  { skill: 'Azure', experienceIds: ['suno-analytics', 'patelco'] },
   { skill: 'LangGraph', experienceIds: ['suno-analytics'] },
   { skill: '.NET', experienceIds: ['patelco'] },
-  { skill: 'SQL', experienceIds: ['suno-analytics', 'patelco', 'netapp'], projectIds: ['ares-project'], educationIds: ['sjsu-bachelors'] },
-  { skill: 'SOQL', experienceIds: ['patelco'] },
-  { skill: 'HTML', experienceIds: ['suno-analytics', 'patelco', 'netapp'], projectIds: ['portfolio-project', 'ares-project'], educationIds: ['sjsu-bachelors'] },
-  { skill: 'CSS', experienceIds: ['suno-analytics', 'patelco', 'netapp'], projectIds: ['portfolio-project', 'ares-project'], educationIds: ['sjsu-bachelors'] },
+  { skill: 'SQL', experienceIds: ['suno-analytics', 'patelco', 'netapp'], educationIds: ['sjsu-bachelors'] },
+  { skill: 'SOQL', experienceIds: ['patelco', 'accenture'] },
+  { skill: 'HTML', experienceIds: ['suno-analytics', 'patelco', 'netapp'], educationIds: ['sjsu-bachelors'] },
+  { skill: 'CSS', experienceIds: ['suno-analytics', 'patelco', 'netapp'], educationIds: ['sjsu-bachelors'] },
   { skill: 'Java', educationIds: ['sjsu-bachelors'] },
-  { skill: 'JavaScript', experienceIds: ['suno-analytics', 'patelco'], projectIds: ['portfolio-project'] },
+  { skill: 'JavaScript', experienceIds: ['suno-analytics', 'patelco'] },
   { skill: 'Apex', experienceIds: ['patelco'] },
-  { skill: 'Salesforce', experienceIds: ['patelco'] },
+  { skill: 'Salesforce', experienceIds: ['patelco', 'accenture'] },
   { skill: 'AWS', experienceIds: ['suno-analytics'], educationIds: ['aws-cloud-practitioner'] },
   { skill: 'Flask', experienceIds: ['netapp', 'suno-analytics'] },
   { skill: 'Bash', experienceIds: ['netapp'], projectIds: [ 'molecule-mutation-prediction'] },
   { skill: 'Oracle', experienceIds: ['netapp'] },
-  { skill: 'PostgreSQL', experienceIds: ['suno-analytics'] },
+  { skill: 'PostgreSQL', experienceIds: ['suno-analytics'], projectIds: ['boosted-project', 'any-project', 'graf-project', 'iris-project'] },
   { skill: 'GCP', experienceIds: ['suno-analytics'] },
-  { skill: 'TailwindCSS', experienceIds: ['suno-analytics'], projectIds: ['portfolio-project'] },
-  { skill: 'Rust', projectIds: ['ares-project', 'task-scheduling-project'] },
+  { skill: 'TailwindCSS', experienceIds: ['suno-analytics'] },
+  { skill: 'Rust', projectIds: ['task-scheduling-project'] },
   { skill: 'Linux', educationIds: ['bu-masters'], projectIds: ['task-scheduling-project'] },
-  { skill: 'LLMs', experienceIds: ['suno-analytics'], projectIds: ['ares-project'] },
+  { skill: 'LLMs', experienceIds: ['suno-analytics'] },
   { skill: 'Sklearn', experienceIds: ['suno-analytics'], projectIds: ['molecule-mutation-prediction'] },
   { skill: 'Tensorflow', experienceIds: ['suno-analytics'] },
-  { skill: 'Pytorch', experienceIds: ['build-fellowship', 'research-assistant'] },
+  { skill: 'Pytorch', experienceIds: ['build-fellowship', 'research-assistant'], projectIds: ['image-retrieval-project'] },
   { skill: 'Docker', experienceIds: ['netapp', 'suno-analytics', 'build-fellowship'] },
-  { skill: 'Jupyter', projectIds: ['drone-build-project'], experienceIds: ['build-fellowship', 'research-assistant'] },
+  { skill: 'Jupyter', projectIds: ['drone-build-project', 'image-retrieval-project'], experienceIds: ['build-fellowship', 'research-assistant'] },
   { skill: 'C++', educationIds: ['bu-masters'] },
-  { skill: 'Github/Git', experienceIds: ['suno-analytics', 'patelco', 'netapp', 'build-fellowship'], projectIds: ['drone-build-project', 'portfolio-project', 'ares-project', 'molecule-mutation-prediction'], educationIds: ['sjsu-bachelors'] },
+  { skill: 'Github/Git', experienceIds: ['suno-analytics', 'patelco', 'netapp', 'build-fellowship'], projectIds: ['drone-build-project', 'molecule-mutation-prediction', 'image-retrieval-project'], educationIds: ['sjsu-bachelors'] },
   { skill: 'REST API', experienceIds: ['suno-analytics', 'patelco', 'netapp'] },
   { skill: 'GraphQL', experienceIds: ['suno-analytics'] },
   { skill: 'MySQL', experienceIds: ['patelco'] },
   { skill: 'MongoDB', experienceIds: ['suno-analytics'] },
   { skill: 'Angular', experienceIds: ['patelco'] },
   { skill: 'ASP.NET Core', experienceIds: ['patelco'] },
-  { skill: 'Next.js', projectIds: ['drone-build-project'], experienceIds: ['suno-analytics'] },
-  { skill: 'CNNs', experienceIds: ['build-fellowship', 'research-assistant'] },
+  { skill: 'Next.js', projectIds: ['drone-build-project', 'umlazy-project'], experienceIds: ['suno-analytics'] },
+  { skill: 'CNNs', experienceIds: ['build-fellowship', 'research-assistant'], projectIds: ['image-retrieval-project'] },
+  { skill: 'FAISS', experienceIds: ['build-fellowship'], projectIds: ['image-retrieval-project'] },
+  { skill: 'Node.js', projectIds: ['boosted-project', 'any-project', 'iris-project'] },
+  { skill: 'Vite', projectIds: ['graf-project'] },
+  { skill: 'Supabase', projectIds: ['boosted-project', 'any-project', 'graf-project', 'iris-project'] },
+  { skill: 'Stripe', projectIds: ['boosted-project', 'iris-project'] },
+  { skill: 'Inngest', projectIds: ['any-project'] },
+  { skill: 'OpenAI', projectIds: ['boosted-project', 'iris-project'] },
 ];
 
 export const SKILL_CATEGORIES = [
@@ -202,7 +209,7 @@ export const EXPERIENCES = [
     description:
       'Conducting computer vision and AI research across two labs at Boston University, across biotechnology and criminal justice.',
     achievements: [
-      'Digital Forensics Research Lab (Mar 2026 – Present): Researching deepfake generation and detection landscape alongside faculty and peers across AI and criminal justice, building frameworks that hold up against real-world media integrity threats.',
+      'Cyberforensics Research Lab (Mar 2026 – Present): Researching deepfake generation and detection landscape alongside faculty and peers across AI and criminal justice, building frameworks that hold up against real-world media integrity threats.',
       'Artificial Intelligence and Computer Vision Lab (Oct 2025 – Present): Researching automated osteoarthritis diagnosis alongside faculty, medical professionals, and peers across computer vision and clinical radiology, building pipelines that replace hours of manual MRI review.'
     ],
     gradient: 'from-blue-500 to-cyan-500',
@@ -496,11 +503,10 @@ export function getTimelineYearTicks(): { label: string; sortKey: number }[] {
 
 export const PROJECT_CATEGORIES = [
   { key: 'all', label: 'All' },
-  { key: 'featured', label: 'Featured', special: true },
-  { key: 'web', label: 'Web Apps' },
-  { key: 'ai', label: 'Data Science & AI/ML' },
-  { key: 'tools', label: 'Developer Tools' },
-  { key: 'theory', label: 'Theory & Algorithms' },
+  { key: 'products', label: 'Products' },
+  { key: 'apps', label: 'Apps & Tools' },
+  { key: 'ai', label: 'AI / ML' },
+  { key: 'theory', label: 'Theory' },
 ];
 
 export const PROJECTS: Project[] = [
@@ -512,57 +518,108 @@ export const PROJECTS: Project[] = [
     period: '01/2026 – Present',
     description:
       'AI-powered daily assistant that sits on top of your conversations and workflows to organize what matters',
-    technologies: getProjectSkillsFromMapping('portfolio-project'),
+    technologies: ['TypeScript', 'React', 'Node.js', 'OpenAI', 'PostgreSQL', 'Stripe', 'Supabase'],
     entry_point: 'live',
     link: 'https://www.iris-plan.com',
     status: 'In Progress',
     readMe: false,
-    categories: ['web', 'featured'],
+    categories: ['products'],
     current_work: false,
     summary: 'AI daily planner for your conversations and workflows',
-    related_experiences: [],
+    related_experiences: ['voyagers'],
+    demoVideo: '/demos/iris-demo.mp4',
     accessible_at: ['hosted'],
     access_points: [
       { type: 'hosted', url: 'https://www.iris-plan.com', label: 'Live Site' }
     ]
   },
   {
-    id: 'portfolio-project',
-    title: 'Portfolio Website',
-    subtitle: 'Modern SPA for My Work & Skills',
-    period: '06/2025 – Present',
-    sortDate: '2025-06',
+    id: 'boosted-project',
+    title: 'Boosted',
+    subtitle: 'AI Marketing Agent',
+    period: '03/2026 – Present',
+    sortDate: '2026-03',
     description:
-      'Personal portfolio built with React, featuring interactive demos, live IDE, and responsive design.',
-    technologies: getProjectSkillsFromMapping('portfolio-project'),
-    entry_point: 'github',
-    link: 'https://github.com/devenshah2018/deven-shah-portfolio',
+      'A marketing agent that drafts content grounded in your product and voice — SEO-tuned and ready to ship across channels.',
+    technologies: ['TypeScript', 'React', 'Node.js', 'OpenAI', 'PostgreSQL', 'Stripe', 'Supabase'],
+    entry_point: 'live',
+    link: 'https://boosted.onrender.com',
     status: 'Live',
-    readMe: true,
-    categories: ['web', 'featured'],
-    accessible_at: ['hosted', 'github'],
+    readMe: false,
+    categories: ['products'],
+    summary: 'AI marketing agent for on-brand, SEO-tuned content',
+    related_experiences: ['voyagers'],
+    demoVideo: '/demos/boosted-demo.mp4',
+    accessible_at: ['hosted'],
     access_points: [
-      { type: 'hosted', url: 'https://deven-shah.com/', label: 'Live Site' },
-      { type: 'github', url: 'https://github.com/devenshah2018/deven-shah-portfolio', label: 'Code' }
-    ]
+      { type: 'hosted', url: 'https://boosted.onrender.com', label: 'Live Site' },
+    ],
   },
   {
-    id: 'ares-project',
-    title: 'Ares',
-    subtitle: 'Security Compliance Platform',
-    period: '08/2024 – 12/2024',
-    sortDate: '2024-08',
+    id: 'any-project',
+    title: 'Any',
+    subtitle: 'Prompt-to-Tool Builder',
+    period: '06/2026 – Present',
+    sortDate: '2026-06',
     description:
-      'SOC2 compliance platform leveraging AI and deep cybersecurity technology launched on VSCode Marketplace.',
-    technologies: getProjectSkillsFromMapping('ares-project'),
-    entry_point: 'vscode',
-    link: 'http://marketplace.visualstudio.com/items?itemName=strive-ai.strive',
+      'A no-code platform that turns a single prompt into a fully built, tested, and deployed web tool — designed and live in minutes.',
+    technologies: ['TypeScript', 'React', 'Node.js', 'Inngest', 'Supabase', 'PostgreSQL'],
+    entry_point: 'live',
+    link: 'https://any-uf96.onrender.com',
     status: 'Live',
-    categories: ['ai', 'tools'],
-    accessible_at: ['vscode'],
+    readMe: false,
+    categories: ['products'],
+    summary: 'Turns a single prompt into a deployed web tool',
+    related_experiences: ['voyagers'],
+    demoVideo: '/demos/any-demo.mp4',
+    accessible_at: ['hosted'],
     access_points: [
-      { type: 'vscode', url: 'http://marketplace.visualstudio.com/items?itemName=strive-ai.strive', label: 'VSCode' },
-    ]
+      { type: 'hosted', url: 'https://any-uf96.onrender.com', label: 'Live Site' },
+    ],
+  },
+  {
+    id: 'umlazy-project',
+    title: 'UMLazy',
+    subtitle: 'UML Diagram Editor',
+    period: '06/2026 – Present',
+    sortDate: '2026-06',
+    description:
+      'The quickest way to create UML diagrams — a fast, lightweight canvas for sketching software designs.',
+    technologies: ['TypeScript', 'Next.js', 'React'],
+    entry_point: 'live',
+    link: 'https://umlazy.vercel.app',
+    status: 'Live',
+    readMe: false,
+    categories: ['apps'],
+    summary: 'Fast, lightweight UML diagram editor',
+    related_experiences: ['voyagers'],
+    demoVideo: '/demos/umlazy-demo.mp4',
+    accessible_at: ['hosted'],
+    access_points: [
+      { type: 'hosted', url: 'https://umlazy.vercel.app', label: 'Live Site' },
+    ],
+  },
+  {
+    id: 'graf-project',
+    title: 'Graf',
+    subtitle: 'Nonlinear Messaging',
+    period: '07/2026 – Present',
+    sortDate: '2026-07',
+    description:
+      'A messaging platform where any message becomes its own thread — the structure of email with the speed of chat.',
+    technologies: ['TypeScript', 'React', 'Vite', 'Supabase', 'PostgreSQL'],
+    entry_point: 'live',
+    link: 'https://graf-fawn.vercel.app',
+    status: 'Live',
+    readMe: false,
+    categories: ['apps'],
+    summary: 'Graph-based messaging: any message becomes a thread',
+    related_experiences: ['voyagers'],
+    demoVideo: '/demos/graf-demo.mp4',
+    accessible_at: ['hosted'],
+    access_points: [
+      { type: 'hosted', url: 'https://graf-fawn.vercel.app', label: 'Live Site' },
+    ],
   },
   // {
   //   id: 'crypto-forecasting-project',
@@ -616,13 +673,34 @@ export const PROJECTS: Project[] = [
     link: 'https://drone-path-planner.vercel.app/',
     status: 'Completed',
     readMe: false,
-    categories: ['ai', 'featured', 'web'],
+    categories: ['apps'],
     accessible_at: ['github', 'hosted'],
     access_points: [
       { type: 'hosted', url: 'https://drone-path-planner.vercel.app/', label: 'Live Demo' },
       { type: 'github', url: 'https://github.com/devenshah2018/drone-trajectory-planner', label: 'Github' },
     ],
     related_experiences: ['build-fellowship'],
+  },
+  {
+    id: 'image-retrieval-project',
+    title: 'Image Retrieval',
+    subtitle: 'Embedding-Based Similarity Search',
+    period: '02/2026 – 03/2026',
+    sortDate: '2026-02',
+    description:
+      'Embedding-based retrieval that trains a ResNet backbone for L2-normalized embeddings, then builds and queries a FAISS inner-product index for fast similarity search over precomputed features.',
+    technologies: ['Python', 'Pytorch', 'FAISS', 'ResNet', 'CNNs'],
+    entry_point: 'github',
+    link: 'https://github.com/devenshah2018/image-retrieval',
+    status: 'Completed',
+    readMe: true,
+    categories: ['ai'],
+    summary: 'Deep-embedding image retrieval with FAISS similarity search',
+    related_experiences: ['build-fellowship'],
+    accessible_at: ['github'],
+    access_points: [
+      { type: 'github', url: 'https://github.com/devenshah2018/image-retrieval', label: 'Code' },
+    ],
   },
   {
     id: 'task-scheduling-project',
@@ -754,14 +832,28 @@ export type Organization = {
   institution: string;
   logo?: string;
   link?: string;
-  /** Tie to an experience or education entry; clicking an org scrolls to and highlights it. */
-  related: { type: 'experience' | 'education'; id: string };
+  /**
+   * Optionally tie to an experience or education entry; clicking the org scrolls to and highlights it.
+   * When omitted, the org is standalone — clicking opens its `link` instead.
+   */
+  related?: { type: 'experience' | 'education'; id: string };
 };
 
 export const ORGANIZATIONS: Organization[] = [
   {
+    id: 'voyagers',
+    name: 'Voyagers',
+    role: 'Founder',
+    period: 'Jan 2026 – Present',
+    description:
+      'A collective of builders shipping real products, from AI planners to content and diagramming tools.',
+    institution: 'Voyagers',
+    logo: '/voyagers-logo.svg',
+    link: 'https://voyagers-lovat.vercel.app',
+  },
+  {
     id: 'digital-forensics-lab',
-    name: 'Digital Forensics Lab',
+    name: 'Cyberforensics Research Lab',
     role: 'Research Assistant',
     period: 'Mar 2026 – Present',
     description:
@@ -805,6 +897,23 @@ export function getProjectById(id: string) {
 
 export function getEducationById(id: string) {
   return EDUCATION.find(edu => edu.id === id);
+}
+
+export function getOrganizationById(id: string) {
+  return ORGANIZATIONS.find(org => org.id === id);
+}
+
+/** Sort key from an org period like "Jan 2026 – Present" → year*12 + monthIndex. */
+function orgStartKey(period: string): number {
+  const m = period.match(/([A-Za-z]{3,})\s+(\d{4})/);
+  if (!m || !m[1] || !m[2]) return 0;
+  const monthIdx = MONTHS.findIndex(mo => mo.toLowerCase() === m![1]!.slice(0, 3).toLowerCase());
+  return parseInt(m[2], 10) * 12 + (monthIdx >= 0 ? monthIdx : 0);
+}
+
+/** Organizations ordered by start date, earliest first. */
+export function getOrganizations(): Organization[] {
+  return [...ORGANIZATIONS].sort((a, b) => orgStartKey(a.period) - orgStartKey(b.period));
 }
 
 export type CurrentWorkItem =

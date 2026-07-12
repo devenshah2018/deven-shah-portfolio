@@ -27,4 +27,6 @@ export type Project = {
   accessible_at: ('github' | 'vscode' | 'kaggle' | 'hosted')[];
   access_points?: AccessPoint[];
   related_experiences?: string[];
+  /** Path to a demo video (in /public). When set, the project row plays this instead of a screenshot. */
+  demoVideo?: string;
 };

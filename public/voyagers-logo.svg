@@ -1,0 +1,26 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="64" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#EAF3FB"/>
+      <stop offset="1" stop-color="#D7EAF8"/>
+    </linearGradient>
+    <linearGradient id="water" x1="6" y1="40" x2="58" y2="52" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2E8BD0"/>
+      <stop offset="1" stop-color="#0E4D86"/>
+    </linearGradient>
+    <linearGradient id="boat" x1="14" y1="34" x2="50" y2="44" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F4B64B"/>
+      <stop offset="1" stop-color="#E8743B"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="64" height="64" rx="14" fill="url(#sky)"/>
+  <circle cx="46" cy="18" r="6.5" fill="#F6B64B"/>
+  <circle cx="28" cy="20" r="4.4" fill="#E8743B"/>
+  <path d="M28 24.5c-3.2 0-5 2.4-5.6 5.2l11.2 0C33 26.9 31.2 24.5 28 24.5Z" fill="#16263F"/>
+  <path d="M30 27 L44 21" stroke="#16263F" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M44 21l3.4-1.6" stroke="#16263F" stroke-width="3.6" stroke-linecap="round"/>
+  <path d="M13 33h38c-1.6 6.4-7.8 10.4-19 10.4S14.6 39.4 13 33Z" fill="url(#boat)"/>
+  <path d="M13 33h38" stroke="#C85A28" stroke-width="2" stroke-linecap="round"/>
+  <path d="M6 47c3.5 0 3.5 3 7 3s3.5-3 7-3 3.5 3 7 3 3.5-3 7-3 3.5 3 7 3 3.5-3 7-3" stroke="url(#water)" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <path d="M8 54c3 0 3 2.4 6 2.4s3-2.4 6-2.4 3 2.4 6 2.4 3-2.4 6-2.4 3 2.4 6 2.4 3-2.4 6-2.4" stroke="url(#water)" stroke-width="2.4" stroke-linecap="round" fill="none" opacity="0.55"/>
+</svg>

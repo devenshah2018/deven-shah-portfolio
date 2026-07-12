@@ -1,34 +1,37 @@
 'use client';
 
-import {
-  Calendar,
-  CheckCircle2,
-  Clock,
-  Pause,
-  ExternalLink,
-  Building2,
-  GraduationCap,
-} from 'lucide-react';
-import { LinkThumbnail } from '@/components/projects/link-thumbnail';
+import { ArrowUpRight } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   PROJECTS,
   getExperienceById,
   getEducationById,
+  getOrganizationById,
 } from '@/database/content-registry';
 import { requestScrollToExperience, scrollToEducation } from '@/lib/url-utils';
 import { Project } from '@/lib/types';
+import {
+  ProjectMedia,
+  getProjectWebLink,
+  getProjectCodeAccessPoints,
+  hostname,
+  iconMap,
+} from '@/components/projects/project-media';
 
-function getProjectCategories(project: Project): string[] {
-  return project.categories || ['other'];
-}
+/** Category filters shown next to the org filters. */
+const CATEGORY_FILTERS: { key: string; label: string }[] = [
+  { key: 'all', label: 'All' },
+  { key: 'products', label: 'Products' },
+  { key: 'apps', label: 'Apps & Tools' },
+  { key: 'ai', label: 'AI / ML' },
+  { key: 'theory', label: 'Theory' },
+];
 
-function isProjectFeatured(project: Project): boolean {
-  return getProjectCategories(project).includes('featured');
-}
+type RelatedLabel = { name: string; type: 'experience' | 'education' | 'organization'; id: string; logo?: string };
 
-function getRelatedLabels(project: Project): { name: string; type: 'experience' | 'education'; id: string; logo?: string }[] {
+/** Resolve a project's related_experiences to org/school/company labels (deduped by name). */
+function getRelatedLabels(project: Project): RelatedLabel[] {
   if (!project.related_experiences || project.related_experiences.length === 0) return [];
   const seen = new Set<string>();
   return project.related_experiences
@@ -43,237 +46,230 @@ function getRelatedLabels(project: Project): { name: string; type: 'experience' 
         seen.add(education.institution);
         return { name: education.institution, type: 'education' as const, id, logo: education.logo };
       }
+      const organization = getOrganizationById(id);
+      if (organization && !seen.has(organization.name)) {
+        seen.add(organization.name);
+        return { name: organization.name, type: 'organization' as const, id, logo: organization.logo };
+      }
       return null;
     })
-    .filter(Boolean) as { name: string; type: 'experience' | 'education'; id: string; logo?: string }[];
+    .filter(Boolean) as RelatedLabel[];
 }
 
-function getStatusBadge(status: string, size: 'sm' | 'md' = 'sm') {
-  const iconCls = size === 'md' ? 'h-3.5 w-3.5' : 'h-2.5 w-2.5';
-  const textCls = size === 'md' ? 'text-sm' : 'text-xs';
-  const base = `inline-flex items-center gap-1 ${textCls} font-medium text-[#a3a3a3]`;
-  if (status === 'Live' || status === 'Completed') {
-    return <span className={base}><CheckCircle2 className={iconCls} />{status}</span>;
-  }
-  if (status === 'In Progress') {
-    return <span className={base}><Clock className={iconCls} />{status}</span>;
-  }
-  if (status === 'Paused') {
-    return <span className={base}><Pause className={iconCls} />{status}</span>;
-  }
-  return <span className={base}>{status}</span>;
+/** Display year for the right column: "2026 —" while ongoing, else the end year. */
+function displayYear(period: string): string {
+  const years = period.match(/\d{4}/g);
+  if (!years || years.length === 0) return period;
+  if (/present/i.test(period)) return `${years[0]} —`;
+  return years[years.length - 1] as string;
 }
 
-function getWebLink(project: Project) {
-  if (project.access_points && project.access_points.length > 0) {
-    return project.access_points.find(ap => ap.type === 'hosted' || ap.type === 'web');
-  }
-  if (project.accessible_at.includes('hosted')) {
-    return { type: 'hosted' as const, url: project.link, label: undefined };
-  }
-  return null;
+/** Status dot colors aligned to the site's status palette (emerald / blue / amber). */
+function statusColor(status: string): string {
+  if (status === 'In Progress') return '#60a5fa'; // blue-400
+  if (status === 'Paused') return '#fbbf24'; // amber-400
+  return '#34d399'; // emerald-400 — Live / Completed
 }
 
-function getAccessPoints(project: Project) {
-  if (project.access_points && project.access_points.length > 0) {
-    return project.access_points;
-  }
-  return project.accessible_at.map(type => ({ type, url: project.link, label: undefined }));
+function StatusPill({ status }: { status: string }) {
+  const color = statusColor(status);
+  return (
+    <span className="inline-flex items-center gap-2 text-[13px] text-[#a3a3a3]">
+      <span
+        className="h-1.5 w-1.5 rounded-full"
+        style={{ backgroundColor: color, boxShadow: `0 0 0 3px ${color}1f` }}
+      />
+      {status}
+    </span>
+  );
 }
 
-const iconMap: Record<string, { src: string; alt: string }> = {
-  github: { src: '/github-icon.svg', alt: 'GitHub' },
-  kaggle: { src: '/kaggle-icon.png', alt: 'Kaggle' },
-  vscode: { src: '/vscode-icon.png', alt: 'VSCode' },
-};
-
-function FeaturedProjectCard({ project, index, size = 'normal' }: { project: Project; index: number; size?: 'large' | 'small' | 'normal' }) {
-  const related = getRelatedLabels(project);
-  const webLink = getWebLink(project);
-  const isLarge = size === 'large';
+function ProjectIndexRow({ project, number }: { project: Project; number: number }) {
+  const relatedLogos = getRelatedLabels(project).filter((r) => r.logo);
+  const webLink = getProjectWebLink(project);
+  const primaryLink = webLink?.url ?? project.link;
+  const codeAccessPoints = getProjectCodeAccessPoints(project);
 
   return (
     <motion.article
       id={`project-${project.id}`}
       initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.35, delay: index * 0.05 }}
-      className={`group flex h-full w-full flex-col scroll-mt-20 ${isLarge ? 'min-h-0' : ''}`}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-80px' }}
+      transition={{ duration: 0.4 }}
+      className="scroll-mt-24 border-b border-[#242424] py-8 sm:py-10"
     >
-      <a
-        href={webLink?.url ?? project.link}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex h-full w-full flex-col overflow-hidden rounded-xl border-none bg-transparent transition-colors"
-      >
-        {webLink && (
-          <div className="w-full flex-shrink-0 overflow-hidden aspect-[40/21]">
-            <LinkThumbnail url={webLink.url} title={project.title} className="h-full w-full transition-transform duration-300 group-hover:scale-[1.02]" objectFit="contain" />
-          </div>
-        )}
-        <div className="flex min-h-0 flex-1 flex-col p-4">
-          <div className="flex items-center gap-2">
-            <h4 className={`font-semibold text-[#f5f5f0] ${isLarge ? 'text-base sm:text-lg' : ''}`}>{project.title}</h4>
-          </div>
-          <div className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-sm text-[#a3a3a3]">
-            <span className="flex items-center gap-1">
-              <Calendar className="h-3 w-3 shrink-0" />
-              {project.period}
-            </span>
-            {getStatusBadge(project.status, 'md')}
-          </div>
-          <div className="mt-2 min-h-[2.5rem]">
+      <div className="grid grid-cols-1 gap-y-6 lg:grid-cols-[2.5rem_minmax(0,1fr)_13rem] lg:gap-x-8">
+        {/* Index number */}
+        <div className="text-sm font-medium tabular-nums text-[#6b6b6b]">
+          {String(number).padStart(2, '0')}
+        </div>
+
+        {/* Main: text column + floating media */}
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:gap-8">
+          <div className="min-w-0 flex-1 sm:max-w-[17rem]">
+            <a
+              href={primaryLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group/title inline-block"
+            >
+              <h3 className="text-xl font-semibold leading-tight text-[#f5f5f0] transition-colors sm:text-2xl group-hover/title:text-white">
+                {project.title}
+              </h3>
+            </a>
+            {project.subtitle && (
+              <p className="mt-2 text-[11px] uppercase tracking-[0.15em] text-[#737373]">
+                {project.subtitle}
+              </p>
+            )}
             {project.description && (
-              <p className="line-clamp-2 text-sm leading-[1.6] text-[#a3a3a3]">{project.description}</p>
+              <p className="mt-3 text-[15px] leading-relaxed text-[#a3a3a3]">{project.description}</p>
+            )}
+            {project.technologies && project.technologies.length > 0 && (
+              <div className="mt-4 flex flex-wrap gap-2">
+                {project.technologies.slice(0, 4).map((tech, i) => (
+                  <span
+                    key={i}
+                    className="rounded-full border border-[#2a2a2a] bg-transparent px-3 py-1 text-[12px] text-[#a3a3a3]"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
             )}
           </div>
-          <div className="mt-2 min-h-[1.75rem] flex flex-wrap gap-1.5">
-            {related.slice(0, 2).map((r, i) => (
-              <button
-                key={`${r.name}-${i}`}
-                type="button"
-                onClick={(e) => {
-                  e.preventDefault();
-                  r.type === 'experience'
-                    ? requestScrollToExperience(r.id)
-                    : scrollToEducation(r.id);
-                }}
-                className="inline-flex items-center gap-1 text-xs font-medium text-[#a3a3a3] underline decoration-[#404040] underline-offset-1 transition-colors hover:text-[#f5f5f0]"
-              >
-                {r.logo ? (
-                  <img src={r.logo} alt="" className="h-4 w-4 rounded object-contain" />
-                ) : r.type === 'experience' ? (
-                  <Building2 className="h-2.5 w-2.5" />
-                ) : (
-                  <GraduationCap className="h-2.5 w-2.5" />
-                )}
-                <span>{r.name}</span>
-              </button>
-            ))}
+
+          {(project.demoVideo || webLink || codeAccessPoints.length > 0) && (
+            <div className="w-full sm:flex-1 sm:max-w-[480px]">
+              <ProjectMedia project={project} />
+            </div>
+          )}
+        </div>
+
+        {/* Right meta column */}
+        <div className="flex flex-col gap-3.5">
+          <div className="flex flex-col gap-1.5">
+            <span className="text-sm font-medium tabular-nums tracking-tight text-[#e5e5e5]">
+              {displayYear(project.period)}
+            </span>
+            <StatusPill status={project.status} />
           </div>
-          <div className="mt-auto flex items-center gap-2 pt-3">
-            {webLink && (
-              <span className="inline-flex items-center gap-1 text-xs font-medium text-[#737373]">
-                <ExternalLink className="h-3 w-3" />
-                Visit
-              </span>
-            )}
-            {getAccessPoints(project)
-              .filter(ap => ap.type !== 'hosted' && ap.type !== 'web')
-              .map((ap, i) => {
+
+          {/* Access: "@" + live link + source */}
+          {(webLink || codeAccessPoints.length > 0) && (
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-[11px] text-[#5a5a5a]">@</span>
+              {webLink && (
+                <a
+                  href={webLink.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group/link inline-flex min-w-0 max-w-full items-center gap-1 text-[13px] text-blue-400 transition-colors hover:text-blue-300"
+                >
+                  <span className="truncate">{hostname(webLink.url)}</span>
+                  <ArrowUpRight className="h-3 w-3 shrink-0 transition-transform duration-200 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
+                </a>
+              )}
+              {codeAccessPoints.map((ap, i) => {
                 const config = iconMap[ap.type];
                 if (!config) return null;
                 return (
                   <a
-                    key={i}
+                    key={`ap-${i}`}
                     href={ap.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                    className="flex h-7 w-7 items-center justify-center rounded text-[#a3a3a3] transition-colors hover:text-[#f5f5f0]"
+                    className="flex h-8 w-8 items-center justify-center rounded-lg border border-[#2a2a2a] bg-[#161616] transition-colors hover:border-[#3d3d3d] hover:bg-[#1f1f1f]"
                     aria-label={config.alt}
+                    title={config.alt}
                   >
-                    <img src={config.src} alt={config.alt} className={`h-3.5 w-3.5 object-contain ${ap.type === 'github' ? 'invert' : ''}`} />
+                    <img
+                      src={config.src}
+                      alt={config.alt}
+                      className={`h-[18px] w-[18px] object-contain ${ap.type === 'github' ? 'invert' : ''}`}
+                    />
                   </a>
                 );
               })}
-          </div>
-        </div>
-      </a>
-    </motion.article>
-  );
-}
-
-function OtherProjectCard({ project, index }: { project: Project; index: number }) {
-  const related = getRelatedLabels(project);
-  const webLink = getWebLink(project);
-
-  return (
-    <motion.article
-      id={`project-${project.id}`}
-      initial={{ opacity: 0, y: 8 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, delay: index * 0.03 }}
-      className="group flex h-full flex-col scroll-mt-20 rounded-xl border-none bg-transparent p-4 transition-colors"
-    >
-      <div className="flex items-start justify-between gap-2">
-        <h4 className="font-semibold text-[#f5f5f0]">{project.title}</h4>
-        <div className="flex items-center gap-1">
-          {webLink && (
-            <a
-              href={webLink.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex h-7 w-7 items-center justify-center rounded text-[#a3a3a3] transition-colors hover:text-[#f5f5f0]"
-              aria-label="Visit"
-            >
-              <ExternalLink className="h-3.5 w-3.5" />
-            </a>
+            </div>
           )}
-          {getAccessPoints(project)
-            .filter(ap => ap.type !== 'hosted' && ap.type !== 'web')
-            .map((ap, i) => {
-              const config = iconMap[ap.type];
-              if (!config) return null;
-              return (
-                <a
-                  key={i}
-                  href={ap.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex h-7 w-7 items-center justify-center rounded text-[#a3a3a3] transition-colors hover:text-[#f5f5f0]"
-                  aria-label={config.alt}
+
+          {/* Associated orgs — soft "with" + logo chips */}
+          {relatedLogos.length > 0 && (
+            <div className="flex flex-wrap items-center gap-2 pt-0.5">
+              <span className="text-[11px] text-[#5a5a5a]">with</span>
+              {relatedLogos.map((r, i) => (
+                <button
+                  key={`rel-${i}`}
+                  type="button"
+                  onClick={() => {
+                    if (r.type === 'experience') requestScrollToExperience(r.id);
+                    else if (r.type === 'education') scrollToEducation(r.id);
+                    else
+                      document
+                        .getElementById('organizations')
+                        ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                  }}
+                  className="h-8 w-8 shrink-0 overflow-hidden rounded-[9px] opacity-95 ring-1 ring-white/10 transition-all hover:opacity-100 hover:ring-white/25"
+                  aria-label={`View ${r.name}`}
+                  title={r.name}
                 >
-                  <img src={config.src} alt={config.alt} className={`h-3.5 w-3.5 object-contain ${ap.type === 'github' ? 'invert' : ''}`} />
-                </a>
-              );
-            })}
+                  <img src={r.logo} alt={r.name} className="h-full w-full object-contain" />
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </div>
-      <div className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-sm text-[#a3a3a3]">
-        <span className="flex items-center gap-1">
-          <Calendar className="h-2.5 w-2.5 shrink-0" />
-          {project.period}
-        </span>
-        {getStatusBadge(project.status)}
-        {related.length > 0 && (
-          <>
-            <span className="text-[#525252]">·</span>
-            {related.slice(0, 2).map((r, i) => (
-              <button
-                key={`${r.name}-${i}`}
-                type="button"
-                onClick={() =>
-                  r.type === 'experience'
-                    ? requestScrollToExperience(r.id)
-                    : scrollToEducation(r.id)
-                }
-                className="font-medium underline decoration-[#404040] underline-offset-1 transition-colors hover:text-[#f5f5f0]"
-              >
-                {r.name}
-              </button>
-            ))}
-          </>
-        )}
-      </div>
-      {project.description && (
-        <p className="mt-2 line-clamp-2 text-sm leading-[1.6] text-[#a3a3a3]">{project.description}</p>
-      )}
     </motion.article>
   );
 }
 
 export function ProjectsHorizontalSection() {
-  const { featuredProjects, otherProjects } = useMemo(() => {
-    const featured: Project[] = [];
-    const other: Project[] = [];
-    const sorted = [...PROJECTS].sort((a, b) => (b.sortDate || '').localeCompare(a.sortDate || ''));
-    for (const p of sorted) {
-      if (isProjectFeatured(p)) featured.push(p);
-      else other.push(p);
-    }
-    return { featuredProjects: featured, otherProjects: other };
+  const [activeCategory, setActiveCategory] = useState<string>('all');
+  const [selectedOrgs, setSelectedOrgs] = useState<Set<string>>(new Set());
+
+  // Cross-page navigation (papers page, hash links) resets filters so the target project is visible.
+  useEffect(() => {
+    const handleReset = () => {
+      setActiveCategory('all');
+      setSelectedOrgs(new Set());
+    };
+    window.addEventListener('resetProjectFilter', handleReset);
+    return () => window.removeEventListener('resetProjectFilter', handleReset);
   }, []);
+
+  // Orgs/schools/companies attached to any project (deduped by name, first appearance order).
+  const attachedOrgs = useMemo(() => {
+    const byName = new Map<string, RelatedLabel>();
+    for (const project of PROJECTS) {
+      for (const r of getRelatedLabels(project)) {
+        if (r.logo && !byName.has(r.name)) byName.set(r.name, r);
+      }
+    }
+    return Array.from(byName.values());
+  }, []);
+
+  const toggleOrg = (name: string) => {
+    setSelectedOrgs((prev) => {
+      const next = new Set(prev);
+      if (next.has(name)) next.delete(name);
+      else next.add(name);
+      return next;
+    });
+  };
+
+  const filteredProjects = useMemo(() => {
+    return PROJECTS.filter((project) => {
+      const cats = project.categories || [];
+      const matchesCategory = activeCategory === 'all' || cats.includes(activeCategory);
+      const matchesOrg =
+        selectedOrgs.size === 0 ||
+        getRelatedLabels(project).some((r) => selectedOrgs.has(r.name));
+      return matchesCategory && matchesOrg;
+    }).sort((a, b) => (b.sortDate || '').localeCompare(a.sortDate || ''));
+  }, [activeCategory, selectedOrgs]);
 
   return (
     <section id="projects" className="bg-[#141414] py-24 sm:py-32">
@@ -284,49 +280,71 @@ export function ProjectsHorizontalSection() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h2 className="mb-12 text-left text-3xl font-medium uppercase tracking-[0.2em] text-[#a3a3a3]">
+          <h2 className="mb-8 text-left text-3xl font-medium uppercase tracking-[0.2em] text-[#a3a3a3]">
             Projects
           </h2>
 
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-[7fr_3fr] lg:gap-10">
-            {/* Left: Featured block grid - big + 2 small */}
-            {featuredProjects.length > 0 && (
-              <div>
-                <h3 className="mb-6 text-base font-medium uppercase tracking-[0.2em] text-[#737373]">
-                  Featured
-                </h3>
-                <div className="grid grid-cols-2 gap-4">
-                  {featuredProjects[0] && (
-                    <div className="col-span-2 min-h-0">
-                      <FeaturedProjectCard key={featuredProjects[0].id} project={featuredProjects[0]} index={0} size="large" />
-                    </div>
-                  )}
-                  {featuredProjects[1] && (
-                    <div className="min-h-0">
-                      <FeaturedProjectCard key={featuredProjects[1].id} project={featuredProjects[1]} index={1} size="small" />
-                    </div>
-                  )}
-                  {featuredProjects[2] && (
-                    <div className="min-h-0">
-                      <FeaturedProjectCard key={featuredProjects[2].id} project={featuredProjects[2]} index={2} size="small" />
-                    </div>
-                  )}
-                </div>
+          {/* Filters: attached org logos, then category pills */}
+          <div className="mb-2 flex flex-wrap items-center gap-x-5 gap-y-3">
+            {attachedOrgs.length > 0 && (
+              <div className="flex items-center gap-2">
+                {attachedOrgs.map((org) => {
+                  const active = selectedOrgs.has(org.name);
+                  return (
+                    <button
+                      key={org.name}
+                      type="button"
+                      onClick={() => toggleOrg(org.name)}
+                      aria-pressed={active}
+                      aria-label={`Filter by ${org.name}`}
+                      title={org.name}
+                      className={`h-9 w-9 overflow-hidden rounded-[10px] transition-all ${
+                        active
+                          ? 'opacity-100 ring-2 ring-[#f5f5f0]/70'
+                          : 'opacity-70 ring-1 ring-white/10 hover:opacity-100 hover:ring-white/25'
+                      }`}
+                    >
+                      <img src={org.logo} alt={org.name} className="h-full w-full object-contain" />
+                    </button>
+                  );
+                })}
               </div>
             )}
 
-            {/* Right: More projects - 2 column grid */}
-            {otherProjects.length > 0 && (
-              <div>
-                <h3 className="mb-6 text-base font-medium uppercase tracking-[0.2em] text-[#737373]">
-                  More Projects
-                </h3>
-                <div className="grid grid-cols-1 gap-4 items-stretch">
-                  {otherProjects.map((project, idx) => (
-                    <OtherProjectCard key={project.id} project={project} index={idx} />
-                  ))}
-                </div>
-              </div>
+            {attachedOrgs.length > 0 && (
+              <span className="hidden h-6 w-px bg-[#2a2a2a] sm:block" aria-hidden />
+            )}
+
+            <div className="flex flex-wrap gap-2">
+              {CATEGORY_FILTERS.map((cat) => {
+                const active = activeCategory === cat.key;
+                return (
+                  <button
+                    key={cat.key}
+                    type="button"
+                    onClick={() => setActiveCategory(cat.key)}
+                    aria-pressed={active}
+                    className={`rounded-full border px-4 py-1.5 text-[13px] font-medium transition-colors ${
+                      active
+                        ? 'border-[#404040] bg-[#262626] text-[#f5f5f0]'
+                        : 'border-[#333]/60 bg-transparent text-[#a3a3a3] hover:border-[#3a3a3a]/80 hover:bg-[#1f1f1f] hover:text-[#c4c4c4]'
+                    }`}
+                  >
+                    {cat.label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Project index */}
+          <div className="mt-8 border-t border-[#242424]">
+            {filteredProjects.length === 0 ? (
+              <p className="py-16 text-center text-sm text-[#737373]">No projects found.</p>
+            ) : (
+              filteredProjects.map((project, idx) => (
+                <ProjectIndexRow key={project.id} project={project} number={idx + 1} />
+              ))
             )}
           </div>
         </motion.div>

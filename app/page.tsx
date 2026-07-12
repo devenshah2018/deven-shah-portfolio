@@ -82,8 +82,6 @@ export default function HomePage() {
       />
       <main className='min-h-screen'>
         <HeroSection />
-        {/* Scroll target for #contact - placed after hero so nav doesn't scroll to bottom */}
-        <div id="contact" className="relative scroll-mt-20" aria-hidden />
         <AboutSection />
         <ExperienceSection />
         <ProjectsHorizontalSection />
