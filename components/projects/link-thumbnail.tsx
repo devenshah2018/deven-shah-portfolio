@@ -24,6 +24,39 @@ interface LinkThumbnailProps {
   objectFit?: 'cover' | 'contain';
 }
 
+/**
+ * Detects a blank/near-uniform screenshot (e.g. a cold-starting Render app captured mid-boot,
+ * which comes back as a solid white page). Samples the loaded image on a small canvas and
+ * flags it when there's almost no luminance variance. Cross-origin reads work because the
+ * 11ty screenshot service sends permissive CORS headers; if that ever changes the canvas read
+ * throws and we simply treat the image as valid.
+ */
+function isBlankScreenshot(img: HTMLImageElement): boolean {
+  try {
+    const w = 48;
+    const h = 26;
+    const canvas = document.createElement('canvas');
+    canvas.width = w;
+    canvas.height = h;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return false;
+    ctx.drawImage(img, 0, 0, w, h);
+    const { data } = ctx.getImageData(0, 0, w, h);
+    let min = 255;
+    let max = 0;
+    for (let i = 0; i < data.length; i += 4) {
+      const lum = (data[i]! + data[i + 1]! + data[i + 2]!) / 3;
+      if (lum < min) min = lum;
+      if (lum > max) max = lum;
+    }
+    // A real screenshot always has content (text, chrome) → meaningful luminance range.
+    // A blank/solid capture is nearly uniform.
+    return max - min < 10;
+  } catch {
+    return false;
+  }
+}
+
 export function LinkThumbnail({ url, title, className = '', objectFit = 'cover' }: LinkThumbnailProps) {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
@@ -60,10 +93,14 @@ export function LinkThumbnail({ url, title, className = '', objectFit = 'cover' 
         <img
           src={imgSrc}
           alt={`${title} preview`}
+          crossOrigin="anonymous"
           className={`absolute inset-0 h-full w-full object-center transition-opacity duration-500 ${objectFit === 'contain' ? 'object-contain' : 'object-cover'}`}
           style={{ opacity: loaded && !error ? 1 : 0 }}
           loading="lazy"
-          onLoad={() => setLoaded(true)}
+          onLoad={(e) => {
+            if (isBlankScreenshot(e.currentTarget)) setError(true);
+            else setLoaded(true);
+          }}
           onError={() => setError(true)}
         />
         {/* Hover overlay */}

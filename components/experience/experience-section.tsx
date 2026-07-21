@@ -164,10 +164,10 @@ function ExperienceCard({
                   data-card
                   className="relative overflow-hidden rounded-xl px-4 py-3"
                 >
-                  <div className="flex flex-row items-center justify-between gap-3">
-                    <div className="flex min-w-0 flex-1 items-center gap-2">
-                      <User className="h-4 w-4 flex-shrink-0 text-[#5a5a5a]" strokeWidth={2} aria-hidden />
-                      <h3 className="min-w-0 truncate text-base font-semibold text-[#f5f5f0]">{pos.title}</h3>
+                  <div className="flex flex-col items-start gap-1.5 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
+                    <div className="flex min-w-0 items-start gap-2 sm:flex-1 sm:items-center">
+                      <User className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#5a5a5a] sm:mt-0" strokeWidth={2} aria-hidden />
+                      <h3 className="min-w-0 text-base font-semibold text-[#f5f5f0] sm:truncate">{pos.title}</h3>
                     </div>
                     <Badge
                       variant="outline"
@@ -403,7 +403,7 @@ export function ExperienceSection() {
                   </button>
                 </div>
               </div>
-              <h3 className="text-left text-base font-medium uppercase tracking-[0.2em] text-[#a3a3a3] lg:mb-4">
+              <h3 className="hidden text-left text-base font-medium uppercase tracking-[0.2em] text-[#a3a3a3] lg:mb-4 lg:block">
                 Education
               </h3>
               <div ref={timelineContainerRef} className="relative min-w-0 -ml-5" style={{ overflowAnchor: 'none' }}>
@@ -473,6 +473,9 @@ export function ExperienceSection() {
               </div>
             </div>
               <aside className="min-w-0 lg:sticky lg:top-24 lg:self-start">
+                <h3 className="mb-6 text-left text-base font-medium uppercase tracking-[0.2em] text-[#a3a3a3] lg:hidden">
+                  Education
+                </h3>
                 <EducationOrganizationsSidebar />
               </aside>
             </div>

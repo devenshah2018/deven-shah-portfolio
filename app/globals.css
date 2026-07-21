@@ -146,6 +146,13 @@
   max-width: 100%;
   height: auto;
 }
+/* On narrow screens keep the "Less … More" legend grouped near the count
+   instead of floating to the far right edge (overrides the inline margin-left:auto). */
+@media (max-width: 640px) {
+  .github-calendar-wrapper .react-activity-calendar__footer .react-activity-calendar__legend-colors {
+    margin-left: 0 !important;
+  }
+}
 
 /* Technical skills search - hide native clear, style for B&W matte theme */
 input[type="search"].skills-search-input::-webkit-search-cancel-button,

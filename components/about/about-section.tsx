@@ -135,7 +135,7 @@ export function AboutSection() {
                     )}
                   </label>
                 </div>
-                <div className="mb-6 flex flex-wrap items-center gap-x-5 gap-y-2 border-b border-[#222]/70 pb-4">
+                <div className="mb-6 flex flex-wrap items-center gap-x-5 gap-y-2.5 border-b border-[#222]/70 pb-4">
                   {SKILL_CATEGORIES.map((cat) => {
                     const isActive = activeCategory === cat.key && !searchQuery.trim();
                     const isFeatured = cat.key === 'featured';
@@ -143,7 +143,7 @@ export function AboutSection() {
                       <button
                         key={cat.key}
                         type="button"
-                        className={`cursor-pointer border-b-2 pb-0.5 text-[11px] font-medium uppercase tracking-[0.1em] transition-all duration-200 focus:outline-none ${
+                        className={`cursor-pointer border-b-2 pb-0.5 pt-2 text-[11px] font-medium uppercase tracking-[0.1em] transition-all duration-200 focus:outline-none ${
                           isActive
                             ? isFeatured
                               ? 'border-cyan-500/70 text-[#e5e5e5]'
@@ -200,8 +200,8 @@ export function AboutSection() {
             {/* Right column */}
             <div className="flex min-w-0 flex-col gap-6">
               {/* PREV @ - spans width of profile container */}
-              <div className="flex min-w-0 w-full max-w-full items-center gap-8 overflow-hidden">
-                <span className="shrink-0 mr-2 text-md font-medium text-[#6b6b6b]">PREV @</span>
+              <div className="flex min-w-0 w-full max-w-full flex-col items-start gap-4 overflow-hidden sm:flex-row sm:items-center sm:gap-8">
+                <span className="shrink-0 mr-2 text-sm font-medium text-[#6b6b6b]">PREV @</span>
                 <div className="flex min-w-0 flex-1 flex-wrap items-center gap-3">
                   {groupExperiencesByOrg().map((org) => {
                     const firstId = org.positions[0]?.id;
@@ -217,7 +217,7 @@ export function AboutSection() {
                         <img
                           src={org.companyLogo}
                           alt=""
-                          className="h-16 w-16 rounded object-contain sm:h-8 sm:w-8"
+                          className="h-11 w-11 rounded object-contain sm:h-8 sm:w-8"
                         />
                       </button>
                     );
