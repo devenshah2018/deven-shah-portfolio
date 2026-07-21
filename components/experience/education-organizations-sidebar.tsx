@@ -30,7 +30,7 @@ export function EducationOrganizationsSidebar() {
   };
 
   return (
-    <div id="education" className="flex flex-col gap-6 lg:gap-8">
+    <div id="education" className="flex flex-col gap-6 lg:gap-8 scroll-mt-12 lg:scroll-mt-[90px]">
       {/* Education - timeline style */}
       <div>
         <div className="relative">

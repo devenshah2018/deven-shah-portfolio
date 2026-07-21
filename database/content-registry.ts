@@ -755,7 +755,7 @@ export const EDUCATION = [
     icon: GraduationCap,
     logo: '/bu-logo.png',
     isActive: true,
-    coursework: ['Generative AI', 'Operating Systems', 'Analysis of Algorithms', 'Database Management', 'Computer Language Theory'],
+    coursework: ['Generative AI', 'Operating Systems', 'Analysis of Algorithms', 'Database Management', 'Computer Language Theory', 'Data Science with Python', 'Big Data Analytics'],
   },
   {
     id: 'sjsu-bachelors',
