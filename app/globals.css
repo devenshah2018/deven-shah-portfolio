@@ -167,6 +167,16 @@ html {
   scroll-padding-top: 6rem; /* Account for fixed nav (h-20) */
 }
 
+/* Project category lanes - hide the native scrollbar; arrow buttons and edge
+   fades carry the "there's more" affordance instead. */
+.lane-scroll {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.lane-scroll::-webkit-scrollbar {
+  display: none;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
