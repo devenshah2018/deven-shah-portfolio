@@ -7,6 +7,8 @@ import {
   groupExperiencesByOrg,
   formatPeriodDisplay,
   getSkillsForExperienceId,
+  getExperienceDate,
+  hasFutureStart,
   type OrgGroup,
 } from '@/database/content-registry';
 import { scrollToExperience, REQUEST_SCROLL_TO_EXPERIENCE } from '@/lib/url-utils';
@@ -14,18 +16,12 @@ import { Badge } from '@/components/ui/badge';
 import { EducationOrganizationsSidebar } from './education-organizations-sidebar';
 
 function getEndYear(org: OrgGroup): number {
-  const p = org.positions[0]?.period;
-  if (!p?.includes('Present')) {
-    const dates = p?.match(/(\d{2})\/(\d{4})/g);
-    if (dates && dates.length >= 2) {
-      const m = dates[dates.length - 1]!.match(/(\d{4})/);
-      if (m?.[1]) return parseInt(m[1], 10);
-    }
-  }
-  return new Date().getFullYear();
+  return Math.floor(getExperienceDate(org.positions[0]?.period ?? '') / 100);
 }
 
-function addYearLabels<T extends { org: OrgGroup }>(items: T[]): (T & { yearLabel: string | null })[] {
+function addYearLabels<T extends { org: OrgGroup }>(
+  items: T[]
+): (T & { yearLabel: string | null })[] {
   let lastYear: number | null = null;
   return items.map(item => {
     const y = getEndYear(item.org);
@@ -65,7 +61,7 @@ function ExperienceCard({
         delay: isExpandedContent ? 0 : index * 0.04,
         ease: [0.32, 0.72, 0, 1],
       }}
-      className={`grid grid-cols-[1.5rem_2.5rem_1fr] items-start ${isCompact ? 'gap-2' : 'gap-3'}`}
+      className={`grid grid-cols-[0rem_2.5rem_minmax(0,1fr)] items-start gap-3 sm:grid-cols-[0rem_3rem_minmax(0,1fr)] sm:gap-5`}
     >
       <div className={isCompact ? 'min-h-[1rem]' : 'min-h-[1.5rem]'} aria-hidden />
       <div
@@ -74,58 +70,61 @@ function ExperienceCard({
         className={`flex items-start justify-end ${isCompact ? 'min-h-[1rem] pt-0.5' : 'min-h-[1.5rem] pt-1'}`}
       >
         {yearLabel && (
-          <span className="text-base font-medium tabular-nums tracking-tight text-[#737373]">
+          <span className='text-base font-medium tabular-nums tracking-tight text-[#737373]'>
             {yearLabel}
           </span>
         )}
       </div>
-      <div className="min-w-0 pl-1">
-        <div className={`${isCompact ? 'space-y-0.5 mb-2' : 'space-y-1.5 mb-4'}`}>
-          <div data-logo-row className={`flex flex-wrap items-center ${isCompact ? 'gap-2 gap-x-4' : 'gap-2.5'}`}>
-            <div className="flex min-w-0 flex-shrink-0 items-center gap-2">
+      <div className='min-w-0 pl-1'>
+        <div className={`${isCompact ? 'mb-3 space-y-2' : 'mb-4 space-y-1.5'}`}>
+          <div
+            data-logo-row
+            className={`flex flex-wrap items-center ${isCompact ? 'gap-2 gap-x-4' : 'gap-2.5'}`}
+          >
+            <div className='flex min-w-0 items-center gap-3'>
               {org.companyLogo && (
                 <motion.img
                   layoutId={`logo-bottom-${org.company}`}
                   src={org.companyLogo}
-                  alt=""
-                  className={`flex-shrink-0 rounded object-contain ring-1 ring-[#262626] ${isCompact ? 'h-6 w-6 rounded-md' : 'h-9 w-9 rounded-lg'}`}
+                  alt=''
+                  className={`flex-shrink-0 rounded object-contain ${isCompact ? 'h-8 w-8 rounded-sm' : 'h-9 w-9 rounded-lg'}`}
                   transition={{ type: 'spring', stiffness: 350, damping: 30 }}
                 />
               )}
               <a
                 href={org.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-base font-semibold text-[#f5f5f0] transition-colors hover:text-[#d4d4d4]"
+                target='_blank'
+                rel='noopener noreferrer'
+                className='inline-flex items-center gap-1.5 text-base font-semibold text-[#f5f5f0] transition-colors hover:text-[#d4d4d4]'
               >
                 {org.company}
               </a>
             </div>
             {isCompact && (
-              <div className="flex flex-shrink-0 items-center gap-x-2 text-sm text-[#a3a3a3]">
-                <span className="flex items-center gap-1">
-                  <MapPin className="h-3 w-3 flex-shrink-0" />
+              <div className='flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-[#999]'>
+                <span className='flex items-center gap-1'>
+                  <MapPin className='h-3 w-3 flex-shrink-0' />
                   {org.location}
                 </span>
                 {org.duration && (
                   <>
-                    <span className="text-[#525252]">·</span>
-                    <span className="tabular-nums">{org.duration}</span>
+                    <span className='text-[#525252]'>·</span>
+                    <span className='tabular-nums'>{org.duration}</span>
                   </>
                 )}
               </div>
             )}
           </div>
           {!isCompact && (
-            <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-sm text-[#a3a3a3]">
-              <span className="flex items-center gap-1">
-                <MapPin className="h-3 w-3 flex-shrink-0" />
+            <div className='flex flex-wrap items-center gap-x-2 gap-y-0.5 text-sm text-[#a3a3a3]'>
+              <span className='flex items-center gap-1'>
+                <MapPin className='h-3 w-3 flex-shrink-0' />
                 {org.location}
               </span>
               {org.duration && (
                 <>
-                  <span className="text-[#525252]">·</span>
-                  <span className="tabular-nums">{org.duration}</span>
+                  <span className='text-[#525252]'>·</span>
+                  <span className='tabular-nums'>{org.duration}</span>
                 </>
               )}
             </div>
@@ -133,24 +132,26 @@ function ExperienceCard({
         </div>
 
         {isCompact ? (
-          <div className="mt-2.5 flex flex-wrap gap-2.5">
-            {org.positions.map((pos) => {
+          <div className='mt-3 space-y-3'>
+            {org.positions.map(pos => {
               const periodDisplay = formatPeriodDisplay(pos.period);
               return (
                 <span
                   key={pos.id}
                   id={`experience-${pos.id}`}
-                  className="inline-flex items-center gap-1.5 rounded-md bg-[#262626]/60 px-2.5 py-1 text-[0.8125rem] text-[#d4d4d4]"
+                  className='flex flex-col gap-1 text-sm text-[#d4d4d4] sm:flex-row sm:flex-wrap sm:items-baseline sm:justify-between sm:gap-x-4'
                 >
-                  <span className="truncate max-w-[14rem]">{pos.title}</span>
-                  <span className="flex-shrink-0 text-[0.6875rem] tabular-nums text-[#737373]">{periodDisplay}</span>
+                  <span className='leading-relaxed'>{pos.title}</span>
+                  <span className='flex-shrink-0 text-xs tabular-nums text-[#999]'>
+                    {periodDisplay}
+                  </span>
                 </span>
               );
             })}
           </div>
         ) : (
-          <div className="space-y-4">
-            {org.positions.map((pos) => {
+          <div className='space-y-4'>
+            {org.positions.map(pos => {
               const isFlipped = flippedIds.has(pos.id);
               const achievements = pos.achievements ?? [];
               const skills = getSkillsForExperienceId(pos.id);
@@ -158,70 +159,80 @@ function ExperienceCard({
               const periodDisplay = formatPeriodDisplay(pos.period);
 
               return (
-                <div
-                  key={pos.id}
-                  id={`experience-${pos.id}`}
-                  data-card
-                  className="relative overflow-hidden rounded-xl px-4 py-3"
-                >
-                  <div className="flex flex-col items-start gap-1.5 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
-                    <div className="flex min-w-0 items-start gap-2 sm:flex-1 sm:items-center">
-                      <User className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#5a5a5a] sm:mt-0" strokeWidth={2} aria-hidden />
-                      <h3 className="min-w-0 text-base font-semibold text-[#f5f5f0] sm:truncate">{pos.title}</h3>
+                <div key={pos.id} id={`experience-${pos.id}`} data-card className='relative py-3'>
+                  <div className='flex flex-col items-start gap-1.5 sm:flex-row sm:items-center sm:justify-between sm:gap-3'>
+                    <div className='flex min-w-0 items-start gap-2 sm:flex-1 sm:items-center'>
+                      <User
+                        className='mt-0.5 h-4 w-4 flex-shrink-0 text-[#5a5a5a] sm:mt-0'
+                        strokeWidth={2}
+                        aria-hidden
+                      />
+                      <h3 className='min-w-0 text-base font-semibold text-[#f5f5f0] sm:truncate'>
+                        {pos.title}
+                      </h3>
                     </div>
                     <Badge
-                      variant="outline"
-                      className="w-fit flex-shrink-0 border-[#404040]/50 bg-[#262626] px-2.5 py-1 text-xs font-medium tabular-nums text-[#a3a3a3]"
+                      variant='outline'
+                      className='w-fit shrink-0 rounded-none border-0 bg-transparent px-0 py-1 text-xs font-normal tabular-nums text-[#999]'
                     >
                       {periodDisplay}
                     </Badge>
                   </div>
-                {isDetailed && pos.description && (
-                  <p className="mt-2 text-[15px] leading-[1.7] text-[#d4d4d4]">{pos.description}</p>
-                )}
-                {isDetailed && skills.length > 0 && (
-                  <div className="mt-2.5 flex flex-wrap gap-2">
-                    {skills.map((skill) => (
-                      <span
-                        key={skill}
-                        className="inline-flex items-center rounded-md border border-[#404040]/50 bg-[#262626] px-2 py-1 text-[0.6875rem] font-medium text-[#a3a3a3]"
+                  {isDetailed && !hasFutureStart(pos.period) && pos.description && (
+                    <p className='mt-2 text-[15px] leading-[1.7] text-[#d4d4d4]'>
+                      {pos.description}
+                    </p>
+                  )}
+                  {isDetailed && skills.length > 0 && (
+                    <div className='mt-2.5 flex flex-wrap gap-2'>
+                      {skills.map(skill => (
+                        <span
+                          key={skill}
+                          className='inline-flex items-center py-1 pr-3 text-xs text-[#999]'
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                  {isDetailed && hasMore && (
+                    <>
+                      <button
+                        type='button'
+                        onClick={() => toggleFlip(pos.id)}
+                        aria-expanded={isFlipped}
+                        aria-controls={`achievements-${pos.id}`}
+                        className='mt-2.5 flex min-h-11 items-center gap-1 text-sm font-medium text-[#a3a3a3] underline decoration-[#525252] underline-offset-2 transition-colors hover:text-[#f5f5f0]'
                       >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                )}
-                {isDetailed && hasMore && (
-                  <>
-                    <button
-                      type="button"
-                      onClick={() => toggleFlip(pos.id)}
-                      className="mt-2.5 flex items-center gap-1 text-sm font-medium text-[#a3a3a3] underline decoration-[#525252] underline-offset-2 transition-colors hover:text-[#f5f5f0]"
-                    >
-                      {isFlipped ? 'Less' : 'More'}
-                      <ChevronRight
-                        className={`h-3.5 w-3.5 transition-transform duration-200 ${isFlipped ? 'rotate-90' : ''}`}
-                      />
-                    </button>
-                    <motion.div
-                      initial={false}
-                      animate={{ height: isFlipped ? 'auto' : 0, opacity: isFlipped ? 1 : 0 }}
-                      transition={{ duration: 0.25, ease: 'easeOut' }}
-                      className="overflow-hidden"
-                    >
-                      <div className="mt-3 pl-4">
-                        <ul className="space-y-2">
-                          {achievements.map((achievement, i) => (
-                            <li key={i} className="flex gap-2 text-sm leading-[1.6] text-[#d4d4d4]">
-                              <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#525252]" />
-                              <span>{achievement}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </motion.div>
-                  </>
-                )}
+                        {isFlipped ? 'Less' : 'More'}
+                        <ChevronRight
+                          className={`h-3.5 w-3.5 transition-transform duration-200 ${isFlipped ? 'rotate-90' : ''}`}
+                        />
+                      </button>
+                      <motion.div
+                        id={`achievements-${pos.id}`}
+                        aria-hidden={!isFlipped}
+                        initial={false}
+                        animate={{ height: isFlipped ? 'auto' : 0, opacity: isFlipped ? 1 : 0 }}
+                        transition={{ duration: 0.25, ease: 'easeOut' }}
+                        className='overflow-hidden'
+                      >
+                        <div className='mt-3 pl-4'>
+                          <ul className='space-y-2'>
+                            {achievements.map((achievement, i) => (
+                              <li
+                                key={i}
+                                className='flex gap-2 text-sm leading-[1.6] text-[#d4d4d4]'
+                              >
+                                <span className='mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#525252]' />
+                                <span>{achievement}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </motion.div>
+                    </>
+                  )}
                 </div>
               );
             })}
@@ -339,7 +350,7 @@ export function ExperienceSection() {
   }, []);
 
   const toggleFlip = (id: string) => {
-    setFlippedIds((prev) => {
+    setFlippedIds(prev => {
       const newSet = new Set(prev);
       if (newSet.has(id)) newSet.delete(id);
       else newSet.add(id);
@@ -349,131 +360,134 @@ export function ExperienceSection() {
 
   const allOrgsSorted = useMemo(() => {
     const all = groupExperiencesByOrg();
-    return addYearLabels(all.map((org) => ({ org })));
+    return addYearLabels(all.map(org => ({ org })));
   }, []);
 
   return (
-    <section id="experience" className="bg-[#141414] py-12 sm:py-16">
-      <div className="container mx-auto w-full max-w-7xl px-8 sm:px-10 lg:px-16">
+    <section id='experience' className='bg-[#141414] py-12 sm:py-16'>
+      <div className='container mx-auto w-full max-w-7xl px-6 sm:px-10 lg:px-16'>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="mx-auto"
+          className='mx-auto'
         >
-          <div className="w-full max-w-6xl xl:max-w-7xl">
-            <h2 className="mb-8 text-left text-3xl font-medium uppercase tracking-[0.2em] text-[#a3a3a3]">
-              Experience
-            </h2>
+          <div className='w-full max-w-6xl xl:max-w-7xl'>
+            <p className='section-eyebrow'>02 / Experience</p>
+            <h2 className='section-title mb-10'>A career of building.</h2>
 
-            <div className="grid grid-cols-1 gap-8 lg:grid-cols-[7fr_3fr] lg:gap-10 items-start lg:items-start">
-              <div className="flex items-center justify-between gap-4 lg:mb-4">
-                <h3 className="text-left text-base font-medium uppercase tracking-[0.2em] text-[#a3a3a3]">
-                  Professional Journey
-                </h3>
-                <div
-                  role="tablist"
-                  aria-label="View mode"
-                  className="inline-flex shrink-0 rounded-md border border-[#404040]/40 p-0.5"
-                >
-                  <button
-                    role="tab"
-                    aria-selected={viewMode === 'compact'}
-                    onClick={() => setViewMode('compact')}
-                    className={`rounded px-3 py-1.5 text-xs font-medium transition-colors focus:outline-none focus:ring-0 ${
-                      viewMode === 'compact'
-                        ? 'bg-[#262626] text-[#f5f5f0]'
-                        : 'text-[#737373] hover:text-[#a3a3a3]'
-                    }`}
+            <div className='grid grid-cols-1 items-start gap-8 lg:grid-cols-[1.5fr_1fr] lg:items-start lg:gap-16'>
+              <div className='min-w-0'>
+                <div className='mb-8 flex min-h-11 flex-wrap items-center justify-between gap-3'>
+                  <h3 className='text-left text-xs font-medium uppercase tracking-[0.15em] text-[#999]'>
+                    Professional Journey
+                  </h3>
+                  <div
+                    role='group'
+                    aria-label='View mode'
+                    className='inline-flex shrink-0 gap-1 bg-[#1d1d1b] p-1'
                   >
-                    Compact
-                  </button>
-                  <button
-                    role="tab"
-                    aria-selected={viewMode === 'detailed'}
-                    onClick={() => setViewMode('detailed')}
-                    className={`rounded px-3 py-1.5 text-xs font-medium transition-colors focus:outline-none focus:ring-0 ${
-                      viewMode === 'detailed'
-                        ? 'bg-[#262626] text-[#f5f5f0]'
-                        : 'text-[#737373] hover:text-[#a3a3a3]'
-                    }`}
-                  >
-                    Detailed
-                  </button>
+                    <button
+                      type='button'
+                      aria-pressed={viewMode === 'compact'}
+                      onClick={() => setViewMode('compact')}
+                      className={`min-h-11 rounded px-3 py-1.5 text-sm font-medium transition-colors focus:outline-none focus:ring-0 ${
+                        viewMode === 'compact'
+                          ? 'bg-[#262626] text-[#f5f5f0]'
+                          : 'text-[#737373] hover:text-[#a3a3a3]'
+                      }`}
+                    >
+                      Compact
+                    </button>
+                    <button
+                      type='button'
+                      aria-pressed={viewMode === 'detailed'}
+                      onClick={() => setViewMode('detailed')}
+                      className={`min-h-11 rounded px-3 py-1.5 text-sm font-medium transition-colors focus:outline-none focus:ring-0 ${
+                        viewMode === 'detailed'
+                          ? 'bg-[#262626] text-[#f5f5f0]'
+                          : 'text-[#737373] hover:text-[#a3a3a3]'
+                      }`}
+                    >
+                      Detailed
+                    </button>
+                  </div>
                 </div>
-              </div>
-              <h3 className="hidden text-left text-base font-medium uppercase tracking-[0.2em] text-[#a3a3a3] lg:mb-4 lg:block">
-                Education
-              </h3>
-              <div ref={timelineContainerRef} className="relative min-w-0 -ml-5" style={{ overflowAnchor: 'none' }}>
-              {/* Vertical timeline - single line, SVG mask cuts gaps at years (no discoloration, true gaps) */}
-              {timelineSvg && timelineSvg.height > 0 && (
-                <svg
-                  className="absolute pointer-events-none overflow-visible"
-                  style={{
-                    top: timelineSvg.top,
-                    left: timelineSvg.left,
-                    width: 12,
-                    height: timelineSvg.height,
-                    transform: 'translateX(-50%)',
-                  }}
-                  aria-hidden
+                <div
+                  ref={timelineContainerRef}
+                  className='relative -ml-3 min-w-0'
+                  style={{ overflowAnchor: 'none' }}
                 >
-                  <defs>
-                    <mask id={timelineMaskId}>
-                      <rect x="0" y="0" width="12" height={timelineSvg.height} fill="white" />
-                      {timelineSvg.gapRects.map((g, i) => (
-                        <rect
+                  {/* Vertical timeline - single line, SVG mask cuts gaps at years (no discoloration, true gaps) */}
+                  {timelineSvg && timelineSvg.height > 0 && (
+                    <svg
+                      className='pointer-events-none absolute overflow-visible'
+                      style={{
+                        top: timelineSvg.top,
+                        left: timelineSvg.left,
+                        width: 12,
+                        height: timelineSvg.height,
+                        transform: 'translateX(-50%)',
+                      }}
+                      aria-hidden
+                    >
+                      <defs>
+                        <mask id={timelineMaskId}>
+                          <rect x='0' y='0' width='12' height={timelineSvg.height} fill='white' />
+                          {timelineSvg.gapRects.map((g, i) => (
+                            <rect key={i} x='0' y={g.y} width='12' height={g.height} fill='black' />
+                          ))}
+                        </mask>
+                      </defs>
+                      <rect
+                        x='1'
+                        y='0'
+                        width='1'
+                        height={timelineSvg.height}
+                        fill='#404040'
+                        fillOpacity='0.4'
+                        mask={
+                          timelineSvg.gapRects.length > 0 ? `url(#${timelineMaskId})` : undefined
+                        }
+                      />
+                      {timelineSvg.ticks.map((tick, i) => (
+                        <line
                           key={i}
-                          x="0"
-                          y={g.y}
-                          width="12"
-                          height={g.height}
-                          fill="black"
+                          x1='1'
+                          y1={tick.y}
+                          x2='8'
+                          y2={tick.y}
+                          stroke='#525252'
+                          strokeOpacity='0.5'
+                          strokeWidth='1'
                         />
                       ))}
-                    </mask>
-                  </defs>
-                  <rect
-                    x="1"
-                    y="0"
-                    width="1"
-                    height={timelineSvg.height}
-                    fill="#404040"
-                    fillOpacity="0.4"
-                    mask={timelineSvg.gapRects.length > 0 ? `url(#${timelineMaskId})` : undefined}
-                  />
-                  {timelineSvg.ticks.map((tick, i) => (
-                    <line
-                      key={i}
-                      x1="1"
-                      y1={tick.y}
-                      x2="8"
-                      y2={tick.y}
-                      stroke="#525252"
-                      strokeOpacity="0.5"
-                      strokeWidth="1"
-                    />
-                  ))}
-                </svg>
-              )}
-              <div className={viewMode === 'compact' ? 'space-y-6' : 'space-y-14'} data-timeline-cards>
-                {allOrgsSorted.map(({ org, yearLabel }, index) => (
-                  <ExperienceCard
-                    key={org.company}
-                    org={org}
-                    yearLabel={yearLabel}
-                    index={index}
-                    flippedIds={flippedIds}
-                    toggleFlip={toggleFlip}
-                    viewMode={viewMode}
-                  />
-                ))}
+                    </svg>
+                  )}
+                  <div
+                    className={viewMode === 'compact' ? 'space-y-9' : 'space-y-14'}
+                    data-timeline-cards
+                  >
+                    {allOrgsSorted.map(({ org, yearLabel }, index) => (
+                      <ExperienceCard
+                        key={org.company}
+                        org={org}
+                        yearLabel={yearLabel}
+                        index={index}
+                        flippedIds={flippedIds}
+                        toggleFlip={toggleFlip}
+                        viewMode={viewMode}
+                      />
+                    ))}
+                  </div>
+                </div>
               </div>
-            </div>
-              <aside className="min-w-0 lg:sticky lg:top-24 lg:self-start">
-                <h3 className="mb-6 text-left text-base font-medium uppercase tracking-[0.2em] text-[#a3a3a3] lg:hidden">
+              <aside id='education' aria-labelledby='education-heading' className='min-w-0'>
+                <h3
+                  id='education-heading'
+                  className='mb-8 flex min-h-11 items-center text-left text-xs font-medium uppercase tracking-[0.15em] text-[#999]'
+                >
                   Education
                 </h3>
                 <EducationOrganizationsSidebar />

@@ -5,7 +5,8 @@ import { GitHubCalendar } from 'react-github-calendar';
 import { LINKS } from '@/database/content-registry';
 import 'react-activity-calendar/tooltips.css';
 
-const GITHUB_USERNAME = LINKS.github.replace(/^https?:\/\/github\.com\/?/, '').replace(/\/$/, '') || 'devenshah2018';
+const GITHUB_USERNAME =
+  LINKS.github.replace(/^https?:\/\/github\.com\/?/, '').replace(/\/$/, '') || 'devenshah2018';
 
 const WARM_DARK_THEME = {
   light: ['rgba(64, 64, 64, 0.4)', '#525252', '#737373', '#a3a3a3', '#d4d4d4'],
@@ -24,16 +25,18 @@ export function GitHubContributionChart({ compact = false }: GitHubContributionC
   useEffect(() => setMounted(true), []);
 
   return (
-    <div className="w-full min-w-0">
-      <div className={`github-calendar-wrapper rounded-lg ${compact ? 'p-2' : 'p-4'}`}>
+    <div className='w-full min-w-0'>
+      <div
+        className={`github-calendar-wrapper rounded-lg ${compact ? 'github-calendar-compact' : 'p-4'}`}
+      >
         {mounted ? (
           <GitHubCalendar
             username={GITHUB_USERNAME}
             theme={WARM_DARK_THEME}
-            colorScheme="dark"
+            colorScheme='dark'
             blockSize={compact ? 10 : 14}
             blockMargin={compact ? 2 : 3}
-            fontSize={compact ? 11 : 14}
+            fontSize={compact ? 12 : 14}
             showWeekdayLabels={false}
             showMonthLabels={false}
             labels={{

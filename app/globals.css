@@ -146,12 +146,17 @@
   max-width: 100%;
   height: auto;
 }
-/* On narrow screens keep the "Less … More" legend grouped near the count
-   instead of floating to the far right edge (overrides the inline margin-left:auto). */
-@media (max-width: 640px) {
-  .github-calendar-wrapper .react-activity-calendar__footer .react-activity-calendar__legend-colors {
-    margin-left: 0 !important;
-  }
+/* Keep the sidebar calendar's count and legend readable on separate rows. */
+.github-calendar-compact .react-activity-calendar__footer {
+  flex-wrap: wrap;
+  gap: 0.75rem !important;
+  margin-top: 1rem !important;
+}
+.github-calendar-compact .react-activity-calendar__count {
+  flex-basis: 100%;
+}
+.github-calendar-compact .react-activity-calendar__legend-colors {
+  margin-left: 0 !important;
 }
 
 /* Technical skills search - hide native clear, style for B&W matte theme */
@@ -379,3 +384,46 @@ html {
   -webkit-backface-visibility: hidden;
 }
 
+
+/* Open section layouts share a quiet typographic hierarchy. */
+.section-eyebrow {
+  margin-bottom: 1.25rem;
+  color: #999995;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+}
+
+.section-title {
+  color: #f5f5f0;
+  font-size: clamp(1.875rem, 3.4vw, 2.75rem);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.035em;
+}
+
+main :is(a, button, input):focus-visible {
+  outline: 2px solid #a5c9bd;
+  outline-offset: 5px;
+}
+
+.project-index-row {
+  transition: background-color 180ms ease;
+}
+
+.project-index-row:hover {
+  background-color: rgba(255, 255, 255, 0.015);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .project-index-row { transition: none; }
+}
+
+/* Keep programmatic section focus quiet while preserving control focus indicators. */
+main [tabindex="-1"]:focus { outline: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-highlight::after { animation: none; background: none; }
+}

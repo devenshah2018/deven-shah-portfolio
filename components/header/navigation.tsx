@@ -1,11 +1,18 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetDescription } from '@/components/ui/sheet';
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetTitle,
+  SheetDescription,
+} from '@/components/ui/sheet';
 import { motion, AnimatePresence } from 'framer-motion';
+import { scrollToSection } from '@/lib/url-utils';
 import { LINKS } from '@/database/content-registry';
 import { CONTACT_CARD_SHINE_EVENT } from '@/components/contact/contact-section';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -28,6 +35,7 @@ export function Navigation({}: NavigationProps) {
   const [timeZoneAbbr, setTimeZoneAbbr] = useState('');
   const [timeZoneFull, setTimeZoneFull] = useState('');
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const pendingNavigation = useRef<(() => void) | null>(null);
 
   useEffect(() => {
     const updateClock = () => {
@@ -91,7 +99,7 @@ export function Navigation({}: NavigationProps) {
       transition={{ duration: 0.6 }}
       className={`fixed top-0 z-50 w-full transition-all duration-500 ${
         isScrolled
-          ? 'border-b border-[#404040]/30 bg-[#141414]/98 shadow-2xl backdrop-blur-xl'
+          ? 'bg-[#141414]/98 border-b border-[#404040]/30 shadow-2xl backdrop-blur-xl'
           : 'bg-transparent'
       }`}
     >
@@ -103,7 +111,7 @@ export function Navigation({}: NavigationProps) {
             transition={{ duration: 0.6 }}
             className='group relative'
           >
-            <div className='flex min-w-[260px] flex-col'>
+            <div className='flex min-w-0 flex-col lg:min-w-[260px]'>
               <AnimatePresence mode='wait'>
                 {showName ? (
                   <motion.div
@@ -112,23 +120,27 @@ export function Navigation({}: NavigationProps) {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.2, ease: 'easeInOut' }}
-                    className='group relative flex cursor-pointer items-center gap-3'
-                    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                    className='group relative'
                   >
-                    <Image
-                      src="/profile.jpg"
-                      alt=""
-                      width={48}
-                      height={48}
-                      className="h-10 w-10 flex-shrink-0 rounded-full object-cover object-top"
-                    />
-                    <span
-                      className="block text-2xl font-semibold text-[#f5f5f0]"
+                    <button
+                      type='button'
+                      aria-label='Back to top'
+                      onClick={() => scrollToSection('hero', true)}
+                      className='flex min-h-11 items-center gap-3 rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#a5c9bd]'
                     >
-                      Deven Shah
-                    </span>
+                      <Image
+                        src='/profile.jpg'
+                        alt=''
+                        width={48}
+                        height={48}
+                        className='h-10 w-10 flex-shrink-0 rounded-full object-cover object-top'
+                      />
+                      <span className='block whitespace-nowrap text-xl font-semibold text-[#f5f5f0] sm:text-2xl'>
+                        Deven Shah
+                      </span>
+                    </button>
 
-                    <div className='pointer-events-none absolute left-0 top-full z-50 opacity-0 transition-all duration-300 ease-out group-hover:pointer-events-auto group-hover:opacity-100'>
+                    <div className='pointer-events-none invisible absolute left-0 top-full z-50 hidden opacity-0 transition-all duration-300 ease-out group-focus-within:pointer-events-auto group-focus-within:visible group-focus-within:opacity-100 group-hover:pointer-events-auto group-hover:visible group-hover:opacity-100 lg:block'>
                       <div className='absolute -top-2 left-0 h-2 w-full bg-transparent'></div>
 
                       <motion.div
@@ -138,13 +150,13 @@ export function Navigation({}: NavigationProps) {
                         transition={{ duration: 0.2, ease: 'easeOut' }}
                         className='relative mt-2'
                       >
-                        <div className="rounded-lg border border-[#404040]/40 bg-[#141414]/98 p-2 shadow-xl backdrop-blur-lg">
+                        <div className='bg-[#141414]/98 rounded-lg border border-[#404040]/40 p-2 shadow-xl backdrop-blur-lg'>
                           <div className='flex items-center gap-2'>
                             <a
                               href={LINKS.github}
                               target='_blank'
                               rel='noopener noreferrer'
-                              className="group/item flex h-7 w-7 items-center justify-center rounded bg-[#262626] text-[#a3a3a3] transition-all duration-150 hover:scale-105 hover:bg-[#404040] hover:text-[#f5f5f0]"
+                              className='group/item flex h-7 w-7 items-center justify-center rounded bg-[#262626] text-[#a3a3a3] transition-all duration-150 hover:scale-105 hover:bg-[#404040] hover:text-[#f5f5f0]'
                               aria-label='GitHub Profile'
                             >
                               <svg className='h-3.5 w-3.5' fill='currentColor' viewBox='0 0 24 24'>
@@ -156,7 +168,7 @@ export function Navigation({}: NavigationProps) {
                               href={LINKS.linkedin}
                               target='_blank'
                               rel='noopener noreferrer'
-                              className="group/item flex h-7 w-7 items-center justify-center rounded bg-[#262626] text-[#a3a3a3] transition-all duration-150 hover:scale-105 hover:bg-[#404040] hover:text-[#f5f5f0]"
+                              className='group/item flex h-7 w-7 items-center justify-center rounded bg-[#262626] text-[#a3a3a3] transition-all duration-150 hover:scale-105 hover:bg-[#404040] hover:text-[#f5f5f0]'
                               aria-label='LinkedIn Profile'
                             >
                               <svg className='h-3.5 w-3.5' fill='currentColor' viewBox='0 0 24 24'>
@@ -166,7 +178,7 @@ export function Navigation({}: NavigationProps) {
 
                             <a
                               href={`mailto:${LINKS.email}`}
-                              className="group/item flex h-7 w-7 items-center justify-center rounded bg-[#262626] text-[#a3a3a3] transition-all duration-150 hover:scale-105 hover:bg-[#404040] hover:text-[#f5f5f0]"
+                              className='group/item flex h-7 w-7 items-center justify-center rounded bg-[#262626] text-[#a3a3a3] transition-all duration-150 hover:scale-105 hover:bg-[#404040] hover:text-[#f5f5f0]'
                               aria-label='Email Contact'
                             >
                               <svg
@@ -207,7 +219,7 @@ export function Navigation({}: NavigationProps) {
                           </div>
                         </div>
 
-                        <div className="absolute -top-1 left-4 h-2 w-2 rotate-45 transform border-l border-t border-[#404040]/40 bg-[#141414]/98"></div>
+                        <div className='bg-[#141414]/98 absolute -top-1 left-4 h-2 w-2 rotate-45 transform border-l border-t border-[#404040]/40'></div>
                       </motion.div>
                     </div>
                   </motion.div>
@@ -221,11 +233,11 @@ export function Navigation({}: NavigationProps) {
                     className='block'
                   >
                     <span
-                      className="inline-flex select-none items-center rounded-md px-3 py-1 text-lg font-medium tracking-widest text-[#f5f5f0]"
+                      className='inline-flex select-none items-center whitespace-nowrap py-1 text-sm font-medium tracking-wide text-[#f5f5f0] sm:px-3 sm:text-lg sm:tracking-widest'
                       title={timeZoneFull}
                     >
-                        <svg
-                          className="mr-2 h-5 w-5 text-[#a3a3a3]"
+                      <svg
+                        className='mr-2 h-5 w-5 text-[#a3a3a3]'
                         fill='none'
                         stroke='currentColor'
                         strokeWidth='2'
@@ -243,7 +255,7 @@ export function Navigation({}: NavigationProps) {
                         <path strokeLinecap='round' strokeLinejoin='round' d='M12 6v6l4 2' />
                       </svg>
                       <span className='tabular-nums'>{currentTime}</span>
-                      <span className="ml-2 text-xs font-medium uppercase tracking-wider text-[#a3a3a3]">
+                      <span className='ml-2 text-xs font-medium uppercase tracking-wider text-[#a3a3a3]'>
                         {timeZoneAbbr}
                       </span>
                     </span>
@@ -252,35 +264,34 @@ export function Navigation({}: NavigationProps) {
               </AnimatePresence>
             </div>
           </motion.div>
-          <div className='hidden items-center space-x-2 md:flex'>
+          <div className='hidden items-center space-x-2 lg:flex'>
             {navItems.map((item, index) => (
               <motion.div
                 key={item.name}
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: index * 0.1 }}
-                className="cursor-pointer"
+                className='cursor-pointer'
               >
                 {item.name === 'Connect' ? (
                   <button
-                    type="button"
+                    type='button'
                     onClick={() => window.dispatchEvent(new Event(CONTACT_CARD_SHINE_EVENT))}
-                    className="cursor-pointer rounded-md border border-[#404040]/50 bg-[#f5f5f0] px-6 py-2.5 font-sans text-sm font-medium uppercase tracking-widest text-[#141414] transition-colors hover:bg-[#e8e8e3]"
+                    className='cursor-pointer rounded-md border border-[#404040]/50 bg-[#f5f5f0] px-6 py-2.5 font-sans text-sm font-medium uppercase tracking-widest text-[#141414] transition-colors hover:bg-[#e8e8e3]'
                   >
                     {item.name}
                   </button>
                 ) : (
                   <Link
                     href={item.href}
-                    onClick={(e) => {
+                    onClick={e => {
                       if (item.href.startsWith('#')) {
                         e.preventDefault();
                         const id = item.href.slice(1);
-                        window.history.pushState(null, '', item.href);
-                        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        scrollToSection(id, true);
                       }
                     }}
-                    className="cursor-pointer rounded-md px-6 py-2.5 font-sans text-sm font-medium uppercase tracking-wider text-[#a3a3a3] transition-colors hover:border-[#525252] hover:text-[#f5f5f0]"
+                    className='cursor-pointer rounded-md px-6 py-2.5 font-sans text-sm font-medium uppercase tracking-wider text-[#a3a3a3] transition-colors hover:border-[#525252] hover:text-[#f5f5f0]'
                   >
                     {item.name}
                   </Link>
@@ -288,7 +299,7 @@ export function Navigation({}: NavigationProps) {
               </motion.div>
             ))}
           </div>
-          <div className='md:hidden'>
+          <div className='lg:hidden'>
             <Sheet open={mobileNavOpen} onOpenChange={setMobileNavOpen}>
               <SheetTrigger asChild>
                 <Button
@@ -320,7 +331,7 @@ export function Navigation({}: NavigationProps) {
                             xmlns='http://www.w3.org/2000/svg'
                             aria-hidden='true'
                             focusable='false'
-                            className="h-9 w-9 text-[#f5f5f0] drop-shadow-xl transition-colors duration-200"
+                            className='h-9 w-9 text-[#f5f5f0] drop-shadow-xl transition-colors duration-200'
                             role='img'
                             aria-label='Close navigation menu'
                           >
@@ -394,13 +405,37 @@ export function Navigation({}: NavigationProps) {
                             xmlns='http://www.w3.org/2000/svg'
                             aria-hidden='true'
                             focusable='false'
-                            className="h-7 w-7 text-[#a3a3a3] transition-colors duration-200"
+                            className='h-7 w-7 text-[#a3a3a3] transition-colors duration-200'
                             role='img'
                             aria-label='Open navigation menu'
                           >
-                            <line x1='6' y1='9' x2='22' y2='9' stroke='currentColor' strokeWidth='2.5' strokeLinecap='round' />
-                            <line x1='6' y1='14' x2='22' y2='14' stroke='currentColor' strokeWidth='2.5' strokeLinecap='round' />
-                            <line x1='6' y1='19' x2='22' y2='19' stroke='currentColor' strokeWidth='2.5' strokeLinecap='round' />
+                            <line
+                              x1='6'
+                              y1='9'
+                              x2='22'
+                              y2='9'
+                              stroke='currentColor'
+                              strokeWidth='2.5'
+                              strokeLinecap='round'
+                            />
+                            <line
+                              x1='6'
+                              y1='14'
+                              x2='22'
+                              y2='14'
+                              stroke='currentColor'
+                              strokeWidth='2.5'
+                              strokeLinecap='round'
+                            />
+                            <line
+                              x1='6'
+                              y1='19'
+                              x2='22'
+                              y2='19'
+                              stroke='currentColor'
+                              strokeWidth='2.5'
+                              strokeLinecap='round'
+                            />
                           </svg>
                         )}
                       </motion.span>
@@ -409,7 +444,15 @@ export function Navigation({}: NavigationProps) {
                 </Button>
               </SheetTrigger>
               <SheetContent
-                className={`translate-y-0 overflow-hidden rounded-2xl border border-[#404040]/40 bg-[#141414] shadow-2xl backdrop-blur-2xl transition-all duration-500 ${mobileNavOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}
+                onCloseAutoFocus={event => {
+                  const navigate = pendingNavigation.current;
+                  pendingNavigation.current = null;
+                  if (navigate) {
+                    event.preventDefault();
+                    navigate();
+                  }
+                }}
+                className={`translate-y-0 overflow-y-auto overscroll-contain rounded-l-2xl border border-[#404040]/40 bg-[#141414] shadow-2xl backdrop-blur-2xl transition-all duration-500 ${mobileNavOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}
                 style={{
                   WebkitBackdropFilter: 'blur(30px)',
                   backdropFilter: 'blur(30px)',
@@ -419,7 +462,7 @@ export function Navigation({}: NavigationProps) {
                 <SheetDescription className='sr-only'>
                   Jump to a section of the site or open the contact form.
                 </SheetDescription>
-                <div className='px-6 py-4'>
+                <div className='px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-16 sm:px-6'>
                   {navItems.map((item, index) => (
                     <motion.div
                       key={item.name}
@@ -431,28 +474,26 @@ export function Navigation({}: NavigationProps) {
                     >
                       {item.name === 'Connect' ? (
                         <button
-                          type="button"
+                          type='button'
                           onClick={() => {
+                            pendingNavigation.current = () =>
+                              window.dispatchEvent(new Event(CONTACT_CARD_SHINE_EVENT));
                             setMobileNavOpen(false);
-                            window.dispatchEvent(new Event(CONTACT_CARD_SHINE_EVENT));
                           }}
-                          className="block w-full cursor-pointer rounded-md border border-[#404040]/50 bg-[#f5f5f0] px-6 py-3 text-left text-lg font-medium text-[#141414] transition-colors hover:bg-[#e8e8e3]"
+                          className='block w-full cursor-pointer rounded-md border border-[#404040]/50 bg-[#f5f5f0] px-6 py-3 text-left text-lg font-medium text-[#141414] transition-colors hover:bg-[#e8e8e3]'
                         >
                           {item.name}
                         </button>
                       ) : (
                         <Link
                           href={item.href}
-                          className="block cursor-pointer rounded-lg px-4 py-3 text-lg font-medium text-[#a3a3a3] transition-colors hover:text-[#f5f5f0]"
-                          onClick={(e) => {
+                          className='block cursor-pointer rounded-lg px-4 py-3 text-lg font-medium text-[#a3a3a3] transition-colors hover:text-[#f5f5f0]'
+                          onClick={e => {
                             setMobileNavOpen(false);
                             if (item.href.startsWith('#')) {
                               e.preventDefault();
                               const id = item.href.slice(1);
-                              window.history.pushState(null, '', item.href);
-                              setTimeout(() => {
-                                document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                              }, 300);
+                              pendingNavigation.current = () => scrollToSection(id, true);
                             }
                           }}
                         >

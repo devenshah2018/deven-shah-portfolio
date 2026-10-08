@@ -3,10 +3,15 @@
 import { HeroSection } from '@/components/hero/hero-section';
 import { AboutSection } from '@/components/about/about-section';
 import { ExperienceSection } from '@/components/experience/experience-section';
-import { ProjectsHorizontalSection } from '@/components/projects/projects-horizontal-section';
+import { ProjectsIndex } from '@/components/projects/projects-index';
 import { ContactSection } from '@/components/contact/contact-section';
 import { generatePersonSchema } from '@/lib/jsonld';
-import { scrollToProject, requestScrollToExperience, scrollToEducation } from '@/lib/url-utils';
+import {
+  scrollToProject,
+  requestScrollToExperience,
+  scrollToEducation,
+  scrollToSection,
+} from '@/lib/url-utils';
 import { useEffect } from 'react';
 
 export default function HomePage() {
@@ -17,7 +22,8 @@ export default function HomePage() {
     const handleHashNavigation = () => {
       const hash = window.location.hash;
       // Check sessionStorage first (set by papers page for reliable shine effect)
-      const projectFromPaper = typeof window !== 'undefined' ? sessionStorage.getItem('scrollToProjectWithShine') : null;
+      const projectFromPaper =
+        typeof window !== 'undefined' ? sessionStorage.getItem('scrollToProjectWithShine') : null;
       if (projectFromPaper) {
         sessionStorage.removeItem('scrollToProjectWithShine');
         scrollToProject(projectFromPaper);
@@ -38,21 +44,21 @@ export default function HomePage() {
         if (educationId) {
           scrollToEducation(educationId);
         }
-      } else if (hash === '#education') {
-        const section = document.getElementById('education');
-        if (section) {
-          section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+      } else if (
+        ['#hero', '#about', '#experience', '#education', '#projects', '#contact'].includes(hash)
+      ) {
+        scrollToSection(hash.slice(1));
       }
     };
 
     // Handle initial load with hash (including cross-domain navigation from papers, etc.)
     const handleInitialLoad = () => {
       const hasProjectHash = window.location.hash.startsWith('#project-');
-      const hasProjectFromPaper = typeof window !== 'undefined' && !!sessionStorage.getItem('scrollToProjectWithShine');
+      const hasProjectFromPaper =
+        typeof window !== 'undefined' && !!sessionStorage.getItem('scrollToProjectWithShine');
       if (window.location.hash || hasProjectFromPaper) {
         // Wait for Projects section to render; papers navigation needs extra time
-        const delay = (hasProjectHash || hasProjectFromPaper) ? 450 : 100;
+        const delay = hasProjectHash || hasProjectFromPaper ? 450 : 100;
         setTimeout(() => {
           if (document.readyState === 'complete') {
             handleHashNavigation();
@@ -84,7 +90,7 @@ export default function HomePage() {
         <HeroSection />
         <AboutSection />
         <ExperienceSection />
-        <ProjectsHorizontalSection />
+        <ProjectsIndex />
         <ContactSection />
       </main>
     </>

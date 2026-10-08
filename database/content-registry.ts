@@ -28,7 +28,7 @@ export const SKILLS = {
     'Rust',
     'C++'
   ],
-  platforms: ['Linux', 'AWS', 'Salesforce', 'Azure', 'LangGraph', 'GCP', 'Jupyter', 'Supabase', 'Stripe', 'Inngest'],
+  platforms: ['Linux', 'AWS', 'Salesforce', 'Azure', 'LangGraph', 'GCP', 'Jupyter', 'Supabase', 'Stripe'],
   frameworks: ['React', '.NET', 'Flask', 'TailwindCSS', 'Angular', 'ASP.NET Core', 'Next.js', 'Node.js', 'Vite'],
   database: ['SQL', 'SOQL', 'Oracle', 'PostgreSQL', 'MySQL', 'MongoDB'],
   aimal: ['Python', 'LLMs', 'Sklearn', 'Tensorflow', 'Pytorch', 'LangGraph', 'CNNs', 'OpenAI', 'FAISS'],
@@ -39,10 +39,10 @@ export const SKILLS = {
 
 // Simplified skill mappings - only store IDs instead of duplicating full object data
 export const SKILL_MAPPINGS = [
-  { skill: 'Python', experienceIds: ['suno-analytics', 'netapp', 'build-fellowship', 'research-assistant', 'accenture'], projectIds: ['molecule-mutation-prediction', 'drone-build-project', 'image-retrieval-project'], educationIds: ['sjsu-bachelors'] },
-  { skill: 'TypeScript', experienceIds: ['suno-analytics', 'patelco', 'build-fellowship'], projectIds: ['drone-build-project', 'iris-project', 'boosted-project', 'any-project', 'umlazy-project', 'graf-project'] },
+  { skill: 'Python', experienceIds: ['suno-analytics', 'netapp', 'build-fellowship', 'research-assistant', 'accenture'], projectIds: ['molecule-mutation-prediction', 'drone-build-project', 'image-retrieval-project', 'kepler-exoplanets', 'gdelt-conflict-forecasting'], educationIds: ['sjsu-bachelors'] },
+  { skill: 'TypeScript', experienceIds: ['suno-analytics', 'patelco', 'build-fellowship'], projectIds: ['drone-build-project', 'iris-project', 'boosted-project', 'umlazy-project', 'graf-project'] },
   { skill: 'C#', experienceIds: ['patelco'], educationIds: ['sjsu-bachelors'] },
-  { skill: 'React', experienceIds: ['suno-analytics'], projectIds: ['drone-build-project', 'iris-project', 'breaking-dijkstra-project', 'boosted-project', 'any-project', 'umlazy-project', 'graf-project'] },
+  { skill: 'React', experienceIds: ['suno-analytics'], projectIds: ['drone-build-project', 'iris-project', 'breaking-dijkstra-project', 'boosted-project', 'umlazy-project', 'graf-project'] },
   { skill: 'Azure', experienceIds: ['suno-analytics', 'patelco'] },
   { skill: 'LangGraph', experienceIds: ['suno-analytics'] },
   { skill: '.NET', experienceIds: ['patelco'] },
@@ -55,16 +55,16 @@ export const SKILL_MAPPINGS = [
   { skill: 'Apex', experienceIds: ['patelco'] },
   { skill: 'Salesforce', experienceIds: ['patelco', 'accenture'] },
   { skill: 'AWS', experienceIds: ['suno-analytics'], educationIds: ['aws-cloud-practitioner'] },
-  { skill: 'Flask', experienceIds: ['netapp', 'suno-analytics'] },
+  { skill: 'Flask', experienceIds: ['netapp', 'suno-analytics'], projectIds: ['gdelt-conflict-forecasting'] },
   { skill: 'Bash', experienceIds: ['netapp'], projectIds: [ 'molecule-mutation-prediction'] },
   { skill: 'Oracle', experienceIds: ['netapp'] },
-  { skill: 'PostgreSQL', experienceIds: ['suno-analytics'], projectIds: ['boosted-project', 'any-project', 'graf-project', 'iris-project'] },
+  { skill: 'PostgreSQL', experienceIds: ['suno-analytics'], projectIds: ['boosted-project', 'graf-project', 'iris-project'] },
   { skill: 'GCP', experienceIds: ['suno-analytics'] },
   { skill: 'TailwindCSS', experienceIds: ['suno-analytics'] },
   { skill: 'Rust', projectIds: ['task-scheduling-project'] },
   { skill: 'Linux', educationIds: ['bu-masters'], projectIds: ['task-scheduling-project'] },
   { skill: 'LLMs', experienceIds: ['suno-analytics'] },
-  { skill: 'Sklearn', experienceIds: ['suno-analytics'], projectIds: ['molecule-mutation-prediction'] },
+  { skill: 'Sklearn', experienceIds: ['suno-analytics'], projectIds: ['molecule-mutation-prediction', 'kepler-exoplanets'] },
   { skill: 'Tensorflow', experienceIds: ['suno-analytics'] },
   { skill: 'Pytorch', experienceIds: ['build-fellowship', 'research-assistant'], projectIds: ['image-retrieval-project'] },
   { skill: 'Docker', experienceIds: ['netapp', 'suno-analytics', 'build-fellowship'] },
@@ -80,11 +80,10 @@ export const SKILL_MAPPINGS = [
   { skill: 'Next.js', projectIds: ['drone-build-project', 'umlazy-project'], experienceIds: ['suno-analytics'] },
   { skill: 'CNNs', experienceIds: ['build-fellowship', 'research-assistant'], projectIds: ['image-retrieval-project'] },
   { skill: 'FAISS', experienceIds: ['build-fellowship'], projectIds: ['image-retrieval-project'] },
-  { skill: 'Node.js', projectIds: ['boosted-project', 'any-project', 'iris-project'] },
+  { skill: 'Node.js', projectIds: ['boosted-project', 'iris-project'] },
   { skill: 'Vite', projectIds: ['graf-project'] },
-  { skill: 'Supabase', projectIds: ['boosted-project', 'any-project', 'graf-project', 'iris-project'] },
+  { skill: 'Supabase', projectIds: ['boosted-project', 'graf-project', 'iris-project'] },
   { skill: 'Stripe', projectIds: ['boosted-project', 'iris-project'] },
-  { skill: 'Inngest', projectIds: ['any-project'] },
   { skill: 'OpenAI', projectIds: ['boosted-project', 'iris-project'] },
 ];
 
@@ -107,6 +106,17 @@ export const CATEGORIZED_SKILLS = Object.fromEntries(
 CATEGORIZED_SKILLS['all'] = Array.from(new Set(Object.values(SKILLS).flat()));
 
 export const EXPERIENCES = [
+  {
+    id: 'accenture-incoming',
+    title: 'AI Native Analyst',
+    company: 'Accenture',
+    companyLogo: '/accenture-logo.svg',
+    location: '',
+    period: '04/2027 - Present',
+    description: 'Joining Accenture as an AI Native Analyst in April 2027.',
+    link: 'https://www.accenture.com',
+    current_work: false,
+  },
   {
     id: 'juntrax',
     title: 'User Interface Engineer',
@@ -190,13 +200,13 @@ export const EXPERIENCES = [
     company: 'Accenture',
     companyLogo: '/accenture-logo.svg',
     location: 'San Francisco, CA',
-    period: '05/2026 – Present',
+    period: '05/2026 – 09/2026',
     description:
       'Automating enterprise software solutions for Fortune 500 clients using AI and cloud technologies, focusing on scalable architecture and efficient deployment.',
     achievements: [],
     gradient: 'from-blue-500 to-cyan-500',
     link: 'https://www.accenture.com',
-    current_work: true,
+    current_work: false,
     summary: 'Building enterprise software solutions for clients.'
   },
   {
@@ -273,11 +283,25 @@ function parsePeriod(period: string): { startY: number; startM: number; endY: nu
   return { startM, startY, endM, endY };
 }
 
+/** Whether the role begins after the current calendar month. */
+export function hasFutureStart(period: string, now = new Date()): boolean {
+  const parsed = parsePeriod(period);
+  return !!parsed && parsed.startY * 12 + parsed.startM > now.getFullYear() * 12 + now.getMonth() + 1;
+}
+
+/** Calendar sort key; future roles sort above roles active today. */
+export function getExperienceDate(period: string): number {
+  const parsed = parsePeriod(period);
+  if (!parsed) return 0;
+  return Math.max(parsed.startY * 100 + parsed.startM, parsed.endY * 100 + parsed.endM);
+}
+
 /** Format period for display, e.g. "Dec 2024 – Jan 2026" or "Feb 2026 – Present". */
 export function formatPeriodDisplay(period: string): string {
   const p = parsePeriod(period);
   if (!p) return period;
   const startStr = `${MONTHS[p.startM - 1]} ${p.startY}`;
+  if (hasFutureStart(period)) return `Starting ${startStr}`;
   const endStr = period.includes('Present') ? 'Present' : `${MONTHS[p.endM - 1]} ${p.endY}`;
   return `${startStr} – ${endStr}`;
 }
@@ -335,6 +359,7 @@ export function getEndDate(period: string): number {
 function getOrgDuration(positions: Experience[]): string {
   const ranges: { start: number; end: number }[] = [];
   for (const pos of positions) {
+    if (hasFutureStart(pos.period)) continue;
     const p = parsePeriod(pos.period);
     if (!p) continue;
     const start = p.startY * 12 + p.startM;
@@ -370,6 +395,7 @@ function getOrgDuration(positions: Experience[]): string {
 export function getTotalExperienceYears(): string {
   const ranges: { start: number; end: number }[] = [];
   for (const exp of EXPERIENCES) {
+    if (hasFutureStart(exp.period)) continue;
     const p = parsePeriod(exp.period);
     if (!p) continue;
     const start = p.startY * 12 + p.startM;
@@ -412,7 +438,7 @@ export function getHighestDegree(): { id: string; degreeAndMajor: string; instit
   return { id: top.id, degreeAndMajor, institution: top.institution };
 }
 
-/** Groups experiences by organization (LinkedIn-style), sorted by most recent position. */
+/** Groups all roles by organization; future roles lead without adding to tenure. */
 export function groupExperiencesByOrg(): OrgGroup[] {
   const byCompany = new Map<string, Experience[]>();
   for (const exp of EXPERIENCES) {
@@ -421,8 +447,8 @@ export function groupExperiencesByOrg(): OrgGroup[] {
     byCompany.get(key)!.push(exp);
   }
   return Array.from(byCompany.entries()).map(([company, positions]) => {
-    const first = positions[0]!;
-    const sorted = [...positions].sort((a, b) => getEndDate(b.period) - getEndDate(a.period));
+    const first = positions.find(pos => !hasFutureStart(pos.period)) ?? positions[0]!;
+    const sorted = [...positions].sort((a, b) => getExperienceDate(b.period) - getExperienceDate(a.period));
     return {
       company,
       ...(first.companyLogo !== undefined && { companyLogo: first.companyLogo }),
@@ -433,7 +459,7 @@ export function groupExperiencesByOrg(): OrgGroup[] {
       positions: sorted,
     };
   }).sort((a, b) => {
-    const endDiff = getEndDate(b.positions[0]!.period) - getEndDate(a.positions[0]!.period);
+    const endDiff = getExperienceDate(b.positions[0]!.period) - getExperienceDate(a.positions[0]!.period);
     if (endDiff !== 0) return endDiff;
     const aStart = parsePeriod(a.positions[0]!.period);
     const bStart = parsePeriod(b.positions[0]!.period);
@@ -461,6 +487,7 @@ export function getTimelineTicks(stepMonths: number = 3): { label: string; sortK
   let minStartY = Infinity;
   let minStartM = Infinity;
   for (const exp of EXPERIENCES) {
+    if (hasFutureStart(exp.period)) continue;
     const p = parsePeriod(exp.period);
     if (!p) continue;
     if (p.startY < minStartY || (p.startY === minStartY && p.startM < minStartM)) {
@@ -488,6 +515,7 @@ export function getTimelineTicks(stepMonths: number = 3): { label: string; sortK
 export function getTimelineYearTicks(): { label: string; sortKey: number }[] {
   let minStartY = Infinity;
   for (const exp of EXPERIENCES) {
+    if (hasFutureStart(exp.period)) continue;
     const p = parsePeriod(exp.period);
     if (!p) continue;
     if (p.startY < minStartY) minStartY = p.startY;
@@ -503,13 +531,47 @@ export function getTimelineYearTicks(): { label: string; sortKey: number }[] {
 
 export const PROJECT_CATEGORIES = [
   { key: 'all', label: 'All' },
-  { key: 'products', label: 'Products' },
-  { key: 'apps', label: 'Apps & Tools' },
-  { key: 'ai', label: 'AI / ML' },
-  { key: 'theory', label: 'Theory' },
+  { key: 'full-stack', label: 'Full Stack' },
+  { key: 'ai', label: 'Data Science and Machine Learning' },
+  { key: 'theory', label: 'Theory and Algorithms' },
 ];
 
 export const PROJECTS: Project[] = [
+  {
+    id: 'kepler-exoplanets',
+    title: 'Detecting Exoplanets in Kepler Transit Data',
+    subtitle: 'Astronomical Signal Classification',
+    period: '2026',
+    sortDate: '2026',
+    description: 'Machine learning pipeline that distinguishes exoplanets from false positives in NASA Kepler data, extracting transit features from raw light curves and comparing classifiers with star-grouped validation.',
+    summary: 'From raw starlight to exoplanet classification',
+    technologies: ['Python', 'scikit-learn', 'Lightkurve', 'Astropy'],
+    entry_point: 'github',
+    link: 'https://github.com/devenshah2018/kepler-exoplanets',
+    status: 'Completed',
+    categories: ['ai'],
+    related_experiences: ['bu-masters'],
+    accessible_at: ['github'],
+    access_points: [{ type: 'github', url: 'https://github.com/devenshah2018/kepler-exoplanets', label: 'Code' }],
+  },
+  {
+    id: 'gdelt-conflict-forecasting',
+    title: 'Forecasting Material Conflict Spikes from GDELT',
+    subtitle: 'News-Based Conflict Forecasting',
+    period: '2026',
+    sortDate: '2026',
+    description: 'PySpark pipeline that aggregates global news events into country-week signals and uses gradient-boosted trees to forecast material conflict spikes one to four weeks ahead, evaluated against logistic regression and persistence baselines.',
+    summary: 'Forecasting conflict spikes from global news signals',
+    technologies: ['Python', 'PySpark', 'Spark MLlib', 'Flask'],
+    entry_point: 'github',
+    link: 'https://github.com/devenshah2018/gdelt-conflict-forecasting',
+    status: 'Completed',
+    categories: ['ai'],
+    related_experiences: ['bu-masters'],
+    paper: '/papers/gdelt-conflict-forecasting.pdf',
+    accessible_at: ['github'],
+    access_points: [{ type: 'github', url: 'https://github.com/devenshah2018/gdelt-conflict-forecasting', label: 'Code' }],
+  },
   {
     id: 'iris-project',
     sortDate: '2026-01',
@@ -523,7 +585,7 @@ export const PROJECTS: Project[] = [
     link: 'https://www.iris-plan.com',
     status: 'In Progress',
     readMe: false,
-    categories: ['products'],
+    categories: ['full-stack'],
     current_work: false,
     summary: 'AI daily planner for your conversations and workflows',
     related_experiences: ['voyagers'],
@@ -546,35 +608,13 @@ export const PROJECTS: Project[] = [
     link: 'https://boosted.onrender.com',
     status: 'Live',
     readMe: false,
-    categories: ['products'],
+    categories: ['full-stack'],
     summary: 'AI marketing agent for on-brand, SEO-tuned content',
     related_experiences: ['voyagers'],
     demoVideo: '/demos/boosted-demo.mp4',
     accessible_at: ['hosted'],
     access_points: [
       { type: 'hosted', url: 'https://boosted.onrender.com', label: 'Live Site' },
-    ],
-  },
-  {
-    id: 'any-project',
-    title: 'Any',
-    subtitle: 'Prompt-to-Tool Builder',
-    period: '06/2026 – Present',
-    sortDate: '2026-06',
-    description:
-      'A no-code platform that turns a single prompt into a fully built, tested, and deployed web tool — designed and live in minutes.',
-    technologies: ['TypeScript', 'React', 'Node.js', 'Inngest', 'Supabase', 'PostgreSQL'],
-    entry_point: 'live',
-    link: 'https://any-uf96.onrender.com',
-    status: 'Live',
-    readMe: false,
-    categories: ['products'],
-    summary: 'Turns a single prompt into a deployed web tool',
-    related_experiences: ['voyagers'],
-    demoVideo: '/demos/any-demo.mp4',
-    accessible_at: ['hosted'],
-    access_points: [
-      { type: 'hosted', url: 'https://any-uf96.onrender.com', label: 'Live Site' },
     ],
   },
   {
@@ -590,7 +630,7 @@ export const PROJECTS: Project[] = [
     link: 'https://umlazy.vercel.app',
     status: 'Live',
     readMe: false,
-    categories: ['apps'],
+    categories: ['full-stack'],
     summary: 'Fast, lightweight UML diagram editor',
     related_experiences: ['voyagers'],
     demoVideo: '/demos/umlazy-demo.mp4',
@@ -612,7 +652,7 @@ export const PROJECTS: Project[] = [
     link: 'https://graf-fawn.vercel.app',
     status: 'Live',
     readMe: false,
-    categories: ['apps'],
+    categories: ['full-stack'],
     summary: 'Graph-based messaging: any message becomes a thread',
     related_experiences: ['voyagers'],
     demoVideo: '/demos/graf-demo.mp4',
@@ -642,6 +682,7 @@ export const PROJECTS: Project[] = [
   // },
   {
     id: 'molecule-mutation-prediction',
+    paper: '/papers/molecule-mutation-prediction.pdf',
     title: 'Molecule Mutation Prediction',
     subtitle: 'BRAF V600E Mutation Inhibitor Classifier',
     period: '08/2022 – 12/2022',
@@ -673,7 +714,7 @@ export const PROJECTS: Project[] = [
     link: 'https://drone-path-planner.vercel.app/',
     status: 'Completed',
     readMe: false,
-    categories: ['apps'],
+    categories: ['theory'],
     accessible_at: ['github', 'hosted'],
     access_points: [
       { type: 'hosted', url: 'https://drone-path-planner.vercel.app/', label: 'Live Demo' },
@@ -704,6 +745,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'task-scheduling-project',
+    paper: '/papers/task-scheduling.pdf',
     title: 'Task Scheduling',
     subtitle: 'Task Scheduling System',
     period: '09/2025 – 12/2025',
@@ -755,7 +797,7 @@ export const EDUCATION = [
     icon: GraduationCap,
     logo: '/bu-logo.png',
     isActive: true,
-    coursework: ['Generative AI', 'Operating Systems', 'Analysis of Algorithms', 'Database Management', 'Computer Language Theory', 'Data Science with Python', 'Big Data Analytics'],
+    coursework: ['Artificial Intelligence', 'Advanced Machine Learning and Neural Networks', 'Generative AI', 'Operating Systems', 'Analysis of Algorithms', 'Database Management', 'Computer Language Theory', 'Data Science with Python', 'Big Data Analytics'],
   },
   {
     id: 'sjsu-bachelors',
@@ -911,9 +953,9 @@ function orgStartKey(period: string): number {
   return parseInt(m[2], 10) * 12 + (monthIdx >= 0 ? monthIdx : 0);
 }
 
-/** Organizations ordered by start date, earliest first. */
+/** Organizations ordered by start date, newest first. */
 export function getOrganizations(): Organization[] {
-  return [...ORGANIZATIONS].sort((a, b) => orgStartKey(a.period) - orgStartKey(b.period));
+  return [...ORGANIZATIONS].sort((a, b) => orgStartKey(b.period) - orgStartKey(a.period));
 }
 
 export type CurrentWorkItem =

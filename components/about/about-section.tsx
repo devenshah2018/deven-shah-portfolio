@@ -3,280 +3,113 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { SkillModal } from '@/components/about/skill-modal';
-import { ProjectGallery } from '@/components/about/project-gallery';
 import { GitHubContributionChart } from '@/components/hero/github-contribution-chart';
-import { CATEGORIZED_SKILLS, SKILL_CATEGORIES, SKILL_MAPPINGS, CERTIFICATIONS, groupExperiencesByOrg } from '@/database/content-registry';
+import { SKILL_MAPPINGS, CERTIFICATIONS, groupExperiencesByOrg } from '@/database/content-registry';
 import { requestScrollToExperience } from '@/lib/url-utils';
-import { Search, X } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
+import { SkillsBrowser } from './skills-browser';
 
 export function AboutSection() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
-  const [activeCategory, setActiveCategory] = useState<string>('featured');
-  const [searchQuery, setSearchQuery] = useState('');
-
-  const handleSkillClick = (skill: string) => {
-    const skillMapping = SKILL_MAPPINGS.find((mapping) => mapping.skill === skill);
-    if (
-      skillMapping &&
-      (skillMapping.experienceIds || skillMapping.projectIds || skillMapping.educationIds)
-    ) {
-      setSelectedSkill(skill);
-      setModalOpen(true);
-    }
-  };
-
-  const hasMapping = (skill: string) => {
-    const skillMapping = SKILL_MAPPINGS.find((mapping) => mapping.skill === skill);
-    return (
-      skillMapping &&
-      (skillMapping.experienceIds || skillMapping.projectIds || skillMapping.educationIds)
-    );
-  };
-
-  const getMappingCount = (skill: string) => {
-    const skillMapping = SKILL_MAPPINGS.find((mapping) => mapping.skill === skill);
-    if (!skillMapping) return 0;
-    const experienceCount = skillMapping.experienceIds?.length || 0;
-    const projectCount = skillMapping.projectIds?.length || 0;
-    const educationCount = skillMapping.educationIds?.length || 0;
-    return experienceCount + projectCount + educationCount;
-  };
-
-  const allSkills = (CATEGORIZED_SKILLS['all'] as string[])
-    .slice()
-    .sort((a, b) => {
-      const countA = getMappingCount(a);
-      const countB = getMappingCount(b);
-      if (countB !== countA) return countB - countA;
-      return a.localeCompare(b);
-    });
-
-  const categorySkills = (CATEGORIZED_SKILLS[activeCategory as keyof typeof CATEGORIZED_SKILLS] as string[])
-    .slice()
-    .sort((a, b) => {
-      const countA = getMappingCount(a);
-      const countB = getMappingCount(b);
-      if (countB !== countA) return countB - countA;
-      return a.localeCompare(b);
-    });
-
-  const normalizeForSearch = (str: string) =>
-    str
-      .toLowerCase()
-      .replace(/[^\w]/g, '')
-      .replace(/\s+/g, '');
-  const queryNorm = normalizeForSearch(searchQuery);
-  const skills = queryNorm
-    ? allSkills.filter((s) => normalizeForSearch(s).includes(queryNorm))
-    : categorySkills;
-
   return (
-    <section id="about" className="relative bg-[#141414] pt-10 pb-16 sm:pt-14 sm:pb-20">
-      <div className="container mx-auto w-full max-w-7xl px-8 sm:px-10 lg:px-16">
+    <section id='about' className='relative bg-[#141414] py-16 sm:py-24'>
+      <div className='container mx-auto w-full max-w-7xl px-6 sm:px-10 lg:px-16'>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="mx-auto"
         >
-          <h2 className="mb-14 text-left text-xl font-normal uppercase tracking-[0.2em] text-[#8a8a8a] sm:text-2xl">
-            About Me
-          </h2>
-
-          {/* Grid: matches Experience & Projects — 7fr 3fr */}
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-[7fr_3fr] lg:gap-16">
-            {/* Left column */}
-            <div className="flex min-w-0 flex-col gap-8">
-              {/* Overview */}
-              <div className="border-l-2 border-[#2a2a2a] pl-6">
-                <h3 className="mb-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#6b6b6b]">
-                  Overview
-                </h3>
-                <p className="max-w-2xl text-[15px] leading-[1.9] text-[#c4c4c4] sm:text-[16px] sm:leading-[1.85]">
-                  Software engineer and AI researcher focused on turning research into production. I advance medical imaging and deepfake detection at Boston University, where I am pursuing an M.S. in Computer Science. My background includes leading product vision at Suno Analytics, building member-facing applications at Patelco, and ensuring safe and secure data operations at NetApp.
-                </p>
-              </div>
-
-              {/* GitHub contribution chart */}
-              <div className="w-full">
-                <GitHubContributionChart />
-              </div>
-
-              {/* Skills */}
-              <div>
-                <div className="mb-4 flex flex-wrap items-center justify-between gap-4">
-                  <h3 className="text-left text-sm font-medium uppercase tracking-[0.15em] text-[#6b6b6b]">
-                    Skills
-                  </h3>
-                  <label className="flex w-[180px] items-center gap-2 bg-transparent px-0 py-1.5 transition-colors focus-within:border-[#404040]">
-                    <Search className="h-3 w-3 flex-shrink-0 text-[#4a4a4a]" />
-                    <input
-                      type="search"
-                      placeholder="Search..."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="skills-search-input min-w-0 flex-1 bg-transparent text-[11px] text-[#c4c4c4] placeholder:text-[#4a4a4a] focus:outline-none"
-                      aria-label="Search skills"
-                    />
-                    {searchQuery.trim() && (
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          setSearchQuery('');
-                        }}
-                        className="flex-shrink-0 rounded p-0.5 text-[#6b6b6b] transition-colors hover:bg-[#262626] hover:text-[#c4c4c4] focus:outline-none"
-                        aria-label="Clear search"
-                      >
-                        <X className="h-3 w-3" strokeWidth={2} />
-                      </button>
-                    )}
-                  </label>
-                </div>
-                <div className="mb-6 flex flex-wrap items-center gap-x-5 gap-y-2.5 border-b border-[#222]/70 pb-4">
-                  {SKILL_CATEGORIES.map((cat) => {
-                    const isActive = activeCategory === cat.key && !searchQuery.trim();
-                    const isFeatured = cat.key === 'featured';
-                    return (
-                      <button
-                        key={cat.key}
-                        type="button"
-                        className={`cursor-pointer border-b-2 pb-0.5 pt-2 text-[11px] font-medium uppercase tracking-[0.1em] transition-all duration-200 focus:outline-none ${
-                          isActive
-                            ? isFeatured
-                              ? 'border-cyan-500/70 text-[#e5e5e5]'
-                              : 'border-[#404040] text-[#c4c4c4]'
-                            : isFeatured
-                              ? 'border-transparent text-[#8a8a8a] hover:border-cyan-500/40 hover:text-[#c4c4c4]'
-                              : 'border-transparent text-[#6b6b6b] hover:border-[#333] hover:text-[#a3a3a3]'
-                        }`}
-                        onClick={() => setActiveCategory(cat.key)}
-                        aria-pressed={isActive}
-                      >
-                        {cat.label}
-                      </button>
-                    );
-                  })}
-                  {searchQuery.trim() && (
-                    <span className="cursor-default border-b-2 border-[#404040] pb-0.5 text-[11px] font-medium uppercase tracking-[0.1em] text-[#c4c4c4]">
-                      {searchQuery.trim()}
-                    </span>
-                  )}
-                </div>
-                <div className="flex flex-wrap gap-3 pt-0.5">
-                  {skills.length === 0 ? (
-                    <p className="text-[13px] text-[#5a5a5a]">No results</p>
-                  ) : (
-                    skills.map((skill) => (
-                      <button
-                        key={skill}
-                        type="button"
-                        className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[14px] font-medium tracking-tight transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#404040] focus:ring-offset-2 focus:ring-offset-[#141414] ${
-                          hasMapping(skill)
-                            ? 'border-[#333]/60 bg-transparent text-[#c4c4c4] hover:border-[#3a3a3a]/80 hover:bg-[#1f1f1f]'
-                            : 'cursor-default border-[#2a2a2a] bg-transparent text-[#5a5a5a]'
-                        }`}
-                        aria-label={
-                          skill + (hasMapping(skill) ? `, ${getMappingCount(skill)} related items` : '')
-                        }
-                        onClick={() => hasMapping(skill) && handleSkillClick(skill)}
-                        tabIndex={0}
-                      >
-                        <span className="max-w-[160px] truncate">{skill}</span>
-                        {hasMapping(skill) && (
-                          <span className="flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-[#2a2a2a] text-[11px] font-medium leading-none text-[#6b6b6b] tabular-nums">
-                            {getMappingCount(skill)}
-                          </span>
-                        )}
-                      </button>
-                    ))
-                  )}
-                </div>
-              </div>
-            </div>
-
-            {/* Right column */}
-            <div className="flex min-w-0 flex-col gap-6">
-              {/* PREV @ - spans width of profile container */}
-              <div className="flex min-w-0 w-full max-w-full flex-col items-start gap-4 overflow-hidden sm:flex-row sm:items-center sm:gap-8">
-                <span className="shrink-0 mr-2 text-sm font-medium text-[#6b6b6b]">PREV @</span>
-                <div className="flex min-w-0 flex-1 flex-wrap items-center gap-3">
-                  {groupExperiencesByOrg().map((org) => {
+          <p className='section-eyebrow'>01 / About me</p>
+          <div className='grid gap-10 lg:grid-cols-[1.35fr_1fr] lg:gap-20'>
+            <div className='min-w-0'>
+              <h2 className='section-title max-w-xl'>
+                Research-minded.
+                <br />
+                <span className='text-[#9aaea5]'>Built for the real world.</span>
+              </h2>
+              <p className='mt-7 max-w-xl text-base leading-8 text-[#b1b1ad]'>
+                I’m a software engineer and AI researcher turning research into production. At
+                Boston University, I work on medical imaging and deepfake detection while pursuing
+                an M.S. in Computer Science.
+              </p>
+              <p className='mt-4 max-w-xl text-sm leading-7 text-[#999]'>
+                My background spans product leadership at Suno Analytics, member-facing applications
+                at Patelco, and secure data operations at NetApp. I care about the space where
+                rigorous ideas become useful software.
+              </p>
+              <div
+                className='mt-8 flex min-w-0 items-center gap-4'
+                aria-label='Previous workplaces'
+              >
+                <span className='shrink-0 whitespace-nowrap text-[10px] font-medium uppercase tracking-[0.15em] text-[#999]'>
+                  Prev @
+                </span>
+                <div className='flex min-w-0 flex-nowrap items-center gap-1 overflow-x-auto py-2 sm:gap-3'>
+                  {groupExperiencesByOrg().map(org => {
                     const firstId = org.positions[0]?.id;
                     if (!org.companyLogo || !firstId) return null;
                     return (
                       <button
                         key={org.company}
-                        type="button"
+                        type='button'
                         onClick={() => requestScrollToExperience(firstId)}
-                        className="transition-opacity hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-[#404040] focus:ring-offset-2 focus:ring-offset-[#141414]"
                         aria-label={`Scroll to ${org.company}`}
+                        title={org.company}
+                        className='flex h-11 w-11 shrink-0 items-center justify-center opacity-80 transition-opacity hover:opacity-100'
                       >
                         <img
                           src={org.companyLogo}
-                          alt=""
-                          className="h-11 w-11 rounded object-contain sm:h-8 sm:w-8"
+                          alt=''
+                          className='h-6 w-6 rounded-sm object-contain sm:h-7 sm:w-7'
                         />
                       </button>
                     );
                   })}
                 </div>
               </div>
-              {/* Rotating project gallery */}
-              <ProjectGallery />
-              {/* Certifications */}
+            </div>
+            <aside className='min-w-0 lg:pt-2'>
+              <h3 className='section-eyebrow'>GitHub contributions</h3>
+              <GitHubContributionChart compact />
               {CERTIFICATIONS.length > 0 && (
-                <div className="overflow-hidden rounded-xl border border-[#2a2a2a]/80 bg-[#161616]/95 shadow-[0_1px_0_0_rgba(255,255,255,0.03)] backdrop-blur-sm">
-                  <div className="border-b border-[#2a2a2a]/60 px-5 py-3.5">
-                    <h3 className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#737373]">
-                      Certifications
-                    </h3>
-                  </div>
-                  <div className="flex flex-col">
-                    {CERTIFICATIONS.map((cert) => (
+                <div className='mt-8 border-t border-[#2c2c29] pt-6'>
+                  <h3 className='section-eyebrow'>Credentials</h3>
+                  <div className='space-y-5'>
+                    {CERTIFICATIONS.map(cert => (
                       <a
                         key={cert.id}
                         href={cert.verificationUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="group flex items-center gap-3.5 border-b border-[#262626]/40 px-5 py-3.5 text-left transition-colors last:border-b-0 focus:outline-none focus:ring-2 focus:ring-[#404040] focus:ring-inset hover:bg-[#1a1a1a]/50"
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        className='group flex items-center gap-3'
                       >
                         {cert.logo && (
-                          <div
-                            className={
-                              cert.logoWrapperClassName ??
-                              'flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg border border-[#2a2a2a]/60 bg-[#1f1f1f]/80 p-1.5'
-                            }
-                          >
-                            <img
-                              src={cert.logo}
-                              alt=""
-                              className={cert.logoClassName ?? 'h-full w-full object-contain opacity-90'}
-                            />
-                          </div>
+                          <img src={cert.logo} alt='' className='h-8 w-8 shrink-0 object-contain' />
                         )}
-                        <div className="min-w-0 flex-1">
-                          <div className="truncate text-[13px] font-medium text-[#d4d4d4] transition-colors group-hover:text-[#e5e5e5]">
+                        <div className='min-w-0 flex-1'>
+                          <p className='text-sm leading-6 text-[#d4d4cd] group-hover:text-white'>
                             {cert.title}
-                          </div>
-                          <div className="truncate text-[11px] text-[#737373]">
+                          </p>
+                          <p className='text-xs leading-6 text-[#999]'>
                             {cert.issuer} · {cert.period}
-                          </div>
+                          </p>
                         </div>
-                        <span className="flex-shrink-0 text-[#3a3a3a] transition-colors group-hover:text-[#525252]" aria-hidden>
-                          <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                          </svg>
-                        </span>
+                        <ArrowUpRight className='h-4 w-4 shrink-0 text-[#888]' />
                       </a>
                     ))}
                   </div>
                 </div>
               )}
-            </div>
+            </aside>
           </div>
+          <SkillsBrowser
+            onSelect={skill => {
+              setSelectedSkill(skill);
+              setModalOpen(true);
+            }}
+          />
         </motion.div>
       </div>
       <SkillModal

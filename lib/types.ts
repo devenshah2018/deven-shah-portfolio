@@ -29,4 +29,6 @@ export type Project = {
   related_experiences?: string[];
   /** Path to a demo video (in /public). When set, the project row plays this instead of a screenshot. */
   demoVideo?: string;
+  /** Same-origin PDF path in /public, offered as a direct download. */
+  paper?: string;
 };
