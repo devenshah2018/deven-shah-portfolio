@@ -386,16 +386,16 @@ export function ExperienceSection() {
                   <div
                     role='group'
                     aria-label='View mode'
-                    className='inline-flex shrink-0 gap-1 bg-[#1d1d1b] p-1'
+                    className='inline-flex shrink-0 items-center gap-6'
                   >
                     <button
                       type='button'
                       aria-pressed={viewMode === 'compact'}
                       onClick={() => setViewMode('compact')}
-                      className={`min-h-11 rounded px-3 py-1.5 text-sm font-medium transition-colors focus:outline-none focus:ring-0 ${
+                      className={`relative min-h-11 border-b-2 px-0.5 py-2 text-sm font-medium transition-colors duration-200 focus-visible:rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#a5c9bd] ${
                         viewMode === 'compact'
-                          ? 'bg-[#262626] text-[#f5f5f0]'
-                          : 'text-[#737373] hover:text-[#a3a3a3]'
+                          ? 'border-[#a5c9bd] text-[#f5f5f0]'
+                          : 'border-transparent text-[#999] hover:border-[#555] hover:text-[#e5e5df]'
                       }`}
                     >
                       Compact
@@ -404,10 +404,10 @@ export function ExperienceSection() {
                       type='button'
                       aria-pressed={viewMode === 'detailed'}
                       onClick={() => setViewMode('detailed')}
-                      className={`min-h-11 rounded px-3 py-1.5 text-sm font-medium transition-colors focus:outline-none focus:ring-0 ${
+                      className={`relative min-h-11 border-b-2 px-0.5 py-2 text-sm font-medium transition-colors duration-200 focus-visible:rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#a5c9bd] ${
                         viewMode === 'detailed'
-                          ? 'bg-[#262626] text-[#f5f5f0]'
-                          : 'text-[#737373] hover:text-[#a3a3a3]'
+                          ? 'border-[#a5c9bd] text-[#f5f5f0]'
+                          : 'border-transparent text-[#999] hover:border-[#555] hover:text-[#e5e5df]'
                       }`}
                     >
                       Detailed
