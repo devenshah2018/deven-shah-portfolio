@@ -149,7 +149,7 @@ function ProjectRow({ project }: { project: Project }) {
 }
 
 export function ProjectsIndex() {
-  const [category, setCategory] = useState('full-stack');
+  const [category, setCategory] = useState('featured');
   const [query, setQuery] = useState('');
   useEffect(() => {
     const reset = () => {

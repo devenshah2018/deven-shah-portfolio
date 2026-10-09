@@ -531,6 +531,7 @@ export function getTimelineYearTicks(): { label: string; sortKey: number }[] {
 
 export const PROJECT_CATEGORIES = [
   { key: 'all', label: 'All' },
+  { key: 'featured', label: 'Featured' },
   { key: 'full-stack', label: 'Full Stack' },
   { key: 'ai', label: 'Data Science and Machine Learning' },
   { key: 'theory', label: 'Theory and Algorithms' },
@@ -566,7 +567,7 @@ export const PROJECTS: Project[] = [
     entry_point: 'github',
     link: 'https://github.com/devenshah2018/gdelt-conflict-forecasting',
     status: 'Completed',
-    categories: ['ai'],
+    categories: ['ai', 'featured'],
     related_experiences: ['bu-masters'],
     paper: '/papers/gdelt-conflict-forecasting.pdf',
     accessible_at: ['github'],
@@ -585,7 +586,7 @@ export const PROJECTS: Project[] = [
     link: 'https://www.iris-plan.com',
     status: 'In Progress',
     readMe: false,
-    categories: ['full-stack'],
+    categories: ['full-stack', 'featured'],
     current_work: false,
     summary: 'AI daily planner for your conversations and workflows',
     related_experiences: ['voyagers'],
@@ -714,7 +715,7 @@ export const PROJECTS: Project[] = [
     link: 'https://drone-path-planner.vercel.app/',
     status: 'Completed',
     readMe: false,
-    categories: ['theory'],
+    categories: ['theory', 'featured'],
     accessible_at: ['github', 'hosted'],
     access_points: [
       { type: 'hosted', url: 'https://drone-path-planner.vercel.app/', label: 'Live Demo' },

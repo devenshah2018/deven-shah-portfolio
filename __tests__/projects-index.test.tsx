@@ -5,6 +5,27 @@ import { ProjectsIndex } from '@/components/projects/projects-index';
 it('switches between the requested categories and includes the research paper downloads', async () => {
   const user = userEvent.setup();
   render(<ProjectsIndex />);
+  const tabs = within(screen.getByRole('group', { name: 'Project categories' })).getAllByRole(
+    'button'
+  );
+  expect(tabs.slice(0, 3).map(button => button.textContent)).toEqual([
+    'All projects11',
+    'Featured3',
+    'Full Stack4',
+  ]);
+  expect(screen.getByRole('button', { name: 'Featured 3' })).toHaveAttribute(
+    'aria-pressed',
+    'true'
+  );
+  expect(screen.getAllByRole('listitem')).toHaveLength(3);
+  for (const title of [
+    'Iris',
+    'Forecasting Material Conflict Spikes from GDELT',
+    'Drone Path Planning',
+  ]) {
+    expect(screen.getByRole('heading', { name: title, exact: true })).toBeInTheDocument();
+  }
+  await user.click(screen.getByRole('button', { name: 'Full Stack 4' }));
   expect(screen.getAllByRole('listitem')).toHaveLength(4);
   expect(screen.getByRole('heading', { name: 'Boosted' })).toBeInTheDocument();
   expect(screen.queryByRole('heading', { name: 'Any', exact: true })).not.toBeInTheDocument();
@@ -34,6 +55,9 @@ it('switches between the requested categories and includes the research paper do
   expect(screen.getByRole('heading', { name: 'Drone Path Planning' })).toBeInTheDocument();
   expect(screen.getByRole('heading', { name: 'Task Scheduling' })).toBeInTheDocument();
   expect(screen.getByRole('heading', { name: 'Breaking Dijkstra' })).toBeInTheDocument();
+  await user.click(screen.getByRole('button', { name: 'Featured 3' }));
+  expect(screen.getAllByRole('listitem')).toHaveLength(3);
+  expect(screen.queryByRole('heading', { name: 'Task Scheduling' })).not.toBeInTheDocument();
 });
 
 it('searches across categories and recovers from empty results', async () => {
