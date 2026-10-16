@@ -27,8 +27,12 @@ export type Project = {
   accessible_at: ('github' | 'vscode' | 'kaggle' | 'hosted')[];
   access_points?: AccessPoint[];
   related_experiences?: string[];
-  /** Path to a demo video (in /public). When set, the project row plays this instead of a screenshot. */
+  /** Optional local video offered through the project's Demo player. */
   demoVideo?: string;
-  /** Same-origin PDF path in /public, offered as a direct download. */
+  /** Curated local preview, so rendering never depends on a third-party preview API. */
+  thumbnail?: { src: string; alt: string };
+  /** Same-origin PDF path, offered in the document viewer with a download. */
   paper?: string;
+  /** Browser-friendly PDF preview and optional original presentation download. */
+  slideDeck?: { pdf: string; source?: string };
 };

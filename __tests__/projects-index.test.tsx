@@ -43,18 +43,18 @@ it('switches between the requested categories and includes the research paper do
     expect(within(row).getByText('Completed')).toBeInTheDocument();
     expect(within(row).getByRole('button', { name: 'Boston University' })).toBeInTheDocument();
   }
-  expect(
-    screen.getByRole('link', { name: 'Download paper for Wardrobe Copilot (PDF)' })
-  ).toHaveAttribute('href', '/papers/wardrobe-copilot.pdf');
-  expect(
-    screen.getByRole('link', { name: 'Download paper for Wardrobe Copilot (PDF)' })
-  ).toHaveAttribute('download');
-  expect(screen.getByRole('link', { name: /Download paper for Forecasting/ })).toHaveAttribute(
+  expect(screen.getByRole('link', { name: 'Paper for Wardrobe Copilot (PDF)' })).toHaveAttribute(
+    'href',
+    '/papers/wardrobe-copilot.pdf'
+  );
+
+  expect(screen.getByRole('link', { name: /Paper for Forecasting/ })).toHaveAttribute(
     'href',
     '/papers/gdelt-conflict-forecasting.pdf'
   );
-  expect(screen.getByRole('link', { name: /Download paper for Molecule/ })).toHaveAttribute(
-    'download'
+  expect(screen.getByRole('link', { name: /Paper for Molecule/ })).toHaveAttribute(
+    'href',
+    '/papers/molecule-mutation-prediction.pdf'
   );
 
   await user.click(screen.getByRole('button', { name: 'Theory and Algorithms 3' }));

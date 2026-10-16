@@ -1,0 +1,38 @@
+.action {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 13px;
+  border-radius: 8px;
+  background: rgb(255 255 255 / 8%);
+  color: #edede7;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+  transition:
+    background-color 150ms,
+    color 150ms;
+}
+.action:hover {
+  background: rgb(255 255 255 / 14%);
+  color: white;
+}
+.action:focus-visible {
+  outline: 2px solid #a5c9bd;
+  outline-offset: 3px;
+}
+.action svg {
+  height: 15px;
+  width: 15px;
+  flex-shrink: 0;
+}
+.primary {
+  background: #a5c9bd;
+  color: #101713;
+}
+.primary:hover {
+  background: #c0dfd4;
+  color: #101713;
+}

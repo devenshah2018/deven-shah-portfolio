@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowUpRight, Download, Search, X } from 'lucide-react';
+import { ArrowUpRight, Code2, Search, X } from 'lucide-react';
 import { memo, useEffect, useState } from 'react';
 import {
   PROJECTS,
@@ -11,6 +11,10 @@ import {
 } from '@/database/content-registry';
 import { requestScrollToExperience, scrollToEducation, scrollToSection } from '@/lib/url-utils';
 import { Project } from '@/lib/types';
+import { ProjectThumbnail } from './project-thumbnail';
+import { ProjectDemo } from './project-demo';
+import { ProjectDocument } from './project-document';
+import actionStyles from './project-actions.module.css';
 
 type RelatedLabel = {
   name: string;
@@ -89,14 +93,25 @@ const CATEGORY_COUNTS = new Map(
   ])
 );
 
-const ProjectRow = memo(function ProjectRow({ project, hidden }: { project: Project; hidden: boolean }) {
+const ProjectRow = memo(function ProjectRow({
+  project,
+  hidden,
+}: {
+  project: Project;
+  hidden: boolean;
+}) {
   const related = PROJECT_METADATA.get(project.id)!.related;
   const links = project.access_points?.length
     ? project.access_points
     : [{ type: project.entry_point, url: project.link, label: 'View project' }];
   return (
-    <li id={`project-${project.id}`} hidden={hidden} className='project-index-row group py-7 sm:py-8'>
-      <div className='grid gap-3 md:grid-cols-[minmax(0,1fr)_minmax(0,1.35fr)] md:gap-10'>
+    <li
+      id={`project-${project.id}`}
+      hidden={hidden}
+      className='py-7 sm:py-8'
+    >
+      <div className='grid grid-cols-[6.5rem_minmax(0,1fr)] gap-x-4 gap-y-4 sm:grid-cols-[10rem_minmax(0,1fr)] sm:gap-x-6 lg:grid-cols-[11rem_minmax(0,0.85fr)_minmax(0,1.35fr)] lg:gap-x-8'>
+        <div className='min-w-0 pt-0.5'>{!hidden && <ProjectThumbnail project={project} />}</div>
         <div className='min-w-0'>
           <div className='mb-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[#999]'>
             <span className='tabular-nums'>
@@ -142,34 +157,43 @@ const ProjectRow = memo(function ProjectRow({ project, hidden }: { project: Proj
             </div>
           )}
         </div>
-        <div className='min-w-0'>
+        <div className='col-span-2 min-w-0 lg:col-span-1'>
           <p className='text-sm leading-7 text-[#b1b1ad]'>{project.description}</p>
           <p className='mt-3 text-xs leading-6 text-[#888]'>{project.technologies.join(' · ')}</p>
-          <div className='mt-3 flex flex-wrap items-center gap-x-6 gap-y-2'>
-            {links.map(link => (
-              <a
-                key={link.url}
-                href={link.url}
-                target='_blank'
-                rel='noopener noreferrer'
-                aria-label={`${link.label || link.type} for ${project.title}`}
-                className='inline-flex min-h-11 items-center gap-1.5 text-xs font-medium text-[#d4d4cd] transition-colors hover:text-[#a5c9bd]'
-              >
-                {link.label || link.type}
-                <ArrowUpRight className='h-3.5 w-3.5' aria-hidden='true' />
-              </a>
-            ))}
-            {project.paper && (
-              <a
-                href={project.paper}
-                download
-                aria-label={`Download paper for ${project.title} (PDF)`}
-                className='inline-flex min-h-11 items-center gap-2 text-xs font-medium text-[#a5c9bd] transition-colors hover:text-white'
-              >
-                <Download className='h-3.5 w-3.5' aria-hidden='true' />
-                Paper <span className='text-[#888]'>PDF</span>
-              </a>
-            )}
+          <div className='mt-4 flex flex-wrap items-center gap-2'>
+            {links
+              .filter(link => ['hosted', 'web', 'live'].includes(link.type))
+              .map(link => (
+                <a
+                  key={link.url}
+                  href={link.url}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  aria-label={`Live Site for ${project.title}`}
+                  className={`${actionStyles['action']} ${actionStyles['primary']}`}
+                >
+                  Live Site <ArrowUpRight aria-hidden='true' />
+                </a>
+              ))}
+            {project.demoVideo && <ProjectDemo project={project} />}
+            {links
+              .filter(link => !['hosted', 'web', 'live'].includes(link.type))
+              .map(link => (
+                <a
+                  key={link.url}
+                  href={link.url}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  aria-label={`${link.label || link.type} for ${project.title}`}
+                  className={actionStyles['action']}
+                >
+                  <Code2 aria-hidden='true' />
+                  {link.label || link.type}
+                  <ArrowUpRight aria-hidden='true' />
+                </a>
+              ))}
+            {project.paper && <ProjectDocument project={project} kind='paper' />}
+            {project.slideDeck && <ProjectDocument project={project} kind='slides' />}
           </div>
         </div>
       </div>

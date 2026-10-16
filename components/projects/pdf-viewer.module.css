@@ -1,0 +1,38 @@
+/* Text layer positioning adapted from PDF.js (Mozilla Foundation, Apache-2.0). */
+.page {
+  position: relative;
+  flex: none;
+  background: white;
+  box-shadow: 0 8px 35px rgb(0 0 0 / 25%);
+}
+.page canvas {
+  display: block;
+}
+.textLayer {
+  position: absolute;
+  inset: 0;
+  overflow: clip;
+  text-align: initial;
+  line-height: 1;
+  text-size-adjust: none;
+  forced-color-adjust: none;
+  transform-origin: 0 0;
+}
+.textLayer :is(span, br) {
+  color: transparent;
+  position: absolute;
+  white-space: pre;
+  cursor: text;
+  transform-origin: 0 0;
+}
+.textLayer > :not(.markedContent),
+.textLayer :global(.markedContent) span:not(:global(.markedContent)) {
+  z-index: 1;
+}
+.textLayer :global(span.markedContent) {
+  top: 0;
+  height: 0;
+}
+.textLayer ::selection {
+  background: rgb(50 135 200 / 35%);
+}

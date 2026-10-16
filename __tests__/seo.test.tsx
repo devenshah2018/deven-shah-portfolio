@@ -20,7 +20,9 @@ it('includes every project and paper in server HTML while preserving the feature
     expect(row.textContent).toContain(project.description);
     expect(row.hidden).toBe(!project.categories?.includes('featured'));
     if (project.paper)
-      expect(row.querySelector('a[download]')?.getAttribute('href')).toBe(project.paper);
+      expect(row.querySelector('a[aria-haspopup="dialog"]')?.getAttribute('href')).toBe(
+        project.paper
+      );
   }
   render(<ProjectsIndex />);
   expect(screen.getAllByRole('listitem')).toHaveLength(3);

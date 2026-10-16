@@ -545,6 +545,11 @@ export const PROJECT_CATEGORIES = [
 export const PROJECTS: Project[] = [
   {
     id: 'wardrobe-copilot',
+    demoVideo: '/demos/wardrobe-copilot-demo.mp4',
+    thumbnail: {
+      src: '/projects/thumbnails/wardrobe-copilot.webp',
+      alt: 'Wardrobe Copilot demo showing clothing items and the outfit assistant',
+    },
     title: 'Wardrobe Copilot',
     subtitle: 'Local Multimodal Outfit Recommendations',
     period: '09/2026 – 10/2026',
@@ -563,6 +568,10 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'kepler-exoplanets',
+    thumbnail: {
+      src: '/projects/thumbnails/kepler-exoplanets.webp',
+      alt: 'Cross-validated ROC AUC comparison for the Kepler exoplanet classifiers',
+    },
     title: 'Detecting Exoplanets in Kepler Transit Data',
     subtitle: 'Astronomical Signal Classification',
     period: '2026',
@@ -580,6 +589,10 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'gdelt-conflict-forecasting',
+    thumbnail: {
+      src: '/projects/thumbnails/gdelt-conflict-forecasting.webp',
+      alt: 'GDELT country risk dashboard with conflict-spike probabilities',
+    },
     title: 'Forecasting Material Conflict Spikes from GDELT',
     subtitle: 'News-Based Conflict Forecasting',
     period: '2026',
@@ -593,11 +606,19 @@ export const PROJECTS: Project[] = [
     categories: ['ai', 'featured'],
     related_experiences: ['bu-masters'],
     paper: '/papers/gdelt-conflict-forecasting.pdf',
+    slideDeck: {
+      pdf: '/slides/gdelt-conflict-forecasting.pdf',
+      source: '/slides/gdelt-conflict-forecasting.pptx',
+    },
     accessible_at: ['github'],
     access_points: [{ type: 'github', url: 'https://github.com/devenshah2018/gdelt-conflict-forecasting', label: 'Code' }],
   },
   {
     id: 'iris-project',
+    thumbnail: {
+      src: '/projects/thumbnails/iris-project-enterprise.webp',
+      alt: 'Iris branding with its green leaf logo and Your day, simplified tagline',
+    },
     sortDate: '2026-01',
     title: 'Iris',
     subtitle: 'AI Planner',
@@ -613,7 +634,7 @@ export const PROJECTS: Project[] = [
     current_work: false,
     summary: 'AI daily planner for your conversations and workflows',
     related_experiences: ['voyagers'],
-    demoVideo: '/demos/iris-demo.mp4',
+    demoVideo: '/demos/iris-enterprise-demo.mp4',
     accessible_at: ['hosted'],
     access_points: [
       { type: 'hosted', url: 'https://www.iris-plan.com', label: 'Live Site' }
@@ -621,6 +642,10 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'boosted-project',
+    thumbnail: {
+      src: '/projects/thumbnails/boosted-project.webp',
+      alt: 'Boosted default site preview for its AI content drafting platform',
+    },
     title: 'Boosted',
     subtitle: 'AI Marketing Agent',
     period: '03/2026 – Present',
@@ -643,6 +668,10 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'umlazy-project',
+    thumbnail: {
+      src: '/projects/thumbnails/umlazy-project.webp',
+      alt: 'UMLazy live class diagram with connected entities and interfaces',
+    },
     title: 'UMLazy',
     subtitle: 'UML Diagram Editor',
     period: '06/2026 – Present',
@@ -665,6 +694,10 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'graf-project',
+    thumbnail: {
+      src: '/projects/thumbnails/graf-project.webp',
+      alt: 'Graf live site introducing branching conversations',
+    },
     title: 'Graf',
     subtitle: 'Nonlinear Messaging',
     period: '07/2026 – Present',
@@ -727,6 +760,10 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'drone-build-project',
+    thumbnail: {
+      src: '/projects/thumbnails/drone-build-project.webp',
+      alt: 'Drone Path Planning live demo with a generated survey flight path',
+    },
     title: 'Drone Path Planning',
     subtitle: 'High-Quality Image Capture System to Support Drone Path Planning',
     period: '09/2025 – 10/2025',
@@ -741,8 +778,8 @@ export const PROJECTS: Project[] = [
     categories: ['theory', 'featured'],
     accessible_at: ['github', 'hosted'],
     access_points: [
-      { type: 'hosted', url: 'https://drone-path-planner.vercel.app/', label: 'Live Demo' },
-      { type: 'github', url: 'https://github.com/devenshah2018/drone-trajectory-planner', label: 'Github' },
+      { type: 'hosted', url: 'https://drone-path-planner.vercel.app/', label: 'Live Site' },
+      { type: 'github', url: 'https://github.com/devenshah2018/drone-trajectory-planner', label: 'Code' },
     ],
     related_experiences: ['build-fellowship'],
   },
@@ -789,6 +826,10 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'breaking-dijkstra-project',
+    thumbnail: {
+      src: '/projects/thumbnails/breaking-dijkstra-project.webp',
+      alt: 'Breaking Dijkstra live graph comparison with Dijkstra and Tsinghua\'s algorithms',
+    },
     title: 'Breaking Dijkstra',
     subtitle: 'Breaking Dijkstra\'s Algorithm',
     period: '09/2025 – 12/2025',
@@ -803,7 +844,7 @@ export const PROJECTS: Project[] = [
     accessible_at: ['github'],
     access_points: [
       { type: 'github', url: 'https://github.com/devenshah2018/breaking-dijkstra', label: 'Code' },
-      { type: 'hosted', url: 'https://breaking-dijkstra.vercel.app/', label: 'Live Demo' },
+      { type: 'hosted', url: 'https://breaking-dijkstra.vercel.app/', label: 'Live Site' },
     ],
     related_experiences: ['bu-masters'],
   }

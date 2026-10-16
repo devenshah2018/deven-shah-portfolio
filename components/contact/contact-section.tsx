@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { CalendarCheck2, Github, Linkedin, Mail, Copy, Check } from 'lucide-react';
+import { ArrowUpRight, CalendarCheck2, Github, Linkedin, Mail, Copy, Check } from 'lucide-react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getCalApi } from '@calcom/embed-react';
@@ -127,12 +127,13 @@ export function ContactSection() {
                 Book a Call
               </Button>
               <a
-                href='https://cal.com/deven-shah-l0qkjk/quick-chat'
+                href={LINKS.cal}
                 target='_blank'
                 rel='noopener noreferrer'
-                className='mt-2 inline-flex min-h-11 items-center text-sm text-[#aaa] underline underline-offset-4 hover:text-white'
+                className='mt-3 inline-flex min-h-11 w-full items-center justify-center gap-2 self-start rounded-md bg-white/5 px-4 py-2 text-sm font-medium text-[#d4d4cd] no-underline transition-colors hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#a5c9bd] sm:w-auto'
               >
                 Open scheduling page
+                <ArrowUpRight className='h-4 w-4' aria-hidden='true' />
               </a>
             </div>
 

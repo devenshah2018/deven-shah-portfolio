@@ -408,17 +408,8 @@ main :is(a, button, input):focus-visible {
   outline-offset: 5px;
 }
 
-.project-index-row {
-  transition: background-color 180ms ease;
-}
-
-.project-index-row:hover {
-  background-color: rgba(255, 255, 255, 0.015);
-}
-
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .project-index-row { transition: none; }
 }
 
 /* Keep programmatic section focus quiet while preserving control focus indicators. */
