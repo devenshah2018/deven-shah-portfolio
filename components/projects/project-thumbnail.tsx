@@ -12,16 +12,16 @@ function SourcePreview({ url, title }: { url: string; title: string }) {
   const Icon = isGithub ? Github : Globe;
 
   return (
-    <div className='relative flex h-full flex-col justify-between overflow-hidden bg-gradient-to-br from-[#252a30] via-[#1c2025] to-[#15181c] p-2.5 text-left sm:p-3.5'>
+    <div className='relative flex h-full flex-col justify-between overflow-hidden bg-gradient-to-br from-[#252a30] via-[#1c2025] to-[#15181c] p-2 text-left sm:p-3.5'>
       <Icon
         aria-hidden='true'
         className='pointer-events-none absolute -right-3 -top-3 h-24 w-24 rotate-[-12deg] text-white/[0.035]'
       />
-      <div className='relative flex items-center gap-1.5 text-[9px] font-medium text-[#a5c9bd] sm:text-[10px]'>
+      <div className='relative flex shrink-0 items-center gap-1.5 text-[9px] font-medium leading-3 text-[#a5c9bd] sm:text-[10px] sm:leading-normal'>
         <Icon className='h-3 w-3 shrink-0 sm:h-3.5 sm:w-3.5' aria-hidden='true' />
         {isGithub ? 'GitHub' : 'Live site'}
       </div>
-      <p className='relative line-clamp-3 text-[10px] font-medium leading-snug text-[#e5e8e6] [overflow-wrap:anywhere] sm:text-xs'>
+      <p className='relative line-clamp-3 shrink-0 text-[10px] font-medium leading-3 text-[#e5e8e6] [overflow-wrap:anywhere] sm:text-xs sm:leading-snug'>
         {isGithub ? repository : title}
       </p>
       <p className='relative hidden truncate text-[9px] text-[#939d99] sm:block'>

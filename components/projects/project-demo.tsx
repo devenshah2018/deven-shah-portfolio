@@ -1,6 +1,6 @@
 'use client';
 
-import { Play, ArrowUpRight, X } from 'lucide-react';
+import { Play, Download, X } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState, type RefObject } from 'react';
 import {
   Dialog,
@@ -86,12 +86,12 @@ function DemoPlayer({
           </p>
           <a
             href={src}
-            target='_blank'
-            rel='noopener noreferrer'
-            className='inline-flex min-h-11 items-center gap-2 text-sm font-medium text-[#a5c9bd] underline underline-offset-4'
+            download
+            aria-label='Download video'
+            title='Download video'
+            className='inline-flex h-11 w-11 items-center justify-center rounded-full text-[#a5c9bd] transition-colors hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#a5c9bd]'
           >
-            Open video
-            <ArrowUpRight className='h-4 w-4' aria-hidden='true' />
+            <Download className='h-4 w-4' aria-hidden='true' />
           </a>
         </div>
       )}

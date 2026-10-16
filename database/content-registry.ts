@@ -609,6 +609,11 @@ export const PROJECTS: Project[] = [
     slideDeck: {
       pdf: '/slides/gdelt-conflict-forecasting.pdf',
       source: '/slides/gdelt-conflict-forecasting.pptx',
+      videos: [{
+        page: 15,
+        src: '/slides/gdelt-conflict-forecasting-demo.mp4',
+        bounds: { left: 4.375, top: 25.866667, width: 62.666667, height: 62.666667 },
+      }],
     },
     accessible_at: ['github'],
     access_points: [{ type: 'github', url: 'https://github.com/devenshah2018/gdelt-conflict-forecasting', label: 'Code' }],

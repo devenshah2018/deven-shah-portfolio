@@ -43,18 +43,18 @@ it('switches between the requested categories and includes the research paper do
     expect(within(row).getByText('Completed')).toBeInTheDocument();
     expect(within(row).getByRole('button', { name: 'Boston University' })).toBeInTheDocument();
   }
-  expect(screen.getByRole('link', { name: 'Paper for Wardrobe Copilot (PDF)' })).toHaveAttribute(
-    'href',
-    '/papers/wardrobe-copilot.pdf'
+  expect(screen.getByRole('button', { name: 'Paper for Wardrobe Copilot (PDF)' })).toHaveAttribute(
+    'aria-haspopup',
+    'dialog'
   );
 
-  expect(screen.getByRole('link', { name: /Paper for Forecasting/ })).toHaveAttribute(
-    'href',
-    '/papers/gdelt-conflict-forecasting.pdf'
+  expect(screen.getByRole('button', { name: /Paper for Forecasting/ })).toHaveAttribute(
+    'aria-haspopup',
+    'dialog'
   );
-  expect(screen.getByRole('link', { name: /Paper for Molecule/ })).toHaveAttribute(
-    'href',
-    '/papers/molecule-mutation-prediction.pdf'
+  expect(screen.getByRole('button', { name: /Paper for Molecule/ })).toHaveAttribute(
+    'aria-haspopup',
+    'dialog'
   );
 
   await user.click(screen.getByRole('button', { name: 'Theory and Algorithms 3' }));
@@ -75,7 +75,8 @@ it('searches across categories and recovers from empty results', async () => {
   expect(
     screen.getByRole('heading', { name: 'Detecting Exoplanets in Kepler Transit Data' })
   ).toBeInTheDocument();
-  await user.clear(screen.getByRole('searchbox', { name: 'Search projects' }));
+  await user.click(screen.getByRole('button', { name: 'Clear project search' }));
+  expect(screen.getByRole('searchbox', { name: 'Search projects' })).toHaveFocus();
   await user.type(screen.getByRole('searchbox', { name: 'Search projects' }), 'no-such-project');
   expect(screen.queryAllByRole('listitem')).toHaveLength(0);
   await user.click(screen.getByRole('button', { name: 'Show all projects' }));

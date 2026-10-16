@@ -1,7 +1,7 @@
 'use client';
 
 import { ArrowUpRight, Code2, Search, X } from 'lucide-react';
-import { memo, useEffect, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import {
   PROJECTS,
   PROJECT_CATEGORIES,
@@ -105,11 +105,7 @@ const ProjectRow = memo(function ProjectRow({
     ? project.access_points
     : [{ type: project.entry_point, url: project.link, label: 'View project' }];
   return (
-    <li
-      id={`project-${project.id}`}
-      hidden={hidden}
-      className='py-7 sm:py-8'
-    >
+    <li id={`project-${project.id}`} hidden={hidden} className='py-7 sm:py-8'>
       <div className='grid grid-cols-[6.5rem_minmax(0,1fr)] gap-x-4 gap-y-4 sm:grid-cols-[10rem_minmax(0,1fr)] sm:gap-x-6 lg:grid-cols-[11rem_minmax(0,0.85fr)_minmax(0,1.35fr)] lg:gap-x-8'>
         <div className='min-w-0 pt-0.5'>{!hidden && <ProjectThumbnail project={project} />}</div>
         <div className='min-w-0'>
@@ -204,6 +200,7 @@ const ProjectRow = memo(function ProjectRow({
 export function ProjectsIndex() {
   const [category, setCategory] = useState('featured');
   const [query, setQuery] = useState('');
+  const searchRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     const reset = () => {
       setCategory('all');
@@ -230,20 +227,24 @@ export function ProjectsIndex() {
               Products, applied research, and the algorithms underneath.
             </p>
           </div>
-          <label className='flex w-full items-center gap-3 border-b border-[#3a3a37] py-3 sm:w-60'>
+          <label className='flex w-full items-center gap-3 border-b border-[#3a3a37] py-1.5 sm:w-60'>
             <Search className='h-4 w-4 shrink-0 text-[#999]' aria-hidden='true' />
             <input
+              ref={searchRef}
               aria-label='Search projects'
               type='search'
               value={query}
               onChange={event => setQuery(event.target.value)}
               placeholder='Search all projects'
-              className='min-w-0 flex-1 bg-transparent text-base text-[#f5f5f0] placeholder:text-[#888] focus:outline-none'
+              className='h-11 min-w-0 flex-1 bg-transparent text-base text-[#f5f5f0] placeholder:text-[#888] focus:outline-none [&::-webkit-search-cancel-button]:appearance-none'
             />
             {query && (
               <button
                 type='button'
-                onClick={() => setQuery('')}
+                onClick={() => {
+                  setQuery('');
+                  searchRef.current?.focus();
+                }}
                 aria-label='Clear project search'
                 className='flex h-11 w-11 shrink-0 items-center justify-center text-[#999]'
               >
@@ -255,7 +256,7 @@ export function ProjectsIndex() {
         <div
           role='group'
           aria-label='Project categories'
-          className='flex flex-wrap gap-x-7 gap-y-1 border-b border-[#333330]'
+          className='flex gap-x-5 gap-y-1 overflow-x-auto border-b border-[#333330] [scrollbar-width:none] sm:flex-wrap sm:gap-x-7 sm:overflow-visible [&::-webkit-scrollbar]:hidden'
         >
           {PROJECT_CATEGORIES.map(item => (
             <button
@@ -266,7 +267,7 @@ export function ProjectsIndex() {
                 setCategory(item.key);
                 setQuery('');
               }}
-              className={`-mb-px inline-flex min-h-12 items-center gap-2 border-b-2 py-3 text-xs font-medium transition-colors sm:text-sm ${!search && category === item.key ? 'border-[#a5c9bd] text-[#f5f5f0]' : 'border-transparent text-[#999] hover:text-white'}`}
+              className={`-mb-px inline-flex min-h-12 shrink-0 items-center gap-2 whitespace-nowrap border-b-2 py-3 text-xs font-medium transition-colors focus-visible:-outline-offset-4 sm:text-sm ${!search && category === item.key ? 'border-[#a5c9bd] text-[#f5f5f0]' : 'border-transparent text-[#999] hover:text-white'}`}
             >
               {item.key === 'all' ? 'All projects' : item.label}
               <span className='text-[10px] tabular-nums text-[#888]'>

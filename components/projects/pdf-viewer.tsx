@@ -4,6 +4,8 @@ import { ChevronLeft, ChevronRight, Maximize, Minus, Plus } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import type { PDFDocumentProxy, RenderTask } from 'pdfjs-dist';
 import { getDocument, TextLayer } from '@/lib/pdf-engine';
+import type { SlideVideo as SlideVideoSpec } from '@/lib/types';
+import { SlideVideo } from './slide-video';
 import styles from './pdf-viewer.module.css';
 
 type Fit = 'width' | 'page';
@@ -14,10 +16,12 @@ export default function PdfViewer({
   src,
   title,
   slides = false,
+  videos,
 }: {
   src: string;
   title: string;
   slides?: boolean;
+  videos?: SlideVideoSpec[] | undefined;
 }) {
   const [document, setDocument] = useState<PDFDocumentProxy | null>(null);
   const [error, setError] = useState(false);
@@ -28,6 +32,8 @@ export default function PdfViewer({
   const [size, setSize] = useState({ width: 0, height: 0 });
   const viewportRef = useRef<HTMLDivElement>(null);
   const pageRef = useRef<HTMLDivElement>(null);
+  const surfaceRef = useRef<HTMLDivElement>(null);
+  const slideVideo = slides ? videos?.find(video => video.page === page) : undefined;
 
   useEffect(() => {
     const viewport = viewportRef.current;
@@ -62,13 +68,14 @@ export default function PdfViewer({
 
   useEffect(() => {
     const host = pageRef.current;
-    if (!document || !host || !size.width || !size.height) return;
+    const surface = surfaceRef.current;
+    if (!document || !host || !surface || !size.width || !size.height) return;
     let active = true;
     let renderTask: RenderTask | undefined;
     let textLayer: TextLayer | undefined;
     setBusy(true);
     setError(false);
-    host.replaceChildren();
+    surface.replaceChildren();
     const render = async () => {
       const pdfPage = await document.getPage(page);
       if (!active) return;
@@ -96,7 +103,7 @@ export default function PdfViewer({
       layer.style.setProperty('--total-scale-factor', String(viewport.scale));
       host.style.width = `${viewport.width}px`;
       host.style.height = `${viewport.height}px`;
-      host.replaceChildren(canvas, layer);
+      surface.replaceChildren(canvas, layer);
       renderTask = pdfPage.render({ canvas, viewport, transform: [density, 0, 0, density, 0, 0] });
       textLayer = new TextLayer({
         textContentSource: pdfPage.streamTextContent(),
@@ -116,7 +123,7 @@ export default function PdfViewer({
       active = false;
       renderTask?.cancel();
       textLayer?.cancel();
-      host.replaceChildren();
+      surface.replaceChildren();
     };
   }, [document, page, size, zoom, fit]);
 
@@ -241,7 +248,7 @@ export default function PdfViewer({
             role='alert'
             className='absolute inset-0 z-10 flex items-center justify-center bg-[#242627] p-6 text-center text-sm text-[#deded8]'
           >
-            This PDF could not be displayed. Use Open PDF or Download PDF above.
+            This PDF could not be displayed. Use the download button above.
           </div>
         )}
         {!error && busy && (
@@ -262,7 +269,12 @@ export default function PdfViewer({
             aria-busy={busy}
             className={styles['page']}
             style={{ visibility: error || busy ? 'hidden' : 'visible' }}
-          />
+          >
+            <div ref={surfaceRef} />
+            {document && slideVideo && !error && (
+              <SlideVideo key={slideVideo.src} clip={slideVideo} title={title} ready={!busy} />
+            )}
+          </div>
         </div>
       </div>
     </div>

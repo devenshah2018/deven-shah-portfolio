@@ -83,15 +83,17 @@ it('provides a play action if the browser declines autoplay', async () => {
   );
 });
 
-it('offers a direct video link if media cannot be loaded', async () => {
+it('offers a video download if media cannot be loaded', async () => {
   const user = userEvent.setup();
   render(<ProjectsIndex />);
   await user.click(screen.getByRole('button', { name: 'Demo for Iris' }));
   fireEvent.error(screen.getByLabelText('Iris demo video'));
   expect(screen.getByRole('alert')).toHaveTextContent('This video could not be loaded.');
-  expect(screen.getByRole('link', { name: 'Open video' })).toHaveAttribute(
+  expect(screen.getByRole('link', { name: 'Download video' })).toHaveAttribute(
     'href',
     '/demos/iris-enterprise-demo.mp4'
   );
+  expect(screen.getByRole('link', { name: 'Download video' })).toHaveAttribute('download');
+  expect(screen.getByRole('link', { name: 'Download video' })).not.toHaveAttribute('target');
   await user.click(screen.getByRole('button', { name: 'Close demo' }));
 });

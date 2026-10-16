@@ -16,8 +16,8 @@ copied locally after the thumbnail exploration. Its contents are unchanged.
 The Demo button uses the existing Radix dialog primitives. The video mounts only
 when the dialog opens, autoplays muted inline, and provides native seek, pause,
 volume, and full-screen controls. Current matched clips contain no audio track.
-A play action is available if autoplay is blocked, and a direct video link
-appears if the media fails to load.
+A play action is available if autoplay is blocked, and a video download is
+offered if the media fails to load. Videos never open in another tab.
 
 Closing through the close button, Escape, or the backdrop immediately pauses
 playback. Unmounting clears the source and releases the media stream. Radix

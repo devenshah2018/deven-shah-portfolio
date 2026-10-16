@@ -4,6 +4,13 @@ export type AccessPoint = {
   label?: string;
 };
 
+export type SlideVideo = {
+  page: number;
+  src: string;
+  /** Original video position and size, as percentages of the slide. */
+  bounds: { left: number; top: number; width: number; height: number };
+};
+
 export type Project = {
   id: string;
   title: string;
@@ -34,5 +41,5 @@ export type Project = {
   /** Same-origin PDF path, offered in the document viewer with a download. */
   paper?: string;
   /** Browser-friendly PDF preview and optional original presentation download. */
-  slideDeck?: { pdf: string; source?: string };
+  slideDeck?: { pdf: string; source?: string; videos?: SlideVideo[] };
 };
