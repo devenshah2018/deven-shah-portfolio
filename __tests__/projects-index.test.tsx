@@ -9,7 +9,7 @@ it('switches between the requested categories and includes the research paper do
     'button'
   );
   expect(tabs.slice(0, 3).map(button => button.textContent)).toEqual([
-    'All projects11',
+    'All projects12',
     'Featured3',
     'Full Stack4',
   ]);
@@ -30,9 +30,10 @@ it('switches between the requested categories and includes the research paper do
   expect(screen.getByRole('heading', { name: 'Boosted' })).toBeInTheDocument();
   expect(screen.queryByRole('heading', { name: 'Any', exact: true })).not.toBeInTheDocument();
 
-  await user.click(screen.getByRole('button', { name: 'Data Science and Machine Learning 4' }));
-  expect(screen.getAllByRole('listitem')).toHaveLength(4);
+  await user.click(screen.getByRole('button', { name: 'Data Science and Machine Learning 5' }));
+  expect(screen.getAllByRole('listitem')).toHaveLength(5);
   for (const title of [
+    'Wardrobe Copilot',
     'Detecting Exoplanets in Kepler Transit Data',
     'Forecasting Material Conflict Spikes from GDELT',
   ]) {
@@ -42,6 +43,12 @@ it('switches between the requested categories and includes the research paper do
     expect(within(row).getByText('Completed')).toBeInTheDocument();
     expect(within(row).getByRole('button', { name: 'Boston University' })).toBeInTheDocument();
   }
+  expect(
+    screen.getByRole('link', { name: 'Download paper for Wardrobe Copilot (PDF)' })
+  ).toHaveAttribute('href', '/papers/wardrobe-copilot.pdf');
+  expect(
+    screen.getByRole('link', { name: 'Download paper for Wardrobe Copilot (PDF)' })
+  ).toHaveAttribute('download');
   expect(screen.getByRole('link', { name: /Download paper for Forecasting/ })).toHaveAttribute(
     'href',
     '/papers/gdelt-conflict-forecasting.pdf'
@@ -72,7 +79,7 @@ it('searches across categories and recovers from empty results', async () => {
   await user.type(screen.getByRole('searchbox', { name: 'Search projects' }), 'no-such-project');
   expect(screen.queryAllByRole('listitem')).toHaveLength(0);
   await user.click(screen.getByRole('button', { name: 'Show all projects' }));
-  expect(screen.getAllByRole('listitem')).toHaveLength(11);
+  expect(screen.getAllByRole('listitem')).toHaveLength(12);
 });
 
 it('reveals a deep-linked project even when a different category and search are active', async () => {
@@ -81,6 +88,6 @@ it('reveals a deep-linked project even when a different category and search are 
   await user.type(screen.getByRole('searchbox', { name: 'Search projects' }), 'Graf');
   act(() => window.dispatchEvent(new Event('resetProjectFilter')));
   expect(screen.getByRole('searchbox', { name: 'Search projects' })).toHaveValue('');
-  expect(screen.getAllByRole('listitem')).toHaveLength(11);
+  expect(screen.getAllByRole('listitem')).toHaveLength(12);
   expect(screen.getByRole('heading', { name: 'Molecule Mutation Prediction' })).toBeInTheDocument();
 });
