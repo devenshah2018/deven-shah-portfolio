@@ -1,144 +1,69 @@
-#!/usr/bin/env node
-
+/** Measure the assets referenced by the built home page, using real gzip sizes. */
 const fs = require('fs');
 const path = require('path');
+const { gzipSync } = require('zlib');
 
-const COLORS = {
-  GREEN: '\x1b[32m',
-  RED: '\x1b[31m',
-  YELLOW: '\x1b[33m',
-  BLUE: '\x1b[34m',
-  RESET: '\x1b[0m',
-  BOLD: '\x1b[1m',
-};
+const TARGET_SIZE_KB = 500;
+const formatBytes = bytes => `${(bytes / 1024).toFixed(1)} KiB`;
 
-function log(message, color = COLORS.RESET) {
-  console.log(`${color}${message}${COLORS.RESET}`);
-}
-
-function formatBytes(bytes) {
-  if (bytes === 0) return '0 Bytes';
-  const k = 1024;
-  const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-}
-
-function getDirectorySize(dirPath) {
-  let totalSize = 0;
-
-  if (!fs.existsSync(dirPath)) {
-    return 0;
+function getInitialAssets() {
+  const htmlPath = path.join(process.cwd(), '.next/server/app/index.html');
+  if (!fs.existsSync(htmlPath)) throw new Error('Run npm run build before checking bundle size.');
+  const html = fs.readFileSync(htmlPath, 'utf8');
+  const urls = new Set();
+  for (const [tag] of html.matchAll(/<(?:script|link)\b[^>]*>/g)) {
+    // Modern browsers do not fetch the nomodule compatibility bundle.
+    if (/\bnomodule\b/i.test(tag)) continue;
+    const url = tag.match(/(?:src|href)="(\/_next\/static\/[^"?]+\.(?:js|css))"/);
+    if (url) urls.add(url[1]);
   }
-
-  function getSize(itemPath) {
-    const stats = fs.statSync(itemPath);
-
-    if (stats.isFile()) {
-      totalSize += stats.size;
-    } else if (stats.isDirectory()) {
-      const items = fs.readdirSync(itemPath);
-      items.forEach(item => {
-        getSize(path.join(itemPath, item));
-      });
-    }
-  }
-
-  getSize(dirPath);
-  return totalSize;
-}
-
-function analyzeBundleSize() {
-  log('\n📦 Analyzing bundle size...', COLORS.BLUE);
-
-  const nextDir = path.join(process.cwd(), '.next');
-  const staticDir = path.join(nextDir, 'static');
-
-  if (!fs.existsSync(nextDir)) {
-    log('❌ No .next directory found. Run "npm run build" first.', COLORS.RED);
-    return false;
-  }
-
-  const totalSize = getDirectorySize(nextDir);
-  const staticSize = getDirectorySize(staticDir);
-  const gzippedEstimate = staticSize * 0.3; // Rough gzip estimate
-
-  log('\n📊 Bundle Size Analysis:', COLORS.BOLD);
-  log(`   Total .next directory: ${formatBytes(totalSize)}`, COLORS.CYAN);
-  log(`   Static assets: ${formatBytes(staticSize)}`, COLORS.CYAN);
-  log(`   Estimated gzipped: ${formatBytes(gzippedEstimate)}`, COLORS.CYAN);
-
-  const TARGET_SIZE_KB = 500; // 500KB target
-  const gzippedKB = gzippedEstimate / 1024;
-
-  if (gzippedKB <= TARGET_SIZE_KB) {
-    log(
-      `✅ Bundle size ${formatBytes(gzippedEstimate)} is within ${TARGET_SIZE_KB}KB target!`,
-      COLORS.GREEN
-    );
-    return true;
-  } else {
-    log(
-      `❌ Bundle size ${formatBytes(gzippedEstimate)} exceeds ${TARGET_SIZE_KB}KB target!`,
-      COLORS.RED
-    );
-    log(
-      `   Consider code splitting, tree shaking, or removing unused dependencies.`,
-      COLORS.YELLOW
-    );
-    return false;
-  }
-}
-
-function analyzeChunks() {
-  log('\n🔍 Analyzing chunks...', COLORS.BLUE);
-
-  const chunksDir = path.join(process.cwd(), '.next', 'static', 'chunks');
-
-  if (!fs.existsSync(chunksDir)) {
-    log('❌ No chunks directory found.', COLORS.RED);
-    return;
-  }
-
-  const chunks = fs
-    .readdirSync(chunksDir)
-    .filter(file => file.endsWith('.js'))
-    .map(file => {
-      const filePath = path.join(chunksDir, file);
-      const stats = fs.statSync(filePath);
-      return {
-        name: file,
-        size: stats.size,
-        formatted: formatBytes(stats.size),
-      };
-    })
-    .sort((a, b) => b.size - a.size);
-
-  log('\n📄 Largest chunks:', COLORS.BOLD);
-  chunks.slice(0, 10).forEach((chunk, index) => {
-    const color =
-      chunk.size > 100000 ? COLORS.RED : chunk.size > 50000 ? COLORS.YELLOW : COLORS.GREEN;
-    log(`   ${index + 1}. ${chunk.name}: ${chunk.formatted}`, color);
+  return [...urls].map(url => {
+    const data = fs.readFileSync(path.join(process.cwd(), '.next', url.slice('/_next/'.length)));
+    return { url, bytes: data.length, gzipBytes: gzipSync(data, { level: 9 }).length };
   });
 }
 
-function main() {
-  log('📦 Bundle Size Analysis', COLORS.BOLD + COLORS.BLUE);
-
-  const success = analyzeBundleSize();
-  analyzeChunks();
-
-  if (success) {
-    log('\n🎉 Bundle size check passed!', COLORS.BOLD + COLORS.GREEN);
-    process.exit(0);
-  } else {
-    log('\n🚨 Bundle size check failed!', COLORS.BOLD + COLORS.RED);
-    process.exit(1);
+function analyzeBundleSize() {
+  const assets = getInitialAssets();
+  for (const extension of ['.js', '.css']) {
+    const files = assets.filter(asset => asset.url.endsWith(extension));
+    const raw = files.reduce((sum, file) => sum + file.bytes, 0);
+    const gzip = files.reduce((sum, file) => sum + file.gzipBytes, 0);
+    console.log(
+      `Initial ${extension === '.js' ? 'JavaScript' : 'CSS'}: ${files.length} files, ${formatBytes(raw)} raw, ${formatBytes(gzip)} gzip`
+    );
   }
+  const gzipJS = assets
+    .filter(asset => asset.url.endsWith('.js'))
+    .reduce((sum, file) => sum + file.gzipBytes, 0);
+  const passed = gzipJS <= TARGET_SIZE_KB * 1024;
+  console.log(
+    `Initial JavaScript ${passed ? 'passes' : 'exceeds'} the ${TARGET_SIZE_KB} KiB gzip budget.`
+  );
+  return passed;
+}
+
+function analyzeChunks() {
+  console.log('\nLargest initial assets:');
+  getInitialAssets()
+    .sort((a, b) => b.bytes - a.bytes)
+    .slice(0, 10)
+    .forEach(asset => {
+      console.log(
+        `  ${asset.url}: ${formatBytes(asset.bytes)} raw, ${formatBytes(asset.gzipBytes)} gzip`
+      );
+    });
 }
 
 if (require.main === module) {
-  main();
+  try {
+    const passed = analyzeBundleSize();
+    analyzeChunks();
+    process.exitCode = passed ? 0 : 1;
+  } catch (error) {
+    console.error(error.message);
+    process.exitCode = 1;
+  }
 }
 
-module.exports = { analyzeBundleSize, analyzeChunks };
+module.exports = { analyzeBundleSize, analyzeChunks, getInitialAssets };

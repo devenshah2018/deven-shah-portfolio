@@ -1,17 +1,13 @@
 'use client';
 
-import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { SkillModal } from '@/components/about/skill-modal';
 import { GitHubContributionChart } from '@/components/hero/github-contribution-chart';
-import { SKILL_MAPPINGS, CERTIFICATIONS, groupExperiencesByOrg } from '@/database/content-registry';
+import { CERTIFICATIONS, groupExperiencesByOrg } from '@/database/content-registry';
 import { requestScrollToExperience } from '@/lib/url-utils';
 import { ArrowUpRight } from 'lucide-react';
-import { SkillsBrowser } from './skills-browser';
+import { SkillsExplorer } from './skills-explorer';
 
 export function AboutSection() {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
   return (
     <section id='about' className='relative bg-[#141414] py-16 sm:py-24'>
       <div className='container mx-auto w-full max-w-7xl px-6 sm:px-10 lg:px-16'>
@@ -104,20 +100,9 @@ export function AboutSection() {
               )}
             </aside>
           </div>
-          <SkillsBrowser
-            onSelect={skill => {
-              setSelectedSkill(skill);
-              setModalOpen(true);
-            }}
-          />
+          <SkillsExplorer />
         </motion.div>
       </div>
-      <SkillModal
-        open={modalOpen}
-        onOpenChange={setModalOpen}
-        skillName={selectedSkill}
-        skillMappings={SKILL_MAPPINGS}
-      />
     </section>
   );
 }

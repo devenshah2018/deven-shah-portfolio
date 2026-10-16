@@ -1,52 +1,63 @@
-import { LINKS, EXPERIENCES, EDUCATION } from '../database/content-registry';
-
-const BASE_URL = 'https://deven-shah.com';
+import { LINKS, EXPERIENCES, EDUCATION, hasFutureStart } from '@/database/content-registry';
+import { HOME_URL, SITE_URL, SITE_NAME, SITE_DESCRIPTION } from './seo';
 
 export function generatePersonSchema() {
-  const sunoExperience = EXPERIENCES.find(exp => exp.id === 'suno-analytics');
-  const buEducation = EDUCATION.find(edu => edu.id === 'bu-masters');
-  const sjsuEducation = EDUCATION.find(edu => edu.id === 'sjsu-bachelors');
+  const currentEmployers = EXPERIENCES.filter(
+    experience => /Present/i.test(experience.period) && !hasFutureStart(experience.period)
+  );
 
   return {
     '@context': 'https://schema.org',
     '@type': 'Person',
-    name: 'Deven Shah',
+    '@id': HOME_URL + '#person',
+    name: SITE_NAME,
     jobTitle: 'Software Engineer & AI Researcher',
-    url: BASE_URL,
-    image: `${BASE_URL}/thumbnail.png`,
-    description: 'M.S. Computer Science student at Boston University. Shaping the next generation of AI-driven analytics, intelligent systems, and scalable solutions.',
-    sameAs: [
-      LINKS.linkedin,
-      LINKS.github,
-      LINKS.x,
-      LINKS.kaggle,
-      LINKS.strava,
-      LINKS.hevy,
-    ],
+    url: HOME_URL,
+    image: SITE_URL + '/profile.jpg',
+    description: SITE_DESCRIPTION,
+    sameAs: [LINKS.linkedin, LINKS.github, LINKS.x, LINKS.kaggle, LINKS.strava, LINKS.hevy],
     email: LINKS.email,
-    worksFor: sunoExperience
-      ? {
-          '@type': 'Organization',
-          name: sunoExperience.company,
-          url: sunoExperience.link,
-        }
-      : undefined,
-    alumniOf: [
-      buEducation
-        ? {
-            '@type': 'EducationalOrganization',
-            name: buEducation.institution,
-            url: 'https://www.bu.edu',
-          }
-        : null,
-      sjsuEducation
-        ? {
-            '@type': 'EducationalOrganization',
-            name: sjsuEducation.institution,
-            url: 'https://www.sjsu.edu',
-          }
-        : null,
-    ].filter(Boolean),
+    worksFor: [
+      ...new Map(currentEmployers.map(experience => [experience.company, experience])).values(),
+    ].map(experience => ({
+      '@type': 'Organization',
+      name: experience.company,
+      url: experience.link,
+    })),
+    alumniOf: EDUCATION.filter(education => !education.isActive).map(education => ({
+      '@type': 'CollegeOrUniversity',
+      name: education.institution,
+    })),
   };
 }
 
+export function generateWebsiteSchema() {
+  const { '@context': _context, ...person } = generatePersonSchema();
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebSite',
+        '@id': HOME_URL + '#website',
+        url: HOME_URL,
+        name: SITE_NAME,
+        alternateName: 'Deven Shah Portfolio',
+        publisher: { '@id': person['@id'] },
+      },
+      {
+        '@type': 'ProfilePage',
+        '@id': HOME_URL + '#profile',
+        url: HOME_URL,
+        name: SITE_NAME + ' — Software Engineer & AI Researcher',
+        description: SITE_DESCRIPTION,
+        isPartOf: { '@id': HOME_URL + '#website' },
+        mainEntity: person,
+      },
+    ],
+  };
+}
+
+/** Keep future content containing HTML from closing the JSON-LD script element. */
+export function serializeJsonLd(value: unknown): string {
+  return JSON.stringify(value).replace(/</g, '\\u003c');
+}

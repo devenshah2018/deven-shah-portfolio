@@ -1,7 +1,7 @@
 import { PROJECTS } from '@/database/content-registry';
 import { NextResponse } from 'next/server';
 
-const BASE_URL = 'https://deven-shah.com';
+import { SITE_URL as BASE_URL, SITE_DESCRIPTION } from '@/lib/seo';
 
 function formatRSSDate(date: string | Date): string {
   const d = typeof date === 'string' ? new Date(date) : date;
@@ -35,7 +35,7 @@ export async function GET() {
   const rssDate = formatRSSDate(currentDate);
 
   // Get recent projects (last 10, sorted by date)
-  const recentProjects = PROJECTS.sort((a, b) => {
+  const recentProjects = [...PROJECTS].sort((a, b) => {
     if (a.sortDate && b.sortDate) {
       return b.sortDate.localeCompare(a.sortDate);
     }
@@ -63,7 +63,7 @@ export async function GET() {
   <channel>
     <title>Deven Shah Portfolio</title>
     <link>${BASE_URL}</link>
-    <description>Portfolio updates and projects from Deven Shah, Co-founder & CTO at Suno Analytics</description>
+    <description>${escapeXml(SITE_DESCRIPTION)}</description>
     <language>en-US</language>
     <lastBuildDate>${rssDate}</lastBuildDate>
     <pubDate>${rssDate}</pubDate>

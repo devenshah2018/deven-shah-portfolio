@@ -1,12 +1,31 @@
 'use client';
 
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { CATEGORIZED_SKILLS, SKILL_CATEGORIES, SKILL_MAPPINGS } from '@/database/content-registry';
 
-export function SkillsBrowser({ onSelect }: { onSelect: (skill: string) => void }) {
+const SORTED_SKILLS = Object.fromEntries(
+  Object.entries(CATEGORIZED_SKILLS).map(([category, skills]) => [
+    category,
+    [...skills].sort((a, b) => a.localeCompare(b)),
+  ])
+);
+const SKILL_COUNTS = new Map(
+  SKILL_MAPPINGS.map(mapping => [
+    mapping.skill,
+    (mapping.experienceIds?.length ?? 0) +
+      (mapping.projectIds?.length ?? 0) +
+      (mapping.educationIds?.length ?? 0),
+  ])
+);
+
+export const SkillsBrowser = memo(function SkillsBrowser({
+  onSelect,
+}: {
+  onSelect: (skill: string) => void;
+}) {
   const [category, setCategory] = useState('featured');
-  const skills = [...(CATEGORIZED_SKILLS[category] ?? [])].sort((a, b) => a.localeCompare(b));
+  const skills = SORTED_SKILLS[category] ?? [];
 
   return (
     <div className='mt-12 border-t border-[#2c2c29] pt-8'>
@@ -32,11 +51,7 @@ export function SkillsBrowser({ onSelect }: { onSelect: (skill: string) => void 
         className='grid grid-cols-2 gap-x-5 sm:grid-cols-3 sm:gap-x-8 lg:grid-cols-4'
       >
         {skills.map(skill => {
-          const mapping = SKILL_MAPPINGS.find(item => item.skill === skill);
-          const count =
-            (mapping?.experienceIds?.length ?? 0) +
-            (mapping?.projectIds?.length ?? 0) +
-            (mapping?.educationIds?.length ?? 0);
+          const count = SKILL_COUNTS.get(skill) ?? 0;
           return (
             <li key={skill} className='min-w-0 border-b border-[#2c2c29]'>
               <button
@@ -60,4 +75,4 @@ export function SkillsBrowser({ onSelect }: { onSelect: (skill: string) => void 
       </ul>
     </div>
   );
-}
+});

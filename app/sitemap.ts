@@ -1,47 +1,10 @@
 import { MetadataRoute } from 'next';
-
-const BASE_URL = 'https://deven-shah.com';
+import { PROJECTS } from '@/database/content-registry';
+import { HOME_URL, SITE_URL } from '@/lib/seo';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const currentDate = new Date();
-
-  return [
-    {
-      url: BASE_URL,
-      lastModified: currentDate,
-      changeFrequency: 'weekly',
-      priority: 1,
-    },
-    {
-      url: `${BASE_URL}/#about`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/#experience`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly',
-      priority: 0.9,
-    },
-    {
-      url: `${BASE_URL}/#projects`,
-      lastModified: currentDate,
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    {
-      url: `${BASE_URL}/#education`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/#contact`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-  ];
+  // Hash sections are part of the homepage, not separately indexable pages.
+  // Omit lastModified until we track actual content revisions rather than build dates.
+  const papers = [...new Set(PROJECTS.flatMap(project => (project.paper ? [project.paper] : [])))];
+  return [{ url: HOME_URL }, ...papers.map(paper => ({ url: SITE_URL + paper }))];
 }
-

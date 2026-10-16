@@ -5,17 +5,15 @@ import './globals.css';
 import { Analytics } from '@vercel/analytics/next';
 import { GoogleTagManager } from '@next/third-parties/google';
 import { ConditionalLayout } from '@/components/conditional-layout';
-
-const BASE_URL = 'https://deven-shah.com';
+import { HOME_URL, SITE_URL, SITE_NAME, SITE_TITLE, SITE_DESCRIPTION } from '@/lib/seo';
 
 export const metadata: Metadata = {
-  metadataBase: new URL(BASE_URL),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Deven Shah | Software Engineer & AI Researcher',
+    default: SITE_TITLE,
     template: '%s | Deven Shah',
   },
-  description:
-    'M.S. Computer Science student (AI & ML concentration) at Boston University. Shaping the next generation of AI-driven analytics, intelligent systems, and scalable solutions. Specializing in building scalable systems, leading teams, and optimizing client-focused solutions.',
+  description: SITE_DESCRIPTION,
   keywords: [
     'Deven Shah',
     'Software Engineer',
@@ -32,7 +30,7 @@ export const metadata: Metadata = {
     'TypeScript',
     'Python',
   ],
-  authors: [{ name: 'Deven Shah', url: BASE_URL }],
+  authors: [{ name: SITE_NAME, url: HOME_URL }],
   creator: 'Deven Shah',
   publisher: 'Deven Shah',
   robots: {
@@ -52,16 +50,15 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: BASE_URL,
-    siteName: 'Deven Shah',
-    title: 'Deven Shah | Software Engineer & AI Researcher',
-    description:
-      'M.S. Computer Science student (AI & ML concentration) at Boston University. Shaping the next generation of AI-driven analytics, intelligent systems, and scalable solutions.',
+    url: HOME_URL,
+    siteName: SITE_NAME,
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
     images: [
       {
-        url: `${BASE_URL}/thumbnail.png`,
-        width: 1200,
-        height: 630,
+        url: `${SITE_URL}/thumbnail.png`,
+        width: 2370,
+        height: 1776,
         alt: 'Deven Shah - Software Engineer & AI Researcher',
         type: 'image/png',
       },
@@ -69,17 +66,16 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Deven Shah | Software Engineer & AI Researcher',
-    description:
-      'M.S. Computer Science student (AI & ML concentration) at Boston University. Shaping the next generation of AI-driven analytics, intelligent systems, and scalable solutions.',
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
     creator: '@devenshah2018',
     site: '@devenshah2018',
-    images: [`${BASE_URL}/thumbnail.png`],
+    images: [`${SITE_URL}/thumbnail.png`],
   },
   alternates: {
-    canonical: BASE_URL,
+    canonical: HOME_URL,
     types: {
-      'application/rss+xml': `${BASE_URL}/rss`,
+      'application/rss+xml': `${SITE_URL}/rss`,
     },
   },
   icons: {
@@ -87,6 +83,11 @@ export const metadata: Metadata = {
       {
         url: '/favicon.ico',
         type: 'image/x-icon',
+      },
+      {
+        url: '/favicon-96x96.png',
+        type: 'image/png',
+        sizes: '96x96',
       },
     ],
     shortcut: [
@@ -103,13 +104,7 @@ export const metadata: Metadata = {
     capable: true,
   },
   verification: {
-    // Placeholder structure - add actual verification codes when available
-    // google: 'YOUR_GOOGLE_VERIFICATION_CODE',
-    // yandex: ['YOUR_YANDEX_VERIFICATION_CODE'],
-    // other: {
-    //   'msvalidate.01': ['YOUR_BING_VERIFICATION_CODE'],
-    //   'facebook-domain-verification': ['YOUR_FACEBOOK_VERIFICATION_CODE'],
-    // },
+    google: process.env['GOOGLE_SITE_VERIFICATION'] || undefined,
   },
 };
 

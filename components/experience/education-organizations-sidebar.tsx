@@ -98,15 +98,17 @@ export function EducationOrganizationsSidebar() {
                           <ChevronDown className='h-3 w-3' />
                         )}
                       </button>
-                      {expandedCoursework.has(edu.id) && (
-                        <div id={`coursework-${edu.id}`} className='mt-3 space-y-2'>
-                          {edu.coursework.map((c, i) => (
-                            <div key={i} className='text-xs leading-relaxed text-[#999]'>
-                              {c}
-                            </div>
-                          ))}
-                        </div>
-                      )}
+                      <div
+                        id={`coursework-${edu.id}`}
+                        hidden={!expandedCoursework.has(edu.id)}
+                        className='mt-3 space-y-2'
+                      >
+                        {edu.coursework.map((c, i) => (
+                          <div key={i} className='text-xs leading-relaxed text-[#999]'>
+                            {c}
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   )}
                 </div>

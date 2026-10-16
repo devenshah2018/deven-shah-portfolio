@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faKaggle } from '@fortawesome/free-brands-svg-icons';
-import { CONTACT_CARD_SHINE_EVENT } from '@/components/contact/contact-section';
+import { CONTACT_CARD_SHINE_EVENT } from '@/lib/events';
 import { scrollToSection } from '@/lib/url-utils';
 import { LINKS } from '@/database/content-registry';
 
@@ -44,6 +44,7 @@ export function HeroSection() {
                 alt='Deven Shah'
                 width={400}
                 height={400}
+                sizes='(min-width: 1024px) 320px, (min-width: 640px) 176px, clamp(104px, 17vh, 144px)'
                 className='relative h-[clamp(6.5rem,17vh,9rem)] w-[clamp(6.5rem,17vh,9rem)] rounded-full object-cover object-top ring-1 ring-[#3a3a3a] sm:h-44 sm:w-44 lg:h-80 lg:w-80 lg:ring-0'
                 priority
               />

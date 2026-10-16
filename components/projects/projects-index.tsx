@@ -1,7 +1,7 @@
 'use client';
 
 import { ArrowUpRight, Download, Search, X } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import {
   PROJECTS,
   PROJECT_CATEGORIES,
@@ -60,13 +60,42 @@ function getRelatedLabels(project: Project): RelatedLabel[] {
     .filter(Boolean) as RelatedLabel[];
 }
 
-function ProjectRow({ project }: { project: Project }) {
-  const related = getRelatedLabels(project);
+const SORTED_PROJECTS = [...PROJECTS].sort((a, b) => b.sortDate.localeCompare(a.sortDate));
+const PROJECT_METADATA = new Map(
+  PROJECTS.map(project => {
+    const related = getRelatedLabels(project);
+    return [
+      project.id,
+      {
+        related,
+        searchText: [
+          project.title,
+          project.description,
+          ...project.technologies,
+          ...related.map(item => item.name),
+        ]
+          .join(' ')
+          .toLowerCase(),
+      },
+    ];
+  })
+);
+const CATEGORY_COUNTS = new Map(
+  PROJECT_CATEGORIES.map(category => [
+    category.key,
+    category.key === 'all'
+      ? PROJECTS.length
+      : PROJECTS.filter(project => project.categories?.includes(category.key)).length,
+  ])
+);
+
+const ProjectRow = memo(function ProjectRow({ project, hidden }: { project: Project; hidden: boolean }) {
+  const related = PROJECT_METADATA.get(project.id)!.related;
   const links = project.access_points?.length
     ? project.access_points
     : [{ type: project.entry_point, url: project.link, label: 'View project' }];
   return (
-    <li id={`project-${project.id}`} className='project-index-row group py-7 sm:py-8'>
+    <li id={`project-${project.id}`} hidden={hidden} className='project-index-row group py-7 sm:py-8'>
       <div className='grid gap-3 md:grid-cols-[minmax(0,1fr)_minmax(0,1.35fr)] md:gap-10'>
         <div className='min-w-0'>
           <div className='mb-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[#999]'>
@@ -146,7 +175,7 @@ function ProjectRow({ project }: { project: Project }) {
       </div>
     </li>
   );
-}
+});
 
 export function ProjectsIndex() {
   const [category, setCategory] = useState('featured');
@@ -160,19 +189,11 @@ export function ProjectsIndex() {
     return () => window.removeEventListener('resetProjectFilter', reset);
   }, []);
   const search = query.trim().toLowerCase();
-  const projects = PROJECTS.filter(project => {
-    if (search)
-      return [
-        project.title,
-        project.description,
-        ...project.technologies,
-        ...getRelatedLabels(project).map(item => item.name),
-      ]
-        .join(' ')
-        .toLowerCase()
-        .includes(search);
+  const projects = SORTED_PROJECTS.filter(project => {
+    if (search) return PROJECT_METADATA.get(project.id)!.searchText.includes(search);
     return category === 'all' || project.categories?.includes(category);
-  }).sort((a, b) => b.sortDate.localeCompare(a.sortDate));
+  });
+  const visibleIds = new Set(projects.map(project => project.id));
 
   return (
     <section id='projects' className='bg-[#141414] py-20 sm:py-24'>
@@ -225,9 +246,7 @@ export function ProjectsIndex() {
             >
               {item.key === 'all' ? 'All projects' : item.label}
               <span className='text-[10px] tabular-nums text-[#888]'>
-                {item.key === 'all'
-                  ? PROJECTS.length
-                  : PROJECTS.filter(p => p.categories?.includes(item.key)).length}
+                {CATEGORY_COUNTS.get(item.key)}
               </span>
             </button>
           ))}
@@ -237,8 +256,9 @@ export function ProjectsIndex() {
           {search ? ` matching “${query.trim()}”` : ''}
         </div>
         <ul className='divide-y divide-[#2c2c29]'>
-          {projects.map(project => (
-            <ProjectRow key={project.id} project={project} />
+          {/* Keep the catalog in server HTML; native hidden preserves filter visibility and focus. */}
+          {SORTED_PROJECTS.map(project => (
+            <ProjectRow key={project.id} project={project} hidden={!visibleIds.has(project.id)} />
           ))}
         </ul>
         {projects.length === 0 && (

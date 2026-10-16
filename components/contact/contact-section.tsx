@@ -5,12 +5,12 @@ import { Button } from '@/components/ui/button';
 import { CalendarCheck2, Github, Linkedin, Mail, Copy, Check } from 'lucide-react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import '@calcom/atoms/globals.min.css';
 import { getCalApi } from '@calcom/embed-react';
 import { scrollToSection } from '@/lib/url-utils';
 import { LINKS } from '@/database/content-registry';
 
-export const CONTACT_CARD_SHINE_EVENT = 'contact-card-shine';
+import { CONTACT_CARD_SHINE_EVENT } from '@/lib/events';
+export { CONTACT_CARD_SHINE_EVENT } from '@/lib/events';
 
 const CONNECT_LINKS = [
   {
