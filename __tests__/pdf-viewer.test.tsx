@@ -21,6 +21,8 @@ let mockDestroy: jest.Mock;
 let resize: () => void;
 let availableWidth = 800;
 let availableHeight = 600;
+const originalIntersectionObserver = global.IntersectionObserver;
+let pageObservers: { target: Element; intersect: (nearby: boolean) => void }[];
 
 beforeEach(() => {
   jest.spyOn(HTMLMediaElement.prototype, 'play').mockResolvedValue();
@@ -28,6 +30,22 @@ beforeEach(() => {
   jest.spyOn(HTMLMediaElement.prototype, 'load').mockImplementation(() => {});
   availableWidth = 800;
   availableHeight = 600;
+  pageObservers = [];
+  global.IntersectionObserver = class {
+    constructor(private callback: IntersectionObserverCallback) {}
+    observe(target: Element) {
+      pageObservers.push({
+        target,
+        intersect: nearby =>
+          this.callback(
+            [{ isIntersecting: nearby }] as IntersectionObserverEntry[],
+            this as unknown as IntersectionObserver
+          ),
+      });
+    }
+    disconnect() {}
+    unobserve() {}
+  } as unknown as typeof IntersectionObserver;
   jest.spyOn(HTMLElement.prototype, 'clientWidth', 'get').mockImplementation(() => availableWidth);
   jest
     .spyOn(HTMLElement.prototype, 'clientHeight', 'get')
@@ -58,25 +76,86 @@ beforeEach(() => {
     destroy: mockDestroy,
   } as never);
 });
-afterEach(() => jest.restoreAllMocks());
+afterEach(() => {
+  jest.restoreAllMocks();
+  global.IntersectionObserver = originalIntersectionObserver;
+});
 
-it('renders a selectable page, navigates within boundaries and supports keyboard navigation', async () => {
+it('stacks every paper page without pagination and renders only nearby pages', async () => {
+  const { container, unmount } = render(<PdfViewer src='/paper.pdf' title='Research' />);
+  await screen.findByText('3 pages · Scroll to read');
+  const pages = await screen.findAllByRole('document');
+  expect(pages.map(element => element.getAttribute('aria-label'))).toEqual([
+    'Research, page 1',
+    'Research, page 2',
+    'Research, page 3',
+  ]);
+  await waitFor(() => expect(pages[0]).toHaveAttribute('aria-busy', 'false'));
+  expect(container.querySelectorAll('canvas')).toHaveLength(1);
+  expect(screen.queryByRole('button', { name: 'Next page' })).not.toBeInTheDocument();
+  expect(screen.queryByRole('button', { name: 'Previous page' })).not.toBeInTheDocument();
+  expect(mockGetPage).not.toHaveBeenCalledWith(2);
+  const firstCanvas = container.querySelector('canvas')!;
+  const pageOneHeight = pages[0]!.style.height;
+  act(() => {
+    pageObservers.find(observer => observer.target === pages[0])!.intersect(false);
+    pageObservers.find(observer => observer.target === pages[1])!.intersect(true);
+  });
+  await waitFor(() => expect(pages[1]).toHaveAttribute('aria-busy', 'false'));
+  expect(mockGetPage).toHaveBeenCalledWith(2);
+  expect(pages[1]!.querySelector('canvas')).not.toBeNull();
+  expect(pages[0]!.querySelector('canvas')).toBeNull();
+  expect(firstCanvas.width).toBe(0);
+  expect(pages[0]!.style.height).toBe(pageOneHeight);
+  expect(container.querySelectorAll('canvas')).toHaveLength(1);
+  const scrollKey = new KeyboardEvent('keydown', {
+    key: 'PageDown',
+    bubbles: true,
+    cancelable: true,
+  });
+  fireEvent(screen.getByRole('region'), scrollKey);
+  expect(scrollKey.defaultPrevented).toBe(false);
+  unmount();
+  expect(mockCancel).toHaveBeenCalled();
+  expect(mockDestroy).toHaveBeenCalledTimes(1);
+});
+
+it('zooms and resizes all paper page slots while keeping the document loaded once', async () => {
   const user = userEvent.setup();
-  const { container } = render(<PdfViewer src='/paper.pdf' title='Research' />);
+  const before = jest.mocked(getDocument).mock.calls.length;
+  render(<PdfViewer src='/paper.pdf' title='Research' />);
+  const first = await screen.findByRole('document', { name: 'Research, page 1' });
+  await waitFor(() => expect(first).toHaveAttribute('aria-busy', 'false'));
+  await user.click(screen.getByRole('button', { name: 'Zoom in' }));
+  expect(first.style.width).toBe('960px');
+  expect(screen.getByRole('document', { name: 'Research, page 3' }).style.width).toBe('960px');
+  await user.click(screen.getByRole('button', { name: 'Fit page' }));
+  expect(first.style.height).toBe('568px');
+  await user.click(screen.getByRole('button', { name: 'Fit width' }));
+  availableWidth = 320;
+  act(() => resize());
+  await waitFor(() => expect(first.style.width).toBe('288px'));
+  expect(screen.getByRole('document', { name: 'Research, page 3' }).style.width).toBe('288px');
+  expect(jest.mocked(getDocument).mock.calls.length - before).toBe(1);
+});
+
+it('keeps slide decks paginated with selectable text and keyboard navigation', async () => {
+  const user = userEvent.setup();
+  const { container } = render(<PdfViewer src='/slides.pdf' title='Research' slides />);
   await waitFor(() => expect(screen.getByRole('document')).toHaveAttribute('aria-busy', 'false'));
   expect(screen.getByText('Selectable PDF text')).toBeInTheDocument();
   expect(container.querySelectorAll('canvas')).toHaveLength(1);
-  expect(getDocument).toHaveBeenCalledWith({ url: '/paper.pdf', isEvalSupported: false });
+  expect(getDocument).toHaveBeenCalledWith({ url: '/slides.pdf', isEvalSupported: false });
   expect(screen.getByRole('button', { name: 'Previous page' })).toBeDisabled();
   await user.click(screen.getByRole('button', { name: 'Next page' }));
-  expect(await screen.findByText('Page 2 / 3')).toBeInTheDocument();
+  expect(await screen.findByText('Slide 2 / 3')).toBeInTheDocument();
   await waitFor(() => expect(mockGetPage).toHaveBeenLastCalledWith(2));
   const region = screen.getByRole('region', { name: 'Research PDF pages' });
   fireEvent.keyDown(region, { key: 'End' });
-  expect(screen.getByText('Page 3 / 3')).toBeInTheDocument();
+  expect(screen.getByText('Slide 3 / 3')).toBeInTheDocument();
   expect(screen.getByRole('button', { name: 'Next page' })).toBeDisabled();
   fireEvent.keyDown(region, { key: 'Home' });
-  expect(screen.getByText('Page 1 / 3')).toBeInTheDocument();
+  expect(screen.getByText('Slide 1 / 3')).toBeInTheDocument();
   await waitFor(() => expect(screen.getByRole('document')).toHaveAttribute('aria-busy', 'false'));
   expect(container.querySelectorAll('canvas')).toHaveLength(1);
 });
@@ -84,7 +163,7 @@ it('renders a selectable page, navigates within boundaries and supports keyboard
 it('zooms, fits and resizes without fetching the document again', async () => {
   const user = userEvent.setup();
   const before = jest.mocked(getDocument).mock.calls.length;
-  render(<PdfViewer src='/paper.pdf' title='Research' />);
+  render(<PdfViewer src='/slides.pdf' title='Research' slides />);
   await waitFor(() => expect(screen.getByRole('document')).toHaveAttribute('aria-busy', 'false'));
   await user.click(screen.getByRole('button', { name: 'Zoom in' }));
   expect(screen.getByLabelText('Zoom level')).toHaveTextContent('125%');
@@ -130,7 +209,7 @@ it('cancels pending rendering on navigation and ignores late completion after cl
     }),
     cancel: mockCancel,
   }));
-  const { unmount } = render(<PdfViewer src='/paper.pdf' title='Research' />);
+  const { unmount } = render(<PdfViewer src='/slides.pdf' title='Research' slides />);
   await waitFor(() => expect(mockRender).toHaveBeenCalled());
   fireEvent.click(screen.getByRole('button', { name: 'Next page' }));
   await waitFor(() => expect(mockGetPage).toHaveBeenLastCalledWith(2));
@@ -178,13 +257,17 @@ it('loads embedded media only on its slide, preserves it through zoom/resize, an
 });
 
 it('never adds slide video overlays to research papers', async () => {
-  const user = userEvent.setup();
   const { container } = render(
     <PdfViewer src='/paper.pdf' title='Paper' videos={[embeddedVideo]} />
   );
-  await screen.findByText('Page 1 / 3');
-  await user.click(screen.getByRole('button', { name: 'Next page' }));
-  await waitFor(() => expect(screen.getByRole('document')).toHaveAttribute('aria-busy', 'false'));
+  await screen.findByText('3 pages · Scroll to read');
+  await waitFor(() =>
+    expect(screen.getByRole('document', { name: 'Paper, page 1' })).toHaveAttribute(
+      'aria-busy',
+      'false'
+    )
+  );
+  expect(screen.queryByRole('button', { name: 'Next page' })).not.toBeInTheDocument();
   expect(container.querySelector('video')).toBeNull();
   expect(HTMLMediaElement.prototype.play).not.toHaveBeenCalled();
 });

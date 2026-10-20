@@ -8,19 +8,24 @@ native buttons that open a document dialog. They cannot launch media tabs
 through modified or middle clicks. A same-origin download link in `noscript`
 preserves document discovery and access for browsers without JavaScript.
 
-The document dialog supports previous/next page, keyboard navigation
-(Left/Right, Page Up/Down, Home/End while the page area is focused), selectable
-text, zoom, fit page, fit width, and PDF download. Media stays inside the
-portfolio viewer; there are no open-in-new-tab media actions. Slide decks also
-offer one icon-only Download control that opens a PDF/PPTX format chooser.
-Papers use an icon-only direct PDF download. Download controls have accessible
-labels and tooltips; format choices remain download links with no new tabs.
-Escape, the close button, and the backdrop dismiss the dialog and restore focus.
+Papers display every page in a continuous vertical scroll, with visible page
+labels and a total page count. Native scrolling, including Page Up/Down and
+Home/End, works while the reading area is focused. Slide decks retain
+previous/next controls and keyboard navigation (Left/Right, Page Up/Down,
+Home/End). Both support selectable text, zoom, fit page, fit width, and PDF
+download. Media stays inside the portfolio viewer; there are no open-in-new-tab
+media actions. Slide decks also offer one icon-only Download control that opens
+a PDF/PPTX format chooser. Papers use an icon-only direct PDF download. Download
+controls have accessible labels and tooltips; format choices remain download
+links with no new tabs. Escape, the close button, and the backdrop dismiss the
+dialog and restore focus.
 
 `PdfViewer` and the existing PDF.js dependency load only when a document dialog
 opens. Webpack emits the matching installed PDF.js worker as a same-origin
-asset. Only one page renders at a time; rendering is canceled on
-page/zoom/resize changes, and closing destroys the loading task, aborts
+asset. Slide decks render one page at a time. Papers reserve space for every
+page but render only pages near the scroll viewport; distant canvases and text
+layers are released while page dimensions remain stable. Rendering is canceled
+on navigation/zoom/resize changes, and closing destroys the loading task, aborts
 requests, and terminates its worker. Canvas backing stores are limited to 8
 million pixels and at most 2x pixel density.
 

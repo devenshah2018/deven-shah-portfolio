@@ -124,7 +124,10 @@ export function ProjectDocument({ project, kind }: { project: Project; kind: 'pa
               <span className='sr-only'> {label.toLowerCase()}</span>
             </DialogTitle>
             <DialogDescription className='sr-only'>
-              Read the PDF, change pages, zoom, or download a copy. Use Escape to close the viewer.
+              {slides
+                ? 'Read the PDF, change slides, zoom, or download a copy.'
+                : 'Scroll through all pages of the paper, zoom, or download a copy.'}{' '}
+              Use Escape to close the viewer.
             </DialogDescription>
           </div>
           <div className='-mr-2 -mt-1 flex shrink-0 items-center gap-1'>

@@ -6,6 +6,7 @@ import type { PDFDocumentProxy, RenderTask } from 'pdfjs-dist';
 import { getDocument, TextLayer } from '@/lib/pdf-engine';
 import type { SlideVideo as SlideVideoSpec } from '@/lib/types';
 import { SlideVideo } from './slide-video';
+import { PaperPages } from './paper-pages';
 import styles from './pdf-viewer.module.css';
 
 type Fit = 'width' | 'page';
@@ -69,7 +70,7 @@ export default function PdfViewer({
   useEffect(() => {
     const host = pageRef.current;
     const surface = surfaceRef.current;
-    if (!document || !host || !surface || !size.width || !size.height) return;
+    if (!slides || !document || !host || !surface || !size.width || !size.height) return;
     let active = true;
     let renderTask: RenderTask | undefined;
     let textLayer: TextLayer | undefined;
@@ -125,7 +126,7 @@ export default function PdfViewer({
       textLayer?.cancel();
       surface.replaceChildren();
     };
-  }, [document, page, size, zoom, fit]);
+  }, [document, page, size, zoom, fit, slides]);
 
   const changePage = (next: number) => {
     setPage(Math.max(1, Math.min(document?.numPages ?? 1, next)));
@@ -140,30 +141,40 @@ export default function PdfViewer({
         className='flex shrink-0 flex-wrap items-center justify-between gap-x-2 border-t border-white/5 px-2 py-1 sm:px-5'
       >
         <div className='flex items-center'>
-          <button
-            type='button'
-            aria-label='Previous page'
-            className={control}
-            disabled={!document || page <= 1}
-            onClick={() => changePage(page - 1)}
-          >
-            <ChevronLeft className='h-4 w-4' />
-          </button>
-          <span
-            aria-live='polite'
-            className='min-w-[5.5rem] text-center text-xs tabular-nums text-[#bbbfb8]'
-          >
-            {document ? `${slides ? 'Slide' : 'Page'} ${page} / ${document.numPages}` : 'Loading…'}
-          </span>
-          <button
-            type='button'
-            aria-label='Next page'
-            className={control}
-            disabled={!document || page >= document.numPages}
-            onClick={() => changePage(page + 1)}
-          >
-            <ChevronRight className='h-4 w-4' />
-          </button>
+          {slides ? (
+            <>
+              <button
+                type='button'
+                aria-label='Previous page'
+                className={control}
+                disabled={!document || page <= 1}
+                onClick={() => changePage(page - 1)}
+              >
+                <ChevronLeft className='h-4 w-4' />
+              </button>
+              <span
+                aria-live='polite'
+                className='min-w-[5.5rem] text-center text-xs tabular-nums text-[#bbbfb8]'
+              >
+                {document
+                  ? `${slides ? 'Slide' : 'Page'} ${page} / ${document.numPages}`
+                  : 'Loading…'}
+              </span>
+              <button
+                type='button'
+                aria-label='Next page'
+                className={control}
+                disabled={!document || page >= document.numPages}
+                onClick={() => changePage(page + 1)}
+              >
+                <ChevronRight className='h-4 w-4' />
+              </button>
+            </>
+          ) : (
+            <span className='px-2 py-3 text-xs text-[#bbbfb8]'>
+              {document ? `${document.numPages} pages · Scroll to read` : 'Loading…'}
+            </span>
+          )}
         </div>
         <div className='flex items-center'>
           <button
@@ -224,7 +235,7 @@ export default function PdfViewer({
         tabIndex={0}
         className='relative min-h-0 flex-1 overflow-auto overscroll-contain bg-[#242627] focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#a5c9bd]'
         onKeyDown={event => {
-          if (event.target !== event.currentTarget) return;
+          if (!slides || event.target !== event.currentTarget) return;
           if (event.key === 'ArrowRight' || event.key === 'PageDown') {
             event.preventDefault();
             changePage(page + 1);
@@ -251,31 +262,46 @@ export default function PdfViewer({
             This PDF could not be displayed. Use the download button above.
           </div>
         )}
-        {!error && busy && (
+        {!error && (slides ? busy : !document) && (
           <p
             role='status'
             className='absolute left-1/2 top-6 z-10 -translate-x-1/2 rounded-full bg-[#101113]/90 px-4 py-2 text-xs text-[#deded8]'
           >
-            Loading page…
+            {slides ? 'Loading page…' : 'Loading paper…'}
           </p>
         )}
-        <div
-          className={`flex min-h-full w-max min-w-full justify-center p-4 ${slides ? 'items-center' : 'items-start'}`}
-        >
+        {slides ? (
           <div
-            ref={pageRef}
-            role='document'
-            aria-label={`${title}, ${slides ? 'slide' : 'page'} ${page}`}
-            aria-busy={busy}
-            className={styles['page']}
-            style={{ visibility: error || busy ? 'hidden' : 'visible' }}
+            className={`flex min-h-full w-max min-w-full justify-center p-4 ${slides ? 'items-center' : 'items-start'}`}
           >
-            <div ref={surfaceRef} />
-            {document && slideVideo && !error && (
-              <SlideVideo key={slideVideo.src} clip={slideVideo} title={title} ready={!busy} />
-            )}
+            <div
+              ref={pageRef}
+              role='document'
+              aria-label={`${title}, ${slides ? 'slide' : 'page'} ${page}`}
+              aria-busy={busy}
+              className={styles['page']}
+              style={{ visibility: error || busy ? 'hidden' : 'visible' }}
+            >
+              <div ref={surfaceRef} />
+              {document && slideVideo && !error && (
+                <SlideVideo key={slideVideo.src} clip={slideVideo} title={title} ready={!busy} />
+              )}
+            </div>
           </div>
-        </div>
+        ) : (
+          document &&
+          !error && (
+            <PaperPages
+              key={src}
+              document={document}
+              title={title}
+              viewportRef={viewportRef}
+              size={size}
+              zoom={zoom}
+              fit={fit}
+            />
+          )
+        )}
       </div>
     </div>
   );
