@@ -1,38 +1,74 @@
 .action {
+  position: relative;
   display: inline-flex;
-  min-height: 44px;
+  flex: none;
+  width: 48px;
+  height: 48px;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 8px 13px;
-  border-radius: 8px;
-  background: rgb(255 255 255 / 8%);
-  color: #edede7;
-  font-size: 13px;
-  font-weight: 500;
-  line-height: 1.4;
-  transition:
-    background-color 150ms,
-    color 150ms;
+  border-radius: 50%;
+  background: transparent;
+  color: #c9cec9;
 }
 .action:hover {
-  background: rgb(255 255 255 / 14%);
-  color: white;
+  background: rgb(255 255 255 / 4%);
+  color: #d6eee3;
 }
 .action:focus-visible {
   outline: 2px solid #a5c9bd;
-  outline-offset: 3px;
+  outline-offset: 4px;
 }
 .action svg {
-  height: 15px;
-  width: 15px;
+  height: 21px;
+  width: 21px;
   flex-shrink: 0;
+  stroke-width: 1.7;
+}
+.action[data-label]::after {
+  content: attr(data-label);
+  position: absolute;
+  z-index: 10;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  padding: 6px 9px;
+  border-radius: 6px;
+  background: #242a27;
+  color: #e0e9e3;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.4;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(-50%);
+}
+.action[data-label]:focus-visible::after {
+  opacity: 1;
+}
+@media (hover: hover) {
+  .action[data-label]:hover::after {
+    opacity: 1;
+  }
 }
 .primary {
-  background: #a5c9bd;
-  color: #101713;
+  width: 56px;
+  height: 56px;
+  margin-inline-end: 4px;
+  background: #22322b;
+  color: #a5c9bd;
+}
+.primary > svg {
+  width: 25px;
+  height: 25px;
 }
 .primary:hover {
-  background: #c0dfd4;
-  color: #101713;
+  background: #2c3d34;
+  color: #c4e3d3;
+}
+.fallback {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  color: #a5c9bd;
+  font-size: 13px;
 }

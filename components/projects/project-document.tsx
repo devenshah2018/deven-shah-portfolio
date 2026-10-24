@@ -93,14 +93,15 @@ export function ProjectDocument({ project, kind }: { project: Project; kind: 'pa
         aria-expanded={open}
         aria-controls={open ? dialogId : undefined}
         aria-label={`${label} for ${project.title} (PDF)`}
+        data-label={slides ? 'Slidedeck' : 'Paper'}
         className={styles['action']}
         onClick={() => setOpen(true)}
       >
         <Icon aria-hidden='true' />
-        {slides ? 'Slidedeck' : 'Paper'}
+        <span className='sr-only'>{slides ? 'Slidedeck' : 'Paper'}</span>
       </button>
       <noscript>
-        <a href={src} download className={styles['action']}>
+        <a href={src} download className={styles['fallback']}>
           Download {label}
         </a>
       </noscript>

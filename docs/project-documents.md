@@ -56,5 +56,8 @@ are never sent to an external preview service.
 
 Actions appear in this order when available: Live Site, Demo, Code, Paper,
 Slidedeck. Hosted links are labeled Live Site; Demo always denotes the local
-video player. The shared action styles provide 44px minimum touch targets and a
-filled accent for Live Site.
+video player. Actions use 48px icon controls with hover/focus labels and
+project-specific accessible names. Live Site uses a larger 56px globe on a flat
+mint-tinted circle; other icons have transparent backgrounds. Controls have no
+gradients, shadows, badges, or animation, and retain visible keyboard focus.
+No-JavaScript document downloads retain text labels.

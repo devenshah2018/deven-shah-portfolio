@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowUpRight, Code2, Search, X } from 'lucide-react';
+import { Code2, Globe2, Search, X } from 'lucide-react';
 import { memo, useEffect, useRef, useState } from 'react';
 import {
   PROJECTS,
@@ -156,7 +156,7 @@ const ProjectRow = memo(function ProjectRow({
         <div className='col-span-2 min-w-0 lg:col-span-1'>
           <p className='text-sm leading-7 text-[#b1b1ad]'>{project.description}</p>
           <p className='mt-3 text-xs leading-6 text-[#888]'>{project.technologies.join(' · ')}</p>
-          <div className='mt-4 flex flex-wrap items-center gap-2'>
+          <div className='mt-5 flex flex-wrap items-center gap-3'>
             {links
               .filter(link => ['hosted', 'web', 'live'].includes(link.type))
               .map(link => (
@@ -166,9 +166,11 @@ const ProjectRow = memo(function ProjectRow({
                   target='_blank'
                   rel='noopener noreferrer'
                   aria-label={`Live Site for ${project.title}`}
+                  data-label='Live Site'
                   className={`${actionStyles['action']} ${actionStyles['primary']}`}
                 >
-                  Live Site <ArrowUpRight aria-hidden='true' />
+                  <Globe2 aria-hidden='true' />
+                  <span className='sr-only'>Live Site</span>
                 </a>
               ))}
             {project.demoVideo && <ProjectDemo project={project} />}
@@ -181,11 +183,11 @@ const ProjectRow = memo(function ProjectRow({
                   target='_blank'
                   rel='noopener noreferrer'
                   aria-label={`${link.label || link.type} for ${project.title}`}
+                  data-label={link.label || link.type}
                   className={actionStyles['action']}
                 >
                   <Code2 aria-hidden='true' />
-                  {link.label || link.type}
-                  <ArrowUpRight aria-hidden='true' />
+                  <span className='sr-only'>{link.label || link.type}</span>
                 </a>
               ))}
             {project.paper && <ProjectDocument project={project} kind='paper' />}

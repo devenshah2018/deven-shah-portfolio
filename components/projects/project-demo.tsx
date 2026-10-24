@@ -116,10 +116,11 @@ export function ProjectDemo({ project }: { project: Project }) {
         <button
           type='button'
           aria-label={`Demo for ${project.title}`}
+          data-label='Demo'
           className={actionStyles['action']}
         >
-          <Play className='h-3.5 w-3.5' aria-hidden='true' />
-          Demo
+          <Play aria-hidden='true' />
+          <span className='sr-only'>Demo</span>
         </button>
       </DialogTrigger>
       <DialogContent
