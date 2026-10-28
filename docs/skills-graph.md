@@ -10,6 +10,11 @@ selection indicator slides between views, content height adjusts smoothly, and
 the graph fades in after its iframe loads. Reduced-motion preferences disable
 these transitions. The selected List category survives view changes.
 
+The List view uses naturally sized, wrapping skill items with quiet markers and
+borderless spacing. Category filters have a small selection underline; skill
+hover and keyboard focus indicate access to related work without permanent row
+dividers, cards, or repeated action arrows.
+
 Both the local portfolio and deployed portfolio use hosted Codon at
 `https://codon-omega.vercel.app` by default. Start the portfolio with:
 

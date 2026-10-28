@@ -68,6 +68,103 @@
   animation: reveal 200ms ease-out;
 }
 
+.categories {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 16px;
+  margin: 24px 0 20px;
+}
+
+.category {
+  position: relative;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 8px 4px;
+  color: #999f99;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.category:hover {
+  color: #e5e5df;
+}
+.category[aria-pressed='true'] {
+  color: #c5e0d2;
+}
+.category[aria-pressed='true']::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 4px;
+  width: 18px;
+  height: 2px;
+  border-radius: 1px;
+  background: #9bbbaa;
+}
+
+.skills {
+  text-wrap: balance;
+  font-size: 0;
+}
+
+.skillItem {
+  display: inline-block;
+  min-width: 0;
+  max-width: calc(100% - 10px);
+  margin: 4px 10px 4px 0;
+  vertical-align: top;
+}
+.skill {
+  display: inline-flex;
+  min-height: 48px;
+  max-width: 100%;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  color: #d9ded8;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 24px;
+  overflow-wrap: anywhere;
+  text-align: left;
+}
+
+.skillMarker {
+  flex: none;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #60756a;
+}
+
+.skill:hover:not(:disabled) {
+  background: rgb(165 201 189 / 5%);
+  color: #d1e9dc;
+}
+.skill:hover:not(:disabled) .skillMarker {
+  background: #a5c9bd;
+}
+.skill:disabled {
+  cursor: default;
+  color: #999f99;
+}
+.skill:disabled .skillMarker {
+  background: #474d48;
+}
+.skill:focus-visible,
+.category:focus-visible {
+  outline: 2px solid #a5c9bd;
+  outline-offset: -2px;
+}
+
+@media (min-width: 640px) {
+  .skill {
+    font-size: 16px;
+  }
+}
+
 @keyframes reveal {
   from {
     opacity: 0;
