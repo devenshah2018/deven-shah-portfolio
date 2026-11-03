@@ -115,7 +115,6 @@ export const SkillsBrowser = memo(function SkillsBrowser({
                       aria-label={count ? `${skill}, explore related work` : skill}
                       className={styles['skill']}
                     >
-                      <span aria-hidden='true' className={styles['skillMarker']} />
                       <span>{skill}</span>
                     </button>
                   </li>

@@ -17,24 +17,24 @@ export function AboutSection() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <p className='section-eyebrow'>01 / About me</p>
+          <p className='section-eyebrow'>01</p>
+          <h2 className='section-title mb-8 sm:mb-10'>About</h2>
           <div className='grid gap-10 lg:grid-cols-[1.35fr_1fr] lg:gap-20'>
             <div className='min-w-0'>
-              <h2 className='section-title max-w-xl'>
-                Research-minded.
-                <br />
-                <span className='text-[#9aaea5]'>Built for the real world.</span>
-              </h2>
-              <p className='mt-7 max-w-xl text-base leading-8 text-[#b1b1ad]'>
-                I’m a software engineer and AI researcher turning research into production. At
-                Boston University, I work on medical imaging and deepfake detection while pursuing
-                an M.S. in Computer Science.
-              </p>
-              <p className='mt-4 max-w-xl text-sm leading-7 text-[#999]'>
-                My background spans product leadership at Suno Analytics, member-facing applications
-                at Patelco, and secure data operations at NetApp. I care about the space where
-                rigorous ideas become useful software.
-              </p>
+              <div className='max-w-xl space-y-5 text-base leading-8 text-[#b1b1ad]'>
+                <p>
+                  I’m a software engineer and AI researcher pursuing an M.S. in Computer Science at
+                  Boston University, focused on AI and machine learning. My research spans medical
+                  imaging, deepfake detection, and financial fraud detection, from U-Net models for
+                  knee MRI analysis to leading a cross-disciplinary fraud research initiative.
+                </p>
+                <p>
+                  I’ve built AI agents for Salesforce workflows at Accenture and co-founded Suno
+                  Analytics, where I led engineering for an AI-powered ERP platform serving 50+
+                  enterprise customers. My earlier work includes digital member services at Patelco
+                  and automated Oracle backup workflows at NetApp.
+                </p>
+              </div>
               <div
                 className='mt-8 flex min-w-0 items-center gap-4'
                 aria-label='Previous workplaces'
@@ -66,7 +66,7 @@ export function AboutSection() {
                 </div>
               </div>
             </div>
-            <aside className='min-w-0 lg:pt-2'>
+            <aside className='min-w-0'>
               <h3 className='section-eyebrow'>GitHub contributions</h3>
               <GitHubContributionChart compact />
               {CERTIFICATIONS.length > 0 && (

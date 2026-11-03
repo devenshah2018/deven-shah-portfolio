@@ -292,8 +292,8 @@ export function ExperienceSection() {
           className='mx-auto'
         >
           <div className='w-full max-w-6xl xl:max-w-7xl'>
-            <p className='section-eyebrow'>02 / Experience</p>
-            <h2 className='section-title mb-10'>A career of building.</h2>
+            <p className='section-eyebrow'>02</p>
+            <h2 className='section-title mb-10'>Experience</h2>
 
             <div className='grid grid-cols-1 items-start gap-8 lg:grid-cols-[1.5fr_1fr] lg:items-start lg:gap-16'>
               <div className='min-w-0'>

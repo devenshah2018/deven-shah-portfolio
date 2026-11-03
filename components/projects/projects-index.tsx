@@ -223,8 +223,8 @@ export function ProjectsIndex() {
       <div className='container mx-auto w-full max-w-7xl px-6 sm:px-10 lg:px-16'>
         <div className='mb-9 flex flex-col justify-between gap-6 sm:flex-row sm:items-end'>
           <div>
-            <p className='section-eyebrow'>03 / Projects</p>
-            <h2 className='section-title'>Ideas, built into practice.</h2>
+            <p className='section-eyebrow'>03</p>
+            <h2 className='section-title'>Projects</h2>
             <p className='mt-4 max-w-xl text-sm leading-7 text-[#999]'>
               Products, applied research, and the algorithms underneath.
             </p>
