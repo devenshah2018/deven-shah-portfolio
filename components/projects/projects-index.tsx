@@ -9,7 +9,12 @@ import {
   getEducationById,
   getOrganizationById,
 } from '@/database/content-registry';
-import { requestScrollToExperience, scrollToEducation, scrollToSection } from '@/lib/url-utils';
+import {
+  requestScrollToExperience,
+  scrollToEducation,
+  scrollToOrganization,
+} from '@/lib/url-utils';
+import { ItemPermalink } from '@/components/item-permalink';
 import { Project } from '@/lib/types';
 import { ProjectThumbnail } from './project-thumbnail';
 import { ProjectDemo } from './project-demo';
@@ -141,7 +146,7 @@ const ProjectRow = memo(function ProjectRow({
                   onClick={() => {
                     if (item.type === 'experience') requestScrollToExperience(item.id);
                     else if (item.type === 'education') scrollToEducation(item.id);
-                    else scrollToSection('organizations');
+                    else scrollToOrganization(item.id);
                   }}
                 >
                   {item.logo && (
@@ -192,6 +197,7 @@ const ProjectRow = memo(function ProjectRow({
               ))}
             {project.paper && <ProjectDocument project={project} kind='paper' />}
             {project.slideDeck && <ProjectDocument project={project} kind='slides' />}
+            <ItemPermalink type='project' id={project.id} label={project.title} action />
           </div>
         </div>
       </div>

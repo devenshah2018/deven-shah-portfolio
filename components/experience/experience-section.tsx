@@ -15,6 +15,7 @@ import { scrollToExperience, REQUEST_SCROLL_TO_EXPERIENCE } from '@/lib/url-util
 import { Badge } from '@/components/ui/badge';
 import { TimelineLine } from './timeline-line';
 import { EducationOrganizationsSidebar } from './education-organizations-sidebar';
+import { ItemPermalink } from '@/components/item-permalink';
 
 function getEndYear(org: OrgGroup): number {
   return Math.floor(getExperienceDate(org.positions[0]?.period ?? '') / 100);
@@ -140,11 +141,19 @@ function ExperienceCard({
                 <span
                   key={pos.id}
                   id={`experience-${pos.id}`}
-                  className='flex flex-col gap-1 text-sm text-[#d4d4d4] sm:flex-row sm:flex-wrap sm:items-baseline sm:justify-between sm:gap-x-4'
+                  className='flex scroll-mt-32 flex-col gap-1 text-sm text-[#d4d4d4] sm:flex-row sm:flex-wrap sm:items-baseline sm:justify-between sm:gap-x-4'
                 >
-                  <span className='leading-relaxed'>{pos.title}</span>
-                  <span className='flex-shrink-0 text-xs tabular-nums text-[#999]'>
+                  <span data-scroll-highlight className='leading-relaxed'>
+                    {pos.title}
+                  </span>
+                  <span className='flex flex-shrink-0 items-center gap-1 text-xs tabular-nums text-[#999]'>
                     {periodDisplay}
+                    <ItemPermalink
+                      type='experience'
+                      id={pos.id}
+                      label={`${pos.title} at ${org.company}`}
+                      className='-my-2'
+                    />
                   </span>
                 </span>
               );
@@ -160,7 +169,12 @@ function ExperienceCard({
               const periodDisplay = formatPeriodDisplay(pos.period);
 
               return (
-                <div key={pos.id} id={`experience-${pos.id}`} data-card className='relative py-3'>
+                <div
+                  key={pos.id}
+                  id={`experience-${pos.id}`}
+                  data-card
+                  className='relative scroll-mt-24 py-3'
+                >
                   <div className='flex flex-col items-start gap-1.5 sm:flex-row sm:items-center sm:justify-between sm:gap-3'>
                     <div className='flex min-w-0 items-start gap-2 sm:flex-1 sm:items-center'>
                       <User
@@ -168,9 +182,18 @@ function ExperienceCard({
                         strokeWidth={2}
                         aria-hidden
                       />
-                      <h3 className='min-w-0 text-base font-semibold text-[#f5f5f0] sm:truncate'>
+                      <h3
+                        data-scroll-highlight
+                        className='min-w-0 text-base font-semibold text-[#f5f5f0] sm:truncate'
+                      >
                         {pos.title}
                       </h3>
+                      <ItemPermalink
+                        type='experience'
+                        id={pos.id}
+                        label={`${pos.title} at ${org.company}`}
+                        className='-my-2'
+                      />
                     </div>
                     <Badge
                       variant='outline'
@@ -247,21 +270,12 @@ function ExperienceCard({
 export function ExperienceSection() {
   const [flippedIds, setFlippedIds] = useState<Set<string>>(new Set());
   const [viewMode, setViewMode] = useState<'detailed' | 'compact'>('compact');
-  const scrollToExperienceIdRef = useRef<string | null>(null);
   const timelineContainerRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (scrollToExperienceIdRef.current) {
-      const id = scrollToExperienceIdRef.current;
-      scrollToExperienceIdRef.current = null;
-      setTimeout(() => scrollToExperience(id), 400);
-    }
-  }, []);
 
   useEffect(() => {
     const handler = (e: CustomEvent<{ experienceId: string }>) => {
       const { experienceId } = e.detail;
-      scrollToExperienceIdRef.current = experienceId;
-      setTimeout(() => scrollToExperience(experienceId), 100);
+      scrollToExperience(experienceId);
     };
     window.addEventListener(REQUEST_SCROLL_TO_EXPERIENCE, handler as EventListener);
     return () => window.removeEventListener(REQUEST_SCROLL_TO_EXPERIENCE, handler as EventListener);

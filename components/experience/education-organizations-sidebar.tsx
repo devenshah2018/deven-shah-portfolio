@@ -9,6 +9,7 @@ import {
   type Organization,
 } from '@/database/content-registry';
 import { requestScrollToExperience, scrollToEducation } from '@/lib/url-utils';
+import { ItemPermalink } from '@/components/item-permalink';
 
 export function EducationOrganizationsSidebar() {
   const [expandedCoursework, setExpandedCoursework] = useState<Set<string>>(new Set());
@@ -68,13 +69,23 @@ export function EducationOrganizationsSidebar() {
                 </div>
                 {/* Content */}
                 <div className='min-w-0 flex-1'>
-                  <div className='flex flex-wrap items-baseline gap-x-2 gap-y-0.5'>
-                    <h4 className='text-sm font-semibold text-[#f5f5f0]'>{edu.degree}</h4>
-                    {edu.isActive && (
-                      <span className='text-[10px] font-medium uppercase tracking-wider text-emerald-400'>
-                        Current
-                      </span>
-                    )}
+                  <div className='flex items-start justify-between gap-2'>
+                    <div className='flex min-w-0 flex-wrap items-baseline gap-x-2 gap-y-0.5'>
+                      <h4 data-scroll-highlight className='text-sm font-semibold text-[#f5f5f0]'>
+                        {edu.degree}
+                      </h4>
+                      {edu.isActive && (
+                        <span className='text-[10px] font-medium uppercase tracking-wider text-emerald-400'>
+                          Current
+                        </span>
+                      )}
+                    </div>
+                    <ItemPermalink
+                      type='education'
+                      id={edu.id}
+                      label={edu.institution}
+                      className='-my-2'
+                    />
                   </div>
                   <p className='mt-0.5 text-xs text-[#a3a3a3]'>{edu.institution}</p>
                   <p className='mt-1.5 text-xs tabular-nums text-[#999]'>
@@ -126,39 +137,51 @@ export function EducationOrganizationsSidebar() {
             </div>
             <div className='divide-y divide-[#2c2c29]'>
               {getOrganizations().map(org => (
-                <button
+                <div
                   key={org.id}
-                  type='button'
-                  onClick={() => handleOrgClick(org)}
-                  title={org.related ? `Jump to ${org.role} role` : `Visit ${org.name}`}
-                  className='group block w-full py-5 text-left transition-colors hover:bg-white/[0.015]'
+                  id={`organization-${org.id}`}
+                  data-card
+                  className='flex items-start gap-1'
                 >
-                  <div className='flex items-start gap-2.5'>
-                    {org.logo && (
-                      <img
-                        src={org.logo}
-                        alt=''
-                        className='mt-0.5 h-6 w-6 flex-shrink-0 rounded object-contain opacity-80 transition-opacity group-hover:opacity-100'
-                      />
-                    )}
-                    <div className='min-w-0 flex-1'>
-                      <div className='flex items-start justify-between gap-2'>
-                        <h4 className='min-w-0 text-[13px] font-semibold leading-snug text-[#f5f5f0]'>
-                          {org.name}
-                        </h4>
-                        <ChevronRight className='mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-[#999] transition-colors group-hover:text-[#a3a3a3]' />
+                  <button
+                    type='button'
+                    onClick={() => handleOrgClick(org)}
+                    title={org.related ? `Jump to ${org.role} role` : `Visit ${org.name}`}
+                    className='group block min-w-0 flex-1 py-5 text-left transition-colors hover:bg-white/[0.015]'
+                  >
+                    <div className='flex items-start gap-2.5'>
+                      {org.logo && (
+                        <img
+                          src={org.logo}
+                          alt=''
+                          className='mt-0.5 h-6 w-6 flex-shrink-0 rounded object-contain opacity-80 transition-opacity group-hover:opacity-100'
+                        />
+                      )}
+                      <div className='min-w-0 flex-1'>
+                        <div className='flex items-start justify-between gap-2'>
+                          <h4 className='min-w-0 text-[13px] font-semibold leading-snug text-[#f5f5f0]'>
+                            {org.name}
+                          </h4>
+                          <ChevronRight className='mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-[#999] transition-colors group-hover:text-[#a3a3a3]' />
+                        </div>
+                        <p className='mt-1 flex flex-wrap items-center gap-x-1.5 text-xs text-[#a3a3a3]'>
+                          <span className='font-medium text-[#d4d4d4]'>{org.role}</span>
+                          <span className='text-[#404040]/80'>·</span>
+                          <span className='tabular-nums text-[#999]'>{org.period}</span>
+                        </p>
+                        <p className='mt-1.5 text-xs leading-relaxed text-[#999]'>
+                          {org.description}
+                        </p>
                       </div>
-                      <p className='mt-1 flex flex-wrap items-center gap-x-1.5 text-xs text-[#a3a3a3]'>
-                        <span className='font-medium text-[#d4d4d4]'>{org.role}</span>
-                        <span className='text-[#404040]/80'>·</span>
-                        <span className='tabular-nums text-[#999]'>{org.period}</span>
-                      </p>
-                      <p className='mt-1.5 text-xs leading-relaxed text-[#999]'>
-                        {org.description}
-                      </p>
                     </div>
-                  </div>
-                </button>
+                  </button>
+                  <ItemPermalink
+                    type='organization'
+                    id={org.id}
+                    label={org.name}
+                    className='mt-2'
+                  />
+                </div>
               ))}
             </div>
           </div>

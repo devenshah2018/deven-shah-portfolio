@@ -1,79 +1,81 @@
 'use client';
 
+import { useEffect } from 'react';
 import {
+  cancelPendingScroll,
+  itemAnchor,
+  itemSlug,
+  navigateToItem,
+  resolveItemLink,
   scrollToProject,
-  requestScrollToExperience,
-  scrollToEducation,
   scrollToSection,
 } from '@/lib/url-utils';
-import { useEffect } from 'react';
+
+const sections = [
+  'hero',
+  'about',
+  'experience',
+  'education',
+  'organizations',
+  'projects',
+  'contact',
+];
 
 export function HashNavigation() {
-  // Handle hash-based navigation from research subdomain, papers page, etc.
   useEffect(() => {
-    const handleHashNavigation = () => {
-      const hash = window.location.hash;
-      // Check sessionStorage first (set by papers page for reliable shine effect)
-      const projectFromPaper =
-        typeof window !== 'undefined' ? sessionStorage.getItem('scrollToProjectWithShine') : null;
-      if (projectFromPaper) {
-        sessionStorage.removeItem('scrollToProjectWithShine');
-        scrollToProject(projectFromPaper);
+    let disposed = false;
+    let frame: number | undefined;
+    const navigate = () => {
+      if (disposed) return;
+      // Preserve links from the legacy papers page, even when storage is unavailable.
+      try {
+        const project = sessionStorage.getItem('scrollToProjectWithShine');
+        if (project) {
+          sessionStorage.removeItem('scrollToProjectWithShine');
+          scrollToProject(project);
+          return;
+        }
+      } catch {
+        /* Storage access is optional for ordinary hash links. */
+      }
+      let anchor: string;
+      try {
+        anchor = decodeURIComponent(window.location.hash.slice(1));
+      } catch {
         return;
       }
-      if (hash && hash.startsWith('#project-')) {
-        const projectId = hash.replace('#project-', '');
-        if (projectId) {
-          scrollToProject(projectId);
+      if (!anchor) return;
+      const item = resolveItemLink(anchor);
+      if (item && document.getElementById(itemAnchor(item.type, item.id))) {
+        const canonical = `#${itemSlug(item.type, item.id)}`;
+        if (window.location.hash !== canonical) {
+          window.history.replaceState(window.history.state, '', canonical);
         }
-      } else if (hash && hash.startsWith('#experience-')) {
-        const experienceId = hash.replace('#experience-', '');
-        if (experienceId) {
-          requestScrollToExperience(experienceId);
-        }
-      } else if (hash && hash.startsWith('#education-')) {
-        const educationId = hash.replace('#education-', '');
-        if (educationId) {
-          scrollToEducation(educationId);
-        }
-      } else if (
-        ['#hero', '#about', '#experience', '#education', '#projects', '#contact'].includes(hash)
-      ) {
-        scrollToSection(hash.slice(1));
-      }
+        navigateToItem(item.type, item.id, false);
+      } else if (sections.includes(anchor)) scrollToSection(anchor);
     };
-
-    let initialTimer: ReturnType<typeof setTimeout> | undefined;
-
-    // Handle initial load with hash (including cross-domain navigation from papers, etc.)
-    const handleInitialLoad = () => {
-      const hasProjectHash = window.location.hash.startsWith('#project-');
-      const hasProjectFromPaper =
-        typeof window !== 'undefined' && !!sessionStorage.getItem('scrollToProjectWithShine');
-      if (window.location.hash || hasProjectFromPaper) {
-        // Wait for Projects section to render; papers navigation needs extra time
-        const delay = hasProjectHash || hasProjectFromPaper ? 450 : 100;
-        initialTimer = setTimeout(() => {
-          if (document.readyState === 'complete') {
-            handleHashNavigation();
-          } else {
-            window.addEventListener('load', handleHashNavigation, { once: true });
-          }
-        }, delay);
-      }
+    const schedule = () => {
+      cancelPendingScroll();
+      if (frame !== undefined) cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(navigate);
     };
-
-    handleInitialLoad();
-
-    // Handle hash changes (e.g., when clicking link from research subdomain)
-    window.addEventListener('hashchange', handleHashNavigation);
-
+    const initial = () => {
+      void (document.fonts?.ready ?? Promise.resolve()).then(() => {
+        if (!disposed) frame = requestAnimationFrame(schedule);
+      });
+    };
+    if (document.readyState === 'complete') initial();
+    else window.addEventListener('load', initial, { once: true });
+    window.addEventListener('hashchange', schedule);
+    window.addEventListener('popstate', schedule);
     return () => {
-      clearTimeout(initialTimer);
-      window.removeEventListener('hashchange', handleHashNavigation);
-      window.removeEventListener('load', handleHashNavigation);
+      disposed = true;
+      if (frame !== undefined) cancelAnimationFrame(frame);
+      cancelPendingScroll();
+      window.removeEventListener('load', initial);
+      window.removeEventListener('hashchange', schedule);
+      window.removeEventListener('popstate', schedule);
     };
   }, []);
-
   return null;
 }
