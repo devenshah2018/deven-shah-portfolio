@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { GitHubContributionChart } from '@/components/hero/github-contribution-chart';
-import { CERTIFICATIONS, groupExperiencesByOrg } from '@/database/content-registry';
+import { CERTIFICATIONS, PUBLICATIONS, groupExperiencesByOrg } from '@/database/content-registry';
 import { requestScrollToExperience } from '@/lib/url-utils';
 import { ArrowUpRight } from 'lucide-react';
 import { SkillsExplorer } from './skills-explorer';
@@ -20,29 +20,53 @@ export function AboutSection() {
           <p className='section-eyebrow'>01</p>
           <h2 className='section-title mb-8 sm:mb-10'>About</h2>
           <div className='grid gap-10 lg:grid-cols-[1.35fr_1fr] lg:gap-20'>
-            <div className='min-w-0'>
+            <div className='flex min-w-0 flex-col lg:justify-between'>
               <div className='max-w-xl space-y-5 text-base leading-8 text-[#b1b1ad]'>
                 <p>
-                  I’m a software engineer and AI researcher pursuing an M.S. in Computer Science at
-                  Boston University, focused on AI and machine learning. My research spans medical
-                  imaging, deepfake detection, and financial fraud detection, from U-Net models for
-                  knee MRI analysis to leading a cross-disciplinary fraud research initiative.
+                  I’m a software engineer and AI researcher completing my M.S. at Boston University,
+                  focused on turning machine learning research into reliable, useful products.
                 </p>
                 <p>
-                  I’ve built AI agents for Salesforce workflows at Accenture and co-founded Suno
-                  Analytics, where I led engineering for an AI-powered ERP platform serving 50+
-                  enterprise customers. My earlier work includes digital member services at Patelco
-                  and automated Oracle backup workflows at NetApp.
+                  My work spans deepfake detection, medical imaging, and AI agents. After
+                  co-founding Suno Analytics and building enterprise software at Accenture, Patelco,
+                  and NetApp, I’m pursuing work that brings applied AI research and product
+                  engineering closer together.
                 </p>
               </div>
-              <div
-                className='mt-8 flex min-w-0 items-center gap-4'
-                aria-label='Previous workplaces'
+              <section
+                id='publications'
+                aria-labelledby='publications-title'
+                className='mt-8 border-t border-[#2c2c29] pt-6'
               >
-                <span className='shrink-0 whitespace-nowrap text-[10px] font-medium uppercase tracking-[0.15em] text-[#999]'>
-                  Prev @
-                </span>
-                <div className='flex min-w-0 flex-nowrap items-center gap-1 overflow-x-auto py-2 sm:gap-3'>
+                <h3 id='publications-title' className='section-eyebrow'>
+                  Publications
+                </h3>
+                {PUBLICATIONS.map(publication => (
+                  <article key={publication.id}>
+                    <p className='mb-2 text-xs leading-6 text-[#999]'>
+                      Co-author · {publication.datePublished.slice(0, 4)} · {publication.publisher}
+                    </p>
+                    <h4 className='text-base font-medium leading-7 text-[#e0e0d9]'>
+                      <a
+                        href={publication.url}
+                        className='group inline-flex items-start gap-3 hover:text-[#a5c9bd] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#a5c9bd]'
+                      >
+                        <span>{publication.title}</span>
+                        <ArrowUpRight
+                          aria-hidden='true'
+                          className='mt-1.5 h-4 w-4 shrink-0 text-[#999] group-hover:text-[#a5c9bd]'
+                        />
+                      </a>
+                    </h4>
+                    <p className='mt-2 text-xs leading-6 text-[#999]'>{publication.venue}</p>
+                  </article>
+                ))}
+              </section>
+            </div>
+            <aside className='flex min-w-0 flex-col gap-8 lg:justify-between'>
+              <div className='min-w-0' aria-label='Previous workplaces'>
+                <h3 className='section-eyebrow'>Prev @</h3>
+                <div className='flex min-w-0 flex-nowrap items-center justify-between gap-1 overflow-x-auto py-2'>
                   {groupExperiencesByOrg().map(org => {
                     const firstId = org.positions[0]?.id;
                     if (!org.companyLogo || !firstId) return null;
@@ -65,12 +89,12 @@ export function AboutSection() {
                   })}
                 </div>
               </div>
-            </div>
-            <aside className='min-w-0'>
-              <h3 className='section-eyebrow'>GitHub contributions</h3>
-              <GitHubContributionChart compact />
+              <div className='min-w-0'>
+                <h3 className='section-eyebrow'>GitHub contributions</h3>
+                <GitHubContributionChart compact />
+              </div>
               {CERTIFICATIONS.length > 0 && (
-                <div className='mt-8 border-t border-[#2c2c29] pt-6'>
+                <div className='border-t border-[#2c2c29] pt-6'>
                   <h3 className='section-eyebrow'>Credentials</h3>
                   <div className='space-y-5'>
                     {CERTIFICATIONS.map(cert => (

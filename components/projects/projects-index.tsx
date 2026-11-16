@@ -14,9 +14,9 @@ import {
   scrollToEducation,
   scrollToOrganization,
 } from '@/lib/url-utils';
-import { ItemPermalink } from '@/components/item-permalink';
 import { Project } from '@/lib/types';
 import { ProjectThumbnail } from './project-thumbnail';
+import { ProjectHeading } from './project-heading';
 import { ProjectDemo } from './project-demo';
 import { ProjectDocument } from './project-document';
 import actionStyles from './project-actions.module.css';
@@ -126,16 +126,7 @@ const ProjectRow = memo(function ProjectRow({
               {project.status}
             </span>
           </div>
-          <h3 className='text-lg font-medium leading-snug tracking-tight text-[#f5f5f0] sm:text-xl'>
-            <a
-              href={project.link}
-              target='_blank'
-              rel='noopener noreferrer'
-              className='inline-flex min-h-11 items-center transition-colors hover:text-[#a5c9bd]'
-            >
-              {project.title}
-            </a>
-          </h3>
+          <ProjectHeading project={project} />
           {related.length > 0 && (
             <div className='mt-3 flex flex-wrap gap-3'>
               {related.map(item => (
@@ -197,7 +188,6 @@ const ProjectRow = memo(function ProjectRow({
               ))}
             {project.paper && <ProjectDocument project={project} kind='paper' />}
             {project.slideDeck && <ProjectDocument project={project} kind='slides' />}
-            <ItemPermalink type='project' id={project.id} label={project.title} action />
           </div>
         </div>
       </div>

@@ -108,14 +108,14 @@ it('gives every item a unique short name that resolves back to its original ID',
   }
 });
 
-it('provides a native share link for every item in both experience views', async () => {
+it('provides project copy controls and native links for other items in both experience views', async () => {
   const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
   render(<Portfolio />);
   await user.click(screen.getByRole('button', { name: 'All projects 12' }));
   for (const item of PROJECTS) {
     expect(
-      screen.getByRole('link', { name: `Link to ${item.title}`, exact: true })
-    ).toHaveAttribute('href', `#${itemSlug('project', item.id)}`);
+      screen.getByRole('button', { name: `Copy link to ${item.title}`, exact: true })
+    ).toBeInTheDocument();
   }
   for (const item of EDUCATION) {
     expect(
@@ -152,7 +152,7 @@ it('reveals a searched-out project and updates the URL without duplicate history
   expect(screen.getByRole('searchbox', { name: 'Search projects' })).toHaveValue('');
   expect(document.getElementById('project-iris-project')).toHaveFocus();
   expect(window.location.hash).toBe('#iris');
-  await user.click(screen.getByRole('link', { name: 'Link to Iris', exact: true }));
+  await user.click(screen.getByRole('button', { name: 'Copy link to Iris', exact: true }));
   await settle();
   expect(push).toHaveBeenCalledTimes(1);
   expect(screen.getByRole('link', { name: 'Iris', exact: true })).toHaveAttribute(
@@ -203,8 +203,8 @@ it('ignores malformed fragments and cancels an older pending item jump', async (
 });
 
 it('does not intercept modified permalink clicks', () => {
-  render(<ProjectsIndex />);
-  const link = screen.getByRole('link', { name: 'Link to Iris', exact: true });
+  render(<ExperienceSection />);
+  const link = screen.getByRole('link', { name: 'Link to Boston University', exact: true });
   const click = new MouseEvent('click', { bubbles: true, cancelable: true, ctrlKey: true });
   fireEvent(link, click);
   expect(click.defaultPrevented).toBe(false);

@@ -117,8 +117,8 @@ export const EXPERIENCES = [
     company: 'Accenture',
     companyLogo: '/accenture-logo.svg',
     location: '',
-    period: '04/2027 - Present',
-    description: 'Joining Accenture as an AI Native Analyst in April 2027.',
+    period: '02/2027 - Present',
+    description: 'Joining Accenture as an AI Native Analyst in February 2027.',
     link: 'https://www.accenture.com',
     current_work: false,
   },
@@ -897,6 +897,18 @@ export const EDUCATION = [
     icon: GraduationCap,
     logo: '/sjsu-logo.png',
     isActive: false,
+  },
+];
+
+// Publication details verified against the publisher's Crossref DOI record.
+export const PUBLICATIONS = [
+  {
+    id: 'deepfakes-courtroom',
+    title: 'Detecting Deepfakes for the Courtroom: A Multi-Modal Forensic Output Framework',
+    datePublished: '2026-11-11',
+    publisher: 'IOS Press',
+    venue: 'Intelligent Digital Forensics and Cybersecurity',
+    url: 'https://ebooks.iospress.nl/doi/10.3233/FAIA261168',
   },
 ];
 

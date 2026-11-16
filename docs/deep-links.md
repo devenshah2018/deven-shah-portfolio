@@ -1,10 +1,17 @@
 # Item links
 
-Each project, experience position, education institution, and organization has a
-link icon. Activate it to update the address and scroll to that item, or use the
-browser's Copy Link action to share it. Modified clicks retain native
-open-in-new-tab behavior. Existing outbound title, code, site, and media actions
-keep their destinations.
+Each project has a copy-link icon beside its title. It appears on title hover or
+keyboard focus and stays visible on touch devices. It copies the full public URL
+(for example, `https://deven-shah.com/#iris`), including from local previews,
+without changing the current page or its history. Successful copies are
+announced; if clipboard access fails, a selected text field allows manual
+copying.
+
+Experience positions, education institutions, and organizations retain native
+link icons. Activate these to update the address and scroll to the item, or use
+the browser's Copy Link action. Modified clicks retain native open-in-new-tab
+behavior. Existing outbound title, code, site, and media actions keep their
+destinations.
 
 Public links use short, stable names, separate from the content registry's IDs:
 

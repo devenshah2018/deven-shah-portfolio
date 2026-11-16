@@ -43,7 +43,7 @@ it('shows future roles as regular positions, ordered first without adding future
     const company = role.closest('article');
     expect(screen.getAllByRole('article')[0]).toContainElement(role);
     expect(company).toHaveTextContent('2027');
-    expect(company).toHaveTextContent('Starting Apr 2027');
+    expect(company).toHaveTextContent('Starting Feb 2027');
     expect(company).toContainElement(screen.getByText('Technical Architecture Analyst'));
     expect(company).toHaveTextContent('May 2026 – Sep 2026');
     expect(screen.queryByText('Incoming')).not.toBeInTheDocument();
@@ -64,11 +64,11 @@ it('derives Starting labels from dates and stops at the start month', () => {
     expect(formatPeriodDisplay('05/2026 - 09/2026')).toBe('May 2026 – Sep 2026');
     expect(hasFutureStart('04/2027', new Date(2027, 3, 1))).toBe(false);
     expect(hasFutureStart('04/2027', new Date(2027, 2, 31))).toBe(true);
-    jest.setSystemTime(new Date(2027, 3, 1));
+    jest.setSystemTime(new Date(2027, 1, 1));
     const role = EXPERIENCES.find(item => item.id === 'accenture-incoming')!;
-    expect(formatPeriodDisplay(role.period)).toBe('Apr 2027 – Present');
+    expect(formatPeriodDisplay(role.period)).toBe('Feb 2027 – Present');
     expect(groupExperiencesByOrg()[0]?.duration).toBe('6 mo');
-    jest.setSystemTime(new Date(2027, 4, 1));
+    jest.setSystemTime(new Date(2027, 2, 1));
     expect(groupExperiencesByOrg()[0]?.company).toBe('Accenture');
     expect(groupExperiencesByOrg()[0]?.duration).toBe('7 mo');
   } finally {

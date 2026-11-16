@@ -1,0 +1,21 @@
+.copy {
+  opacity: 1;
+  transition: opacity 150ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .copy {
+    opacity: 0;
+  }
+  .title:hover .copy,
+  .title:focus-within .copy,
+  .copy[data-feedback='true'] {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .copy {
+    transition: none;
+  }
+}

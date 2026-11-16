@@ -16,6 +16,7 @@ import { Badge } from '@/components/ui/badge';
 import { TimelineLine } from './timeline-line';
 import { EducationOrganizationsSidebar } from './education-organizations-sidebar';
 import { ItemPermalink } from '@/components/item-permalink';
+import styles from './experience-section.module.css';
 
 function getEndYear(org: OrgGroup): number {
   return Math.floor(getExperienceDate(org.positions[0]?.period ?? '') / 100);
@@ -141,7 +142,7 @@ function ExperienceCard({
                 <span
                   key={pos.id}
                   id={`experience-${pos.id}`}
-                  className='flex scroll-mt-32 flex-col gap-1 text-sm text-[#d4d4d4] sm:flex-row sm:flex-wrap sm:items-baseline sm:justify-between sm:gap-x-4'
+                  className={`${styles['heading']} flex scroll-mt-32 flex-col gap-1 text-sm text-[#d4d4d4] sm:flex-row sm:flex-wrap sm:items-baseline sm:justify-between sm:gap-x-4`}
                 >
                   <span data-scroll-highlight className='leading-relaxed'>
                     {pos.title}
@@ -152,7 +153,7 @@ function ExperienceCard({
                       type='experience'
                       id={pos.id}
                       label={`${pos.title} at ${org.company}`}
-                      className='-my-2'
+                      className={`${styles['permalink']} -my-2`}
                     />
                   </span>
                 </span>
@@ -176,7 +177,9 @@ function ExperienceCard({
                   className='relative scroll-mt-24 py-3'
                 >
                   <div className='flex flex-col items-start gap-1.5 sm:flex-row sm:items-center sm:justify-between sm:gap-3'>
-                    <div className='flex min-w-0 items-start gap-2 sm:flex-1 sm:items-center'>
+                    <div
+                      className={`${styles['heading']} flex min-w-0 items-start gap-2 sm:flex-1 sm:items-center`}
+                    >
                       <User
                         className='mt-0.5 h-4 w-4 flex-shrink-0 text-[#5a5a5a] sm:mt-0'
                         strokeWidth={2}
@@ -192,7 +195,7 @@ function ExperienceCard({
                         type='experience'
                         id={pos.id}
                         label={`${pos.title} at ${org.company}`}
-                        className='-my-2'
+                        className={`${styles['permalink']} -my-2`}
                       />
                     </div>
                     <Badge

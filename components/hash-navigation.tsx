@@ -14,6 +14,7 @@ import {
 const sections = [
   'hero',
   'about',
+  'publications',
   'experience',
   'education',
   'organizations',
