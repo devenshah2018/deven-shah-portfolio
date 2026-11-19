@@ -1,7 +1,7 @@
 'use client';
 
-import { Code2, Globe2, Search, X } from 'lucide-react';
-import { memo, useEffect, useRef, useState } from 'react';
+import { Code2, Globe2 } from 'lucide-react';
+import { memo, useEffect, useState } from 'react';
 import {
   PROJECTS,
   PROJECT_CATEGORIES,
@@ -70,24 +70,8 @@ function getRelatedLabels(project: Project): RelatedLabel[] {
 }
 
 const SORTED_PROJECTS = [...PROJECTS].sort((a, b) => b.sortDate.localeCompare(a.sortDate));
-const PROJECT_METADATA = new Map(
-  PROJECTS.map(project => {
-    const related = getRelatedLabels(project);
-    return [
-      project.id,
-      {
-        related,
-        searchText: [
-          project.title,
-          project.description,
-          ...project.technologies,
-          ...related.map(item => item.name),
-        ]
-          .join(' ')
-          .toLowerCase(),
-      },
-    ];
-  })
+const PROJECT_RELATED_LABELS = new Map(
+  PROJECTS.map(project => [project.id, getRelatedLabels(project)])
 );
 const CATEGORY_COUNTS = new Map(
   PROJECT_CATEGORIES.map(category => [
@@ -105,7 +89,7 @@ const ProjectRow = memo(function ProjectRow({
   project: Project;
   hidden: boolean;
 }) {
-  const related = PROJECT_METADATA.get(project.id)!.related;
+  const related = PROJECT_RELATED_LABELS.get(project.id)!;
   const links = project.access_points?.length
     ? project.access_points
     : [{ type: project.entry_point, url: project.link, label: 'View project' }];
@@ -197,59 +181,27 @@ const ProjectRow = memo(function ProjectRow({
 
 export function ProjectsIndex() {
   const [category, setCategory] = useState('featured');
-  const [query, setQuery] = useState('');
-  const searchRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     const reset = () => {
       setCategory('all');
-      setQuery('');
     };
     window.addEventListener('resetProjectFilter', reset);
     return () => window.removeEventListener('resetProjectFilter', reset);
   }, []);
-  const search = query.trim().toLowerCase();
-  const projects = SORTED_PROJECTS.filter(project => {
-    if (search) return PROJECT_METADATA.get(project.id)!.searchText.includes(search);
-    return category === 'all' || project.categories?.includes(category);
-  });
+  const projects = SORTED_PROJECTS.filter(
+    project => category === 'all' || project.categories?.includes(category)
+  );
   const visibleIds = new Set(projects.map(project => project.id));
 
   return (
     <section id='projects' className='bg-[#141414] py-20 sm:py-24'>
       <div className='container mx-auto w-full max-w-7xl px-6 sm:px-10 lg:px-16'>
-        <div className='mb-9 flex flex-col justify-between gap-6 sm:flex-row sm:items-end'>
-          <div>
-            <p className='section-eyebrow'>03</p>
-            <h2 className='section-title'>Projects</h2>
-            <p className='mt-4 max-w-xl text-sm leading-7 text-[#999]'>
-              Products, applied research, and the algorithms underneath.
-            </p>
-          </div>
-          <label className='flex w-full items-center gap-3 border-b border-[#3a3a37] py-1.5 sm:w-60'>
-            <Search className='h-4 w-4 shrink-0 text-[#999]' aria-hidden='true' />
-            <input
-              ref={searchRef}
-              aria-label='Search projects'
-              type='search'
-              value={query}
-              onChange={event => setQuery(event.target.value)}
-              placeholder='Search all projects'
-              className='h-11 min-w-0 flex-1 bg-transparent text-base text-[#f5f5f0] placeholder:text-[#888] focus:outline-none [&::-webkit-search-cancel-button]:appearance-none'
-            />
-            {query && (
-              <button
-                type='button'
-                onClick={() => {
-                  setQuery('');
-                  searchRef.current?.focus();
-                }}
-                aria-label='Clear project search'
-                className='flex h-11 w-11 shrink-0 items-center justify-center text-[#999]'
-              >
-                <X className='h-4 w-4' />
-              </button>
-            )}
-          </label>
+        <div className='mb-9'>
+          <p className='section-eyebrow'>03</p>
+          <h2 className='section-title'>Projects</h2>
+          <p className='mt-4 max-w-xl text-sm leading-7 text-[#999]'>
+            Products, applied research, and the algorithms underneath.
+          </p>
         </div>
         <div
           role='group'
@@ -260,12 +212,9 @@ export function ProjectsIndex() {
             <button
               key={item.key}
               type='button'
-              aria-pressed={!search && category === item.key}
-              onClick={() => {
-                setCategory(item.key);
-                setQuery('');
-              }}
-              className={`-mb-px inline-flex min-h-12 shrink-0 items-center gap-2 whitespace-nowrap border-b-2 py-3 text-xs font-medium transition-colors focus-visible:-outline-offset-4 sm:text-sm ${!search && category === item.key ? 'border-[#a5c9bd] text-[#f5f5f0]' : 'border-transparent text-[#999] hover:text-white'}`}
+              aria-pressed={category === item.key}
+              onClick={() => setCategory(item.key)}
+              className={`-mb-px inline-flex min-h-12 shrink-0 items-center gap-2 whitespace-nowrap border-b-2 py-3 text-xs font-medium transition-colors focus-visible:-outline-offset-4 sm:text-sm ${category === item.key ? 'border-[#a5c9bd] text-[#f5f5f0]' : 'border-transparent text-[#999] hover:text-white'}`}
             >
               {item.key === 'all' ? 'All projects' : item.label}
               <span className='text-[10px] tabular-nums text-[#888]'>
@@ -276,7 +225,6 @@ export function ProjectsIndex() {
         </div>
         <div aria-live='polite' className='mt-5 text-xs text-[#888]'>
           {projects.length} {projects.length === 1 ? 'project' : 'projects'}
-          {search ? ` matching “${query.trim()}”` : ''}
         </div>
         <ul className='divide-y divide-[#2c2c29]'>
           {/* Keep the catalog in server HTML; native hidden preserves filter visibility and focus. */}
@@ -286,13 +234,10 @@ export function ProjectsIndex() {
         </ul>
         {projects.length === 0 && (
           <div className='py-14'>
-            <p className='text-[#b1b1ad]'>No projects match your search.</p>
+            <p className='text-[#b1b1ad]'>No projects in this category.</p>
             <button
               type='button'
-              onClick={() => {
-                setQuery('');
-                setCategory('all');
-              }}
+              onClick={() => setCategory('all')}
               className='mt-4 min-h-11 text-sm text-[#a5c9bd] underline underline-offset-4'
             >
               Show all projects

@@ -67,28 +67,28 @@ it('switches between the requested categories and includes the research paper do
   expect(screen.queryByRole('heading', { name: 'Task Scheduling' })).not.toBeInTheDocument();
 });
 
-it('searches across categories and recovers from empty results', async () => {
+it('browses all projects through categories without a search bar', async () => {
   const user = userEvent.setup();
   render(<ProjectsIndex />);
-  await user.type(screen.getByRole('searchbox', { name: 'Search projects' }), 'Kepler');
-  expect(screen.getAllByRole('listitem')).toHaveLength(1);
+  expect(screen.queryByRole('searchbox')).not.toBeInTheDocument();
+  await user.click(screen.getByRole('button', { name: 'All projects 12' }));
+  expect(screen.getAllByRole('listitem')).toHaveLength(12);
   expect(
     screen.getByRole('heading', { name: 'Detecting Exoplanets in Kepler Transit Data' })
   ).toBeInTheDocument();
-  await user.click(screen.getByRole('button', { name: 'Clear project search' }));
-  expect(screen.getByRole('searchbox', { name: 'Search projects' })).toHaveFocus();
-  await user.type(screen.getByRole('searchbox', { name: 'Search projects' }), 'no-such-project');
-  expect(screen.queryAllByRole('listitem')).toHaveLength(0);
-  await user.click(screen.getByRole('button', { name: 'Show all projects' }));
-  expect(screen.getAllByRole('listitem')).toHaveLength(12);
+  await user.click(screen.getByRole('button', { name: 'Featured 3' }));
+  expect(screen.getAllByRole('listitem')).toHaveLength(3);
 });
 
-it('reveals a deep-linked project even when a different category and search are active', async () => {
+it('reveals a deep-linked project when a different category is active', async () => {
   const user = userEvent.setup();
   render(<ProjectsIndex />);
-  await user.type(screen.getByRole('searchbox', { name: 'Search projects' }), 'Graf');
+  await user.click(screen.getByRole('button', { name: 'Full Stack 4' }));
   act(() => window.dispatchEvent(new Event('resetProjectFilter')));
-  expect(screen.getByRole('searchbox', { name: 'Search projects' })).toHaveValue('');
+  expect(screen.getByRole('button', { name: 'All projects 12' })).toHaveAttribute(
+    'aria-pressed',
+    'true'
+  );
   expect(screen.getAllByRole('listitem')).toHaveLength(12);
   expect(screen.getByRole('heading', { name: 'Molecule Mutation Prediction' })).toBeInTheDocument();
 });

@@ -141,15 +141,18 @@ it('provides project copy controls and native links for other items in both expe
   }
 });
 
-it('reveals a searched-out project and updates the URL without duplicate history entries', async () => {
+it('reveals a filtered-out project and updates the URL without duplicate history entries', async () => {
   const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
   render(<Portfolio />);
   await settle();
-  await user.type(screen.getByRole('searchbox', { name: 'Search projects' }), 'Graf');
+  await user.click(screen.getByRole('button', { name: 'Theory and Algorithms 3' }));
   const push = jest.spyOn(window.history, 'pushState');
   act(() => scrollToProject('iris-project'));
   await settle();
-  expect(screen.getByRole('searchbox', { name: 'Search projects' })).toHaveValue('');
+  expect(screen.getByRole('button', { name: 'All projects 12' })).toHaveAttribute(
+    'aria-pressed',
+    'true'
+  );
   expect(document.getElementById('project-iris-project')).toHaveFocus();
   expect(window.location.hash).toBe('#iris');
   await user.click(screen.getByRole('button', { name: 'Copy link to Iris', exact: true }));
