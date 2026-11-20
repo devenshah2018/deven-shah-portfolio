@@ -2,9 +2,10 @@
 
 import { motion } from 'framer-motion';
 import { GitHubContributionChart } from '@/components/hero/github-contribution-chart';
-import { CERTIFICATIONS, PUBLICATIONS, groupExperiencesByOrg } from '@/database/content-registry';
+import { CERTIFICATIONS, groupExperiencesByOrg } from '@/database/content-registry';
 import { requestScrollToExperience } from '@/lib/url-utils';
 import { ArrowUpRight } from 'lucide-react';
+import { EducationPanel } from './education-panel';
 import { SkillsExplorer } from './skills-explorer';
 
 export function AboutSection() {
@@ -23,45 +24,13 @@ export function AboutSection() {
             <div className='flex min-w-0 flex-col lg:justify-between'>
               <div className='max-w-xl space-y-5 text-base leading-8 text-[#b1b1ad]'>
                 <p>
-                  I’m a software engineer and AI researcher completing my M.S. at Boston University,
-                  focused on turning machine learning research into reliable, useful products.
-                </p>
-                <p>
                   My work spans deepfake detection, medical imaging, and AI agents. After
                   co-founding Suno Analytics and building enterprise software at Accenture, Patelco,
                   and NetApp, I’m pursuing work that brings applied AI research and product
                   engineering closer together.
                 </p>
               </div>
-              <section
-                id='publications'
-                aria-labelledby='publications-title'
-                className='mt-8 border-t border-[#2c2c29] pt-6'
-              >
-                <h3 id='publications-title' className='section-eyebrow'>
-                  Publications
-                </h3>
-                {PUBLICATIONS.map(publication => (
-                  <article key={publication.id}>
-                    <p className='mb-2 text-xs leading-6 text-[#999]'>
-                      Co-author · {publication.datePublished.slice(0, 4)} · {publication.publisher}
-                    </p>
-                    <h4 className='text-base font-medium leading-7 text-[#e0e0d9]'>
-                      <a
-                        href={publication.url}
-                        className='group inline-flex items-start gap-3 hover:text-[#a5c9bd] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#a5c9bd]'
-                      >
-                        <span>{publication.title}</span>
-                        <ArrowUpRight
-                          aria-hidden='true'
-                          className='mt-1.5 h-4 w-4 shrink-0 text-[#999] group-hover:text-[#a5c9bd]'
-                        />
-                      </a>
-                    </h4>
-                    <p className='mt-2 text-xs leading-6 text-[#999]'>{publication.venue}</p>
-                  </article>
-                ))}
-              </section>
+              <EducationPanel />
             </div>
             <aside className='flex min-w-0 flex-col gap-8 lg:justify-between'>
               <div className='min-w-0' aria-label='Previous workplaces'>

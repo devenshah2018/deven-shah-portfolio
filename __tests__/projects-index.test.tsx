@@ -9,9 +9,9 @@ it('switches between the requested categories and includes the research paper do
     'button'
   );
   expect(tabs.slice(0, 3).map(button => button.textContent)).toEqual([
-    'All projects12',
+    'All projects8',
     'Featured3',
-    'Full Stack4',
+    'Full Stack1',
   ]);
   expect(screen.getByRole('button', { name: 'Featured 3' })).toHaveAttribute(
     'aria-pressed',
@@ -25,15 +25,14 @@ it('switches between the requested categories and includes the research paper do
   ]) {
     expect(screen.getByRole('heading', { name: title, exact: true })).toBeInTheDocument();
   }
-  await user.click(screen.getByRole('button', { name: 'Full Stack 4' }));
-  expect(screen.getAllByRole('listitem')).toHaveLength(4);
-  expect(screen.getByRole('heading', { name: 'Boosted' })).toBeInTheDocument();
+  await user.click(screen.getByRole('button', { name: 'Full Stack 1' }));
+  expect(screen.getAllByRole('listitem')).toHaveLength(1);
+  expect(screen.getByRole('heading', { name: 'Iris' })).toBeInTheDocument();
   expect(screen.queryByRole('heading', { name: 'Any', exact: true })).not.toBeInTheDocument();
 
-  await user.click(screen.getByRole('button', { name: 'Data Science and Machine Learning 5' }));
-  expect(screen.getAllByRole('listitem')).toHaveLength(5);
+  await user.click(screen.getByRole('button', { name: 'Data Science and Machine Learning 4' }));
+  expect(screen.getAllByRole('listitem')).toHaveLength(4);
   for (const title of [
-    'Wardrobe Copilot',
     'Detecting Exoplanets in Kepler Transit Data',
     'Forecasting Material Conflict Spikes from GDELT',
   ]) {
@@ -43,11 +42,6 @@ it('switches between the requested categories and includes the research paper do
     expect(within(row).getByText('Completed')).toBeInTheDocument();
     expect(within(row).getByRole('button', { name: 'Boston University' })).toBeInTheDocument();
   }
-  expect(screen.getByRole('button', { name: 'Paper for Wardrobe Copilot (PDF)' })).toHaveAttribute(
-    'aria-haspopup',
-    'dialog'
-  );
-
   expect(screen.getByRole('button', { name: /Paper for Forecasting/ })).toHaveAttribute(
     'aria-haspopup',
     'dialog'
@@ -71,8 +65,8 @@ it('browses all projects through categories without a search bar', async () => {
   const user = userEvent.setup();
   render(<ProjectsIndex />);
   expect(screen.queryByRole('searchbox')).not.toBeInTheDocument();
-  await user.click(screen.getByRole('button', { name: 'All projects 12' }));
-  expect(screen.getAllByRole('listitem')).toHaveLength(12);
+  await user.click(screen.getByRole('button', { name: 'All projects 8' }));
+  expect(screen.getAllByRole('listitem')).toHaveLength(8);
   expect(
     screen.getByRole('heading', { name: 'Detecting Exoplanets in Kepler Transit Data' })
   ).toBeInTheDocument();
@@ -83,12 +77,12 @@ it('browses all projects through categories without a search bar', async () => {
 it('reveals a deep-linked project when a different category is active', async () => {
   const user = userEvent.setup();
   render(<ProjectsIndex />);
-  await user.click(screen.getByRole('button', { name: 'Full Stack 4' }));
+  await user.click(screen.getByRole('button', { name: 'Full Stack 1' }));
   act(() => window.dispatchEvent(new Event('resetProjectFilter')));
-  expect(screen.getByRole('button', { name: 'All projects 12' })).toHaveAttribute(
+  expect(screen.getByRole('button', { name: 'All projects 8' })).toHaveAttribute(
     'aria-pressed',
     'true'
   );
-  expect(screen.getAllByRole('listitem')).toHaveLength(12);
+  expect(screen.getAllByRole('listitem')).toHaveLength(8);
   expect(screen.getByRole('heading', { name: 'Molecule Mutation Prediction' })).toBeInTheDocument();
 });

@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { PROJECTS, EDUCATION } from '@/database/content-registry';
 import { ProjectsIndex } from '@/components/projects/projects-index';
-import { EducationOrganizationsSidebar } from '@/components/experience/education-organizations-sidebar';
+import { EducationPanel } from '@/components/about/education-panel';
 import { generatePersonSchema, generateWebsiteSchema, serializeJsonLd } from '@/lib/jsonld';
 import sitemap from '@/app/sitemap';
 import robots from '@/app/robots';
@@ -25,25 +25,6 @@ it('includes every project and paper in server HTML while preserving the feature
   render(<ProjectsIndex />);
   expect(screen.getAllByRole('listitem')).toHaveLength(3);
   expect(screen.queryByRole('heading', { name: 'Wardrobe Copilot' })).not.toBeInTheDocument();
-});
-
-it('serves coursework in server HTML and preserves the collapsed toggle behavior', async () => {
-  const html = renderToStaticMarkup(<EducationOrganizationsSidebar />);
-  const document = new DOMParser().parseFromString(html, 'text/html');
-  for (const education of EDUCATION) {
-    const panel = document.getElementById(`coursework-${education.id}`)!;
-    expect(panel).not.toBeNull();
-    expect(panel.hidden).toBe(true);
-    for (const course of education.coursework) expect(panel.textContent).toContain(course);
-  }
-  const user = userEvent.setup();
-  render(<EducationOrganizationsSidebar />);
-  const course = screen.getByText('Advanced Machine Learning and Neural Networks');
-  expect(course).not.toBeVisible();
-  await user.click(screen.getByRole('button', { name: 'Coursework (9)' }));
-  expect(course).toBeVisible();
-  await user.click(screen.getByRole('button', { name: 'Coursework (9)' }));
-  expect(course).not.toBeVisible();
 });
 
 it('lists canonical documents in the sitemap without fragment URLs or artificial update dates', () => {

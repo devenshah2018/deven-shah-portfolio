@@ -18,15 +18,9 @@ it('offers only matching demos without mounting or preloading any video in the p
   const { container } = render(<ProjectsIndex />);
   expect(screen.getAllByRole('button', { name: /^Demo for / })).toHaveLength(1);
   expect(container.querySelector('video')).toBeNull();
-  await user.click(screen.getByRole('button', { name: 'All projects 12' }));
+  await user.click(screen.getByRole('button', { name: 'All projects 8' }));
   const demos = PROJECTS.filter(project => project.demoVideo);
-  expect(demos.map(project => project.id).sort()).toEqual([
-    'boosted-project',
-    'graf-project',
-    'iris-project',
-    'umlazy-project',
-    'wardrobe-copilot',
-  ]);
+  expect(demos.map(project => project.id).sort()).toEqual(['iris-project']);
   expect(screen.getAllByRole('button', { name: /^Demo for / })).toHaveLength(demos.length);
   for (const project of demos) {
     expect(existsSync(path.join(process.cwd(), 'public', project.demoVideo!))).toBe(true);
@@ -38,7 +32,7 @@ it('offers only matching demos without mounting or preloading any video in the p
 it('opens each demo with inline autoplay, native controls and the correct local source', async () => {
   const user = userEvent.setup();
   render(<ProjectsIndex />);
-  await user.click(screen.getByRole('button', { name: 'All projects 12' }));
+  await user.click(screen.getByRole('button', { name: 'All projects 8' }));
   for (const project of PROJECTS.filter(project => project.demoVideo)) {
     await user.click(screen.getByRole('button', { name: `Demo for ${project.title}` }));
     const dialog = screen.getByRole('dialog', { name: `${project.title} demo` });

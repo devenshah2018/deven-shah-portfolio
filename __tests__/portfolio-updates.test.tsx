@@ -32,29 +32,6 @@ it('browses skills without search or Inngest and opens the selected skill', asyn
   ).not.toBeInTheDocument();
 });
 
-it('shows future roles as regular positions, ordered first without adding future tenure', async () => {
-  jest.useFakeTimers();
-  jest.setSystemTime(new Date(2026, 9, 8));
-  const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime });
-  render(<ExperienceSection />);
-  for (const view of ['Compact', 'Detailed']) {
-    await user.click(screen.getByRole('button', { name: view, exact: true }));
-    const role = screen.getByText('AI Native Analyst');
-    const company = role.closest('article');
-    expect(screen.getAllByRole('article')[0]).toContainElement(role);
-    expect(company).toHaveTextContent('2027');
-    expect(company).toHaveTextContent('Starting Feb 2027');
-    expect(company).toContainElement(screen.getByText('Technical Architecture Analyst'));
-    expect(company).toHaveTextContent('May 2026 – Sep 2026');
-    expect(screen.queryByText('Incoming')).not.toBeInTheDocument();
-    expect(screen.getAllByRole('link', { name: 'Accenture', exact: true })).toHaveLength(1);
-  }
-  const accenture = groupExperiencesByOrg().find(org => org.company === 'Accenture')!;
-  expect(accenture.duration).toBe('5 mo');
-  expect(accenture.positions.map(role => role.id)).toEqual(['accenture-incoming', 'accenture']);
-  expect(getCurrentWorkItems().some(item => item.id === 'accenture-incoming')).toBe(false);
-});
-
 it('derives Starting labels from dates and stops at the start month', () => {
   jest.useFakeTimers();
   try {
@@ -74,14 +51,4 @@ it('derives Starting labels from dates and stops at the start month', () => {
   } finally {
     jest.useRealTimers();
   }
-});
-
-it('orders organizations newest first without mutating the registry', () => {
-  const originalOrder = ORGANIZATIONS.map(org => org.id);
-  expect(getOrganizations().map(org => org.id)).toEqual([
-    'digital-forensics-lab',
-    'voyagers',
-    'ai-computer-vision-lab',
-  ]);
-  expect(ORGANIZATIONS.map(org => org.id)).toEqual(originalOrder);
 });

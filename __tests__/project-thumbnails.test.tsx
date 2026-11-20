@@ -18,8 +18,8 @@ it('adds lazy previews only to visible project rows and preserves hosted destina
     expect(image).toHaveAttribute('width', '640');
     expect(image).toHaveAttribute('height', '400');
   }
-  await user.click(screen.getByRole('button', { name: 'All projects 12' }));
-  expect(screen.getAllByRole('link', { name: / preview — / })).toHaveLength(12);
+  await user.click(screen.getByRole('button', { name: 'All projects 8' }));
+  expect(screen.getAllByRole('link', { name: / preview — / })).toHaveLength(8);
   expect(
     screen.getByRole('link', { name: 'Breaking Dijkstra preview — live site' })
   ).toHaveAttribute('href', 'https://breaking-dijkstra.vercel.app/');
@@ -38,21 +38,21 @@ it('uses a branded repository card for source projects without media', async () 
 it('recovers from a failed image with repository identity instead of a broken image', async () => {
   const user = userEvent.setup();
   render(<ProjectsIndex />);
-  await user.click(screen.getByRole('button', { name: 'All projects 12' }));
+  await user.click(screen.getByRole('button', { name: 'All projects 8' }));
   const preview = screen.getByRole('link', {
-    name: 'Wardrobe Copilot preview — GitHub repository',
+    name: 'Detecting Exoplanets in Kepler Transit Data preview — GitHub repository',
   });
   fireEvent.error(within(preview).getByRole('img'));
   expect(within(preview).queryByRole('img')).not.toBeInTheDocument();
   expect(within(preview).getByText('GitHub')).toBeVisible();
-  expect(within(preview).getByText('wardrobe-copilot')).toBeVisible();
+  expect(within(preview).getByText('kepler-exoplanets')).toBeVisible();
   await user.click(screen.getByRole('button', { name: 'Featured 3' }));
   expect(screen.getAllByRole('link', { name: / preview — / })).toHaveLength(3);
 });
 
 it('ships small local WebP files for curated previews', () => {
   const previews = PROJECTS.filter(project => project.thumbnail);
-  expect(previews).toHaveLength(9);
+  expect(previews).toHaveLength(5);
   for (const project of previews) {
     const thumbnail = project.thumbnail!;
     expect(thumbnail.src).toMatch(/^\/projects\/thumbnails\/[a-z0-9-]+\.webp$/);

@@ -2,7 +2,16 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowUpRight, CalendarCheck2, Github, Linkedin, Mail, Copy, Check } from 'lucide-react';
+import {
+  ArrowUpRight,
+  CalendarCheck2,
+  Github,
+  Linkedin,
+  Mail,
+  Copy,
+  Check,
+  GraduationCap,
+} from 'lucide-react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getCalApi } from '@calcom/embed-react';
@@ -33,6 +42,13 @@ const CONNECT_LINKS = [
     copyValue: LINKS.github,
     displayUrl: 'github.com/devenshah2018',
     icon: Github,
+  },
+  {
+    label: 'Google Scholar',
+    href: LINKS.scholar,
+    copyValue: LINKS.scholar,
+    displayUrl: 'Google Scholar',
+    icon: GraduationCap,
   },
 ];
 
@@ -109,17 +125,13 @@ export function ContactSection() {
             data-card
             className='grid grid-cols-1 gap-8 py-4 lg:grid-cols-2 lg:gap-16'
           >
-            {/* Left: intro + book a call */}
+            {/* Left: book a call */}
             <div className='flex flex-col'>
-              <p className='max-w-md text-[15px] leading-relaxed text-[#a3a3a3]'>
-                Have something to build, a role to discuss, or just want to say hi? Grab a time that
-                works, or reach out directly — I&apos;ll get back to you.
-              </p>
               <Button
                 data-cal-namespace='quick-chat'
                 data-cal-link='deven-shah-l0qkjk/quick-chat'
                 data-cal-config='{"layout":"month_view"}'
-                className='mt-6 inline-flex h-11 w-full items-center justify-center gap-2 rounded-md bg-[#fafafa] px-5 text-[14px] font-medium text-[#0a0a0a] transition-colors hover:bg-[#e5e5e0] focus-visible:ring-2 focus-visible:ring-[#404040]/30 focus-visible:ring-offset-2 focus-visible:ring-offset-[#141414] sm:w-auto sm:self-start'
+                className='inline-flex h-11 w-full items-center justify-center gap-2 rounded-md bg-[#fafafa] px-5 text-[14px] font-medium text-[#0a0a0a] transition-colors hover:bg-[#e5e5e0] focus-visible:ring-2 focus-visible:ring-[#404040]/30 focus-visible:ring-offset-2 focus-visible:ring-offset-[#141414] sm:w-auto sm:self-start'
                 aria-label='Book a call with Deven Shah'
                 tabIndex={0}
               >

@@ -4,6 +4,7 @@ import { ExperienceSection } from '@/components/experience/experience-section';
 import { ProjectsIndex } from '@/components/projects/projects-index';
 import { ContactSection } from '@/components/contact/contact-section';
 import { generateWebsiteSchema, serializeJsonLd } from '@/lib/jsonld';
+import { ResearchSection } from '@/components/research/research-section';
 import { HashNavigation } from '@/components/hash-navigation';
 
 export default function HomePage() {
@@ -20,6 +21,7 @@ export default function HomePage() {
         <HeroSection />
         <AboutSection />
         <ExperienceSection />
+        <ResearchSection />
         <ProjectsIndex />
         <ContactSection />
       </main>

@@ -4,6 +4,7 @@ import { Project } from '../lib/types';
 export const LINKS = {
   linkedin: 'https://www.linkedin.com/in/deven-a-shah/',
   github: 'https://github.com/devenshah2018',
+  scholar: 'https://scholar.google.com/citations?user=bWJKHlMAAAAJ&hl=en',
   x: 'https://x.com/devenshah2018',
   email: 'devenshah2018@gmail.com',
   strava: 'https://www.strava.com/athletes/123793208',
@@ -39,13 +40,13 @@ export const SKILLS = {
 
 // Simplified skill mappings - only store IDs instead of duplicating full object data
 export const SKILL_MAPPINGS = [
-  { skill: 'Python', experienceIds: ['suno-analytics', 'netapp', 'build-fellowship', 'research-assistant', 'accenture'], projectIds: ['wardrobe-copilot', 'molecule-mutation-prediction', 'drone-build-project', 'image-retrieval-project', 'kepler-exoplanets', 'gdelt-conflict-forecasting'], educationIds: ['sjsu-bachelors'] },
-  { skill: 'TypeScript', experienceIds: ['suno-analytics', 'patelco', 'build-fellowship'], projectIds: ['wardrobe-copilot', 'drone-build-project', 'iris-project', 'boosted-project', 'umlazy-project', 'graf-project'] },
+  { skill: 'Python', experienceIds: ['suno-analytics', 'netapp', 'build-fellowship', 'research-assistant', 'accenture'], projectIds: ['molecule-mutation-prediction', 'drone-build-project', 'image-retrieval-project', 'kepler-exoplanets', 'gdelt-conflict-forecasting'], educationIds: ['sjsu-bachelors'] },
+  { skill: 'TypeScript', experienceIds: ['suno-analytics', 'patelco', 'build-fellowship'], projectIds: ['drone-build-project', 'iris-project', ] },
   { skill: 'C#', experienceIds: ['patelco'], educationIds: ['sjsu-bachelors'] },
-  { skill: 'React', experienceIds: ['suno-analytics'], projectIds: ['wardrobe-copilot', 'drone-build-project', 'iris-project', 'breaking-dijkstra-project', 'boosted-project', 'umlazy-project', 'graf-project'] },
+  { skill: 'React', experienceIds: ['suno-analytics'], projectIds: ['drone-build-project', 'iris-project', 'breaking-dijkstra-project', ] },
   { skill: 'Azure', experienceIds: ['suno-analytics', 'patelco'] },
   { skill: 'LangGraph', experienceIds: ['suno-analytics'] },
-  { skill: 'Hugging Face', experienceIds: ['research-assistant', 'suno-analytics'], projectIds: ['wardrobe-copilot'] },
+  { skill: 'Hugging Face', experienceIds: ['research-assistant', 'suno-analytics'] },
   { skill: '.NET', experienceIds: ['patelco'] },
   { skill: 'SQL', experienceIds: ['suno-analytics', 'patelco', 'netapp'], educationIds: ['sjsu-bachelors'] },
   { skill: 'SOQL', experienceIds: ['patelco', 'accenture'] },
@@ -59,15 +60,15 @@ export const SKILL_MAPPINGS = [
   { skill: 'Flask', experienceIds: ['netapp', 'suno-analytics'], projectIds: ['gdelt-conflict-forecasting'] },
   { skill: 'Bash', experienceIds: ['netapp'], projectIds: [ 'molecule-mutation-prediction'] },
   { skill: 'Oracle', experienceIds: ['netapp'] },
-  { skill: 'PostgreSQL', experienceIds: ['suno-analytics'], projectIds: ['boosted-project', 'graf-project', 'iris-project'] },
+  { skill: 'PostgreSQL', experienceIds: ['suno-analytics'], projectIds: ['iris-project'] },
   { skill: 'GCP', experienceIds: ['suno-analytics'] },
   { skill: 'TailwindCSS', experienceIds: ['suno-analytics'] },
   { skill: 'Rust', projectIds: ['task-scheduling-project'] },
   { skill: 'Linux', educationIds: ['bu-masters'], projectIds: ['task-scheduling-project'] },
-  { skill: 'LLMs', experienceIds: ['suno-analytics'], projectIds: ['wardrobe-copilot'] },
+  { skill: 'LLMs', experienceIds: ['suno-analytics'] },
   { skill: 'Sklearn', experienceIds: ['suno-analytics'], projectIds: ['molecule-mutation-prediction', 'kepler-exoplanets'] },
   { skill: 'Tensorflow', experienceIds: ['suno-analytics'] },
-  { skill: 'Pytorch', experienceIds: ['build-fellowship', 'research-assistant'], projectIds: ['wardrobe-copilot', 'image-retrieval-project'] },
+  { skill: 'Pytorch', experienceIds: ['build-fellowship', 'research-assistant'], projectIds: ['image-retrieval-project'] },
   { skill: 'Docker', experienceIds: ['netapp', 'suno-analytics', 'build-fellowship'] },
   { skill: 'Jupyter', projectIds: ['drone-build-project', 'image-retrieval-project'], experienceIds: ['build-fellowship', 'research-assistant'] },
   { skill: 'C++', educationIds: ['bu-masters'] },
@@ -78,18 +79,18 @@ export const SKILL_MAPPINGS = [
   { skill: 'MongoDB', experienceIds: ['suno-analytics'] },
   { skill: 'Angular', experienceIds: ['patelco'] },
   { skill: 'ASP.NET Core', experienceIds: ['patelco'] },
-  { skill: 'Next.js', projectIds: ['drone-build-project', 'umlazy-project'], experienceIds: ['suno-analytics'] },
+  { skill: 'Next.js', projectIds: ['drone-build-project', ], experienceIds: ['suno-analytics'] },
   { skill: 'CNNs', experienceIds: ['build-fellowship', 'research-assistant'], projectIds: ['image-retrieval-project'] },
   { skill: 'FAISS', experienceIds: ['build-fellowship'], projectIds: ['image-retrieval-project'] },
-  { skill: 'Node.js', projectIds: ['boosted-project', 'iris-project'] },
-  { skill: 'Vite', projectIds: ['wardrobe-copilot', 'graf-project'] },
-  { skill: 'Supabase', projectIds: ['boosted-project', 'graf-project', 'iris-project'] },
-  { skill: 'Stripe', projectIds: ['boosted-project', 'iris-project'] },
-  { skill: 'CLIP', projectIds: ['wardrobe-copilot'] },
-  { skill: 'Ollama', projectIds: ['wardrobe-copilot'] },
-  { skill: 'FastAPI', projectIds: ['wardrobe-copilot'] },
-  { skill: 'SQLite', projectIds: ['wardrobe-copilot'] },
-  { skill: 'OpenAI', projectIds: ['boosted-project', 'iris-project'] },
+  { skill: 'Node.js', projectIds: ['iris-project'] },
+  { skill: 'Vite' },
+  { skill: 'Supabase', projectIds: ['iris-project'] },
+  { skill: 'Stripe', projectIds: ['iris-project'] },
+  { skill: 'CLIP' },
+  { skill: 'Ollama' },
+  { skill: 'FastAPI' },
+  { skill: 'SQLite' },
+  { skill: 'OpenAI', projectIds: ['iris-project'] },
 ];
 
 export const SKILL_CATEGORIES = [
@@ -544,29 +545,6 @@ export const PROJECT_CATEGORIES = [
 
 export const PROJECTS: Project[] = [
   {
-    id: 'wardrobe-copilot',
-    demoVideo: '/demos/wardrobe-copilot-demo.mp4',
-    thumbnail: {
-      src: '/projects/thumbnails/wardrobe-copilot.webp',
-      alt: 'Wardrobe Copilot demo showing clothing items and the outfit assistant',
-    },
-    title: 'Wardrobe Copilot',
-    subtitle: 'Local Multimodal Outfit Recommendations',
-    period: '09/2026 – 10/2026',
-    sortDate: '2026-10',
-    description: 'Local outfit assistant that uses FashionCLIP to categorize clothing photos and retrieve matching garments, then combines Gemma through Ollama with Python validation to recommend outfits and refine them through conversation. Runs offline after setup.',
-    summary: 'From clothing photos to conversational outfit recommendations',
-    technologies: getProjectSkillsFromMapping('wardrobe-copilot'),
-    entry_point: 'github',
-    link: 'https://github.com/devenshah2018/wardrobe-copilot',
-    status: 'Completed',
-    categories: ['ai'],
-    related_experiences: ['bu-masters'],
-    paper: '/papers/wardrobe-copilot.pdf',
-    accessible_at: ['github'],
-    access_points: [{ type: 'github', url: 'https://github.com/devenshah2018/wardrobe-copilot', label: 'Code' }],
-  },
-  {
     id: 'kepler-exoplanets',
     thumbnail: {
       src: '/projects/thumbnails/kepler-exoplanets.webp',
@@ -638,110 +616,13 @@ export const PROJECTS: Project[] = [
     categories: ['full-stack', 'featured'],
     current_work: false,
     summary: 'AI daily planner for your conversations and workflows',
-    related_experiences: ['voyagers'],
+    related_experiences: [],
     demoVideo: '/demos/iris-enterprise-demo.mp4',
     accessible_at: ['hosted'],
     access_points: [
       { type: 'hosted', url: 'https://www.iris-plan.com', label: 'Live Site' }
     ]
   },
-  {
-    id: 'boosted-project',
-    thumbnail: {
-      src: '/projects/thumbnails/boosted-project.webp',
-      alt: 'Boosted default site preview for its AI content drafting platform',
-    },
-    title: 'Boosted',
-    subtitle: 'AI Marketing Agent',
-    period: '03/2026 – Present',
-    sortDate: '2026-03',
-    description:
-      'A marketing agent that drafts content grounded in your product and voice — SEO-tuned and ready to ship across channels.',
-    technologies: ['TypeScript', 'React', 'Node.js', 'OpenAI', 'PostgreSQL', 'Stripe', 'Supabase'],
-    entry_point: 'live',
-    link: 'https://boosted.onrender.com',
-    status: 'Live',
-    readMe: false,
-    categories: ['full-stack'],
-    summary: 'AI marketing agent for on-brand, SEO-tuned content',
-    related_experiences: ['voyagers'],
-    demoVideo: '/demos/boosted-demo.mp4',
-    accessible_at: ['hosted'],
-    access_points: [
-      { type: 'hosted', url: 'https://boosted.onrender.com', label: 'Live Site' },
-    ],
-  },
-  {
-    id: 'umlazy-project',
-    thumbnail: {
-      src: '/projects/thumbnails/umlazy-project.webp',
-      alt: 'UMLazy live class diagram with connected entities and interfaces',
-    },
-    title: 'UMLazy',
-    subtitle: 'UML Diagram Editor',
-    period: '06/2026 – Present',
-    sortDate: '2026-06',
-    description:
-      'The quickest way to create UML diagrams — a fast, lightweight canvas for sketching software designs.',
-    technologies: ['TypeScript', 'Next.js', 'React'],
-    entry_point: 'live',
-    link: 'https://umlazy.vercel.app',
-    status: 'Live',
-    readMe: false,
-    categories: ['full-stack'],
-    summary: 'Fast, lightweight UML diagram editor',
-    related_experiences: ['voyagers'],
-    demoVideo: '/demos/umlazy-demo.mp4',
-    accessible_at: ['hosted'],
-    access_points: [
-      { type: 'hosted', url: 'https://umlazy.vercel.app', label: 'Live Site' },
-    ],
-  },
-  {
-    id: 'graf-project',
-    thumbnail: {
-      src: '/projects/thumbnails/graf-project.webp',
-      alt: 'Graf live site introducing branching conversations',
-    },
-    title: 'Graf',
-    subtitle: 'Nonlinear Messaging',
-    period: '07/2026 – Present',
-    sortDate: '2026-07',
-    description:
-      'A messaging platform where any message becomes its own thread — the structure of email with the speed of chat.',
-    technologies: ['TypeScript', 'React', 'Vite', 'Supabase', 'PostgreSQL'],
-    entry_point: 'live',
-    link: 'https://graf-fawn.vercel.app',
-    status: 'Live',
-    readMe: false,
-    categories: ['full-stack'],
-    summary: 'Graph-based messaging: any message becomes a thread',
-    related_experiences: ['voyagers'],
-    demoVideo: '/demos/graf-demo.mp4',
-    accessible_at: ['hosted'],
-    access_points: [
-      { type: 'hosted', url: 'https://graf-fawn.vercel.app', label: 'Live Site' },
-    ],
-  },
-  // {
-  //   id: 'crypto-forecasting-project',
-  //   title: 'Cryptocurrency Forecasting',
-  //   related_experiences: ['sjsu-bachelors'],
-  //   subtitle: 'ML Prediction Model',
-  //   period: '01/2022 – 12/2022',
-  //   sortDate: '2022-12',
-  //   description:
-  //     'ML model for cryptocurrency trend forecasting using synthetic data. Presented at SJSU Fall 2022 Expo.',
-  //   technologies: getProjectSkillsFromMapping('crypto-forecasting-project'),
-  //   entry_point: 'github',
-  //   link: 'https://github.com/b-devera/crypto-forecasting-model',
-  //   status: 'Completed',
-  //   categories: ['ai'],
-  //   accessible_at: ['github'],
-  //   access_points: [
-  //     { type: 'github', url: 'https://github.com/b-devera/crypto-forecasting-model', label: 'Code' },
-  //   ]
-  // },
   {
     id: 'molecule-mutation-prediction',
     paper: '/papers/molecule-mutation-prediction.pdf',
@@ -963,43 +844,7 @@ export type Organization = {
   related?: { type: 'experience' | 'education'; id: string };
 };
 
-export const ORGANIZATIONS: Organization[] = [
-  {
-    id: 'voyagers',
-    name: 'Voyagers',
-    role: 'Founder',
-    period: 'Jan 2026 – Present',
-    description:
-      'A collective of builders shipping real products, from AI planners to content and diagramming tools.',
-    institution: 'Voyagers',
-    logo: '/voyagers-logo.svg',
-    link: 'https://voyagers-lovat.vercel.app',
-  },
-  {
-    id: 'digital-forensics-lab',
-    name: 'Cyberforensics Research Lab',
-    role: 'Research Assistant',
-    period: 'Mar 2026 – Present',
-    description:
-      'Boston University lab at the intersection of AI and criminal justice. Researching deepfake generation and detection to build frameworks resilient to real-world media integrity threats.',
-    institution: 'Boston University',
-    logo: '/bu-logo.png',
-    link: 'https://www.bu.edu/',
-    related: { type: 'experience', id: 'research-assistant' },
-  },
-  {
-    id: 'ai-computer-vision-lab',
-    name: 'Artificial Intelligence and Computer Vision Lab',
-    role: 'Research Assistant',
-    period: 'Oct 2025 – Present',
-    description:
-      'Boston University computer vision lab focused on medical imaging. Building MRI segmentation pipelines for automated osteoarthritis diagnosis that replace hours of manual radiology review.',
-    institution: 'Boston University',
-    logo: '/bu-logo.png',
-    link: 'https://www.bu.edu/',
-    related: { type: 'experience', id: 'research-assistant' },
-  },
-];
+export const ORGANIZATIONS: Organization[] = [];
 
 // Helper functions to look up full objects from IDs
 export function getExperienceById(id: string) {

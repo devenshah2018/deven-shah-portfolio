@@ -42,7 +42,7 @@ jest.mock(
 it('labels every hosted destination Live Site and leaves document viewers unloaded until opened', async () => {
   const user = userEvent.setup();
   const { container } = render(<ProjectsIndex />);
-  await user.click(screen.getByRole('button', { name: 'All projects 12' }));
+  await user.click(screen.getByRole('button', { name: 'All projects 8' }));
   expect(screen.queryByTestId('pdf-viewer')).not.toBeInTheDocument();
   expect(container.querySelector('canvas, iframe, video')).toBeNull();
   expect(screen.queryByText('Live Demo')).not.toBeInTheDocument();
@@ -60,9 +60,9 @@ it('labels every hosted destination Live Site and leaves document viewers unload
 it('opens each paper in its own PDF dialog with direct access and a download', async () => {
   const user = userEvent.setup();
   render(<ProjectsIndex />);
-  await user.click(screen.getByRole('button', { name: 'All projects 12' }));
+  await user.click(screen.getByRole('button', { name: 'All projects 8' }));
   const papers = PROJECTS.filter(project => project.paper);
-  expect(papers).toHaveLength(4);
+  expect(papers).toHaveLength(3);
   for (const project of papers) {
     const trigger = screen.getByRole('button', { name: `Paper for ${project.title} (PDF)` });
     expect(trigger).not.toHaveAttribute('href');
@@ -138,7 +138,7 @@ it('offers only GDELT a slide deck with its PDF preview and original PowerPoint 
 it('orders mixed project actions by Live Site, Demo, Code, Paper, Slidedeck', async () => {
   const user = userEvent.setup();
   render(<ProjectsIndex />);
-  await user.click(screen.getByRole('button', { name: 'All projects 12' }));
+  await user.click(screen.getByRole('button', { name: 'All projects 8' }));
   const actionsFor = (id: string) =>
     Array.from(document.querySelectorAll(`#project-${id} a, #project-${id} button`))
       .filter(element =>
@@ -148,7 +148,6 @@ it('orders mixed project actions by Live Site, Demo, Code, Paper, Slidedeck', as
       )
       .map(element => element.textContent?.trim());
   expect(actionsFor('iris-project')).toEqual(['Live Site', 'Demo']);
-  expect(actionsFor('wardrobe-copilot')).toEqual(['Demo', 'Code', 'Paper']);
   expect(actionsFor('gdelt-conflict-forecasting')).toEqual(['Code', 'Paper', 'Slidedeck']);
   expect(actionsFor('drone-build-project')).toEqual(['Live Site', 'Code']);
 });

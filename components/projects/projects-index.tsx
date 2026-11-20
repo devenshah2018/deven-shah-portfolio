@@ -197,11 +197,8 @@ export function ProjectsIndex() {
     <section id='projects' className='bg-[#141414] py-20 sm:py-24'>
       <div className='container mx-auto w-full max-w-7xl px-6 sm:px-10 lg:px-16'>
         <div className='mb-9'>
-          <p className='section-eyebrow'>03</p>
+          <p className='section-eyebrow'>04</p>
           <h2 className='section-title'>Projects</h2>
-          <p className='mt-4 max-w-xl text-sm leading-7 text-[#999]'>
-            Products, applied research, and the algorithms underneath.
-          </p>
         </div>
         <div
           role='group'
